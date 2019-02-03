@@ -1,0 +1,18 @@
+{
+  "name": "@softwareventures/create-project",
+  "version": "0.0.0",
+  "description": "Create a TypeScript project with standard settings for Software Ventures Limited",
+  "keywords": [
+    "create-project",
+    "typescript",
+    "template"
+  ],
+  "author": "Daniel Cassidy <mail@danielcassidy.me.uk>",
+  "homepage": "https://github.com/softwareventures/create-project",
+  "bugs": "https://github.com/softwareventures/create-project/issues",
+  "repository": "github:softwareventures/create-project",
+  "license": "ISC",
+  "scripts": {
+    "test": "echo No tests yet"
+  }
+}
