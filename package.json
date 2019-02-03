@@ -13,6 +13,7 @@
   "repository": "github:softwareventures/create-project",
   "license": "ISC",
   "scripts": {
+    "prepare": "tslint --project . && tsc",
     "test": "echo No tests yet"
   },
   "devDependencies": {
