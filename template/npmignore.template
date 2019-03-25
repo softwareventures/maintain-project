@@ -1,5 +1,5 @@
 /.idea
-/template/tsconfig.template.json
+/tsconfig.json
 /tslint.json
 /.travis.yml
 *.ts
