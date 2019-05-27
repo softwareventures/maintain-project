@@ -1,6 +1,6 @@
 {
   "name": "@softwareventures/create-project",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "description": "Create a TypeScript project with standard settings for Software Ventures Limited",
   "keywords": [
     "create-project",
@@ -14,7 +14,8 @@
   "license": "ISC",
   "scripts": {
     "prepare": "tsc",
-    "test": "tslint --project . && ava"
+    "test": "tslint --project . && ava",
+    "semantic-release": "semantic-release"
   },
   "devDependencies": {
     "@softwareventures/tsconfig": "2.0.0",
@@ -23,7 +24,8 @@
     "cz-conventional-changelog": "2.1.0",
     "ts-node": "8.2.0",
     "tslint": "5.16.0",
-    "typescript": "3.4.5"
+    "typescript": "3.4.5",
+    "semantic-release": "15.13.12"
   },
   "config": {
     "commitizen": {
