@@ -2,19 +2,36 @@ import {allFn} from "@softwareventures/array";
 import emptyDir = require("empty-dir");
 import {constants, promises as fs} from "fs";
 import {resolve} from "path";
-import {cwd, exit} from "process";
+import {argv, cwd, exit} from "process";
 
 export interface Success {
     type: "success";
+}
+
+export interface NotDirectory {
+    type: "not-directory";
 }
 
 export interface NotEmpty {
     type: "not-empty";
 }
 
-export type Result = Success | NotEmpty;
+export type Result = Success | NotDirectory | NotEmpty;
 
 export default async function init(destDir: string): Promise<Result> {
+    const mkdir = fs.mkdir(destDir, {recursive: true});
+    const isDirectory = mkdir.then(() => true, reason => {
+        if (reason.code === "EEXIST") {
+            return false;
+        } else {
+            throw reason;
+        }
+    });
+
+    if (!await isDirectory) {
+        return {type: "not-directory"};
+    }
+
     if (!await emptyDir(destDir)) {
         return {type: "not-empty"};
     }
@@ -48,15 +65,32 @@ function copy(source: string, destDir: string, destFile: string = source): Promi
             });
 }
 
-if (require.main === module) {
-    init(cwd())
+function main(destDir: string): void {
+    init(destDir)
         .then(result => {
             switch (result.type) {
                 case "success":
-                    return exit();
+                    exit();
+                    break;
+                case "not-directory":
+                    console.error("Target exists and is not a directory");
+                    exit(1);
+                    break;
                 case "not-empty":
                     console.error("Directory not empty");
-                    return exit(1);
+                    exit(1);
+                    break;
             }
         });
+}
+
+if (require.main === module) {
+    if (argv.length === 2) {
+        main(cwd());
+    } else if (argv.length === 3) {
+        main(resolve(cwd(), argv[2]));
+    } else {
+        console.error("Invalid arguments");
+        exit(1);
+    }
 }
