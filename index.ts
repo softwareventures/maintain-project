@@ -81,6 +81,14 @@ function main(destDir: string): void {
                     exit(1);
                     break;
             }
+        })
+        .catch(reason => {
+            if (!!reason && reason.message) {
+                console.error(reason.message);
+            } else {
+                console.error(reason);
+            }
+            exit(1);
         });
 }
 
