@@ -1,8 +1,8 @@
 import {allFn} from "@softwareventures/array";
-import emptyDir = require("empty-dir");
 import {constants, promises as fs} from "fs";
-import {resolve} from "path";
+import {basename, dirname, resolve} from "path";
 import {argv, cwd, exit} from "process";
+import emptyDir = require("empty-dir");
 
 export interface Success {
     type: "success";
@@ -42,7 +42,8 @@ export default async function init(destDir: string): Promise<Result> {
         copy("renovate.lib.template.json", destDir, "renovate.json"),
         copy("travis.template.yml", destDir, ".travis.yml"),
         copy("tsconfig.template.json", destDir, "tsconfig.json"),
-        copy("tslint.template.json", destDir, "tslint.json")
+        copy("tslint.template.json", destDir, "tslint.json"),
+        packageJson(destDir)
     ])
         .then(allFn(result => result.type === "success"))
         .then(success => success
@@ -55,6 +56,33 @@ function copy(source: string, destDir: string, destFile: string = source): Promi
     const destPath = resolve(destDir, destFile);
 
     return fs.copyFile(sourcePath, destPath, constants.COPYFILE_EXCL)
+        .then(() => ({type: "success"}),
+            reason => {
+                if (reason.code === "EEXIST") {
+                    return {type: "not-empty"};
+                } else {
+                    throw reason;
+                }
+            });
+}
+
+function packageJson(destDir: string): Promise<Result> {
+    const sourcePath = require.resolve("./template/package.json");
+    const destPath = resolve(destDir, "package.json");
+
+    const packageName = basename(dirname(destPath));
+
+    return fs.readFile(sourcePath, {encoding: "utf8"})
+        .then(JSON.parse)
+        .then(json => ({
+            ...json,
+            name: `@softwareventures/${packageName}`,
+            homepage: `https://github.com/softwareventures/${packageName}`,
+            bugs: `https://github.com/softwareventures/${packageName}`,
+            repository: `github:softwareventures/${packageName}`
+        }))
+        .then(JSON.stringify)
+        .then(text => fs.writeFile(destPath, text, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),
             reason => {
                 if (reason.code === "EEXIST") {
