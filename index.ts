@@ -1,8 +1,9 @@
 import {allFn} from "@softwareventures/array";
+import emptyDir = require("empty-dir");
 import {constants, promises as fs} from "fs";
 import {basename, dirname, resolve} from "path";
+import {format as formatPackageJson} from "prettier-package-json";
 import {argv, cwd, exit} from "process";
-import emptyDir = require("empty-dir");
 
 export interface Success {
     type: "success";
@@ -81,7 +82,14 @@ function packageJson(destDir: string): Promise<Result> {
             bugs: `https://github.com/softwareventures/${packageName}`,
             repository: `github:softwareventures/${packageName}`
         }))
-        .then(JSON.stringify)
+        .then(json => formatPackageJson(json, {
+            keyOrder: ["private", "name", "version", "description", "keywords", "author", "maintainers",
+                "contributors", "homepage", "bugs", "repository", "license", "scripts", "main", "module", "browser",
+                "man", "preferGlobal", "bin", "files", "directories", "sideEffects", "types", "typings",
+                "dependencies", "optionalDependencies", "bundleDependencies", "bundledDependencies",
+                "peerDependencies", "devDependencies", "engines", "engine-strict", "engineStrict", "os", "cpu",
+                "config", "ava"]
+        }))
         .then(text => fs.writeFile(destPath, text, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),
             reason => {
