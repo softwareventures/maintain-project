@@ -74,7 +74,7 @@ function packageJson(destDir: string): Promise<Result> {
     const packageName = basename(dirname(destPath));
 
     return fs.readFile(sourcePath, {encoding: "utf8"})
-        .then(JSON.parse)
+        .then(text => JSON.parse(text))
         .then(json => ({
             ...json,
             name: `@softwareventures/${packageName}`,
