@@ -4,5 +4,8 @@
 /tslint.json
 /.travis.yml
 /renovate.json
+/template/idea.template/dictionaries
+/template/idea.template/workspace.xml
+/template/idea.template/tasks.xml
 *.ts
 !*.d.ts

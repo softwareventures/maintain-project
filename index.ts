@@ -1,9 +1,10 @@
-import {allFn} from "@softwareventures/array";
-import emptyDir = require("empty-dir");
+import {allFn, filterFn, mapFn} from "@softwareventures/array";
 import {constants, promises as fs} from "fs";
-import {basename, dirname, resolve} from "path";
+import {basename, dirname, relative, resolve, sep} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
 import {argv, cwd, exit} from "process";
+import emptyDir = require("empty-dir");
+import recursiveReadDir = require("recursive-readdir");
 
 export interface Success {
     type: "success";
@@ -44,6 +45,7 @@ export default async function init(destDir: string): Promise<Result> {
         copy("travis.template.yml", destDir, ".travis.yml"),
         copy("tsconfig.template.json", destDir, "tsconfig.json"),
         copy("tslint.template.json", destDir, "tslint.json"),
+        ideaProjectFiles(destDir),
         packageJson(destDir)
     ])
         .then(allFn(result => result.type === "success"))
@@ -56,7 +58,8 @@ function copy(source: string, destDir: string, destFile: string = source): Promi
     const sourcePath = require.resolve("./template/" + source);
     const destPath = resolve(destDir, destFile);
 
-    return fs.copyFile(sourcePath, destPath, constants.COPYFILE_EXCL)
+    return fs.mkdir(dirname(destPath), {recursive: true})
+        .then(() => fs.copyFile(sourcePath, destPath, constants.COPYFILE_EXCL))
         .then(() => ({type: "success"}),
             reason => {
                 if (reason.code === "EEXIST") {
@@ -99,6 +102,28 @@ function packageJson(destDir: string): Promise<Result> {
                     throw reason;
                 }
             });
+}
+
+function ideaProjectFiles(destDir: string): Promise<Result> {
+    const templateDir = dirname(require.resolve("./template/idea.template/create-project.iml"));
+
+    const sourcePaths = recursiveReadDir(templateDir)
+        .then(mapFn(path => relative(templateDir, path)))
+        .then(filterFn(path => path.split(sep)[0] !== "dictionaries"))
+        .then(filterFn(path => !path.match(/\.iml$/)));
+
+    return sourcePaths
+        .then(mapFn(path => {
+            const source = "idea.template" + sep + path;
+            const dest = ".idea" + sep + path;
+
+            return copy(source, destDir, dest);
+        }))
+        .then(results => Promise.all(results))
+        .then(allFn(result => result.type === "success"))
+        .then(success => success
+            ? {type: "success"}
+            : {type: "not-empty"});
 }
 
 function main(destDir: string): void {

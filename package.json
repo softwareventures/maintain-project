@@ -13,7 +13,7 @@
   "repository": "github:softwareventures/create-project",
   "license": "ISC",
   "scripts": {
-    "prepare": "tsc",
+    "prepare": "shx rm -rf template/idea.template && shx cp -r .idea template/idea.template && tsc",
     "test": "tslint --project . && ava",
     "semantic-release": "semantic-release"
   },
@@ -21,8 +21,10 @@
     "@softwareventures/array": "^0.14.0",
     "@types/node": "^12.0.2",
     "@types/prettier-package-json": "^2.1.0",
+    "@types/recursive-readdir": "^2.2.0",
     "empty-dir": "^2.0.0",
-    "prettier-package-json": "^2.1.0"
+    "prettier-package-json": "^2.1.0",
+    "recursive-readdir": "^2.2.2"
   },
   "devDependencies": {
     "@softwareventures/tsconfig": "2.0.0",
@@ -30,6 +32,7 @@
     "ava": "1.4.1",
     "cz-conventional-changelog": "2.1.0",
     "semantic-release": "15.13.12",
+    "shx": "0.3.2",
     "ts-node": "8.2.0",
     "tslint": "5.17.0",
     "typescript": "3.5.1"
