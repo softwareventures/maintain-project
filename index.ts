@@ -1,5 +1,7 @@
-import {allFn, filterFn, mapFn} from "@softwareventures/array";
+import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
 import {constants, promises as fs} from "fs";
+import {JSDOM} from "jsdom";
+import nonNull from "non-null";
 import {basename, dirname, relative, resolve, sep} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
 import {argv, cwd, exit} from "process";
@@ -106,11 +108,13 @@ function packageJson(destDir: string): Promise<Result> {
 
 function ideaProjectFiles(destDir: string): Promise<Result> {
     const templateDir = dirname(require.resolve("./template/idea.template/create-project.iml"));
+    const packageName = basename(destDir);
 
     const sourcePaths = recursiveReadDir(templateDir)
         .then(mapFn(path => relative(templateDir, path)))
         .then(filterFn(path => path.split(sep)[0] !== "dictionaries"))
-        .then(filterFn(path => !path.match(/\.iml$/)));
+        .then(filterFn(path => !path.match(/\.iml$/)))
+        .then(filterFn(path => path !== "modules.xml"));
 
     return sourcePaths
         .then(mapFn(path => {
@@ -119,11 +123,49 @@ function ideaProjectFiles(destDir: string): Promise<Result> {
 
             return copy(source, destDir, dest);
         }))
+        .then(append([
+            copy("idea.template/create-project.iml", destDir, `.idea/${packageName}.iml`)
+        ]))
+        .then(append([ideaModulesXml(destDir)]))
         .then(results => Promise.all(results))
         .then(allFn(result => result.type === "success"))
         .then(success => success
             ? {type: "success"}
             : {type: "not-empty"});
+}
+
+function ideaModulesXml(destDir: string): Promise<Result> {
+    const sourcePath = require.resolve("./template/idea.template/modules.xml");
+    const destPath = resolve(destDir, ".idea/modules.xml");
+    const packageName = basename(destDir);
+
+    const xmlText = fs.readFile(sourcePath, "utf8");
+    const dom = xmlText.then(xmlText => new JSDOM(xmlText, {contentType: "application/xml"}));
+    const document = dom.then(dom => dom.window.document);
+
+    const module = document.then(document => document.querySelector("project:root>component>modules>module"))
+        .then(nonNull);
+
+    const newXmlText = module
+        .then(module => {
+            module.setAttribute("fileurl", nonNull(module.getAttribute("fileurl"))
+                .replace(/create-project\.iml$/, packageName + ".iml"));
+            module.setAttribute("filepath", nonNull(module.getAttribute("filepath"))
+                .replace(/create-project\.iml$/, packageName + ".iml"));
+        })
+        .then(() => dom)
+        .then(dom => dom.serialize());
+
+    return newXmlText
+        .then(newXmlText => fs.writeFile(destPath, newXmlText, {encoding: "utf8", flag: "wx"}))
+        .then(() => ({type: "success"}),
+            reason => {
+                if (reason.code === "EEXIST") {
+                    return {type: "not-empty"};
+                } else {
+                    throw reason;
+                }
+            });
 }
 
 function main(destDir: string): void {
