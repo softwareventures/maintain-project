@@ -1,11 +1,11 @@
 import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
-import emptyDir = require("empty-dir");
 import {constants, promises as fs} from "fs";
 import {JSDOM} from "jsdom";
 import nonNull from "non-null";
 import {basename, dirname, relative, resolve, sep} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
 import {argv, cwd, exit} from "process";
+import emptyDir = require("empty-dir");
 import recursiveReadDir = require("recursive-readdir");
 
 export interface Success {
@@ -48,7 +48,8 @@ export default async function init(destDir: string): Promise<Result> {
         copy("tsconfig.template.json", destDir, "tsconfig.json"),
         copy("tslint.template.json", destDir, "tslint.json"),
         ideaProjectFiles(destDir),
-        packageJson(destDir)
+        packageJson(destDir),
+        dictionary(destDir)
     ])
         .then(allFn(result => result.type === "success"))
         .then(success => success
@@ -158,6 +159,46 @@ function ideaModulesXml(destDir: string): Promise<Result> {
 
     return newXmlText
         .then(newXmlText => fs.writeFile(destPath, newXmlText, {encoding: "utf8", flag: "wx"}))
+        .then(() => ({type: "success"}),
+            reason => {
+                if (reason.code === "EEXIST") {
+                    return {type: "not-empty"};
+                } else {
+                    throw reason;
+                }
+            });
+}
+
+function dictionary(destDir: string): Promise<Result> {
+    const words = fs.readFile(require.resolve("./template/dictionary.txt"), "utf8")
+        .then(words => words.split("\n"));
+
+    const dom = new JSDOM("<component/>", {contentType: "application/xml"});
+    const document = dom.window.document;
+
+    const component = document.documentElement;
+    component.setAttribute("name", "ProjectDictionaryState");
+
+    const dictionary = document.createElement("dictionary");
+    dictionary.setAttribute("name", "project");
+    component.appendChild(dictionary);
+
+    const wordsElement = document.createElement("words");
+    dictionary.appendChild(wordsElement);
+
+    const wordElements = words.then(mapFn(word => {
+        const element = document.createElement("w");
+        element.textContent = word;
+        wordsElement.appendChild(element);
+    }));
+
+    const xmlText = wordElements.then(() => dom.serialize());
+
+    const destPath = resolve(destDir, ".idea/dictionaries/project.xml");
+
+    return fs.mkdir(dirname(destPath), {recursive: true})
+        .then(() => xmlText)
+        .then(xmlText => fs.writeFile(destPath, xmlText, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),
             reason => {
                 if (reason.code === "EEXIST") {
