@@ -1,11 +1,11 @@
 import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
+import emptyDir = require("empty-dir");
 import {constants, promises as fs} from "fs";
 import {JSDOM} from "jsdom";
 import nonNull from "non-null";
 import {basename, dirname, relative, resolve, sep} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
 import {argv, cwd, exit} from "process";
-import emptyDir = require("empty-dir");
 import recursiveReadDir = require("recursive-readdir");
 
 export interface Success {
