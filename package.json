@@ -18,16 +18,16 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "@softwareventures/array": "^0.14.0",
-    "@types/jsdom": "^12.2.3",
-    "@types/node": "^12.0.2",
-    "@types/prettier-package-json": "^2.1.0",
-    "@types/recursive-readdir": "^2.2.0",
-    "empty-dir": "^2.0.0",
-    "jsdom": "^15.1.1",
-    "non-null": "^2.0.1",
-    "prettier-package-json": "^2.1.0",
-    "recursive-readdir": "^2.2.2",
+    "@softwareventures/array": "0.14.0",
+    "@types/jsdom": "12.2.3",
+    "@types/node": "12.0.4",
+    "@types/prettier-package-json": "2.1.0",
+    "@types/recursive-readdir": "2.2.0",
+    "empty-dir": "2.0.0",
+    "jsdom": "15.1.1",
+    "non-null": "2.0.1",
+    "prettier-package-json": "2.1.0",
+    "recursive-readdir": "2.2.2",
     "tslib": "1.9.3"
   },
   "devDependencies": {
