@@ -216,6 +216,7 @@ webgl
 webglcontextlost
 webglcontextrestored
 webm
+webp
 webos
 webstorm
 wget
