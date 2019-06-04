@@ -24,6 +24,9 @@
     "typescript": "3.5.1",
     "semantic-release": "15.13.12"
   },
+  "dependencies": {
+    "tslib": "1.9.3"
+  },
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
