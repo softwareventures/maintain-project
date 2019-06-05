@@ -448,10 +448,10 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@types/empty-dir@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@types/empty-dir/-/empty-dir-1.0.1.tgz#56f1c7e39bf9995d3cac67e41202dd863f52c139"
-  integrity sha512-la+KGbq0qUTySE3tyEbttvTZCQaVoeJNMkjkifbEI1I4yjJjwRHiH8SnTR0lYo2bQfCe2w9ZReIuKWIUsL6qrA==
+"@types/empty-dir@^2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@types/empty-dir/-/empty-dir-2.0.0.tgz#fc40e385727b1625c5cb5021ecf9cd28efeafe8a"
+  integrity sha512-wyXug9Ay49frbC8fd+QDnoe1ByBk+wDz+acg+cacXWSnrph2v1wyLm3dSVnGLYAzMsfmga0asuBl2Da9IeQx2w==
   dependencies:
     "@types/node" "*"
 
