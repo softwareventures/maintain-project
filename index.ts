@@ -189,11 +189,14 @@ function dictionary(destDir: string): Promise<Result> {
     const wordsElement = document.createElement("words");
     dictionary.appendChild(wordsElement);
 
-    const wordElements = words.then(mapFn(word => {
-        const element = document.createElement("w");
-        element.textContent = word;
-        wordsElement.appendChild(element);
-    }));
+    const wordElements = words
+        .then(filterFn(word => word !== ""))
+        .then(mapFn(word => word.trim()))
+        .then(mapFn(word => {
+            const element = document.createElement("w");
+            element.textContent = word;
+            wordsElement.appendChild(element);
+        }));
 
     const xmlText = wordElements.then(() => dom.serialize());
 
