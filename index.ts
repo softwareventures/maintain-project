@@ -49,7 +49,8 @@ export default async function init(destDir: string): Promise<Result> {
         copy("tslint.template.json", destDir, "tslint.json"),
         ideaProjectFiles(destDir),
         packageJson(destDir),
-        dictionary(destDir)
+        dictionary(destDir),
+        gitInit(destDir)
     ])
         .then(allFn(result => result.type === "success"))
         .then(success => success
@@ -207,6 +208,24 @@ function dictionary(destDir: string): Promise<Result> {
                     throw reason;
                 }
             });
+}
+
+function gitInit(destDir: string): Promise<Result> {
+    const templateDir = dirname(require.resolve("./template/git.template/HEAD"));
+
+    return recursiveReadDir(templateDir)
+        .then(mapFn(path => relative(templateDir, path)))
+        .then(mapFn(path => {
+            const source = "git.template" + sep + path;
+            const dest = ".git" + sep + path;
+
+            return copy(source, destDir, dest);
+        }))
+        .then(results => Promise.all(results))
+        .then(allFn(result => result.type === "success"))
+        .then(success => success
+            ? {type: "success"}
+            : {type: "not-empty"});
 }
 
 function main(destDir: string): void {
