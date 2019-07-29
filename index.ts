@@ -115,6 +115,8 @@ function ideaProjectFiles(destDir: string): Promise<Result> {
     const sourcePaths = recursiveReadDir(templateDir)
         .then(mapFn(path => relative(templateDir, path)))
         .then(filterFn(path => path.split(sep)[0] !== "dictionaries"))
+        .then(filterFn(path => path !== "workspace.xml"))
+        .then(filterFn(path => path !== "tasks.xml"))
         .then(filterFn(path => !path.match(/\.iml$/)))
         .then(filterFn(path => path !== "modules.xml"));
 
