@@ -560,7 +560,7 @@
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-2.3.5.tgz#9da44ed75571999b65c37b60c9b2b88db54c585d"
   integrity sha512-SCcK7mvGi3+ZNz833RRjFIxrn4gI1PPR3NtuIS+6vMkvmsGjosqTJwRt5bAEFLRz+wtJMWv8+uOnZf2hi2QXTg==
 
-"@types/xml-formatter@^1.1.0":
+"@types/xml-formatter@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@types/xml-formatter/-/xml-formatter-1.1.0.tgz#f7cde70ec33d7b044029b6b6c2f6e69d270ced63"
   integrity sha512-1Z8XdMUQ3mLsAwqBzKUea2IgDeLOwvgEWevUHhcu3aF6K0KqeGPRlwEYmVy3wGiaepZdcqsiCuUbNhrU4bIJog==
@@ -7215,7 +7215,7 @@ xdg-basedir@^3.0.0:
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-3.0.0.tgz#496b2cc109eca8dbacfe2dc72b603c17c5870ad4"
   integrity sha1-SWsswQnsqNus/i3HK2A8F8WHCtQ=
 
-xml-formatter@^1.1.0:
+xml-formatter@1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-1.1.0.tgz#0c9174a7101bb0ef7d7b2b09448282844990a4ef"
   integrity sha512-qzWzbpEy7gNXsjz7rLc4/PZ7Z+rccyICUzV1Wu4DSbCghAg1NmaKGW2pQYbgB2JzZJf0nVU2sQqCCDC0UtCpeA==
