@@ -48,6 +48,8 @@ export default async function init(destDir: string): Promise<Result> {
         copy("travis.template.yml", destDir, ".travis.yml"),
         copy("tsconfig.template.json", destDir, "tsconfig.json"),
         copy("tslint.template.json", destDir, "tslint.json"),
+        copy("index.ts", destDir),
+        copy("index.test.ts", destDir),
         ideaProjectFiles(destDir),
         packageJson(destDir),
         dictionary(destDir),
