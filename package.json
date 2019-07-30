@@ -24,12 +24,14 @@
     "@types/node": "12.6.8",
     "@types/prettier-package-json": "2.1.0",
     "@types/recursive-readdir": "2.2.0",
+    "@types/xml-formatter": "^1.1.0",
     "empty-dir": "2.0.0",
     "jsdom": "15.1.1",
     "non-null": "2.0.1",
     "prettier-package-json": "2.1.0",
     "recursive-readdir": "2.2.2",
-    "tslib": "1.10.0"
+    "tslib": "1.10.0",
+    "xml-formatter": "^1.1.0"
   },
   "devDependencies": {
     "@softwareventures/tsconfig": "2.0.0",

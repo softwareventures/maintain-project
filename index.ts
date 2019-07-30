@@ -7,6 +7,7 @@ import {basename, dirname, relative, resolve, sep} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
 import {argv, cwd, exit} from "process";
 import recursiveReadDir = require("recursive-readdir");
+import formatXml = require("xml-formatter");
 
 export interface Success {
     type: "success";
@@ -198,7 +199,13 @@ function dictionary(destDir: string): Promise<Result> {
             wordsElement.appendChild(element);
         }));
 
-    const xmlText = wordElements.then(() => dom.serialize());
+    const xmlText = wordElements
+        .then(() => dom.serialize())
+        .then(xmlText => formatXml(xmlText, {
+            collapseContent: true,
+            indentation: "  ",
+            stripComments: true
+        }));
 
     const destPath = resolve(destDir, ".idea/dictionaries/project.xml");
 
