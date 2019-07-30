@@ -1,4 +1,5 @@
 import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
+import {fork} from "child_process";
 import emptyDir = require("empty-dir");
 import {constants, promises as fs} from "fs";
 import {JSDOM} from "jsdom";
@@ -21,7 +22,11 @@ export interface NotEmpty {
     type: "not-empty";
 }
 
-export type Result = Success | NotDirectory | NotEmpty;
+export interface YarnInstallFailed {
+    type: "yarn-install-failed";
+}
+
+export type Result = Success | NotDirectory | NotEmpty | YarnInstallFailed;
 
 export default async function init(destDir: string): Promise<Result> {
     const mkdir = fs.mkdir(destDir, {recursive: true});
@@ -57,7 +62,7 @@ export default async function init(destDir: string): Promise<Result> {
     ])
         .then(allFn(result => result.type === "success"))
         .then(success => success
-            ? {type: "success"}
+            ? yarnInstall(destDir)
             : {type: "not-empty"});
 }
 
@@ -264,6 +269,19 @@ function gitInit(destDir: string): Promise<Result> {
             : {type: "not-empty"});
 }
 
+function yarnInstall(dir: string): Promise<Result> {
+    return new Promise((resolve, reject) =>
+        fork(require.resolve("yarn/bin/yarn.js"), [], {cwd: dir, stdio: "inherit"})
+            .on("error", reject)
+            .on("exit", code => {
+                if (code === 0) {
+                    resolve({type: "success"});
+                } else {
+                    resolve({type: "yarn-install-failed"});
+                }
+            }));
+}
+
 function main(destDir: string): void {
     init(destDir)
         .then(result => {
@@ -277,6 +295,10 @@ function main(destDir: string): void {
                     break;
                 case "not-empty":
                     console.error("Directory not empty");
+                    exit(1);
+                    break;
+                case "yarn-install-failed":
+                    console.error("yarn install failed");
                     exit(1);
                     break;
             }
