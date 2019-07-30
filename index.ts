@@ -223,18 +223,39 @@ function dictionary(destDir: string): Promise<Result> {
             });
 }
 
+function mkdir(path: string): Promise<Result> {
+    return fs.mkdir(path, {recursive: true})
+        .then(() => ({type: "success"}),
+            reason => {
+                if (reason.code === "EEXIST") {
+                    return {type: "not-empty"};
+                } else {
+                    throw reason;
+                }
+            });
+}
+
 function gitInit(destDir: string): Promise<Result> {
     const templateDir = dirname(require.resolve("./template/git.template/HEAD"));
 
-    return recursiveReadDir(templateDir)
+    const createDirectories = [
+        mkdir(resolve(destDir, ".git", "objects", "info")),
+        mkdir(resolve(destDir, ".git", "objects", "pack")),
+        mkdir(resolve(destDir, ".git", "refs", "heads")),
+        mkdir(resolve(destDir, ".git", "refs", "tags"))
+    ];
+
+    const copyFiles = recursiveReadDir(templateDir)
         .then(mapFn(path => relative(templateDir, path)))
         .then(mapFn(path => {
             const source = "git.template" + sep + path;
             const dest = ".git" + sep + path;
 
             return copy(source, destDir, dest);
-        }))
-        .then(results => Promise.all(results))
+        }));
+
+    return copyFiles
+        .then(copyFiles => Promise.all([...createDirectories, ...copyFiles]))
         .then(allFn(result => result.type === "success"))
         .then(success => success
             ? {type: "success"}
