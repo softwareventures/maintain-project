@@ -193,6 +193,7 @@ function dictionary(destDir: string): Promise<Result> {
     const wordElements = words
         .then(filterFn(word => word !== ""))
         .then(mapFn(word => word.trim()))
+        .then(words => words.sort())
         .then(mapFn(word => {
             const element = document.createElement("w");
             element.textContent = word;
