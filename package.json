@@ -42,7 +42,7 @@
     "semantic-release": "15.13.24",
     "shx": "0.3.2",
     "ts-node": "8.3.0",
-    "tslint": "5.19.0",
+    "tslint": "5.20.0",
     "typescript": "3.6.2"
   },
   "config": {
