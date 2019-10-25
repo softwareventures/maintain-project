@@ -35,7 +35,7 @@
     "yarn": "1.19.1"
   },
   "devDependencies": {
-    "@softwareventures/tsconfig": "2.0.0",
+    "@softwareventures/tsconfig": "2.1.0",
     "@softwareventures/tslint-rules": "0.7.1",
     "ava": "2.4.0",
     "cz-conventional-changelog": "3.0.2",
