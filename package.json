@@ -17,6 +17,9 @@
     "test": "tslint --project . && ava",
     "semantic-release": "semantic-release"
   },
+  "bin": {
+    "create-project": "./index.js"
+  },
   "dependencies": {
     "@softwareventures/array": "0.16.1",
     "@types/empty-dir": "2.0.0",

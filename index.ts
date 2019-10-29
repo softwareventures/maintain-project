@@ -1,3 +1,4 @@
+#!/usr/bin/env/node
 import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
 import {fork} from "child_process";
 import emptyDir = require("empty-dir");
