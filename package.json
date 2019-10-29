@@ -17,6 +17,9 @@
     "test": "tslint --project . && ava",
     "semantic-release": "semantic-release"
   },
+  "sideEffects": [
+    "./index.js"
+  ],
   "bin": {
     "create-project": "./index.js"
   },
