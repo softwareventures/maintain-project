@@ -250,7 +250,8 @@ function gitInit(destDir: string): Promise<Result> {
         mkdir(resolve(destDir, ".git", "objects", "info")),
         mkdir(resolve(destDir, ".git", "objects", "pack")),
         mkdir(resolve(destDir, ".git", "refs", "heads")),
-        mkdir(resolve(destDir, ".git", "refs", "tags"))
+        mkdir(resolve(destDir, ".git", "refs", "tags")),
+        mkdir(resolve(destDir, ".git", "hooks"))
     ];
 
     const copyFiles = recursiveReadDir(templateDir)
