@@ -48,10 +48,10 @@ export default async function init(destDir: string): Promise<Result> {
     }
 
     return Promise.all([
+        copy("github.template/workflows/ci.yml", destDir, ".github/workflows/ci.yml"),
         copy("gitignore.template", destDir, ".gitignore"),
         copy("npmignore.template", destDir, ".npmignore"),
         copy("renovate.lib.template.json", destDir, "renovate.json"),
-        copy("travis.template.yml", destDir, ".travis.yml"),
         copy("tsconfig.template.json", destDir, "tsconfig.json"),
         copy("tslint.template.json", destDir, "tslint.json"),
         copy("index.ts", destDir),
