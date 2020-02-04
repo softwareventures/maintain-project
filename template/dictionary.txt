@@ -75,6 +75,7 @@ gzip
 hevc
 highp
 hotseat
+iana
 ibotta
 iframe
 imei
