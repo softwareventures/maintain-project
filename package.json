@@ -38,7 +38,7 @@
     "recursive-readdir": "2.2.2",
     "tslib": "1.10.0",
     "xml-formatter": "1.2.0",
-    "yarn": "1.21.1"
+    "yarn": "1.22.0"
   },
   "devDependencies": {
     "@softwareventures/tsconfig": "2.1.0",
