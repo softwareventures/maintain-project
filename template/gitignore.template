@@ -7,3 +7,4 @@ npm-debug.log*
 *.js
 *.d.ts
 *.js.map
+!/types/*.d.ts
