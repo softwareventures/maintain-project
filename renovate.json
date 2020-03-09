@@ -1,5 +1,5 @@
 {
   "extends": [
-    "@softwareventures:js-app"
+    "@softwareventures:app"
   ]
 }
