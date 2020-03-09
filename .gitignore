@@ -2,6 +2,7 @@
 /.idea/tasks.xml
 /node_modules
 /template/idea.template
+package-lock.json
 yarn-error.log
 npm-debug.log
 *.js
