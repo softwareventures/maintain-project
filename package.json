@@ -24,7 +24,7 @@
     "create-project": "./index.js"
   },
   "dependencies": {
-    "@softwareventures/array": "0.28.0",
+    "@softwareventures/array": "0.29.0",
     "@types/empty-dir": "2.0.0",
     "@types/jsdom": "12.2.4",
     "@types/node": "12.12.30",
