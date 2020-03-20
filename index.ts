@@ -67,7 +67,7 @@ export default async function init(destDir: string): Promise<Result> {
             : {type: "not-empty"});
 }
 
-function copy(source: string, destDir: string, destFile: string = source): Promise<Result> {
+async function copy(source: string, destDir: string, destFile: string = source): Promise<Result> {
     const sourcePath = require.resolve("./template/" + source);
     const destPath = resolve(destDir, destFile);
 
@@ -83,7 +83,7 @@ function copy(source: string, destDir: string, destFile: string = source): Promi
             });
 }
 
-function packageJson(destDir: string): Promise<Result> {
+async function packageJson(destDir: string): Promise<Result> {
     const sourcePath = require.resolve("./template/package.json");
     const destPath = resolve(destDir, "package.json");
 
@@ -117,7 +117,7 @@ function packageJson(destDir: string): Promise<Result> {
             });
 }
 
-function ideaProjectFiles(destDir: string): Promise<Result> {
+async function ideaProjectFiles(destDir: string): Promise<Result> {
     const templateDir = dirname(require.resolve("./template/idea.template/create-project.iml"));
     const packageName = basename(destDir);
 
@@ -130,7 +130,7 @@ function ideaProjectFiles(destDir: string): Promise<Result> {
         .then(filterFn(path => path !== "modules.xml"));
 
     return sourcePaths
-        .then(mapFn(path => {
+        .then(mapFn(async path => {
             const source = "idea.template" + sep + path;
             const dest = ".idea" + sep + path;
 
@@ -147,7 +147,7 @@ function ideaProjectFiles(destDir: string): Promise<Result> {
             : {type: "not-empty"});
 }
 
-function ideaModulesXml(destDir: string): Promise<Result> {
+async function ideaModulesXml(destDir: string): Promise<Result> {
     const sourcePath = require.resolve("./template/idea.template/modules.xml");
     const destPath = resolve(destDir, ".idea/modules.xml");
     const packageName = basename(destDir);
@@ -166,7 +166,7 @@ function ideaModulesXml(destDir: string): Promise<Result> {
             module.setAttribute("filepath", nonNull(module.getAttribute("filepath"))
                 .replace(/create-project\.iml$/, packageName + ".iml"));
         })
-        .then(() => dom)
+        .then(async () => dom)
         .then(dom => dom.serialize());
 
     return newXmlText
@@ -181,7 +181,7 @@ function ideaModulesXml(destDir: string): Promise<Result> {
             });
 }
 
-function dictionary(destDir: string): Promise<Result> {
+async function dictionary(destDir: string): Promise<Result> {
     const words = fs.readFile(require.resolve("./template/dictionary.txt"), "utf8")
         .then(words => words.split("\n"));
 
@@ -219,7 +219,7 @@ function dictionary(destDir: string): Promise<Result> {
     const destPath = resolve(destDir, ".idea/dictionaries/project.xml");
 
     return fs.mkdir(dirname(destPath), {recursive: true})
-        .then(() => xmlText)
+        .then(async () => xmlText)
         .then(xmlText => fs.writeFile(destPath, xmlText, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),
             reason => {
@@ -231,7 +231,7 @@ function dictionary(destDir: string): Promise<Result> {
             });
 }
 
-function mkdir(path: string): Promise<Result> {
+async function mkdir(path: string): Promise<Result> {
     return fs.mkdir(path, {recursive: true})
         .then(() => ({type: "success"}),
             reason => {
@@ -243,7 +243,7 @@ function mkdir(path: string): Promise<Result> {
             });
 }
 
-function gitInit(destDir: string): Promise<Result> {
+async function gitInit(destDir: string): Promise<Result> {
     const templateDir = dirname(require.resolve("./template/git.template/HEAD"));
 
     const createDirectories = [
@@ -256,7 +256,7 @@ function gitInit(destDir: string): Promise<Result> {
 
     const copyFiles = recursiveReadDir(templateDir)
         .then(mapFn(path => relative(templateDir, path)))
-        .then(mapFn(path => {
+        .then(mapFn(async path => {
             const source = "git.template" + sep + path;
             const dest = ".git" + sep + path;
 
@@ -271,7 +271,7 @@ function gitInit(destDir: string): Promise<Result> {
             : {type: "not-empty"});
 }
 
-function yarnInstall(dir: string): Promise<Result> {
+async function yarnInstall(dir: string): Promise<Result> {
     return new Promise((resolve, reject) =>
         fork(require.resolve("yarn/bin/yarn.js"), [], {cwd: dir, stdio: "inherit"})
             .on("error", reject)
