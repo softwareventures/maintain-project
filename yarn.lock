@@ -7155,10 +7155,10 @@ xdg-basedir@^4.0.0:
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-4.0.0.tgz#4bc8d9984403696225ef83a1573cbbcb4e79db13"
   integrity sha512-PSNhEJDejZYV7h50BohL09Er9VaIefr2LMAf3OEmpCkjOi34eYyQYAXUTjEQtZJTKcF0E2UKTh+osDLsgNim9Q==
 
-xml-formatter@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-1.2.0.tgz#cfbf2fd7250b5b77fcb484d9df4adf7ab30b3b2d"
-  integrity sha512-+7hrQv9ZmmDzbCchRdQIyL3Y+Twp35ZbuLDJRi3mV9KYJWKLcRI/fo8oVgbx4+GxI6MrZZhvVy/5i+f2g5fhUg==
+xml-formatter@1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-1.2.1.tgz#64177b767ca54572ce511dc325cde7a359028bbe"
+  integrity sha512-IJDyT5sKfycXuFa2bz1y57i1lGhM9PSMleXcJ/leTNcNfZOM36oqVRJcuUAyGDnihcLSXEgTFwqdyfloeiPkxQ==
   dependencies:
     xml-parser-xo "^2.1.1"
 
