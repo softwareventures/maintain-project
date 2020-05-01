@@ -13,9 +13,10 @@
   "repository": "github:softwareventures/create-project",
   "license": "ISC",
   "scripts": {
-    "prepare": "shx rm -rf template/idea.template && shx cp -r .idea template/idea.template && tsc",
+    "prepare": "yarn run snyk-protect && shx rm -rf template/idea.template && shx cp -r .idea template/idea.template && tsc",
     "test": "tslint --project . && ava",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "snyk-protect": "snyk protect"
   },
   "sideEffects": [
     "./index.js"
@@ -38,7 +39,8 @@
     "recursive-readdir": "2.2.2",
     "tslib": "1.11.1",
     "xml-formatter": "2.0.1",
-    "yarn": "1.22.4"
+    "yarn": "1.22.4",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "@softwareventures/tsconfig": "2.2.0",
@@ -63,5 +65,6 @@
     "require": [
       "ts-node/register"
     ]
-  }
+  },
+  "snyk": true
 }
