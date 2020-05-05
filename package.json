@@ -40,7 +40,7 @@
     "tslib": "1.11.1",
     "xml-formatter": "2.0.1",
     "yarn": "1.22.4",
-    "snyk": "1.317.0"
+    "snyk": "1.319.0"
   },
   "devDependencies": {
     "@softwareventures/tsconfig": "2.2.0",
