@@ -104,7 +104,7 @@ async function packageJson(destDir: string): Promise<Result> {
                 "man", "preferGlobal", "bin", "files", "directories", "sideEffects", "types", "typings",
                 "dependencies", "optionalDependencies", "bundleDependencies", "bundledDependencies",
                 "peerDependencies", "devDependencies", "engines", "engine-strict", "engineStrict", "os", "cpu",
-                "config", "ava"]
+                "config", "ava", "release"]
         }))
         .then(text => fs.writeFile(destPath, text, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),
