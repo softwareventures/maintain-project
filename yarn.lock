@@ -499,12 +499,12 @@
   dependencies:
     tslib "^1.9.3"
 
-"@softwareventures/semantic-release-config@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@softwareventures/semantic-release-config/-/semantic-release-config-1.0.1.tgz#90b2c9d04f55c38c7617abd225bb04f498a68d86"
-  integrity sha512-a4ge9fia3tTTrBEo7Cuv0QNkDLR/9CuBuTCg9KFve9k4U41nxMGEPhQ77eV8Nh+PHEG0J3HSZlOmsdeBYSzGTA==
+"@softwareventures/semantic-release-config@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@softwareventures/semantic-release-config/-/semantic-release-config-1.0.2.tgz#bb6aaa377b3016f15064e7029e84fa692b81de62"
+  integrity sha512-plfjOj85vE8Yl8t5jMqUV+uMnnt8o2JYze8ijMh4pdyX//u6/qb8UnT5pgpUCtL2YGgWwYBLGUME6vUIjANr5g==
   dependencies:
-    tslib "1.11.2"
+    tslib "2.0.0"
 
 "@softwareventures/tsconfig@2.2.0":
   version "2.2.0"
@@ -7644,11 +7644,6 @@ tslib@1.11.1:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.1.tgz#eb15d128827fbee2841549e171f45ed338ac7e35"
   integrity sha512-aZW88SY8kQbU7gpV19lN24LtXh/yD4ZZg6qieAJDDg+YBsJcSmLGK9QpnUjAKVG/xefmvJGd1WUmfpT/g6AJGA==
-
-tslib@1.11.2:
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.11.2.tgz#9c79d83272c9a7aaf166f73915c9667ecdde3cc9"
-  integrity sha512-tTSkux6IGPnUGUd1XAZHcpu85MOkIl5zX49pO+jfsie3eP0B6pyhOlLXm3cAC6T7s+euSDDUUV+Acop5WmtkVg==
 
 tslib@1.9.0:
   version "1.9.0"
