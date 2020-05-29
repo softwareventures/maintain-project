@@ -8139,10 +8139,10 @@ xdg-basedir@^4.0.0:
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-4.0.0.tgz#4bc8d9984403696225ef83a1573cbbcb4e79db13"
   integrity sha512-PSNhEJDejZYV7h50BohL09Er9VaIefr2LMAf3OEmpCkjOi34eYyQYAXUTjEQtZJTKcF0E2UKTh+osDLsgNim9Q==
 
-xml-formatter@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-2.0.1.tgz#9bc6be09c99ff5259e61dde2dacee5d2a37a9fe1"
-  integrity sha512-k9bLMPR741/SL7eZOiaWf4RwDuzkNuAEGFQafA7Pd1hQm1id5Y4lECLKQs5XJhaBe/Xaq1QYyI7Hjxan+Rak1g==
+xml-formatter@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-2.1.0.tgz#ff438be6e2195e480b7525ecd3b06652ed76f390"
+  integrity sha512-t55v5mfpohwKvNbfd8A0FZSZI22//hqXqx3AwRx3mjZel0IEoRM2p1bvVnvNPxHqdqZ0sDjUrBqfHJNbIfE8fw==
   dependencies:
     xml-parser-xo "^3.0.0"
 
