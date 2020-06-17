@@ -612,10 +612,10 @@
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-4.0.0.tgz#fef1904e4668b6e5ecee60c52cc6a078ffa6697d"
   integrity sha512-I99sngh224D0M7XgW1s120zxCt3VYQ3IQsuw3P3jbq5GG4yc79+ZjyKznyOGIQrflfylLgcfekeZW/vk0yng6A==
 
-"@types/xml-formatter@1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@types/xml-formatter/-/xml-formatter-1.1.0.tgz#f7cde70ec33d7b044029b6b6c2f6e69d270ced63"
-  integrity sha512-1Z8XdMUQ3mLsAwqBzKUea2IgDeLOwvgEWevUHhcu3aF6K0KqeGPRlwEYmVy3wGiaepZdcqsiCuUbNhrU4bIJog==
+"@types/xml-formatter@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/xml-formatter/-/xml-formatter-1.2.0.tgz#f1a98b2f99f8021304d58d7cc89f73e6515da450"
+  integrity sha512-hTJriFFYEHKMQXP3/dTxL9f1LbqZ/f6cJ/T77znGGFtet/9+9IqHWV2j4TH3OR/HRZ2ucv/c6in0tdmYwGHdYg==
 
 "@types/xml2js@0.4.5":
   version "0.4.5"
