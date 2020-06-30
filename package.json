@@ -39,7 +39,7 @@
     "recursive-readdir": "2.2.2",
     "snyk": "1.353.0",
     "tslib": "2.0.0",
-    "xml-formatter": "2.1.0",
+    "xml-formatter": "2.1.2",
     "yarn": "1.22.4"
   },
   "devDependencies": {
