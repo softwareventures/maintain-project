@@ -28,7 +28,7 @@
     "@softwareventures/array": "0.33.0",
     "@types/empty-dir": "2.0.0",
     "@types/jsdom": "16.2.3",
-    "@types/node": "12.12.47",
+    "@types/node": "12.12.48",
     "@types/prettier-package-json": "2.1.0",
     "@types/recursive-readdir": "2.2.0",
     "empty-dir": "2.0.0",
