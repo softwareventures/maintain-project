@@ -18,7 +18,7 @@
     "@softwareventures/semantic-release-config": "1.0.2",
     "@softwareventures/tsconfig": "2.2.0",
     "@softwareventures/tslint-rules": "0.9.1",
-    "ava": "3.10.0",
+    "ava": "3.10.1",
     "cz-conventional-changelog": "3.2.0",
     "ts-node": "8.10.2",
     "tslint": "6.1.2",
