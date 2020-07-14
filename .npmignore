@@ -4,6 +4,7 @@
 /.eslintignore
 /.github
 /renovate.json
+/.snyk
 /template/idea.template/dictionaries
 /template/idea.template/workspace.xml
 /template/idea.template/tasks.xml
