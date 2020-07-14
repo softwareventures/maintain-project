@@ -4,5 +4,6 @@
 /.eslintignore
 /.github
 /renovate.json
+/.snyk
 *.ts
 !*.d.ts
