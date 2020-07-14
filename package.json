@@ -15,8 +15,8 @@
   "scripts": {
     "prepare": "yarn run snyk-protect && shx rm -rf template/idea.template && shx cp -r .idea template/idea.template && tsc",
     "test": "ava",
-    "lint": "eslint .",
-    "fix": "eslint --fix .",
+    "lint": "eslint . && prettier --check .",
+    "fix": "eslint --fix . && prettier --write .",
     "semantic-release": "semantic-release",
     "snyk-protect": "snyk protect"
   },
@@ -45,11 +45,13 @@
   },
   "devDependencies": {
     "@softwareventures/eslint-config": "1.6.0",
+    "@softwareventures/prettier-config": "1.0.2",
     "@softwareventures/semantic-release-config": "1.1.0",
     "@softwareventures/tsconfig": "2.2.0",
     "ava": "3.10.1",
     "cz-conventional-changelog": "3.2.0",
     "eslint": "7.4.0",
+    "prettier": "2.0.5",
     "semantic-release": "17.1.1",
     "shx": "0.3.2",
     "ts-node": "8.10.2",
@@ -59,6 +61,7 @@
     "root": true,
     "extends": "@softwareventures"
   },
+  "prettier": "@softwareventures/prettier-config",
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"

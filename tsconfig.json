@@ -1,15 +1,7 @@
 {
   "extends": "@softwareventures/tsconfig",
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "es5",
-      "es2015.promise"
-    ]
+    "lib": ["dom", "es5", "es2015.promise"]
   },
-  "exclude": [
-    "**/test.ts",
-    "**/*.test.ts",
-    "template/**.ts"
-  ]
+  "exclude": ["**/test.ts", "**/*.test.ts", "template/**.ts"]
 }
