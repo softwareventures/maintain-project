@@ -1,13 +1,13 @@
 #!/usr/bin/env/node
-import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
 import {fork} from "child_process";
-import emptyDir = require("empty-dir");
 import {constants, promises as fs} from "fs";
+import {basename, dirname, relative, resolve, sep} from "path";
+import {argv, cwd, exit} from "process";
+import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
+import emptyDir = require("empty-dir");
 import {JSDOM} from "jsdom";
 import nonNull from "non-null";
-import {basename, dirname, relative, resolve, sep} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
-import {argv, cwd, exit} from "process";
 import recursiveReadDir = require("recursive-readdir");
 import formatXml = require("xml-formatter");
 
@@ -32,7 +32,7 @@ export type Result = Success | NotDirectory | NotEmpty | YarnInstallFailed;
 export default async function init(destDir: string): Promise<Result> {
     const mkdir = fs.mkdir(destDir, {recursive: true});
     const isDirectory = mkdir.then(() => true, reason => {
-        if (reason.code === "EEXIST") {
+        if (reason?.code === "EEXIST") {
             return false;
         } else {
             throw reason;
@@ -72,7 +72,7 @@ async function copy(source: string, destDir: string, destFile: string = source):
     const destPath = resolve(destDir, destFile);
 
     return fs.mkdir(dirname(destPath), {recursive: true})
-        .then(() => fs.copyFile(sourcePath, destPath, constants.COPYFILE_EXCL))
+        .then(async () => fs.copyFile(sourcePath, destPath, constants.COPYFILE_EXCL))
         .then(() => ({type: "success"}),
             reason => {
                 if (reason.code === "EEXIST") {
@@ -106,7 +106,7 @@ async function packageJson(destDir: string): Promise<Result> {
                 "peerDependencies", "devDependencies", "engines", "engine-strict", "engineStrict", "os", "cpu",
                 "config", "ava", "release"]
         }))
-        .then(text => fs.writeFile(destPath, text, {encoding: "utf8", flag: "wx"}))
+        .then(async text => fs.writeFile(destPath, text, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),
             reason => {
                 if (reason.code === "EEXIST") {
@@ -140,7 +140,7 @@ async function ideaProjectFiles(destDir: string): Promise<Result> {
             copy("idea.template/create-project.iml", destDir, `.idea/${packageName}.iml`)
         ]))
         .then(append([ideaModulesXml(destDir)]))
-        .then(results => Promise.all(results))
+        .then(async results => Promise.all(results))
         .then(allFn(result => result.type === "success"))
         .then(success => success
             ? {type: "success"}
@@ -170,7 +170,7 @@ async function ideaModulesXml(destDir: string): Promise<Result> {
         .then(dom => dom.serialize());
 
     return newXmlText
-        .then(newXmlText => fs.writeFile(destPath, newXmlText, {encoding: "utf8", flag: "wx"}))
+        .then(async newXmlText => fs.writeFile(destPath, newXmlText, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),
             reason => {
                 if (reason.code === "EEXIST") {
@@ -220,7 +220,7 @@ async function dictionary(destDir: string): Promise<Result> {
 
     return fs.mkdir(dirname(destPath), {recursive: true})
         .then(async () => xmlText)
-        .then(xmlText => fs.writeFile(destPath, xmlText, {encoding: "utf8", flag: "wx"}))
+        .then(async xmlText => fs.writeFile(destPath, xmlText, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),
             reason => {
                 if (reason.code === "EEXIST") {
@@ -264,7 +264,7 @@ async function gitInit(destDir: string): Promise<Result> {
         }));
 
     return copyFiles
-        .then(copyFiles => Promise.all([...createDirectories, ...copyFiles]))
+        .then(async copyFiles => Promise.all([...createDirectories, ...copyFiles]))
         .then(allFn(result => result.type === "success"))
         .then(success => success
             ? {type: "success"}
