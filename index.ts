@@ -49,11 +49,12 @@ export default async function init(destDir: string): Promise<Result> {
 
     return Promise.all([
         copy("github.template/workflows/ci.yml", destDir, ".github/workflows/ci.yml"),
+        copy("eslintignore.template", destDir, ".eslintignore"),
         copy("gitignore.template", destDir, ".gitignore"),
         copy("npmignore.template", destDir, ".npmignore"),
         copy("renovate.lib.template.json", destDir, "renovate.json"),
         copy("tsconfig.template.json", destDir, "tsconfig.json"),
-        copy("tslint.template.json", destDir, "tslint.json"),
+        copy("tsconfig.test.template.json", destDir, "tsconfig.test.json"),
         copy("index.ts", destDir),
         copy("index.test.ts", destDir),
         ideaProjectFiles(destDir),
@@ -104,7 +105,7 @@ async function packageJson(destDir: string): Promise<Result> {
                 "man", "preferGlobal", "bin", "files", "directories", "sideEffects", "types", "typings",
                 "dependencies", "optionalDependencies", "bundleDependencies", "bundledDependencies",
                 "peerDependencies", "devDependencies", "engines", "engine-strict", "engineStrict", "os", "cpu",
-                "config", "ava", "release"]
+                "eslintConfig", "prettier", "config", "ava", "release"]
         }))
         .then(async text => fs.writeFile(destPath, text, {encoding: "utf8", flag: "wx"}))
         .then(() => ({type: "success"}),

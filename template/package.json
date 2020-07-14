@@ -11,22 +11,26 @@
   "license": "ISC",
   "scripts": {
     "prepare": "tsc",
-    "test": "tslint --project . && ava",
+    "test": "eslint . && ava",
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
+    "@softwareventures/eslint-config": "1.5.0",
     "@softwareventures/semantic-release-config": "1.1.0",
     "@softwareventures/tsconfig": "2.2.0",
-    "@softwareventures/tslint-rules": "0.9.1",
     "ava": "3.10.1",
     "cz-conventional-changelog": "3.2.0",
+    "eslint": "7.4.0",
     "ts-node": "8.10.2",
-    "tslint": "6.1.2",
     "typescript": "3.9.6",
     "semantic-release": "17.1.1"
   },
   "dependencies": {
     "tslib": "2.0.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "@softwareventures"
   },
   "config": {
     "commitizen": {
