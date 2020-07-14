@@ -55,6 +55,7 @@ export default async function init(destDir: string): Promise<Result> {
         copy("eslintignore.template", destDir, ".eslintignore"),
         copy("gitignore.template", destDir, ".gitignore"),
         copy("npmignore.template", destDir, ".npmignore"),
+        copy("prettierignore.template", destDir, ".prettierignore"),
         copy("renovate.lib.template.json", destDir, "renovate.json"),
         copy("tsconfig.template.json", destDir, "tsconfig.json"),
         copy("tsconfig.test.template.json", destDir, "tsconfig.test.json"),
