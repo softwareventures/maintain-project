@@ -1,5 +1,4 @@
 /.idea
-/yarn.lock
 /tsconfig.json
 /tsconfig.test.json
 /.eslintignore
@@ -8,3 +7,9 @@
 /.snyk
 *.ts
 !*.d.ts
+
+# yarn and npm
+package-lock.json
+yarn.lock
+yarn-error.log
+npm-debug.log*
