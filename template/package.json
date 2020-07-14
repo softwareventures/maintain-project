@@ -11,7 +11,9 @@
   "license": "ISC",
   "scripts": {
     "prepare": "tsc",
-    "test": "eslint . && ava",
+    "test": "ava",
+    "lint": "eslint .",
+    "fix": "eslint . --fix",
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
