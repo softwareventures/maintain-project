@@ -27,7 +27,21 @@ export interface YarnInstallFailed {
     type: "yarn-install-failed";
 }
 
-export type Result = Success | NotDirectory | NotEmpty | YarnInstallFailed;
+export interface YarnFixFailed {
+    type: "yarn-fix-failed";
+}
+
+export type Result = Success | NotDirectory | NotEmpty | YarnInstallFailed | YarnFixFailed;
+
+export interface YarnFailed {
+    type: "yarn-failed";
+}
+
+export type YarnResult = Success | YarnFailed;
+
+function mapResultFn(f: () => PromiseLike<Result>): (result: Result) => Promise<Result> {
+    return async result => (result.type === "success" ? f() : Promise.resolve(result));
+}
 
 export default async function init(destDir: string): Promise<Result> {
     const mkdir = fs.mkdir(destDir, {recursive: true});
@@ -67,7 +81,9 @@ export default async function init(destDir: string): Promise<Result> {
         gitInit(destDir)
     ])
         .then(allFn(result => result.type === "success"))
-        .then(success => (success ? yarnInstall(destDir) : {type: "not-empty"}));
+        .then<Result>(success => (success ? {type: "success"} : {type: "not-empty"}))
+        .then(mapResultFn(async () => yarnInstall(destDir)))
+        .then(mapResultFn(async () => yarnFix(destDir)));
 }
 
 async function copy(source: string, destDir: string, destFile: string = source): Promise<Result> {
@@ -343,14 +359,26 @@ async function gitInit(destDir: string): Promise<Result> {
 }
 
 async function yarnInstall(dir: string): Promise<Result> {
+    return yarn(dir).then(result =>
+        result.type === "yarn-failed" ? {type: "yarn-install-failed"} : result
+    );
+}
+
+async function yarnFix(dir: string): Promise<Result> {
+    return yarn(dir, "fix").then(result =>
+        result.type === "yarn-failed" ? {type: "yarn-fix-failed"} : result
+    );
+}
+
+async function yarn(dir: string, ...args: string[]): Promise<YarnResult> {
     return new Promise((resolve, reject) =>
-        fork(require.resolve("yarn/bin/yarn.js"), [], {cwd: dir, stdio: "inherit"})
+        fork(require.resolve("yarn/bin/yarn.js"), args, {cwd: dir, stdio: "inherit"})
             .on("error", reject)
             .on("exit", code => {
                 if (code === 0) {
                     resolve({type: "success"});
                 } else {
-                    resolve({type: "yarn-install-failed"});
+                    resolve({type: "yarn-failed"});
                 }
             })
     );
@@ -373,6 +401,10 @@ function main(destDir: string): void {
                     break;
                 case "yarn-install-failed":
                     console.error("yarn install failed");
+                    exit(1);
+                    break;
+                case "yarn-fix-failed":
+                    console.error("Failed to apply code style rules");
                     exit(1);
                     break;
             }
