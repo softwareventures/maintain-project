@@ -118,7 +118,7 @@ async function packageJson(destDir: string): Promise<Result> {
             ...json,
             name: `@softwareventures/${packageName}`,
             homepage: `https://github.com/softwareventures/${packageName}`,
-            bugs: `https://github.com/softwareventures/${packageName}`,
+            bugs: `https://github.com/softwareventures/${packageName}/issues`,
             repository: `github:softwareventures/${packageName}`
         }))
         .then(json =>
