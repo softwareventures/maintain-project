@@ -10,6 +10,7 @@ import nonNull from "non-null";
 import {format as formatPackageJson} from "prettier-package-json";
 import recursiveReadDir = require("recursive-readdir");
 import formatXml = require("xml-formatter");
+import {createProject, Project} from "./project/project";
 
 export interface Success {
     type: "success";
@@ -43,8 +44,8 @@ function mapResultFn(f: () => PromiseLike<Result>): (result: Result) => Promise<
     return async result => (result.type === "success" ? f() : Promise.resolve(result));
 }
 
-export default async function init(destDir: string): Promise<Result> {
-    const mkdir = fs.mkdir(destDir, {recursive: true});
+export default async function init(project: Project): Promise<Result> {
+    const mkdir = fs.mkdir(project.path, {recursive: true});
     const isDirectory = mkdir.then(
         () => true,
         reason => {
@@ -60,30 +61,30 @@ export default async function init(destDir: string): Promise<Result> {
         return {type: "not-directory"};
     }
 
-    if (!(await emptyDir(destDir))) {
+    if (!(await emptyDir(project.path))) {
         return {type: "not-empty"};
     }
 
     return Promise.all([
-        copy("github.template/workflows/ci.yml", destDir, ".github/workflows/ci.yml"),
-        copy("eslintignore.template", destDir, ".eslintignore"),
-        copy("gitignore.template", destDir, ".gitignore"),
-        copy("npmignore.template", destDir, ".npmignore"),
-        copy("prettierignore.template", destDir, ".prettierignore"),
-        copy("renovate.lib.template.json", destDir, "renovate.json"),
-        copy("tsconfig.template.json", destDir, "tsconfig.json"),
-        copy("tsconfig.test.template.json", destDir, "tsconfig.test.json"),
-        copy("index.ts", destDir),
-        copy("index.test.ts", destDir),
-        ideaProjectFiles(destDir),
-        packageJson(destDir),
-        dictionary(destDir),
-        gitInit(destDir)
+        copy("github.template/workflows/ci.yml", project.path, ".github/workflows/ci.yml"),
+        copy("eslintignore.template", project.path, ".eslintignore"),
+        copy("gitignore.template", project.path, ".gitignore"),
+        copy("npmignore.template", project.path, ".npmignore"),
+        copy("prettierignore.template", project.path, ".prettierignore"),
+        copy("renovate.lib.template.json", project.path, "renovate.json"),
+        copy("tsconfig.template.json", project.path, "tsconfig.json"),
+        copy("tsconfig.test.template.json", project.path, "tsconfig.test.json"),
+        copy("index.ts", project.path),
+        copy("index.test.ts", project.path),
+        ideaProjectFiles(project.path),
+        packageJson(project),
+        dictionary(project.path),
+        gitInit(project.path)
     ])
         .then(allFn(result => result.type === "success"))
         .then<Result>(success => (success ? {type: "success"} : {type: "not-empty"}))
-        .then(mapResultFn(async () => yarnInstall(destDir)))
-        .then(mapResultFn(async () => yarnFix(destDir)));
+        .then(mapResultFn(async () => yarnInstall(project.path)))
+        .then(mapResultFn(async () => yarnFix(project.path)));
 }
 
 async function copy(source: string, destDir: string, destFile: string = source): Promise<Result> {
@@ -105,21 +106,21 @@ async function copy(source: string, destDir: string, destFile: string = source):
         );
 }
 
-async function packageJson(destDir: string): Promise<Result> {
+async function packageJson(project: Project): Promise<Result> {
     const sourcePath = require.resolve("./template/package.json");
-    const destPath = resolve(destDir, "package.json");
-
-    const packageName = basename(dirname(destPath));
+    const destPath = resolve(project.path, "package.json");
 
     return fs
         .readFile(sourcePath, {encoding: "utf8"})
         .then(text => JSON.parse(text))
         .then(json => ({
             ...json,
-            name: `@softwareventures/${packageName}`,
-            homepage: `https://github.com/softwareventures/${packageName}`,
-            bugs: `https://github.com/softwareventures/${packageName}/issues`,
-            repository: `github:softwareventures/${packageName}`
+            name: project.npmScope
+                ? `${project.npmScope}/${project.packageName}`
+                : project.packageName,
+            homepage: `https://github.com/softwareventures/${project.packageName}`,
+            bugs: `https://github.com/softwareventures/${project.packageName}/issues`,
+            repository: `github:softwareventures/${project.packageName}`
         }))
         .then(json =>
             formatPackageJson(json, {
@@ -385,7 +386,7 @@ async function yarn(dir: string, ...args: string[]): Promise<YarnResult> {
 }
 
 function main(destDir: string): void {
-    init(destDir)
+    init(createProject({path: destDir}))
         .then(result => {
             switch (result.type) {
                 case "success":
