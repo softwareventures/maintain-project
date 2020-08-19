@@ -109,18 +109,17 @@ async function copy(source: string, destDir: string, destFile: string = source):
 async function packageJson(project: Project): Promise<Result> {
     const sourcePath = require.resolve("./template/package.json");
     const destPath = resolve(project.path, "package.json");
+    const npmPackage = project.npmPackage;
 
     return fs
         .readFile(sourcePath, {encoding: "utf8"})
         .then(text => JSON.parse(text))
         .then(json => ({
             ...json,
-            name: project.npmScope
-                ? `${project.npmScope}/${project.packageName}`
-                : project.packageName,
-            homepage: `https://github.com/softwareventures/${project.packageName}`,
-            bugs: `https://github.com/softwareventures/${project.packageName}/issues`,
-            repository: `github:softwareventures/${project.packageName}`
+            name: npmPackage.scope ? `${npmPackage.scope}/${npmPackage.name}` : npmPackage.name,
+            homepage: `https://github.com/softwareventures/${npmPackage.name}`,
+            bugs: `https://github.com/softwareventures/${npmPackage.name}/issues`,
+            repository: `github:softwareventures/${npmPackage.name}`
         }))
         .then(json =>
             formatPackageJson(json, {
