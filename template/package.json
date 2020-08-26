@@ -22,7 +22,7 @@
     "@softwareventures/semantic-release-config": "1.1.1",
     "@softwareventures/tsconfig": "2.2.0",
     "ava": "3.12.1",
-    "cz-conventional-changelog": "3.2.1",
+    "cz-conventional-changelog": "3.3.0",
     "eslint": "7.7.0",
     "prettier": "2.1.1",
     "ts-node": "9.0.0",
