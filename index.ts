@@ -1,13 +1,13 @@
 #!/usr/bin/env/node
 import {fork} from "child_process";
 import {constants, promises as fs} from "fs";
-import {basename, dirname, relative, resolve, sep} from "path";
+import {dirname, relative, resolve, sep} from "path";
 import {argv, cwd, exit} from "process";
-import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
-import emptyDir = require("empty-dir");
-import {JSDOM} from "jsdom";
 import nonNull from "non-null";
 import {format as formatPackageJson} from "prettier-package-json";
+import {JSDOM} from "jsdom";
+import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
+import emptyDir = require("empty-dir");
 import recursiveReadDir = require("recursive-readdir");
 import formatXml = require("xml-formatter");
 import {createProject, Project} from "./project/project";
@@ -76,7 +76,7 @@ export default async function init(project: Project): Promise<Result> {
         copy("tsconfig.test.template.json", project.path, "tsconfig.test.json"),
         copy("index.ts", project.path),
         copy("index.test.ts", project.path),
-        ideaProjectFiles(project.path),
+        ideaProjectFiles(project),
         packageJson(project),
         dictionary(project.path),
         gitInit(project.path)
@@ -180,9 +180,8 @@ async function packageJson(project: Project): Promise<Result> {
         );
 }
 
-async function ideaProjectFiles(destDir: string): Promise<Result> {
+async function ideaProjectFiles(project: Project): Promise<Result> {
     const templateDir = dirname(require.resolve("./template/idea.template/create-project.iml"));
-    const packageName = basename(destDir);
 
     const sourcePaths = recursiveReadDir(templateDir)
         .then(mapFn(path => relative(templateDir, path)))
@@ -198,22 +197,27 @@ async function ideaProjectFiles(destDir: string): Promise<Result> {
                 const source = "idea.template" + sep + path;
                 const dest = ".idea" + sep + path;
 
-                return copy(source, destDir, dest);
+                return copy(source, project.path, dest);
             })
         )
         .then(
-            append([copy("idea.template/create-project.iml", destDir, `.idea/${packageName}.iml`)])
+            append([
+                copy(
+                    "idea.template/create-project.iml",
+                    project.path,
+                    `.idea/${project.npmPackage.name}.iml`
+                )
+            ])
         )
-        .then(append([ideaModulesXml(destDir)]))
+        .then(append([ideaModulesXml(project)]))
         .then(async results => Promise.all(results))
         .then(allFn(result => result.type === "success"))
         .then(success => (success ? {type: "success"} : {type: "not-empty"}));
 }
 
-async function ideaModulesXml(destDir: string): Promise<Result> {
+async function ideaModulesXml(project: Project): Promise<Result> {
     const sourcePath = require.resolve("./template/idea.template/modules.xml");
-    const destPath = resolve(destDir, ".idea/modules.xml");
-    const packageName = basename(destDir);
+    const destPath = resolve(project.path, ".idea", "modules.xml");
 
     const xmlText = fs.readFile(sourcePath, "utf8");
     const dom = xmlText.then(xmlText => new JSDOM(xmlText, {contentType: "application/xml"}));
@@ -229,14 +233,14 @@ async function ideaModulesXml(destDir: string): Promise<Result> {
                 "fileurl",
                 nonNull(module.getAttribute("fileurl")).replace(
                     /create-project\.iml$/,
-                    packageName + ".iml"
+                    project.npmPackage.name + ".iml"
                 )
             );
             module.setAttribute(
                 "filepath",
                 nonNull(module.getAttribute("filepath")).replace(
                     /create-project\.iml$/,
-                    packageName + ".iml"
+                    project.npmPackage.name + ".iml"
                 )
             );
         })
