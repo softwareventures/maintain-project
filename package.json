@@ -13,12 +13,11 @@
   "repository": "github:softwareventures/create-project",
   "license": "ISC",
   "scripts": {
-    "prepare": "yarn run snyk-protect && shx rm -rf template/idea.template && shx cp -r .idea template/idea.template && tsc",
+    "prepare": "shx rm -rf template/idea.template && shx cp -r .idea template/idea.template && tsc",
     "test": "ava",
     "lint": "eslint . && prettier --check .",
     "fix": "eslint --fix . && prettier --write .",
-    "semantic-release": "semantic-release",
-    "snyk-protect": "snyk protect"
+    "semantic-release": "semantic-release"
   },
   "sideEffects": [
     "./index.js"
@@ -38,7 +37,6 @@
     "non-null": "2.0.1",
     "prettier-package-json": "2.1.3",
     "recursive-readdir": "2.2.2",
-    "snyk": "1.389.0",
     "tslib": "2.0.1",
     "xml-formatter": "2.1.3",
     "yarn": "1.22.5"
