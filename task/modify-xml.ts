@@ -11,7 +11,7 @@ export async function modifyXml(
     source: string,
     modify: (document: Document) => Destination
 ): Promise<Result> {
-    const sourcePath = require.resolve(`./template/${source}`);
+    const sourcePath = require.resolve(`../template/${source}`);
 
     const xmlText = fs.readFile(sourcePath, "utf8");
     const dom = xmlText.then(xmlText => new JSDOM(xmlText, {contentType: "application/xml"}));
