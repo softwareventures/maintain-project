@@ -7,7 +7,7 @@ export async function copy(
     destDir: string,
     destFile: string = source
 ): Promise<Result> {
-    const sourcePath = require.resolve("./template/" + source);
+    const sourcePath = require.resolve("../template/" + source);
     const destPath = resolve(destDir, destFile);
 
     return fs
