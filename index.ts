@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import {fork} from "child_process";
 import {promises as fs} from "fs";
 import {resolve} from "path";
 import {argv, cwd, exit} from "process";
@@ -9,8 +8,9 @@ import {gitInit} from "./project/git/init";
 import {writeIdeaDictionary, writeIdeaProjectFiles} from "./project/idea/write";
 import {writePackageJson} from "./project/npm/write";
 import {createProject, Project} from "./project/project";
+import {yarn} from "./project/yarn/yarn";
 import {copy} from "./task/copy";
-import {mapResultFn, Result, YarnResult} from "./task/result";
+import {mapResultFn, Result} from "./task/result";
 
 export default async function init(project: Project): Promise<Result> {
     const mkdir = fs.mkdir(project.path, {recursive: true});
@@ -64,20 +64,6 @@ async function yarnInstall(dir: string): Promise<Result> {
 async function yarnFix(dir: string): Promise<Result> {
     return yarn(dir, "fix").then(result =>
         result.type === "yarn-failed" ? {type: "yarn-fix-failed"} : result
-    );
-}
-
-async function yarn(dir: string, ...args: string[]): Promise<YarnResult> {
-    return new Promise((resolve, reject) =>
-        fork(require.resolve("yarn/bin/yarn.js"), args, {cwd: dir, stdio: "inherit"})
-            .on("error", reject)
-            .on("exit", code => {
-                if (code === 0) {
-                    resolve({type: "success"});
-                } else {
-                    resolve({type: "yarn-failed"});
-                }
-            })
     );
 }
 
