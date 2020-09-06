@@ -1,6 +1,7 @@
 import {promises as fs} from "fs";
 import {dirname} from "path";
 import {JSDOM} from "jsdom";
+import formatXml = require("xml-formatter");
 import {Result} from "./result";
 
 export interface Destination {
@@ -19,7 +20,16 @@ export async function modifyXml(
 
     const destPath = document.then(modify).then(({destPath}) => destPath);
 
-    const newXmlText = destPath.then(async () => dom).then(dom => dom.serialize());
+    const newXmlText = destPath
+        .then(async () => dom)
+        .then(dom => dom.serialize())
+        .then(newXmlText =>
+            formatXml(newXmlText, {
+                collapseContent: true,
+                indentation: "  ",
+                stripComments: true
+            })
+        );
 
     return Promise.all([destPath, newXmlText])
         .then(async ([destPath, newXmlText]) =>
