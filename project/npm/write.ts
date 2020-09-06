@@ -5,7 +5,7 @@ import {Result} from "../../task/result";
 import {Project} from "../project";
 
 export async function writePackageJson(project: Project): Promise<Result> {
-    const sourcePath = require.resolve("./template/package.json");
+    const sourcePath = require.resolve("../../template/package.json");
     const destPath = resolve(project.path, "package.json");
     const npmPackage = project.npmPackage;
 
