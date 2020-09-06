@@ -1,16 +1,15 @@
 #!/usr/bin/env node
 import {fork} from "child_process";
 import {promises as fs} from "fs";
-import {dirname, relative, resolve, sep} from "path";
+import {resolve} from "path";
 import {argv, cwd, exit} from "process";
-import {allFn, mapFn} from "@softwareventures/array";
+import {allFn} from "@softwareventures/array";
 import emptyDir = require("empty-dir");
-import recursiveReadDir = require("recursive-readdir");
+import {gitInit} from "./project/git/init";
 import {writeIdeaDictionary, writeIdeaProjectFiles} from "./project/idea/write";
 import {writePackageJson} from "./project/npm/write";
 import {createProject, Project} from "./project/project";
 import {copy} from "./task/copy";
-import {mkdir} from "./task/mkdir";
 import {mapResultFn, Result, YarnResult} from "./task/result";
 
 export default async function init(project: Project): Promise<Result> {
@@ -54,34 +53,6 @@ export default async function init(project: Project): Promise<Result> {
         .then<Result>(success => (success ? {type: "success"} : {type: "not-empty"}))
         .then(mapResultFn(async () => yarnInstall(project.path)))
         .then(mapResultFn(async () => yarnFix(project.path)));
-}
-
-async function gitInit(destDir: string): Promise<Result> {
-    const templateDir = dirname(require.resolve("./template/git.template/HEAD"));
-
-    const createDirectories = [
-        mkdir(resolve(destDir, ".git", "objects", "info")),
-        mkdir(resolve(destDir, ".git", "objects", "pack")),
-        mkdir(resolve(destDir, ".git", "refs", "heads")),
-        mkdir(resolve(destDir, ".git", "refs", "tags")),
-        mkdir(resolve(destDir, ".git", "hooks"))
-    ];
-
-    const copyFiles = recursiveReadDir(templateDir)
-        .then(mapFn(path => relative(templateDir, path)))
-        .then(
-            mapFn(async path => {
-                const source = "git.template" + sep + path;
-                const dest = ".git" + sep + path;
-
-                return copy(source, destDir, dest);
-            })
-        );
-
-    return copyFiles
-        .then(async copyFiles => Promise.all([...createDirectories, ...copyFiles]))
-        .then(allFn(result => result.type === "success"))
-        .then(success => (success ? {type: "success"} : {type: "not-empty"}));
 }
 
 async function yarnInstall(dir: string): Promise<Result> {
