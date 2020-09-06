@@ -1,4 +1,4 @@
-import {sep} from "path";
+import {resolve} from "path";
 import {modifyXml} from "../../task/modify-xml";
 import {Result} from "../../task/result";
 import {Project} from "../project";
@@ -19,6 +19,6 @@ export async function writeIdeaModulesXml(project: Project): Promise<Result> {
             module?.setAttribute("filepath", filePath);
         }
 
-        return {destPath: `.idea${sep}modules.xml`};
+        return {destPath: resolve(project.path, ".idea", "modules.xml")};
     });
 }
