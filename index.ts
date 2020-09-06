@@ -1,4 +1,4 @@
-#!/usr/bin/env/node
+#!/usr/bin/env node
 import {fork} from "child_process";
 import {promises as fs} from "fs";
 import {dirname, relative, resolve, sep} from "path";
