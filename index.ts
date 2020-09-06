@@ -8,8 +8,8 @@ import {gitInit} from "./project/git/init";
 import {writeIdeaDictionary, writeIdeaProjectFiles} from "./project/idea/write";
 import {writePackageJson} from "./project/npm/write";
 import {createProject, Project} from "./project/project";
+import {yarnFix} from "./project/yarn/fix";
 import {yarnInstall} from "./project/yarn/install";
-import {yarn} from "./project/yarn/yarn";
 import {copy} from "./task/copy";
 import {mapResultFn, Result} from "./task/result";
 
@@ -54,12 +54,6 @@ export default async function init(project: Project): Promise<Result> {
         .then<Result>(success => (success ? {type: "success"} : {type: "not-empty"}))
         .then(mapResultFn(async () => yarnInstall(project.path)))
         .then(mapResultFn(async () => yarnFix(project.path)));
-}
-
-async function yarnFix(dir: string): Promise<Result> {
-    return yarn(dir, "fix").then(result =>
-        result.type === "yarn-failed" ? {type: "yarn-fix-failed"} : result
-    );
 }
 
 function main(destDir: string): void {
