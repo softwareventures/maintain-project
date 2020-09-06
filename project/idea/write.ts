@@ -4,6 +4,7 @@ import recursiveReadDir = require("recursive-readdir");
 import {copy} from "../../task/copy";
 import {Result} from "../../task/result";
 import {Project} from "../project";
+import {writeIdeaModuleIml} from "./write-module-iml";
 import {writeIdeaModulesXml} from "./write-modules-xml";
 
 export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
@@ -26,16 +27,7 @@ export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
                 return copy(source, project.path, dest);
             })
         )
-        .then(
-            append([
-                copy(
-                    "idea.template/create-project.iml",
-                    project.path,
-                    `.idea/${project.npmPackage.name}.iml`
-                )
-            ])
-        )
-        .then(append([writeIdeaModulesXml(project)]))
+        .then(append([writeIdeaModulesXml(project), writeIdeaModuleIml(project)]))
         .then(async results => Promise.all(results))
         .then(allFn(result => result.type === "success"))
         .then(success => (success ? {type: "success"} : {type: "not-empty"}));
