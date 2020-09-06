@@ -1,7 +1,7 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
-import {Result} from "../../index";
+import {Result} from "../../task/result";
 import {Project} from "../project";
 
 export async function writePackageJson(project: Project): Promise<Result> {

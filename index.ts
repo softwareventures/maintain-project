@@ -9,40 +9,9 @@ import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
 import emptyDir = require("empty-dir");
 import recursiveReadDir = require("recursive-readdir");
 import formatXml = require("xml-formatter");
+import {mapResultFn, Result, YarnResult} from "./task/result";
 import {writePackageJson} from "./project/npm/write";
 import {createProject, Project} from "./project/project";
-
-export interface Success {
-    type: "success";
-}
-
-export interface NotDirectory {
-    type: "not-directory";
-}
-
-export interface NotEmpty {
-    type: "not-empty";
-}
-
-export interface YarnInstallFailed {
-    type: "yarn-install-failed";
-}
-
-export interface YarnFixFailed {
-    type: "yarn-fix-failed";
-}
-
-export type Result = Success | NotDirectory | NotEmpty | YarnInstallFailed | YarnFixFailed;
-
-export interface YarnFailed {
-    type: "yarn-failed";
-}
-
-export type YarnResult = Success | YarnFailed;
-
-function mapResultFn(f: () => PromiseLike<Result>): (result: Result) => Promise<Result> {
-    return async result => (result.type === "success" ? f() : Promise.resolve(result));
-}
 
 export default async function init(project: Project): Promise<Result> {
     const mkdir = fs.mkdir(project.path, {recursive: true});
@@ -113,7 +82,7 @@ async function ideaProjectFiles(project: Project): Promise<Result> {
         .then(mapFn(path => relative(templateDir, path)))
         .then(filterFn(path => path.split(sep)[0] !== "dictionaries"))
         .then(filterFn(path => path !== "workspace.xml"))
-        .then(filterFn(path => path !== "tasks.xml"))
+        .then(filterFn(path => path !== "task.xml"))
         .then(filterFn(path => !path.match(/\.iml$/)))
         .then(filterFn(path => path !== "modules.xml"));
 
