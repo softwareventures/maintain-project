@@ -1,17 +1,18 @@
 #!/usr/bin/env/node
 import {fork} from "child_process";
-import {constants, promises as fs} from "fs";
+import {promises as fs} from "fs";
 import {dirname, relative, resolve, sep} from "path";
 import {argv, cwd, exit} from "process";
-import nonNull from "non-null";
-import {JSDOM} from "jsdom";
 import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
+import {JSDOM} from "jsdom";
+import nonNull from "non-null";
 import emptyDir = require("empty-dir");
 import recursiveReadDir = require("recursive-readdir");
 import formatXml = require("xml-formatter");
-import {mapResultFn, Result, YarnResult} from "./task/result";
 import {writePackageJson} from "./project/npm/write";
 import {createProject, Project} from "./project/project";
+import {copy} from "./task/copy";
+import {mapResultFn, Result, YarnResult} from "./task/result";
 
 export default async function init(project: Project): Promise<Result> {
     const mkdir = fs.mkdir(project.path, {recursive: true});
@@ -54,25 +55,6 @@ export default async function init(project: Project): Promise<Result> {
         .then<Result>(success => (success ? {type: "success"} : {type: "not-empty"}))
         .then(mapResultFn(async () => yarnInstall(project.path)))
         .then(mapResultFn(async () => yarnFix(project.path)));
-}
-
-async function copy(source: string, destDir: string, destFile: string = source): Promise<Result> {
-    const sourcePath = require.resolve("./template/" + source);
-    const destPath = resolve(destDir, destFile);
-
-    return fs
-        .mkdir(dirname(destPath), {recursive: true})
-        .then(async () => fs.copyFile(sourcePath, destPath, constants.COPYFILE_EXCL))
-        .then(
-            () => ({type: "success"}),
-            reason => {
-                if (reason.code === "EEXIST") {
-                    return {type: "not-empty"};
-                } else {
-                    throw reason;
-                }
-            }
-        );
 }
 
 async function ideaProjectFiles(project: Project): Promise<Result> {
