@@ -10,6 +10,7 @@ import {writeIdeaDictionary, writeIdeaProjectFiles} from "./project/idea/write";
 import {writePackageJson} from "./project/npm/write";
 import {createProject, Project} from "./project/project";
 import {copy} from "./task/copy";
+import {mkdir} from "./task/mkdir";
 import {mapResultFn, Result, YarnResult} from "./task/result";
 
 export default async function init(project: Project): Promise<Result> {
@@ -53,19 +54,6 @@ export default async function init(project: Project): Promise<Result> {
         .then<Result>(success => (success ? {type: "success"} : {type: "not-empty"}))
         .then(mapResultFn(async () => yarnInstall(project.path)))
         .then(mapResultFn(async () => yarnFix(project.path)));
-}
-
-async function mkdir(path: string): Promise<Result> {
-    return fs.mkdir(path, {recursive: true}).then(
-        () => ({type: "success"}),
-        reason => {
-            if (reason.code === "EEXIST") {
-                return {type: "not-empty"};
-            } else {
-                throw reason;
-            }
-        }
-    );
 }
 
 async function gitInit(destDir: string): Promise<Result> {
