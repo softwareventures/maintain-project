@@ -7,7 +7,7 @@ import {Result} from "../../task/result";
 
 export async function writeIdeaDictionary(destDir: string): Promise<Result> {
     const words = fs
-        .readFile(require.resolve("./template/dictionary.txt"), "utf8")
+        .readFile(require.resolve("../../template/dictionary.txt"), "utf8")
         .then(words => words.split("\n"));
 
     const dom = new JSDOM("<component/>", {contentType: "application/xml"});

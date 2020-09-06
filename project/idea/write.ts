@@ -7,7 +7,7 @@ import {Project} from "../project";
 import {writeIdeaModulesXml} from "./write-modules-xml";
 
 export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
-    const templateDir = dirname(require.resolve("./template/idea.template/create-project.iml"));
+    const templateDir = dirname(require.resolve("../../template/idea.template/create-project.iml"));
 
     const sourcePaths = recursiveReadDir(templateDir)
         .then(mapFn(path => relative(templateDir, path)))
