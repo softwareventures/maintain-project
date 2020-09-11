@@ -25,9 +25,9 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.8.1",
     "prettier": "2.1.1",
+    "semantic-release": "17.1.1",
     "ts-node": "9.0.0",
-    "typescript": "4.0.2",
-    "semantic-release": "17.1.1"
+    "typescript": "4.0.2"
   },
   "dependencies": {
     "tslib": "2.0.1"

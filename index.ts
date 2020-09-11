@@ -1,8 +1,10 @@
 #!/usr/bin/env node
-import {resolve} from "path";
 import {argv, cwd, exit} from "process";
+import {last} from "@softwareventures/array";
+import {Command} from "commander";
 import init from "./project/init";
 import {createProject} from "./project/project";
+import {name, version} from "./package.json";
 
 function main(destDir: string): void {
     init(createProject({path: destDir}))
@@ -40,12 +42,12 @@ function main(destDir: string): void {
 }
 
 if (require.main === module) {
-    if (argv.length === 2) {
-        main(cwd());
-    } else if (argv.length === 3) {
-        main(resolve(cwd(), argv[2]));
-    } else {
-        console.error("Invalid arguments");
-        exit(1);
-    }
+    new Command()
+        .storeOptionsAsProperties(false)
+        .passCommandToAction(false)
+        .name(last(name.split("/")) ?? "")
+        .version(version)
+        .arguments("[destination]")
+        .action(destination => main(destination ?? cwd()))
+        .parse(argv);
 }
