@@ -4,7 +4,7 @@ import {Command} from "commander";
 import {name, version} from "../package.json";
 import {cliInit} from "./init";
 
-export default function cli() {
+export default function cli(): void {
     new Command()
         .storeOptionsAsProperties(false)
         .passCommandToAction(false)
