@@ -11,6 +11,8 @@ export default function cli(): void {
         .name(last(name.split("/")) ?? "")
         .version(version)
         .arguments("[destination]")
-        .action(destination => cliInit(destination ?? cwd()))
+        .option("--scope <scope>")
+        .option("--name <name>")
+        .action((destination, options) => cliInit(destination ?? cwd(), options))
         .parse(argv);
 }

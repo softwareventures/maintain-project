@@ -2,8 +2,21 @@ import {exit} from "process";
 import init from "../project/init";
 import {createProject} from "../project/project";
 
-export function cliInit(destDir: string): void {
-    init(createProject({path: destDir}))
+export interface InitOptions {
+    readonly scope?: string;
+    readonly name?: string;
+}
+
+export function cliInit(path: string, options: InitOptions): void {
+    const project = createProject({
+        npmPackage: {
+            scope: options.scope,
+            name: options.name
+        },
+        path
+    });
+
+    init(project)
         .then(result => {
             switch (result.type) {
                 case "success":

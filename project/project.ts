@@ -1,4 +1,4 @@
-import {createNpmPackage, NpmPackage} from "./npm/npm-package";
+import {createNpmPackage, NpmPackage, NpmPackageOptions} from "./npm/npm-package";
 
 export interface Project extends ProjectOptions {
     readonly npmPackage: NpmPackage;
@@ -6,7 +6,7 @@ export interface Project extends ProjectOptions {
 
 export interface ProjectOptions {
     readonly path: string;
-    readonly npmPackage?: NpmPackage;
+    readonly npmPackage?: NpmPackageOptions;
 }
 
 export function createProject(options: ProjectOptions): Project {

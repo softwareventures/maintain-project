@@ -14,7 +14,7 @@ export async function writePackageJson(project: Project): Promise<Result> {
         .then(text => JSON.parse(text))
         .then(json => ({
             ...json,
-            name: npmPackage.scope ? `${npmPackage.scope}/${npmPackage.name}` : npmPackage.name,
+            name: npmPackage.scope ? `@${npmPackage.scope}/${npmPackage.name}` : npmPackage.name,
             homepage: `https://github.com/softwareventures/${npmPackage.name}`,
             bugs: `https://github.com/softwareventures/${npmPackage.name}/issues`,
             repository: `github:softwareventures/${npmPackage.name}`
