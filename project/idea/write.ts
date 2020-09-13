@@ -6,6 +6,7 @@ import {Result} from "../../task/result";
 import {Project} from "../project";
 import {writeIdeaModuleIml} from "./write-module-iml";
 import {writeIdeaModulesXml} from "./write-modules-xml";
+import {writeIdeaRunConfigurations} from "./write-run-configurations";
 
 export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
     const templateDir = dirname(require.resolve("../../template/idea.template/create-project.iml"));
@@ -13,6 +14,7 @@ export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
     const sourcePaths = recursiveReadDir(templateDir)
         .then(mapFn(path => relative(templateDir, path)))
         .then(filterFn(path => path.split(sep)[0] !== "dictionaries"))
+        .then(filterFn(path => path.split(sep)[0] !== "runConfigurations"))
         .then(filterFn(path => path !== "workspace.xml"))
         .then(filterFn(path => path !== "task.xml"))
         .then(filterFn(path => !path.match(/\.iml$/)))
@@ -28,6 +30,7 @@ export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
             })
         )
         .then(append([writeIdeaModulesXml(project), writeIdeaModuleIml(project)]))
+        .then(append(writeIdeaRunConfigurations(project)))
         .then(async results => Promise.all(results))
         .then(allFn(result => result.type === "success"))
         .then(success => (success ? {type: "success"} : {type: "not-empty"}));

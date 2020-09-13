@@ -7,6 +7,7 @@ export interface InitOptions {
     readonly name?: string;
     readonly githubOwner?: string;
     readonly githubProject?: string;
+    readonly webapp?: boolean;
 }
 
 export function cliInit(path: string, options: InitOptions): void {
@@ -19,6 +20,7 @@ export function cliInit(path: string, options: InitOptions): void {
             owner: options.githubOwner,
             name: options.githubProject
         },
+        target: options.webapp ? "webapp" : "npm",
         path
     });
 

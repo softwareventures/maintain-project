@@ -1,13 +1,18 @@
 import {promises as fs} from "fs";
-import {allFn} from "@softwareventures/array";
 import emptyDir = require("empty-dir");
 import {copy} from "../task/copy";
-import {mapResultFn, Result} from "../task/result";
+import {combineResults, mapResultFn, Result} from "../task/result";
+import {writeEslintIgnore} from "./eslint/write";
 import {gitInit} from "./git/init";
+import {writeGitIgnore} from "./git/write";
 import {writeIdeaProjectFiles} from "./idea/write";
 import {writeIdeaDictionary} from "./idea/write-dictionary";
-import {writePackageJson} from "./npm/write";
+import {writeNpmFiles} from "./npm/write";
+import {writePrettierIgnore} from "./prettier/write";
 import {Project} from "./project";
+import {writeRenovateConfig} from "./renovate/write";
+import {writeTypeScriptFiles} from "./typescript/write";
+import {writeWebpackConfig} from "./webpack/write";
 import {yarnFix} from "./yarn/fix";
 import {yarnInstall} from "./yarn/install";
 
@@ -32,24 +37,19 @@ export default async function init(project: Project): Promise<Result> {
         return {type: "not-empty"};
     }
 
-    return Promise.all([
+    return combineResults([
         copy("github.template/workflows/ci.yml", project.path, ".github/workflows/ci.yml"),
-        copy("eslintignore.template", project.path, ".eslintignore"),
-        copy("gitignore.template", project.path, ".gitignore"),
-        copy("npmignore.template", project.path, ".npmignore"),
-        copy("prettierignore.template", project.path, ".prettierignore"),
-        copy("renovate.lib.template.json", project.path, "renovate.json"),
-        copy("tsconfig.template.json", project.path, "tsconfig.json"),
-        copy("tsconfig.test.template.json", project.path, "tsconfig.test.json"),
-        copy("index.ts", project.path),
-        copy("index.test.ts", project.path),
+        writeRenovateConfig(project),
+        writePrettierIgnore(project),
+        writeGitIgnore(project),
+        writeEslintIgnore(project),
+        writeTypeScriptFiles(project),
+        writeWebpackConfig(project),
         writeIdeaProjectFiles(project),
-        writePackageJson(project),
+        writeNpmFiles(project),
         writeIdeaDictionary(project.path),
         gitInit(project.path)
     ])
-        .then(allFn(result => result.type === "success"))
-        .then<Result>(success => (success ? {type: "success"} : {type: "not-empty"}))
         .then(mapResultFn(async () => yarnInstall(project.path)))
         .then(mapResultFn(async () => yarnFix(project.path)));
 }

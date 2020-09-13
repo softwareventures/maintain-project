@@ -1,10 +1,15 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
-import {Result} from "../../task/result";
+import {copy} from "../../task/copy";
+import {combineResults, Result} from "../../task/result";
 import {Project} from "../project";
 
-export async function writePackageJson(project: Project): Promise<Result> {
+export async function writeNpmFiles(project: Project): Promise<Result> {
+    return combineResults([writePackageJson(project), writeNpmIgnore(project)]);
+}
+
+async function writePackageJson(project: Project): Promise<Result> {
     const sourcePath = require.resolve("../../template/package.json");
     const destPath = resolve(project.path, "package.json");
     const {npmPackage, githubProject} = project;
@@ -17,7 +22,18 @@ export async function writePackageJson(project: Project): Promise<Result> {
             name: npmPackage.scope ? `@${npmPackage.scope}/${npmPackage.name}` : npmPackage.name,
             homepage: `https://github.com/${githubProject.owner}/${npmPackage.name}`,
             bugs: `https://github.com/${githubProject.owner}/${npmPackage.name}/issues`,
-            repository: `github:${githubProject.owner}/${npmPackage.name}`
+            repository: `github:${githubProject.owner}/${npmPackage.name}`,
+            devDependencies: {
+                ...json.devDependencies,
+                "@softwareventures/tsconfig":
+                    project.target === "npm"
+                        ? json.devDependencies["@softwareventures/tsconfig"]
+                        : null,
+                "@softwareventures/webpack-config":
+                    project.target === "webapp"
+                        ? json.devDependencies["@softwareventures/webpack-config"]
+                        : null
+            }
         }))
         .then(json =>
             formatPackageJson(json, {
@@ -76,4 +92,12 @@ export async function writePackageJson(project: Project): Promise<Result> {
                 }
             }
         );
+}
+
+async function writeNpmIgnore(project: Project): Promise<Result> {
+    if (project.target === "npm") {
+        return copy("npmignore.template", project.path, ".npmignore");
+    } else {
+        return {type: "success"};
+    }
 }

@@ -1,8 +1,8 @@
 import {promises as fs} from "fs";
-import {dirname} from "path";
 import {JSDOM} from "jsdom";
 import formatXml = require("xml-formatter");
 import {Result} from "./result";
+import {writeFile} from "./write-file";
 
 export interface Destination {
     readonly destPath: string;
@@ -31,22 +31,7 @@ export async function modifyXml(
             })
         );
 
-    return Promise.all([destPath, newXmlText])
-        .then(async ([destPath, newXmlText]) =>
-            fs
-                .mkdir(dirname(destPath), {recursive: true})
-                .then(async () =>
-                    fs.writeFile(destPath, newXmlText, {encoding: "utf8", flag: "wx"})
-                )
-        )
-        .then(
-            () => ({type: "success"}),
-            reason => {
-                if (reason.code === "EEXIST") {
-                    return {type: "not-empty"};
-                } else {
-                    throw reason;
-                }
-            }
-        );
+    return Promise.all([destPath, newXmlText]).then(async ([destPath, newXmlText]) =>
+        writeFile(destPath, newXmlText)
+    );
 }
