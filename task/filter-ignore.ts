@@ -10,7 +10,10 @@ export async function filterIgnore(
 ): Promise<Result> {
     const sourcePath = require.resolve(`../template/${source}`);
     const text = fs.readFile(sourcePath, "utf8");
-    const filteredText = text.then(text => text.split(/\r?\n/)).then(filterFn(filter));
+    const filteredText = text
+        .then(text => text.split(/\r?\n/))
+        .then(filterFn(filter))
+        .then(lines => lines.join("\n"));
     return fs
         .mkdir(dirname(dest), {recursive: true})
         .then(async () => filteredText)
