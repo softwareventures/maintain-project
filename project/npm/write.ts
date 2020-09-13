@@ -7,7 +7,7 @@ import {Project} from "../project";
 export async function writePackageJson(project: Project): Promise<Result> {
     const sourcePath = require.resolve("../../template/package.json");
     const destPath = resolve(project.path, "package.json");
-    const npmPackage = project.npmPackage;
+    const {npmPackage, githubProject} = project;
 
     return fs
         .readFile(sourcePath, {encoding: "utf8"})
@@ -15,9 +15,9 @@ export async function writePackageJson(project: Project): Promise<Result> {
         .then(json => ({
             ...json,
             name: npmPackage.scope ? `@${npmPackage.scope}/${npmPackage.name}` : npmPackage.name,
-            homepage: `https://github.com/softwareventures/${npmPackage.name}`,
-            bugs: `https://github.com/softwareventures/${npmPackage.name}/issues`,
-            repository: `github:softwareventures/${npmPackage.name}`
+            homepage: `https://github.com/${githubProject.owner}/${npmPackage.name}`,
+            bugs: `https://github.com/${githubProject.owner}/${npmPackage.name}/issues`,
+            repository: `github:${githubProject.owner}/${npmPackage.name}`
         }))
         .then(json =>
             formatPackageJson(json, {

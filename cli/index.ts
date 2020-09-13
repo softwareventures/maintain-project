@@ -13,6 +13,8 @@ export default function cli(): void {
         .arguments("[destination]")
         .option("--scope <scope>")
         .option("--name <name>")
+        .option("--github-owner <owner>")
+        .option("--github-project <name>")
         .action((destination, options) => cliInit(destination ?? cwd(), options))
         .parse(argv);
 }

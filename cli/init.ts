@@ -5,6 +5,8 @@ import {createProject} from "../project/project";
 export interface InitOptions {
     readonly scope?: string;
     readonly name?: string;
+    readonly githubOwner?: string;
+    readonly githubProject?: string;
 }
 
 export function cliInit(path: string, options: InitOptions): void {
@@ -12,6 +14,10 @@ export function cliInit(path: string, options: InitOptions): void {
         npmPackage: {
             scope: options.scope,
             name: options.name
+        },
+        githubProject: {
+            owner: options.githubOwner,
+            name: options.githubProject
         },
         path
     });
