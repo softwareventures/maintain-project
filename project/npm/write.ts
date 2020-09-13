@@ -28,11 +28,11 @@ async function writePackageJson(project: Project): Promise<Result> {
                 "@softwareventures/tsconfig":
                     project.target === "npm"
                         ? json.devDependencies["@softwareventures/tsconfig"]
-                        : null,
+                        : undefined,
                 "@softwareventures/webpack-config":
                     project.target === "webapp"
                         ? json.devDependencies["@softwareventures/webpack-config"]
-                        : null
+                        : undefined
             }
         }))
         .then(json =>
