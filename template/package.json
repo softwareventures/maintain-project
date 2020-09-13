@@ -10,7 +10,9 @@
   "repository": "",
   "license": "ISC",
   "scripts": {
+    "build": "webpack --env.production",
     "prepare": "tsc",
+    "start": "webpack-dev-server --open",
     "test": "ava",
     "lint": "eslint . && prettier --check .",
     "fix": "eslint . --fix && prettier --write .",

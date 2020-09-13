@@ -23,6 +23,12 @@ async function writePackageJson(project: Project): Promise<Result> {
             homepage: `https://github.com/${githubProject.owner}/${npmPackage.name}`,
             bugs: `https://github.com/${githubProject.owner}/${npmPackage.name}/issues`,
             repository: `github:${githubProject.owner}/${npmPackage.name}`,
+            scripts: {
+                ...json.scripts,
+                build: project.target === "webapp" ? json.scripts.build : undefined,
+                prepare: project.target === "npm" ? json.scripts.prepare : undefined,
+                start: project.target === "webapp" ? json.scripts.start : undefined
+            },
             devDependencies: {
                 ...json.devDependencies,
                 "@softwareventures/tsconfig":
