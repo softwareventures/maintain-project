@@ -38,6 +38,15 @@ async function writePackageJson(project: Project): Promise<Result> {
                 "@softwareventures/webpack-config":
                     project.target === "webapp"
                         ? json.devDependencies["@softwareventures/webpack-config"]
+                        : undefined,
+                "ts-loader":
+                    project.target === "webapp" ? json.devDependencies["ts-loader"] : undefined,
+                "webpack": project.target === "webapp" ? json.devDependencies.webpack : undefined,
+                "webpack-cli":
+                    project.target === "webapp" ? json.devDependencies["webpack-cli"] : undefined,
+                "webpack-dev-server":
+                    project.target === "webapp"
+                        ? json.devDependencies["webpack-dev-server"]
                         : undefined
             }
         }))
