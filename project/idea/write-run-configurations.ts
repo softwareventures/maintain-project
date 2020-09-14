@@ -44,7 +44,7 @@ async function writeIdeaRunConfigurationTest(project: Project): Promise<Result> 
                 task.parentElement?.removeChild?.(task);
             }
         }
-        return {destPath: resolve(project.path, ".idea", "test.xml")};
+        return {destPath: resolve(project.path, ".idea", "runConfigurations", "test.xml")};
     });
 }
 
@@ -55,7 +55,7 @@ async function writeIdeaRunConfigurationStart(project: Project): Promise<Result>
             configuration?.setAttribute("name", "start");
             const command = document.querySelector("command");
             command?.setAttribute("value", "start");
-            return {destPath: resolve(project.path, ".idea", "start.xml")};
+            return {destPath: resolve(project.path, ".idea", "runConfigurations", "start.xml")};
         });
     } else {
         return {type: "success"};
