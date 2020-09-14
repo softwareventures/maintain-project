@@ -16,7 +16,7 @@ export function writeIdeaRunConfigurations(project: Project): Array<Promise<Resu
 
 async function writeIdeaRunConfigurationFix(project: Project): Promise<Result> {
     return copy(
-        `idea.template${sep}runConfigurations${sep}fix.xml`,
+        `idea.template/runConfigurations/fix.xml`,
         project.path,
         `.idea${sep}runConfigurations${sep}fix.xml`
     );
@@ -24,7 +24,7 @@ async function writeIdeaRunConfigurationFix(project: Project): Promise<Result> {
 
 async function writeIdeaRunConfigurationLint(project: Project): Promise<Result> {
     return copy(
-        `idea.template${sep}runConfigurations${sep}lint.xml`,
+        `idea.template/runConfigurations/lint.xml`,
         project.path,
         `.idea${sep}runConfigurations${sep}lint.xml`
     );
