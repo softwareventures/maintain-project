@@ -19,7 +19,7 @@
     "semantic-release": "semantic-release"
   },
   "devDependencies": {
-    "@softwareventures/eslint-config": "3.2.1",
+    "@softwareventures/eslint-config": "3.3.0",
     "@softwareventures/prettier-config": "1.0.2",
     "@softwareventures/semantic-release-config": "1.1.1",
     "@softwareventures/tsconfig": "2.3.2",
