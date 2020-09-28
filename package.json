@@ -43,7 +43,7 @@
     "recursive-readdir": "2.2.2",
     "tslib": "2.0.1",
     "xml-formatter": "2.3.0",
-    "yarn": "1.22.5"
+    "yarn": "1.22.10"
   },
   "devDependencies": {
     "@softwareventures/eslint-config": "3.3.0",
