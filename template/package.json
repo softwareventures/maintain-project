@@ -37,7 +37,7 @@
     "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
-    "tslib": "2.0.1"
+    "tslib": "2.0.2"
   },
   "eslintConfig": {
     "root": true,
