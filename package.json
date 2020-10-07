@@ -25,7 +25,7 @@
     "./index.js"
   ],
   "bin": {
-    "create-project": "./index.js"
+    "maintain-project": "./index.js"
   },
   "dependencies": {
     "@softwareventures/array": "3.2.0",
