@@ -1,16 +1,18 @@
 {
-  "name": "@softwareventures/create-project",
+  "name": "@softwareventures/maintain-project",
   "version": "0.0.0-development",
-  "description": "Create a TypeScript project with standard settings for Software Ventures Limited",
+  "description": "Create and maintain TypeScript projects with standard settings for Software Ventures Limited",
   "keywords": [
+    "automated",
     "create-project",
+    "maintain-project",
     "typescript",
     "template"
   ],
   "author": "Daniel Cassidy <mail@danielcassidy.me.uk>",
-  "homepage": "https://github.com/softwareventures/create-project",
-  "bugs": "https://github.com/softwareventures/create-project/issues",
-  "repository": "github:softwareventures/create-project",
+  "homepage": "https://github.com/softwareventures/maintain-project",
+  "bugs": "https://github.com/softwareventures/maintain-project/issues",
+  "repository": "github:softwareventures/maintain-project",
   "license": "ISC",
   "scripts": {
     "prepare": "shx rm -rf template/idea.template && shx cp -r .idea template/idea.template && tsc",
