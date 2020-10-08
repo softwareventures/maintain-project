@@ -17,7 +17,7 @@ export async function readProject(path: string): Promise<Project> {
         .then(packageJson => packageJson.repository)
         .then(gitInfoFromUrl)
         .then(info =>
-            info.type === "github" ? {owner: info.user, name: info.project} : undefined
+            info?.type === "github" ? {owner: info.user, name: info.project} : undefined
         );
 
     const target = fs

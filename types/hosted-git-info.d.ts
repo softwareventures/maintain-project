@@ -69,7 +69,7 @@ declare module "hosted-git-info" {
     }
 
     namespace GitHost {
-        function fromUrl(gitUrl: string, opts?: Options): GitHost;
+        function fromUrl(gitUrl: string, opts?: Options): GitHost | undefined;
 
         interface Options {
             noCommittish?: boolean;
