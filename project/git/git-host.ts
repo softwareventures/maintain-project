@@ -28,6 +28,22 @@ export function createGitHost(options: ProjectOptions): GitHost {
     };
 }
 
+export function gitHostFromUrl(url: string): GitHost | undefined {
+    const info = HostedGitInfo.fromUrl(url);
+    if (info?.type === "github") {
+        return {
+            service: "github",
+            user: info.user,
+            project: info.project
+        };
+    } else {
+        return {
+            service: "unknown",
+            url
+        };
+    }
+}
+
 function hostedGitInfo(gitHost: GitHost): HostedGitInfo | undefined {
     return gitHost.service === "github"
         ? new HostedGitInfo("github", gitHost.user, undefined, gitHost.project)

@@ -1,6 +1,6 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
-import {fromUrl as gitInfoFromUrl} from "hosted-git-info";
+import {gitHostFromUrl} from "./git/git-host";
 import {Project} from "./project";
 
 export async function readProject(path: string): Promise<Project> {
@@ -13,12 +13,7 @@ export async function readProject(path: string): Promise<Project> {
         .then(name => /^(?:(@.*?)\/)?(.*)$/.exec(name))
         .then(([_, scope, name]) => ({scope, name}));
 
-    const githubProject = packageJson
-        .then(packageJson => packageJson.repository)
-        .then(gitInfoFromUrl)
-        .then(info =>
-            info?.type === "github" ? {owner: info.user, name: info.project} : undefined
-        );
+    const gitHost = packageJson.then(packageJson => packageJson.repository).then(gitHostFromUrl);
 
     const target = fs
         .stat(resolve(path, "webpack.config.js"))
@@ -31,12 +26,10 @@ export async function readProject(path: string): Promise<Project> {
         })
         .then(stats => (stats?.isFile() ? "webapp" : "npm"));
 
-    return Promise.all([npmPackage, githubProject, target]).then(
-        ([npmPackage, githubProject, target]) => ({
-            path,
-            npmPackage,
-            githubProject,
-            target
-        })
-    );
+    return Promise.all([npmPackage, gitHost, target]).then(([npmPackage, gitHost, target]) => ({
+        path,
+        npmPackage,
+        gitHost,
+        target
+    }));
 }
