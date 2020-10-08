@@ -1,7 +1,7 @@
 {
   "name": "@softwareventures/maintain-project",
   "version": "0.0.0-development",
-  "description": "Create and maintain TypeScript projects with standard settings for Software Ventures Limited",
+  "description": "Automatically create and maintain TypeScript projects with standard settings for Software Ventures Limited",
   "keywords": [
     "automated",
     "create-project",
