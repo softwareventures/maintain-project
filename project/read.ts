@@ -22,7 +22,14 @@ export async function readProject(path: string): Promise<Project> {
 
     const target = fs
         .stat(resolve(path, "webpack.config.js"))
-        .then(stats => (stats.isFile() ? "webapp" : "npm"));
+        .catch(reason => {
+            if (reason.code === "ENOENT") {
+                return undefined;
+            } else {
+                throw reason;
+            }
+        })
+        .then(stats => (stats?.isFile() ? "webapp" : "npm"));
 
     return Promise.all([npmPackage, githubProject, target]).then(
         ([npmPackage, githubProject, target]) => ({
