@@ -3,6 +3,7 @@ import {resolve} from "path";
 import {format as formatPackageJson} from "prettier-package-json";
 import {copy} from "../../task/copy";
 import {combineResults, Result} from "../../task/result";
+import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
 import {Project} from "../project";
 
 export async function writeNpmFiles(project: Project): Promise<Result> {
@@ -12,7 +13,7 @@ export async function writeNpmFiles(project: Project): Promise<Result> {
 async function writePackageJson(project: Project): Promise<Result> {
     const sourcePath = require.resolve("../../template/package.json");
     const destPath = resolve(project.path, "package.json");
-    const {npmPackage, githubProject} = project;
+    const {npmPackage, gitHost} = project;
 
     return fs
         .readFile(sourcePath, {encoding: "utf8"})
@@ -20,9 +21,9 @@ async function writePackageJson(project: Project): Promise<Result> {
         .then(json => ({
             ...json,
             name: npmPackage.scope ? `@${npmPackage.scope}/${npmPackage.name}` : npmPackage.name,
-            homepage: `https://github.com/${githubProject.owner}/${npmPackage.name}`,
-            bugs: `https://github.com/${githubProject.owner}/${npmPackage.name}/issues`,
-            repository: `github:${githubProject.owner}/${npmPackage.name}`,
+            homepage: gitHost == null ? undefined : homepageUrl(gitHost),
+            bugs: gitHost == null ? undefined : bugsUrl(gitHost),
+            repository: gitHost == null ? undefined : repositoryShortcut(gitHost),
             scripts: {
                 ...json.scripts,
                 build: project.target === "webapp" ? json.scripts.build : undefined,
