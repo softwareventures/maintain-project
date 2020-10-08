@@ -8,13 +8,13 @@ export async function writeIdeaModulesXml(project: Project): Promise<Result> {
         const module = document.querySelector("project:root>component>modules>module");
         const fileUrl = module
             ?.getAttribute("fileurl")
-            ?.replace(/create-project\.iml$/, `${project.npmPackage.name}.iml`);
+            ?.replace(/maintain-project\.iml$/, `${project.npmPackage.name}.iml`);
         if (fileUrl != null) {
             module?.setAttribute("fileurl", fileUrl);
         }
         const filePath = module
             ?.getAttribute("filepath")
-            ?.replace(/create-project\.iml$/, `${project.npmPackage.name}.iml`);
+            ?.replace(/maintain-project\.iml$/, `${project.npmPackage.name}.iml`);
         if (filePath != null) {
             module?.setAttribute("filepath", filePath);
         }
