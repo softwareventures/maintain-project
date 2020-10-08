@@ -16,9 +16,9 @@ export function cliInit(path: string, options: InitOptions): void {
             scope: options.scope,
             name: options.name
         },
-        githubProject: {
-            owner: options.githubOwner,
-            name: options.githubProject
+        gitHost: {
+            user: options.githubOwner,
+            project: options.githubProject
         },
         target: options.webapp ? "webapp" : "npm",
         path
