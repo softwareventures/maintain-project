@@ -41,7 +41,8 @@ export async function writeIdeaDictionary(destDir: string): Promise<Result> {
             formatXml(xmlText, {
                 collapseContent: true,
                 indentation: "  ",
-                stripComments: true
+                stripComments: true,
+                whiteSpaceAtEndOfSelfclosingTag: true
             })
         );
 

@@ -27,7 +27,8 @@ export async function modifyXml(
             formatXml(newXmlText, {
                 collapseContent: true,
                 indentation: "  ",
-                stripComments: true
+                stripComments: true,
+                whiteSpaceAtEndOfSelfclosingTag: true
             })
         );
 
