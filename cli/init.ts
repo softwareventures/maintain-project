@@ -11,7 +11,7 @@ export interface InitOptions {
 }
 
 export function cliInit(path: string, options: InitOptions): void {
-    const project = createProject({
+    createProject({
         npmPackage: {
             scope: options.scope,
             name: options.name
@@ -22,9 +22,8 @@ export function cliInit(path: string, options: InitOptions): void {
         },
         target: options.webapp ? "webapp" : "npm",
         path
-    });
-
-    init(project)
+    })
+        .then(init)
         .then(result => {
             switch (result.type) {
                 case "success":

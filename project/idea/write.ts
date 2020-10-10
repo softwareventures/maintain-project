@@ -4,6 +4,7 @@ import recursiveReadDir = require("recursive-readdir");
 import {copy} from "../../task/copy";
 import {Result} from "../../task/result";
 import {Project} from "../project";
+import {writeIdeaDictionaries} from "./dictionary/write";
 import {writeIdeaModuleIml} from "./write-module-iml";
 import {writeIdeaModulesXml} from "./write-modules-xml";
 import {writeIdeaRunConfigurations} from "./write-run-configurations";
@@ -31,7 +32,13 @@ export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
                 return copy(source, project.path, dest);
             })
         )
-        .then(append([writeIdeaModulesXml(project), writeIdeaModuleIml(project)]))
+        .then(
+            append([
+                writeIdeaModulesXml(project),
+                writeIdeaModuleIml(project),
+                writeIdeaDictionaries(project)
+            ])
+        )
         .then(append(writeIdeaRunConfigurations(project)))
         .then(async results => Promise.all(results))
         .then(allFn(result => result.type === "success"))

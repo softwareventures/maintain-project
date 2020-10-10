@@ -6,7 +6,6 @@ import {writeEslintIgnore} from "./eslint/write";
 import {gitInit} from "./git/init";
 import {writeGitIgnore} from "./git/write";
 import {writeIdeaProjectFiles} from "./idea/write";
-import {writeIdeaDictionary} from "./idea/write-dictionary";
 import {writeNpmFiles} from "./npm/write";
 import {writePrettierIgnore} from "./prettier/write";
 import {Project} from "./project";
@@ -47,7 +46,6 @@ export default async function init(project: Project): Promise<Result> {
         writeWebpackConfig(project),
         writeIdeaProjectFiles(project),
         writeNpmFiles(project),
-        writeIdeaDictionary(project.path),
         gitInit(project.path)
     ])
         .then(mapResultFn(async () => yarnInstall(project.path)))
