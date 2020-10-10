@@ -1,8 +1,8 @@
 import {dirname, relative, sep} from "path";
-import {allFn, append, filterFn, mapFn} from "@softwareventures/array";
+import {append, filterFn, mapFn} from "@softwareventures/array";
 import recursiveReadDir = require("recursive-readdir");
 import {copy} from "../../task/copy";
-import {Result} from "../../task/result";
+import {combineResults, Result} from "../../task/result";
 import {Project} from "../project";
 import {writeIdeaDictionaries} from "./dictionary/write";
 import {writeIdeaModuleIml} from "./write-module-iml";
@@ -40,7 +40,5 @@ export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
             ])
         )
         .then(append(writeIdeaRunConfigurations(project)))
-        .then(async results => Promise.all(results))
-        .then(allFn(result => result.type === "success"))
-        .then(success => (success ? {type: "success"} : {type: "not-empty"}));
+        .then(combineResults);
 }
