@@ -23,7 +23,7 @@
     "@softwareventures/prettier-config": "1.0.2",
     "@softwareventures/semantic-release-config": "1.1.1",
     "@softwareventures/tsconfig": "2.3.2",
-    "@softwareventures/webpack-config": "2.0.4",
+    "@softwareventures/webpack-config": "3.0.1",
     "ava": "3.13.0",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.11.0",
@@ -37,6 +37,7 @@
     "webpack-dev-server": "3.11.0"
   },
   "dependencies": {
+    "@types/webpack-env": "1.15.3",
     "tslib": "2.0.3"
   },
   "eslintConfig": {

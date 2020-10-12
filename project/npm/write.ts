@@ -30,6 +30,13 @@ async function writePackageJson(project: Project): Promise<Result> {
                 prepare: project.target === "npm" ? json.scripts.prepare : undefined,
                 start: project.target === "webapp" ? json.scripts.start : undefined
             },
+            dependencies: {
+                ...json.dependencies,
+                "@types/webpack-env":
+                    project.target === "webapp"
+                        ? json.dependencies["@types/webpack-env"]
+                        : undefined
+            },
             devDependencies: {
                 ...json.devDependencies,
                 "@softwareventures/tsconfig":
