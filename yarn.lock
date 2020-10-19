@@ -7589,22 +7589,22 @@ xdg-basedir@^4.0.0:
   resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-4.0.0.tgz#4bc8d9984403696225ef83a1573cbbcb4e79db13"
   integrity sha512-PSNhEJDejZYV7h50BohL09Er9VaIefr2LMAf3OEmpCkjOi34eYyQYAXUTjEQtZJTKcF0E2UKTh+osDLsgNim9Q==
 
-xml-formatter@2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-2.3.0.tgz#99c2c33fb6c63691763e8aeb5ddf7205a9df7f16"
-  integrity sha512-ZYG7vIHn0Y3vSa4QGJX7jv0WrwFqGQJC+Wgoir+7c+XCHa4KWeBfc1+Q7NJVQNMK9/DGgl1/UxhzvDm3J8Xjmg==
+xml-formatter@2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/xml-formatter/-/xml-formatter-2.3.1.tgz#79201637dad4fe4b2e58fbd6bf1524ac830ea505"
+  integrity sha512-jvqmM7aowtzgi05LfvWjXLqajeRNu50/dX6Q26a4jwdpMwuCz6FRYRkvqvPBThe7bordClp35jiR/zxRrtM0NQ==
   dependencies:
-    xml-parser-xo "^3.1.0"
+    xml-parser-xo "^3.1.1"
 
 xml-name-validator@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/xml-name-validator/-/xml-name-validator-3.0.0.tgz#6ae73e06de4d8c6e47f9fb181f78d648ad457c6a"
   integrity sha512-A5CUptxDsvxKJEU3yO6DuWBSJz/qizqzJKOMIfUJHETbBw/sFaDxgd6fxm1ewUaM0jZ444Fc5vC5ROYurg/4Pw==
 
-xml-parser-xo@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/xml-parser-xo/-/xml-parser-xo-3.1.0.tgz#a3a138f0525d7d1e717928ae0d87c03691b0eaa2"
-  integrity sha512-7oz5N2NVnzKTSrYPFQ9zuEEqielMUgoTakaxFA2z2bWEkIlsZsnr7GxVtuElbdeNIZBQmDW1kktuAkjJjLXEZg==
+xml-parser-xo@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/xml-parser-xo/-/xml-parser-xo-3.1.1.tgz#a87d92e44fa8ad3ba7242517df96e6b0893f1f47"
+  integrity sha512-gq1nDlJxjKQpPPZUhLbJ52pghtlB4Rz6LAQULm3SF6xzOYVnUloBglNhJR9vtZB3vIxMN/R3nZTf3qmun+6GCg==
 
 xmlchars@^2.2.0:
   version "2.2.0"
