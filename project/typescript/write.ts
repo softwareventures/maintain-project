@@ -27,10 +27,7 @@ async function writeTsConfigFiles(project: Project): Promise<Result> {
 
 async function writeTypeDeclarations(project: Project): Promise<Result> {
     if (project.target === "webapp") {
-        return combineResults([
-            copy("types/asset-loaders.d.ts", project.path),
-            copy("types/preact-debug.d.ts", project.path)
-        ]);
+        return copy("types/preact-debug.d.ts", project.path);
     } else {
         return {type: "success"};
     }
