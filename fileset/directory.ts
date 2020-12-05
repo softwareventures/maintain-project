@@ -7,6 +7,8 @@ export interface Directory {
     readonly entries: ReadonlyMap<string, Directory | TextFile>;
 }
 
+export const emptyDirectory: Directory = {type: "directory", entries: new Map()};
+
 export type InsertSubdirectoryResult = Directory | FileExists;
 
 export interface FileExists {
@@ -34,7 +36,7 @@ function insertSubdirectoryInternal(
         return root;
     }
 
-    const entry = root.entries.get(entryName) ?? {type: "directory", entries: new Map()};
+    const entry = root.entries.get(entryName) ?? emptyDirectory;
 
     if (entry.type === "directory") {
         const subdirectory = insertSubdirectoryInternal(entry, tail(path));
