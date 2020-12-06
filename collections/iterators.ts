@@ -13,3 +13,11 @@ export function mapFn<T, U>(
 ): (iterable: Iterable<T>) => Iterable<U> {
     return iterable => map(iterable, f);
 }
+
+export function intoArray<T>(iterable: Iterable<T>): T[] {
+    const array = [];
+    for (const element of iterable) {
+        array.push(element);
+    }
+    return array;
+}
