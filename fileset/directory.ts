@@ -4,10 +4,10 @@ import {TextFile} from "./text-file";
 
 export interface Directory {
     readonly type: "directory";
-    readonly entries: ReadonlyMap<string, DirectoryEntry>;
+    readonly entries: ReadonlyMap<string, File>;
 }
 
-export type DirectoryEntry = Directory | TextFile;
+export type File = Directory | TextFile;
 
 export const emptyDirectory: Directory = {type: "directory", entries: new Map()};
 
@@ -20,13 +20,13 @@ export interface FileExists {
 export function insert(
     root: Directory,
     path: string | readonly string[],
-    entry: DirectoryEntry
+    file: File
 ): InsertResult {
     const pathSegments = isArray(path) ? path : path.split("/");
     return insertInternal(
         root,
         filter(pathSegments, segment => segment !== ""),
-        entry
+        file
     );
 }
 
@@ -45,15 +45,11 @@ export function insertTextFile(
     return insert(root, path, {type: "text-file", text});
 }
 
-function insertInternal(
-    root: Directory,
-    path: readonly string[],
-    entry: DirectoryEntry
-): InsertResult {
+function insertInternal(root: Directory, path: readonly string[], file: File): InsertResult {
     const entryName = head(path);
 
     if (entryName == null) {
-        if (entry.type === "directory") {
+        if (file.type === "directory") {
             return root;
         } else {
             return {type: "file-exists"};
@@ -67,12 +63,34 @@ function insertInternal(
         return {type: "file-exists"};
     }
 
-    const newEntry =
-        existingEntry == null ? entry : insertInternal(existingEntry, tail(path), entry);
+    const newEntry = existingEntry == null ? file : insertInternal(existingEntry, tail(path), file);
 
     if (newEntry.type === "file-exists") {
         return newEntry;
     } else {
         return {type: "directory", entries: mapInsert(root.entries, entryName, newEntry)};
+    }
+}
+
+export interface ListOptions {
+    readonly directory: Directory;
+    readonly recursive?: boolean;
+}
+
+export interface Entry {
+    readonly path: string;
+    readonly file: File;
+}
+
+export function list(options: ListOptions): IterableIterator<Entry> {
+    return listInternal("", options);
+}
+
+function* listInternal(pathPrefix: string, options: ListOptions): IterableIterator<Entry> {
+    for (const [path, file] of options.directory.entries) {
+        yield {path: pathPrefix + path, file};
+        if (options.recursive && file.type === "directory") {
+            yield* listInternal(`${path}/`, {...options, directory: file});
+        }
     }
 }
