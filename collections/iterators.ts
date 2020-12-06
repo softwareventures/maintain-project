@@ -7,3 +7,9 @@ export function* map<T, U>(
         yield f(element, i++);
     }
 }
+
+export function mapFn<T, U>(
+    f: (element: T, index: number) => U
+): (iterable: Iterable<T>) => Iterable<U> {
+    return iterable => map(iterable, f);
+}
