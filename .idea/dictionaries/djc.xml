@@ -2,6 +2,7 @@
   <dictionary name="djc">
     <words>
       <w>cassidy</w>
+      <w>changeset</w>
       <w>eslintignore</w>
       <w>npmignore</w>
       <w>prettierignore</w>
