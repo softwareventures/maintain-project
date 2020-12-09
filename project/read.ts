@@ -10,7 +10,7 @@ export async function readProject(path: string): Promise<Project> {
 
     const npmPackage = packageJson
         .then(packageJson => packageJson.name ?? "")
-        .then(name => /^(?:(@.*?)\/)?(.*)$/.exec(name))
+        .then(name => /^(?:(@.*?)\/)?(.*)$/.exec(name) ?? ["", "", ""])
         .then(([_, scope, name]) => ({scope, name}));
 
     const gitHost = packageJson.then(packageJson => packageJson.repository).then(gitHostFromUrl);
