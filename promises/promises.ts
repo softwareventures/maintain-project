@@ -19,10 +19,13 @@ export function catchIf<T>(
     };
 }
 
-export function ignoreIf(predicate: (reason: any) => boolean): (reason: any) => void {
-    return reason => {
-        if (!predicate(reason)) {
-            throw reason;
-        }
-    };
+export function ignoreIf(
+    predicate: (reason: any) => boolean | Promise<boolean>
+): (reason: any) => Promise<void> {
+    return async reason =>
+        Promise.resolve(predicate(reason)).then(pass => {
+            if (!pass) {
+                throw reason;
+            }
+        });
 }
