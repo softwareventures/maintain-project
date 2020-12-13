@@ -23,6 +23,17 @@ export interface FileExists {
     readonly path: string;
 }
 
+export async function commit(path: string, changeset: FsChangeset): Promise<CommitResult> {
+    return open(path, changeset).then(async openResult => {
+        switch (openResult.type) {
+            case "open-fs-changeset":
+                return write(openResult).then(() => ({type: "success"}));
+            case "commit-failure":
+                return openResult;
+        }
+    });
+}
+
 type OpenResult = OpenFsChangeset | CommitFailure;
 
 interface OpenFsChangeset {
