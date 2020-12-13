@@ -1,5 +1,7 @@
 import {resolve} from "path";
 import {promises as fs} from "fs";
+import chain from "@softwareventures/chain";
+import {mapFn} from "../collections/iterators";
 import {liftPromises, mapValueFn} from "../collections/maps";
 import {ignoreIf} from "../promises/promises";
 import {Success} from "../task/result";
@@ -32,6 +34,7 @@ async function open(path: string, changeset: FsChangeset): Promise<OpenResult> {
     const {root, overwrite = false} = changeset;
     return openDirectory({path, file: root, overwrite}).then(openRoot => ({
         type: "open-fs-changeset",
+        path,
         openRoot
     }));
 }
@@ -51,6 +54,8 @@ interface OpenDirectory {
 
 interface OpenTextFile {
     readonly type: "open-text-file";
+    readonly fileHandle: fs.FileHandle;
+    readonly text: string;
 }
 
 async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirectory> {
@@ -83,5 +88,31 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
 
 async function openTextFile(options: OpenOptions<TextFile>): Promise<OpenTextFile> {
     const flags = options.overwrite ? "r+" : "wx+";
-    return fs.open(options.path, flags).then(fileHandle => ({type: "open-text-file", fileHandle}));
+    return fs
+        .open(options.path, flags)
+        .then(fileHandle => ({type: "open-text-file", fileHandle, text: options.file.text}));
+}
+
+async function write(changeset: OpenFsChangeset): Promise<void> {
+    return writeDirectory(changeset.openRoot);
+}
+
+async function writeDirectory(directory: OpenDirectory): Promise<void> {
+    return chain(directory.entries.values())
+        .map(
+            mapFn(async file => {
+                switch (file.type) {
+                    case "open-directory":
+                        return writeDirectory(file);
+                    case "open-text-file":
+                        return writeTextFile(file);
+                }
+            })
+        )
+        .map(async results => Promise.resolve(results))
+        .map(async promise => promise.then(() => undefined)).value;
+}
+
+async function writeTextFile(file: OpenTextFile): Promise<void> {
+    return fs.writeFile(file.fileHandle, file.text, "utf8");
 }
