@@ -1,13 +1,11 @@
 import {filter, head, isArray, tail} from "@softwareventures/array";
 import {insert as mapInsert} from "../collections/maps";
-import {TextFile} from "./text-file";
+import {File} from "./file";
 
 export interface Directory {
     readonly type: "directory";
     readonly entries: ReadonlyMap<string, File>;
 }
-
-export type File = Directory | TextFile;
 
 export const emptyDirectory: Directory = {type: "directory", entries: new Map()};
 
