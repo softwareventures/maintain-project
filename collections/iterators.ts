@@ -14,6 +14,26 @@ export function mapFn<T, U>(
     return iterable => map(iterable, f);
 }
 
+export function filter<T, U extends T>(
+    iterable: Iterable<T>,
+    predicate: (element: T, index: number) => element is U
+): Iterable<U>;
+export function filter<T>(
+    iterable: Iterable<T>,
+    predicate: (element: T, index: number) => boolean
+): Iterable<T>;
+export function* filter<T>(
+    iterable: Iterable<T>,
+    predicate: (element: T, index: number) => boolean
+): Iterable<T> {
+    let i = 0;
+    for (const element of iterable) {
+        if (predicate(element, i++)) {
+            yield element;
+        }
+    }
+}
+
 export function* zip<T, U>(a: Iterable<T>, b: Iterable<U>): Iterable<[T, U]> {
     const ai = a[Symbol.iterator]();
     const bi = b[Symbol.iterator]();
