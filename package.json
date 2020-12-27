@@ -15,7 +15,7 @@
   "repository": "github:softwareventures/maintain-project",
   "license": "ISC",
   "scripts": {
-    "prepare": "shx rm -rf template/idea.template && shx cp -r .idea template/idea.template && tsc",
+    "prepare": "shx rm -rf template/template/idea.template && shx cp -r .idea template/template/idea.template && tsc",
     "test": "ava",
     "lint": "eslint . && prettier --check .",
     "fix": "eslint --fix . && prettier --write .",

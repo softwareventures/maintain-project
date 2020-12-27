@@ -8,7 +8,7 @@ export async function filterIgnore(
     dest: string,
     filter: (line: string) => boolean
 ): Promise<Result> {
-    const sourcePath = require.resolve(`../template/${source}`);
+    const sourcePath = require.resolve(`../template/template/${source}`);
     const text = fs.readFile(sourcePath, "utf8");
     const filteredText = text
         .then(text => text.split(/\r?\n/))

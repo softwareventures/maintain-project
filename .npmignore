@@ -6,9 +6,9 @@
 /.prettierignore
 /renovate.json
 /.snyk
-/template/idea.template/dictionaries
-/template/idea.template/workspace.xml
-/template/idea.template/tasks.xml
+/template/template/idea.template/dictionaries
+/template/template/idea.template/workspace.xml
+/template/template/idea.template/tasks.xml
 *.ts
 !*.d.ts
 

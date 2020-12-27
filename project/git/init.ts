@@ -6,7 +6,9 @@ import {mkdir} from "../../task/mkdir";
 import {Result} from "../../task/result";
 
 export async function gitInit(destDir: string): Promise<Result> {
-    const templateDir = dirname(require.resolve("../../template/git.template/HEAD"));
+    const templateDir = dirname(
+        require.resolve("../../template/template/template/git.template/HEAD")
+    );
 
     const createDirectories = [
         mkdir(resolve(destDir, ".git", "objects", "info")),

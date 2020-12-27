@@ -4,5 +4,5 @@
     "lib": ["dom", "es2017"],
     "allowJs": true
   },
-  "exclude": ["**/test.ts", "**/*.test.ts", "template/**.ts"]
+  "exclude": ["**/test.ts", "**/*.test.ts", "template/template/**.ts"]
 }

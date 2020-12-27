@@ -11,7 +11,7 @@ export async function writeNpmFiles(project: Project): Promise<Result> {
 }
 
 async function writePackageJson(project: Project): Promise<Result> {
-    const sourcePath = require.resolve("../../template/package.json");
+    const sourcePath = require.resolve("../../template/template/package.json");
     const destPath = resolve(project.path, "package.json");
     const {npmPackage, gitHost} = project;
 

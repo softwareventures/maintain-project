@@ -11,7 +11,7 @@ import {writeIdeaRunConfigurations} from "./write-run-configurations";
 
 export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
     const templateDir = dirname(
-        require.resolve("../../template/idea.template/maintain-project.iml")
+        require.resolve("../../template/template/idea.template/maintain-project.iml")
     );
 
     const sourcePaths = recursiveReadDir(templateDir)

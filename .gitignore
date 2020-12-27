@@ -2,7 +2,7 @@
 /.idea/tasks.xml
 /.idea/shelf
 /node_modules
-/template/idea.template
+/template/template/idea.template
 package-lock.json
 yarn-error.log
 npm-debug.log*
@@ -10,7 +10,7 @@ npm-debug.log*
 *.d.ts
 *.js.map
 !/types/*.d.ts
-!/template/types/*.d.ts
+!/template/template/types/*.d.ts
 
 # macOS
 .DS_Store
