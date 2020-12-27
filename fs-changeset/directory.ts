@@ -18,13 +18,13 @@ export interface FileExists {
 export function insert(
     root: Directory,
     path: string | readonly string[],
-    file: FileNode
+    node: FileNode
 ): InsertResult {
     const pathSegments = isArray(path) ? path : path.split("/");
     return insertInternal(
         root,
         filter(pathSegments, segment => segment !== ""),
-        file
+        node
     );
 }
 
@@ -33,14 +33,6 @@ export function insertSubdirectory(
     path: string | readonly string[]
 ): InsertResult {
     return insert(root, path, emptyDirectory);
-}
-
-export function insertTextFile(
-    root: Directory,
-    path: string | readonly string[],
-    text: string
-): InsertResult {
-    return insert(root, path, {type: "text-file", text});
 }
 
 function insertInternal(root: Directory, path: readonly string[], file: FileNode): InsertResult {

@@ -1,4 +1,4 @@
 import {Directory} from "./directory";
-import {TextFile} from "./text-file";
+import {File} from "./file";
 
-export type FileNode = Directory | TextFile;
+export type FileNode = Directory | File;

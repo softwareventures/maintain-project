@@ -7,7 +7,7 @@ import {ignoreIf} from "../promises/promises";
 import {Success} from "../task/result";
 import {Directory} from "./directory";
 import {FsChangeset} from "./fs-changeset";
-import {TextFile} from "./text-file";
+import {File} from "./file";
 
 export type CommitResult = Success | CommitFailure;
 
@@ -43,7 +43,7 @@ interface OpenFsChangeset {
 
 async function open(path: string, changeset: FsChangeset): Promise<OpenResult> {
     const {root, overwrite = false} = changeset;
-    return openDirectory({path, file: root, overwrite}).then(openRoot => ({
+    return openDirectory({path, node: root, overwrite}).then(openRoot => ({
         type: "open-fs-changeset",
         path,
         openRoot
@@ -52,21 +52,21 @@ async function open(path: string, changeset: FsChangeset): Promise<OpenResult> {
 
 interface OpenOptions<T> {
     readonly path: string;
-    readonly file: T;
+    readonly node: T;
     readonly overwrite: boolean;
 }
 
-type OpenFile = OpenDirectory | OpenTextFile;
+type OpenNode = OpenDirectory | OpenFile;
 
 interface OpenDirectory {
     readonly type: "open-directory";
-    readonly entries: ReadonlyMap<string, OpenFile>;
+    readonly entries: ReadonlyMap<string, OpenNode>;
 }
 
-interface OpenTextFile {
-    readonly type: "open-text-file";
+interface OpenFile {
+    readonly type: "open-file";
     readonly fileHandle: fs.FileHandle;
-    readonly text: string;
+    readonly data: ArrayBufferLike;
 }
 
 async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirectory> {
@@ -81,15 +81,15 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
                     fs.stat(options.path).then(stat => stat.isDirectory())
             )
         )
-        .then(() => options.file.entries)
+        .then(() => options.node.entries)
         .then(
-            mapValueFn(async (file, relativePath) => {
+            mapValueFn(async (node, relativePath) => {
                 const path = resolve(options.path, relativePath);
-                switch (file.type) {
+                switch (node.type) {
                     case "directory":
-                        return openDirectory({path, file, overwrite});
-                    case "text-file":
-                        return openTextFile({path, file, overwrite});
+                        return openDirectory({path, node, overwrite});
+                    case "file":
+                        return openFile({path, node, overwrite});
                 }
             })
         )
@@ -97,11 +97,11 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
         .then(entries => ({type: "open-directory", entries}));
 }
 
-async function openTextFile(options: OpenOptions<TextFile>): Promise<OpenTextFile> {
+async function openFile(options: OpenOptions<File>): Promise<OpenFile> {
     const flags = options.overwrite ? "r+" : "wx+";
     return fs
         .open(options.path, flags)
-        .then(fileHandle => ({type: "open-text-file", fileHandle, text: options.file.text}));
+        .then(fileHandle => ({type: "open-file", fileHandle, data: options.node.data}));
 }
 
 async function write(changeset: OpenFsChangeset): Promise<void> {
@@ -111,12 +111,12 @@ async function write(changeset: OpenFsChangeset): Promise<void> {
 async function writeDirectory(directory: OpenDirectory): Promise<void> {
     return chain(directory.entries.values())
         .map(
-            mapFn(async file => {
-                switch (file.type) {
+            mapFn(async node => {
+                switch (node.type) {
                     case "open-directory":
-                        return writeDirectory(file);
-                    case "open-text-file":
-                        return writeTextFile(file);
+                        return writeDirectory(node);
+                    case "open-file":
+                        return writeFile(node);
                 }
             })
         )
@@ -124,6 +124,6 @@ async function writeDirectory(directory: OpenDirectory): Promise<void> {
         .map(async promise => promise.then(() => undefined)).value;
 }
 
-async function writeTextFile(file: OpenTextFile): Promise<void> {
-    return fs.writeFile(file.fileHandle, file.text, "utf8");
+async function writeFile(file: OpenFile): Promise<void> {
+    return fs.writeFile(file.fileHandle, file.data);
 }
