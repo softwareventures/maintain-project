@@ -34,6 +34,24 @@ export function* filter<T>(
     }
 }
 
+export function partition<T, U extends T>(
+    iterable: Iterable<T>,
+    predicate: (element: T, index: number) => element is U
+): [Iterable<U>, Iterable<Exclude<T, U>>];
+export function partition<T>(
+    iterable: Iterable<T>,
+    predicate: (element: T, index: number) => boolean
+): [Iterable<T>, Iterable<T>];
+export function partition<T>(
+    iterable: Iterable<T>,
+    predicate: (element: T, index: number) => boolean
+): [Iterable<T>, Iterable<T>] {
+    return [
+        filter(iterable, predicate),
+        filter(iterable, (element: T, index: number) => !predicate(element, index))
+    ];
+}
+
 export function* zip<T, U>(a: Iterable<T>, b: Iterable<U>): Iterable<[T, U]> {
     const ai = a[Symbol.iterator]();
     const bi = b[Symbol.iterator]();
