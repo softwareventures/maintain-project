@@ -2,6 +2,10 @@ export function empty<T>(iterable: Iterable<T>): boolean {
     return iterable[Symbol.iterator]().next().done ?? false;
 }
 
+export function notEmpty<T>(iterable: Iterable<T>): boolean {
+    return !empty(iterable);
+}
+
 export function* map<T, U>(
     iterable: Iterable<T>,
     f: (element: T, index: number) => U
