@@ -1,10 +1,10 @@
 import {filter, head, isArray, tail} from "@softwareventures/array";
 import {insert as mapInsert} from "../collections/maps";
-import {File} from "./file";
+import {FileNode} from "./file-node";
 
 export interface Directory {
     readonly type: "directory";
-    readonly entries: ReadonlyMap<string, File>;
+    readonly entries: ReadonlyMap<string, FileNode>;
 }
 
 export const emptyDirectory: Directory = {type: "directory", entries: new Map()};
@@ -18,7 +18,7 @@ export interface FileExists {
 export function insert(
     root: Directory,
     path: string | readonly string[],
-    file: File
+    file: FileNode
 ): InsertResult {
     const pathSegments = isArray(path) ? path : path.split("/");
     return insertInternal(
@@ -43,7 +43,7 @@ export function insertTextFile(
     return insert(root, path, {type: "text-file", text});
 }
 
-function insertInternal(root: Directory, path: readonly string[], file: File): InsertResult {
+function insertInternal(root: Directory, path: readonly string[], file: FileNode): InsertResult {
     const entryName = head(path);
 
     if (entryName == null) {
@@ -77,7 +77,7 @@ export interface ListOptions {
 
 export interface Entry {
     readonly path: string;
-    readonly file: File;
+    readonly file: FileNode;
 }
 
 export function list(options: ListOptions): IterableIterator<Entry> {
