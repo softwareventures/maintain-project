@@ -1,7 +1,12 @@
+import {isSuccess, Result} from "../result/result";
 import {zip} from "./iterators";
 
 export function copy<T, U>(map: ReadonlyMap<T, U>): Map<T, U> {
     return new Map(map);
+}
+
+export function empty<T, U>(map: ReadonlyMap<T, U>): boolean {
+    return map.size === 0;
 }
 
 export function mapValue<T, U, V>(map: ReadonlyMap<T, U>, f: (value: U, key: T) => V): Map<T, V> {
