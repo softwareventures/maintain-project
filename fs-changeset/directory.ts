@@ -1,5 +1,8 @@
 import {filter, head, isArray, tail} from "@softwareventures/array";
+import chain from "@softwareventures/chain";
 import {insert as mapInsert} from "../collections/maps";
+import {mapFailureFn, mapResultFn, Result} from "../result/result";
+import {FileExists} from "./file-exists";
 import {FileNode} from "./file-node";
 
 export interface Directory {
@@ -9,11 +12,9 @@ export interface Directory {
 
 export const emptyDirectory: Directory = {type: "directory", entries: new Map()};
 
-export type InsertResult = Directory | FileExists;
+export type InsertResult = Result<InsertFailureReason, Directory>;
 
-export interface FileExists {
-    readonly type: "file-exists";
-}
+export type InsertFailureReason = FileExists;
 
 export function insert(
     root: Directory,
@@ -40,25 +41,37 @@ function insertInternal(root: Directory, path: readonly string[], file: FileNode
 
     if (entryName == null) {
         if (file.type === "directory") {
-            return root;
+            return {type: "success", value: root};
         } else {
-            return {type: "file-exists"};
+            return {type: "failure", reasons: [{type: "file-exists", path: ""}]};
         }
     }
 
     const defaultEntry = path.length > 1 ? emptyDirectory : undefined;
     const existingEntry = root.entries.get(entryName) ?? defaultEntry;
 
-    if (existingEntry != null && existingEntry.type !== "directory") {
-        return {type: "file-exists"};
-    }
-
-    const newEntry = existingEntry == null ? file : insertInternal(existingEntry, tail(path), file);
-
-    if (newEntry.type === "file-exists") {
-        return newEntry;
+    if (existingEntry == null) {
+        return {
+            type: "success",
+            value: {...root, entries: mapInsert(root.entries, entryName, file)}
+        };
+    } else if (existingEntry.type !== "directory") {
+        return {type: "failure", reasons: [{type: "file-exists", path: entryName}]};
     } else {
-        return {type: "directory", entries: mapInsert(root.entries, entryName, newEntry)};
+        return chain(insertInternal(existingEntry, tail(path), file))
+            .map(
+                mapFailureFn(reason =>
+                    reason.type === "file-exists"
+                        ? {...reason, path: `${entryName}/${reason.path}`}
+                        : reason
+                )
+            )
+            .map(
+                mapResultFn(newEntry => ({
+                    ...root,
+                    entries: mapInsert(root.entries, entryName, newEntry)
+                }))
+            ).value;
     }
 }
 

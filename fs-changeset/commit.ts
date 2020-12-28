@@ -1,21 +1,17 @@
-import {resolve} from "path";
 import {promises as fs} from "fs";
+import {resolve} from "path";
 import chain from "@softwareventures/chain";
 import {mapFn} from "../collections/iterators";
 import {liftPromises, liftResults, mapValue} from "../collections/maps";
 import {mapAsyncResultFn, mapResultFn, Result} from "../result/result";
 import {Directory} from "./directory";
-import {FsChangeset} from "./fs-changeset";
 import {File} from "./file";
+import {FileExists} from "./file-exists";
+import {FsChangeset} from "./fs-changeset";
 
 export type CommitResult = Result<CommitFailureReason>;
 
 export type CommitFailureReason = FileExists;
-
-export interface FileExists {
-    readonly type: "file-exists";
-    readonly path: string;
-}
 
 export async function commit(path: string, changeset: FsChangeset): Promise<CommitResult> {
     return open(path, changeset).then(mapAsyncResultFn(write));
