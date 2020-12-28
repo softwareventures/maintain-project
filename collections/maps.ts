@@ -23,6 +23,30 @@ export function mapValueFn<T, U, V>(
     return map => mapValue(map, f);
 }
 
+export function partitionValue<TKey, TValue, TValue2 extends TValue>(
+    map: ReadonlyMap<TKey, TValue>,
+    predicate: (value: TValue) => value is TValue2
+): [Map<TKey, TValue2>, Map<TKey, Exclude<TValue, TValue2>>];
+export function partitionValue<TKey, TValue>(
+    map: ReadonlyMap<TKey, TValue>,
+    predicate: (value: TValue) => boolean
+): [Map<TKey, TValue>, Map<TKey, TValue>];
+export function partitionValue<TKey, TValue>(
+    map: ReadonlyMap<TKey, TValue>,
+    predicate: (value: TValue) => boolean
+): [Map<TKey, TValue>, Map<TKey, TValue>] {
+    const a = new Map();
+    const b = new Map();
+    for (const [key, value] of map.entries()) {
+        if (predicate(value)) {
+            a.set(key, value);
+        } else {
+            b.set(key, value);
+        }
+    }
+    return [a, b];
+}
+
 export function insert<T, U>(map: ReadonlyMap<T, U>, key: T, value: U): Map<T, U> {
     return copy(map).set(key, value);
 }
