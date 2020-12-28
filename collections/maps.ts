@@ -1,5 +1,5 @@
 import {isSuccess, Result} from "../result/result";
-import {zip} from "./iterators";
+import {intoArray, concatMap, zip} from "./iterators";
 
 export function copy<T, U>(map: ReadonlyMap<T, U>): Map<T, U> {
     return new Map(map);
@@ -55,4 +55,18 @@ export async function liftPromises<T, U>(promises: ReadonlyMap<T, Promise<U>>): 
     return Promise.all(promises.values())
         .then(values => zip(promises.keys(), values))
         .then(entries => new Map(entries));
+}
+
+export function liftResults<TKey, TReason, TValue>(
+    map: ReadonlyMap<TKey, Result<TReason, TValue>>
+): Result<TReason, Map<TKey, TValue>> {
+    const [successes, failures] = partitionValue(map, isSuccess);
+    if (empty(failures)) {
+        return {type: "success", value: mapValue(successes, success => success.value)};
+    } else {
+        return {
+            type: "failure",
+            reasons: intoArray(concatMap(failures.values(), failure => failure.reasons))
+        };
+    }
 }
