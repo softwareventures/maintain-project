@@ -1,6 +1,10 @@
 import chain from "@softwareventures/chain";
 import {mapResultFn, Result} from "../result/result";
-import {Directory, insert as insertIntoDirectory} from "./directory";
+import {
+    Directory,
+    insert as insertIntoDirectory,
+    insertSubdirectory as insertSubdirectoryIntoDirectory
+} from "./directory";
 import {FileExists} from "./file-exists";
 import {FileNode} from "./file-node";
 
@@ -26,4 +30,19 @@ export function insertFn(
     node: FileNode
 ): (fsChangeset: FsChangeset) => InsertResult {
     return fsChangeset => insert(fsChangeset, path, node);
+}
+
+export function insertSubdirectory(
+    fsChangeset: FsChangeset,
+    path: string | readonly string[]
+): InsertResult {
+    return chain(insertSubdirectoryIntoDirectory(fsChangeset.root, path)).map(
+        mapResultFn(root => ({...fsChangeset, root}))
+    ).value;
+}
+
+export function insertSubdirectoryFn(
+    path: string | readonly string[]
+): (fsChangeset: FsChangeset) => InsertResult {
+    return fsChangeset => insertSubdirectory(fsChangeset, path);
 }
