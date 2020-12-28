@@ -4,7 +4,7 @@ import {copy} from "../task/copy";
 import {combineResults, mapResultFn, Result} from "../task/result";
 import {writeEslintIgnore} from "./eslint/write";
 import {gitInit} from "./git/init";
-import {writeGitIgnore} from "./git/write";
+import {writeGitIgnore} from "./git/write-legacy";
 import {writeIdeaProjectFiles} from "./idea/write";
 import {writeNpmFiles} from "./npm/write";
 import {writePrettierIgnore} from "./prettier/write-legacy";
