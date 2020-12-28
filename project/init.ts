@@ -2,7 +2,7 @@ import {promises as fs} from "fs";
 import emptyDir = require("empty-dir");
 import {copy} from "../task/copy";
 import {combineResults, mapResultFn, Result} from "../task/result";
-import {writeEslintIgnore} from "./eslint/write";
+import {writeEslintIgnore} from "./eslint/write-legacy";
 import {gitInit} from "./git/init";
 import {writeGitIgnore} from "./git/write-legacy";
 import {writeIdeaProjectFiles} from "./idea/write";
