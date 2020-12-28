@@ -42,6 +42,24 @@ export function* filter<T>(
     }
 }
 
+export function* concatMap<T, U>(
+    iterable: Iterable<T>,
+    f: (element: T, index: number) => Iterable<U>
+): Iterable<U> {
+    let i = 0;
+    for (const element of iterable) {
+        for (const mapped of f(element, i++)) {
+            yield mapped;
+        }
+    }
+}
+
+export function concatMapFn<T, U>(
+    f: (element: T, index: number) => Iterable<U>
+): (iterable: Iterable<T>) => Iterable<U> {
+    return iterable => concatMap(iterable, f);
+}
+
 export function partition<T, U extends T>(
     iterable: Iterable<T>,
     predicate: (element: T, index: number) => element is U
