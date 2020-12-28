@@ -7,7 +7,7 @@ import {gitInit} from "./git/init";
 import {writeGitIgnore} from "./git/write";
 import {writeIdeaProjectFiles} from "./idea/write";
 import {writeNpmFiles} from "./npm/write";
-import {writePrettierIgnore} from "./prettier/write";
+import {writePrettierIgnore} from "./prettier/write-legacy";
 import {Project} from "./project";
 import {writeRenovateConfig} from "./renovate/write-legacy";
 import {writeTypeScriptFiles} from "./typescript/write";
