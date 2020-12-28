@@ -10,6 +10,18 @@ export interface Failure<T = void> {
     readonly reasons: readonly T[];
 }
 
+export function isSuccess<TReason, TValue>(
+    result: Result<TReason, TValue>
+): result is Success<TValue> {
+    return result.type === "success";
+}
+
+export function isFailure<TReason, TValue>(
+    result: Result<TReason, TValue>
+): result is Failure<TReason> {
+    return result.type === "failure";
+}
+
 export function mapResult<TReason, TValue, TNewValue>(
     result: Result<TReason, TValue>,
     f: (value: TValue) => TNewValue
