@@ -1,11 +1,14 @@
-import {copy} from "../../task/copy";
-import {Result} from "../../task/result";
+import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {copy} from "../../template/copy";
 import {Project} from "../project";
 
-export async function writeRenovateConfig(project: Project): Promise<Result> {
-    if (project.target === "npm") {
-        return copy("renovate.lib.template.json", project.path, "renovate.json");
-    } else {
-        return copy("renovate.app.template.json", project.path, "renovate.json");
-    }
+export function writeRenovateConfig(
+    project: Project
+): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+    const file =
+        project.target === "npm"
+            ? copy("renovate.lib.template.json")
+            : copy("renovate.app.template.json");
+
+    return async fsChangeset => file.then(file => insert(fsChangeset, "renovate.json", file));
 }
