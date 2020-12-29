@@ -122,3 +122,20 @@ export function chainResultsFn<TReason, TValue>(
 ): (initial: TValue) => Result<TReason, TValue> {
     return initial => chainResults(initial, actions);
 }
+
+export async function chainAsyncResults<TReason, TValue>(
+    initial: TValue,
+    actions: Iterable<(value: TValue) => PromiseLike<Result<TReason, TValue>>>
+): Promise<Result<TReason, TValue>> {
+    return fold(
+        actions,
+        async (accumulator, action) => accumulator.then(bindAsyncResultFn(action)),
+        Promise.resolve<Result<TReason, TValue>>({type: "success", value: initial})
+    );
+}
+
+export function chainAsyncResultsFn<TReason, TValue>(
+    actions: Iterable<(value: TValue) => PromiseLike<Result<TReason, TValue>>>
+): (initial: TValue) => Promise<Result<TReason, TValue>> {
+    return async initial => chainAsyncResults(initial, actions);
+}
