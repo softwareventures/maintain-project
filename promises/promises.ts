@@ -29,3 +29,9 @@ export function ignoreIf(
             }
         });
 }
+
+export function liftFunctionFromPromise<TA, TResult>(
+    promise: Promise<(a: TA) => TResult>
+): (a: TA) => Promise<TResult> {
+    return async a => promise.then(f => f(a));
+}
