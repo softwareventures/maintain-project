@@ -11,7 +11,7 @@ import {writePrettierIgnore} from "./prettier/write-legacy";
 import {Project} from "./project";
 import {writeRenovateConfig} from "./renovate/write-legacy";
 import {writeTypeScriptFiles} from "./typescript/write-legacy";
-import {writeWebpackConfig} from "./webpack/write";
+import {writeWebpackConfig} from "./webpack/write-legacy";
 import {yarnFix} from "./yarn/fix";
 import {yarnInstall} from "./yarn/install";
 
