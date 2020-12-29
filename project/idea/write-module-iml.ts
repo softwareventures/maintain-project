@@ -1,15 +1,21 @@
-import {resolve} from "path";
-import {modifyXml} from "../../task/modify-xml";
-import {Result} from "../../task/result";
+import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {modifyXml} from "../../template/modify-xml";
 import {Project} from "../project";
 
-export async function writeIdeaModuleIml(project: Project): Promise<Result> {
-    return modifyXml("idea.template/maintain-project.iml", document => {
+export function writeIdeaModuleIml(
+    project: Project
+): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+    const file = modifyXml("idea.template/maintain-project.iml", dom => {
+        const document = dom.window.document;
+
         const excludeFolder = document.querySelector(
             'module:root>component[name=NewModuleRootManager]>content>excludeFolder[url="file://$MODULE_DIR$/template"]'
         );
         excludeFolder?.parentNode?.removeChild(excludeFolder);
 
-        return {destPath: resolve(project.path, ".idea", `${project.npmPackage.name}.iml`)};
+        return dom;
     });
+
+    return async fsChangeset =>
+        file.then(file => insert(fsChangeset, `.idea/${project.npmPackage.name}.iml`, file));
 }
