@@ -7,7 +7,7 @@ import {Project} from "../project";
 import {writeIdeaDictionaries} from "./dictionary/write-legacy";
 import {writeIdeaModuleIml} from "./write-module-iml-legacy";
 import {writeIdeaModulesXml} from "./write-modules-xml-legacy";
-import {writeIdeaRunConfigurations} from "./write-run-configurations";
+import {writeIdeaRunConfigurations} from "./write-run-configurations-legacy";
 
 export async function writeIdeaProjectFiles(project: Project): Promise<Result> {
     const templateDir = dirname(
