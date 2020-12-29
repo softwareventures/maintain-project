@@ -110,15 +110,15 @@ export function mapFailureFn<TReason, TValue, TNewReason>(
     return reason => mapFailure(reason, f);
 }
 
-export function sequenceResults<TReason, TValue>(
-    result: Result<TReason, TValue>,
+export function chainResults<TReason, TValue>(
+    initial: TValue,
     actions: Iterable<(value: TValue) => Result<TReason, TValue>>
 ): Result<TReason, TValue> {
-    return fold(actions, bindResult, result);
+    return fold(actions, bindResult, {type: "success", value: initial} as Result<TReason, TValue>);
 }
 
-export function sequenceResultsFn<TReason, TValue>(
+export function chainResultsFn<TReason, TValue>(
     actions: Iterable<(value: TValue) => Result<TReason, TValue>>
-): (result: Result<TReason, TValue>) => Result<TReason, TValue> {
-    return result => sequenceResults(result, actions);
+): (initial: TValue) => Result<TReason, TValue> {
+    return initial => chainResults(initial, actions);
 }
