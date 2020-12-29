@@ -116,3 +116,9 @@ export function sequenceResults<TReason, TValue>(
 ): Result<TReason, TValue> {
     return fold(actions, bindResult, result);
 }
+
+export function sequenceResultsFn<TReason, TValue>(
+    actions: Iterable<(value: TValue) => Result<TReason, TValue>>
+): (result: Result<TReason, TValue>) => Result<TReason, TValue> {
+    return result => sequenceResults(result, actions);
+}
