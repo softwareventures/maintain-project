@@ -1,14 +1,25 @@
-import {filterFn, mapFn} from "@softwareventures/array";
+import {promises as fs} from "fs";
+import {dirname, resolve} from "path";
 import chain from "@softwareventures/chain";
+import {filterFn, map, mapFn} from "@softwareventures/array";
 import {JSDOM} from "jsdom";
 import formatXml = require("xml-formatter");
-import {textFile} from "../../../fs-changeset/file";
-import {FsChangeset, insert, InsertResult} from "../../../fs-changeset/fs-changeset";
+import {combineResults, Result} from "../../../task/result";
+import {Project} from "../../project";
 import {IdeaDictionary} from "./idea-dictionary";
 
-export function writeIdeaDictionary(
+export async function writeIdeaDictionaries(project: Project): Promise<Result> {
+    return combineResults(
+        map(project.ideaProject?.dictionaries ?? [], async dictionary =>
+            writeIdeaDictionary(project.path, dictionary)
+        )
+    );
+}
+
+export async function writeIdeaDictionary(
+    destDir: string,
     dictionary: IdeaDictionary
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+): Promise<Result> {
     const dom = new JSDOM("<component/>", {contentType: "application/xml"});
     const document = dom.window.document;
 
@@ -41,8 +52,20 @@ export function writeIdeaDictionary(
         whiteSpaceAtEndOfSelfclosingTag: true
     });
 
-    const file = textFile(xmlText);
+    const destPath = resolve(destDir, ".idea", "dictionaries", `${dictionary.name}.xml`);
 
-    return async fsChangeset =>
-        insert(fsChangeset, ".idea/dictionaries/${dictionary.name}.xml", file);
+    return fs
+        .mkdir(dirname(destPath), {recursive: true})
+        .then(async () => xmlText)
+        .then(async xmlText => fs.writeFile(destPath, xmlText, {encoding: "utf8", flag: "wx"}))
+        .then(
+            () => ({type: "success"}),
+            reason => {
+                if (reason.code === "EEXIST") {
+                    return {type: "not-empty"};
+                } else {
+                    throw reason;
+                }
+            }
+        );
 }
