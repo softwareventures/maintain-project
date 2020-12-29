@@ -1,4 +1,5 @@
 import {map} from "@softwareventures/array";
+import {fold} from "../collections/iterators";
 
 export type Result<TReason = void, TValue = void> = Success<TValue> | Failure<TReason>;
 
@@ -107,4 +108,11 @@ export function mapFailureFn<TReason, TValue, TNewReason>(
     f: (reason: TReason) => TNewReason
 ): (result: Result<TReason, TValue>) => Result<TNewReason, TValue> {
     return reason => mapFailure(reason, f);
+}
+
+export function sequenceResults<TReason, TValue>(
+    result: Result<TReason, TValue>,
+    actions: Iterable<(value: TValue) => Result<TReason, TValue>>
+): Result<TReason, TValue> {
+    return fold(actions, bindResult, result);
 }
