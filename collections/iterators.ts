@@ -42,6 +42,26 @@ export function* filter<T>(
     }
 }
 
+export function fold<T, U>(
+    iterable: Iterable<T>,
+    f: (accumulator: U, element: T, index: number) => U,
+    initial: U
+): U {
+    let i = 0;
+    let result = initial;
+    for (const element of iterable) {
+        result = f(result, element, i++);
+    }
+    return result;
+}
+
+export function foldFn<T, U>(
+    f: (accumulator: U, element: T, index: number) => U,
+    initial: U
+): (iterable: Iterable<T>) => U {
+    return iterable => fold(iterable, f, initial);
+}
+
 export function* concatMap<T, U>(
     iterable: Iterable<T>,
     f: (element: T, index: number) => Iterable<U>
