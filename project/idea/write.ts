@@ -6,7 +6,7 @@ import {combineResults, Result} from "../../task/result";
 import {Project} from "../project";
 import {writeIdeaDictionaries} from "./dictionary/write";
 import {writeIdeaModuleIml} from "./write-module-iml";
-import {writeIdeaModulesXml} from "./write-modules-xml";
+import {writeIdeaModulesXml} from "./write-modules-xml-legacy";
 import {writeIdeaRunConfigurations} from "./write-run-configurations";
 
 export async function writeIdeaProjectFiles(project: Project): Promise<Result> {

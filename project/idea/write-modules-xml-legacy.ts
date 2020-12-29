@@ -1,13 +1,10 @@
-import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
-import {modifyXml} from "../../template/modify-xml";
+import {resolve} from "path";
+import {modifyXml} from "../../task/modify-xml";
+import {Result} from "../../task/result";
 import {Project} from "../project";
 
-export function writeIdeaModulesXml(
-    project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
-    const file = modifyXml("idea.template/modules.xml", dom => {
-        const document = dom.window.document;
-
+export async function writeIdeaModulesXml(project: Project): Promise<Result> {
+    return modifyXml("idea.template/modules.xml", document => {
         const module = document.querySelector("project:root>component>modules>module");
         const fileUrl = module
             ?.getAttribute("fileurl")
@@ -22,8 +19,6 @@ export function writeIdeaModulesXml(
             module?.setAttribute("filepath", filePath);
         }
 
-        return dom;
+        return {destPath: resolve(project.path, ".idea", "modules.xml")};
     });
-
-    return async fsChangeset => file.then(file => insert(fsChangeset, ".idea/modules.xml", file));
 }
