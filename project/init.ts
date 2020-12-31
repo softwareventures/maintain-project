@@ -6,7 +6,7 @@ import {writeEslintIgnore} from "./eslint/write-legacy";
 import {gitInit} from "./git/init";
 import {writeGitIgnore} from "./git/write-legacy";
 import {writeIdeaProjectFiles} from "./idea/write-legacy";
-import {writeNpmFiles} from "./npm/write";
+import {writeNpmFiles} from "./npm/write-legacy";
 import {writePrettierIgnore} from "./prettier/write-legacy";
 import {Project} from "./project";
 import {writeRenovateConfig} from "./renovate/write-legacy";
