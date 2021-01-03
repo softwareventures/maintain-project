@@ -1,5 +1,12 @@
 import {fork} from "child_process";
-import {YarnResult} from "../../task/result";
+import {Result} from "../../result/result";
+
+export type YarnResult = Result<YarnFailureReason>;
+
+export interface YarnFailureReason {
+    readonly type: "yarn-failed";
+    readonly code: number | null;
+}
 
 export async function yarn(dir: string, ...args: string[]): Promise<YarnResult> {
     return new Promise((resolve, reject) =>
@@ -7,9 +14,9 @@ export async function yarn(dir: string, ...args: string[]): Promise<YarnResult> 
             .on("error", reject)
             .on("exit", code => {
                 if (code === 0) {
-                    resolve({type: "success"});
+                    resolve({type: "success", value: undefined});
                 } else {
-                    resolve({type: "yarn-failed"});
+                    resolve({type: "failure", reasons: [{type: "yarn-failed", code}]});
                 }
             })
     );

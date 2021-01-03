@@ -48,6 +48,18 @@ export default async function init(project: Project): Promise<Result> {
         writeNpmFiles(project),
         gitInit(project.path)
     ])
-        .then(mapResultFn(async () => yarnInstall(project.path)))
-        .then(mapResultFn(async () => yarnFix(project.path)));
+        .then(
+            mapResultFn(async () =>
+                yarnInstall(project.path).then(result =>
+                    result.type === "success" ? result : {type: "yarn-install-failed"}
+                )
+            )
+        )
+        .then(
+            mapResultFn(async () =>
+                yarnFix(project.path).then(result =>
+                    result.type === "success" ? result : {type: "yarn-fix-failed"}
+                )
+            )
+        );
 }

@@ -1,8 +1,12 @@
-import {Result} from "../../task/result";
+import {mapFailureFn, Result} from "../../result/result";
 import {yarn} from "./yarn";
 
-export async function yarnFix(dir: string): Promise<Result> {
-    return yarn(dir, "fix").then(result =>
-        result.type === "yarn-failed" ? {type: "yarn-fix-failed"} : result
-    );
+export type YarnFixResult = Result<YarnFixFailureReason>;
+
+export interface YarnFixFailureReason {
+    readonly type: "yarn-fix-failed";
+}
+
+export async function yarnFix(dir: string): Promise<YarnFixResult> {
+    return yarn(dir, "fix").then(mapFailureFn(() => ({type: "yarn-fix-failed"})));
 }
