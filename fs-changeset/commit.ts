@@ -128,5 +128,5 @@ async function writeDirectory(directory: OpenDirectory): Promise<void> {
 }
 
 async function writeFile(file: OpenFile): Promise<void> {
-    return fs.writeFile(file.fileHandle, file.data);
+    return fs.writeFile(file.fileHandle, file.data).then(async () => file.fileHandle.close());
 }
