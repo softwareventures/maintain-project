@@ -52,5 +52,5 @@ function writeIdeaDictionary(
     const file = textFile(xmlText);
 
     return async fsChangeset =>
-        insert(fsChangeset, ".idea/dictionaries/${dictionary.name}.xml", file);
+        insert(fsChangeset, `.idea/dictionaries/${dictionary.name}.xml`, file);
 }
