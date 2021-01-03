@@ -35,3 +35,7 @@ export function liftFunctionFromPromise<TA, TResult>(
 ): (a: TA) => Promise<TResult> {
     return async a => promise.then(f => f(a));
 }
+
+export function asyncFn<TA, TResult>(f: (a: TA) => TResult): (a: TA) => Promise<TResult> {
+    return async a => f(a);
+}
