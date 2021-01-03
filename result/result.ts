@@ -93,6 +93,14 @@ export function bindAsyncResultFn<TReason, TValue, TNewReason, TNewValue>(
     return async result => bindAsyncResult(result, f);
 }
 
+export function mapFailure<TReason, TValue>(
+    result: Result<TReason, TValue>,
+    f: (reason: TReason) => never
+): Success<TValue>;
+export function mapFailure<TReason, TValue, TNewReason>(
+    result: Result<TReason, TValue>,
+    f: (reason: TReason) => TNewReason
+): Result<TNewReason, TValue>;
 export function mapFailure<TReason, TValue, TNewReason>(
     result: Result<TReason, TValue>,
     f: (reason: TReason) => TNewReason
@@ -104,6 +112,12 @@ export function mapFailure<TReason, TValue, TNewReason>(
     }
 }
 
+export function mapFailureFn<TReason, TValue>(
+    f: (reason: TReason) => never
+): (result: Result<TReason, TValue>) => Success<TValue>;
+export function mapFailureFn<TReason, TValue, TNewReason>(
+    f: (reason: TReason) => TNewReason
+): (result: Result<TReason, TValue>) => Result<TNewReason, TValue>;
 export function mapFailureFn<TReason, TValue, TNewReason>(
     f: (reason: TReason) => TNewReason
 ): (result: Result<TReason, TValue>) => Result<TNewReason, TValue> {
