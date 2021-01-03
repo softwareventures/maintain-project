@@ -1,4 +1,4 @@
-import {mapFn} from "@softwareventures/array";
+import {filterFn, mapFn} from "@softwareventures/array";
 import {FsChangeset, insertFn, InsertResult} from "../../fs-changeset/fs-changeset";
 import {liftFunctionFromPromise} from "../../promises/promises";
 import {chainAsyncResults, chainAsyncResultsFn} from "../../result/result";
@@ -24,6 +24,12 @@ export function writeIdeaProjectFiles(
 
 async function writeIdeaMiscFiles(fsChangeset: FsChangeset): Promise<InsertResult> {
     return listTemplates("idea.template")
+        .then(filterFn(path => path.split("/")[0] !== "dictionaries"))
+        .then(filterFn(path => path.split("/")[0] !== "runConfigurations"))
+        .then(filterFn(path => path !== "workspace.xml"))
+        .then(filterFn(path => path !== "task.xml"))
+        .then(filterFn(path => !path.match(/\.iml$/)))
+        .then(filterFn(path => path !== "modules.xml"))
         .then(
             mapFn(async path =>
                 copy(`idea.template/${path}`).then(file => insertFn(`.idea/${path}`, file))
