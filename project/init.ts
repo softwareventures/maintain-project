@@ -3,7 +3,7 @@ import emptyDir = require("empty-dir");
 import {copy} from "../task/copy";
 import {combineResults, mapResultFn, Result} from "../task/result";
 import {writeEslintIgnore} from "./eslint/write-legacy";
-import {gitInit} from "./git/init";
+import {gitInit} from "./git/init-legacy";
 import {writeGitIgnore} from "./git/write-legacy";
 import {writeIdeaProjectFiles} from "./idea/write-legacy";
 import {writeNpmFiles} from "./npm/write-legacy";

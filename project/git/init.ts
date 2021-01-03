@@ -1,36 +1,23 @@
-import {dirname, relative, resolve, sep} from "path";
-import {allFn, mapFn} from "@softwareventures/array";
-import recursiveReadDir = require("recursive-readdir");
-import {copy} from "../../task/copy";
-import {mkdir} from "../../task/mkdir";
-import {Result} from "../../task/result";
+import {mapFn} from "@softwareventures/array";
+import {FsChangeset, insertFn, InsertResult, insertSubdirectoryFn} from "../../fs-changeset/fs-changeset";
+import {asyncFn, liftFunctionFromPromise} from "../../promises/promises";
+import {chainAsyncResults, chainAsyncResultsFn, chainResultsFn} from "../../result/result";
+import {copy} from "../../template/copy";
+import {listTemplates} from "../../template/list";
 
-export async function gitInit(destDir: string): Promise<Result> {
-    const templateDir = dirname(
-        require.resolve("../../template/template/template/git.template/HEAD")
-    );
-
-    const createDirectories = [
-        mkdir(resolve(destDir, ".git", "objects", "info")),
-        mkdir(resolve(destDir, ".git", "objects", "pack")),
-        mkdir(resolve(destDir, ".git", "refs", "heads")),
-        mkdir(resolve(destDir, ".git", "refs", "tags")),
-        mkdir(resolve(destDir, ".git", "hooks"))
-    ];
-
-    const copyFiles = recursiveReadDir(templateDir)
-        .then(mapFn(path => relative(templateDir, path)))
-        .then(
-            mapFn(async path => {
-                const source = "git.template" + sep + path;
-                const dest = ".git" + sep + path;
-
-                return copy(source, destDir, dest);
-            })
-        );
-
-    return copyFiles
-        .then(async copyFiles => Promise.all([...createDirectories, ...copyFiles]))
-        .then(allFn(result => result.type === "success"))
-        .then(success => (success ? {type: "success"} : {type: "not-empty"}));
+export async function gitInit(fsChangeset: FsChangeset): Promise<InsertResult> {
+    return chainAsyncResults(fsChangeset, [
+        asyncFn(chainResultsFn([
+            insertSubdirectoryFn(".git/objects/info"),
+            insertSubdirectoryFn(".git/objects/pack"),
+            insertSubdirectoryFn(".git/refs/heads"),
+            insertSubdirectoryFn(".git/refs/tags"),
+            insertSubdirectoryFn(".git/hooks")
+        ])),
+        liftFunctionFromPromise(listTemplates("git.template")
+            .then(mapFn(async path => copy(path)
+                .then(file => insertFn(`.git/${path}`, file))))
+            .then(mapFn(liftFunctionFromPromise))
+            .then(chainAsyncResultsFn))
+    ]);
 }
