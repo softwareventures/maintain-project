@@ -23,7 +23,11 @@ export async function gitInit(fsChangeset: FsChangeset): Promise<InsertResult> {
         ),
         liftFunctionFromPromise(
             listTemplates("git.template")
-                .then(mapFn(async path => copy(path).then(file => insertFn(`.git/${path}`, file))))
+                .then(
+                    mapFn(async path =>
+                        copy(`git.template/${path}`).then(file => insertFn(`.git/${path}`, file))
+                    )
+                )
                 .then(mapFn(liftFunctionFromPromise))
                 .then(chainAsyncResultsFn)
         )
