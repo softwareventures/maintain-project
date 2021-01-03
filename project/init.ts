@@ -1,65 +1,56 @@
-import {promises as fs} from "fs";
-import emptyDir = require("empty-dir");
-import {copy} from "../task/copy";
-import {combineResults, mapResultFn, Result} from "../task/result";
-import {writeEslintIgnore} from "./eslint/write-legacy";
-import {gitInit} from "./git/init-legacy";
-import {writeGitIgnore} from "./git/write-legacy";
-import {writeIdeaProjectFiles} from "./idea/write-legacy";
-import {writeNpmFiles} from "./npm/write-legacy";
-import {writePrettierIgnore} from "./prettier/write-legacy";
+import {commit, CommitFailureReason} from "../fs-changeset/commit";
+import {emptyDirectory} from "../fs-changeset/directory";
+import {FsChangeset} from "../fs-changeset/fs-changeset";
+import {bindAsyncResultFn, chainAsyncResults, mapFailureFn, Result} from "../result/result";
+import {writeEsLintIgnore} from "./eslint/write";
+import {gitInit} from "./git/init";
+import {writeGitIgnore} from "./git/write";
+import {writeGitHubConfig} from "./github/write";
+import {writeIdeaProjectFiles} from "./idea/write";
+import {writeNpmFiles} from "./npm/write";
+import {writePrettierIgnore} from "./prettier/write";
 import {Project} from "./project";
-import {writeRenovateConfig} from "./renovate/write-legacy";
-import {writeTypeScriptFiles} from "./typescript/write-legacy";
-import {writeWebpackConfig} from "./webpack/write-legacy";
-import {yarnFix} from "./yarn/fix";
-import {yarnInstall} from "./yarn/install";
+import {writeRenovateConfig} from "./renovate/write";
+import {writeTypeScriptFiles} from "./typescript/write";
+import {writeWebpackConfig} from "./webpack/write";
+import {yarnFix, YarnFixFailureReason} from "./yarn/fix";
+import {yarnInstall, YarnInstallFailureReason} from "./yarn/install";
 
-export default async function init(project: Project): Promise<Result> {
-    const mkdir = fs.mkdir(project.path, {recursive: true});
-    const isDirectory = mkdir.then(
-        () => true,
-        reason => {
-            if (reason?.code === "EEXIST") {
-                return false;
-            } else {
-                throw reason;
-            }
-        }
-    );
+export type InitResult = Result<InitFailureReason>;
 
-    if (!(await isDirectory)) {
-        return {type: "not-directory"};
-    }
+export type InitFailureReason =
+    | CommitFailureReason
+    | YarnInstallFailureReason
+    | YarnFixFailureReason;
 
-    if (!(await emptyDir(project.path))) {
-        return {type: "not-empty"};
-    }
+export default async function init(project: Project): Promise<InitResult> {
+    const fsChangeset: FsChangeset = {
+        root: emptyDirectory,
+        overwrite: false
+    };
 
-    return combineResults([
-        copy("github.template/workflows/ci.yml", project.path, ".github/workflows/ci.yml"),
+    return chainAsyncResults(fsChangeset, [
+        writeGitHubConfig,
         writeRenovateConfig(project),
         writePrettierIgnore(project),
         writeGitIgnore(project),
-        writeEslintIgnore(project),
+        writeEsLintIgnore(project),
         writeTypeScriptFiles(project),
         writeWebpackConfig(project),
         writeIdeaProjectFiles(project),
         writeNpmFiles(project),
-        gitInit(project.path)
+        gitInit
     ])
         .then(
-            mapResultFn(async () =>
-                yarnInstall(project.path).then(result =>
-                    result.type === "success" ? result : {type: "yarn-install-failed"}
-                )
-            )
+            mapFailureFn(() => {
+                throw new Error("Internal error initializing project");
+            })
+        )
+        .then(bindAsyncResultFn(async fsChangeset => commit(project.path, fsChangeset)))
+        .then(
+            bindAsyncResultFn<InitFailureReason>(async () => yarnInstall(project.path))
         )
         .then(
-            mapResultFn(async () =>
-                yarnFix(project.path).then(result =>
-                    result.type === "success" ? result : {type: "yarn-fix-failed"}
-                )
-            )
+            bindAsyncResultFn<InitFailureReason>(async () => yarnFix(project.path))
         );
 }

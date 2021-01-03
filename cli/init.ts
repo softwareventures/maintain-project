@@ -1,4 +1,6 @@
 import {exit} from "process";
+import {forEachFn, mapFn} from "@softwareventures/array";
+import chain from "@softwareventures/chain";
 import init from "../project/init";
 import {createProject} from "../project/project";
 
@@ -29,22 +31,23 @@ export function cliInit(path: string, options: InitOptions): void {
                 case "success":
                     exit();
                     break;
-                case "not-directory":
-                    console.error("Target exists and is not a directory");
+                case "failure":
+                    chain(result.reasons)
+                        .map(
+                            mapFn(reason => {
+                                switch (reason.type) {
+                                    // TODO: File exists and is not a directory.
+                                    case "file-exists":
+                                        return "Directory not empty";
+                                    case "yarn-install-failed":
+                                        return "yarn install failed";
+                                    case "yarn-fix-failed":
+                                        return "Failed to apply code style rules";
+                                }
+                            })
+                        )
+                        .map(forEachFn(message => console.error(message)));
                     exit(1);
-                    break;
-                case "not-empty":
-                    console.error("Directory not empty");
-                    exit(1);
-                    break;
-                case "yarn-install-failed":
-                    console.error("yarn install failed");
-                    exit(1);
-                    break;
-                case "yarn-fix-failed":
-                    console.error("Failed to apply code style rules");
-                    exit(1);
-                    break;
             }
         })
         .catch(reason => {

@@ -123,7 +123,7 @@ async function writeDirectory(directory: OpenDirectory): Promise<void> {
                 }
             })
         )
-        .map(async results => Promise.resolve(results))
+        .map(async results => Promise.all(results))
         .map(async promise => promise.then(() => undefined)).value;
 }
 
