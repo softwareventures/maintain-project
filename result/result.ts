@@ -59,7 +59,7 @@ export function mapAsyncResultFn<TReason, TValue, TNewValue>(
     return async result => mapAsyncResult(result, f);
 }
 
-export function bindResult<TReason, TValue, TNewReason, TNewValue>(
+export function bindResult<TReason, TNewReason = TReason, TValue = void, TNewValue = void>(
     result: Result<TReason, TValue>,
     f: (value: TValue) => Result<TNewReason | TReason, TNewValue>
 ): Result<TNewReason | TReason, TNewValue> {
@@ -70,13 +70,18 @@ export function bindResult<TReason, TValue, TNewReason, TNewValue>(
     }
 }
 
-export function bindResultFn<TReason, TValue, TNewReason, TNewValue>(
+export function bindResultFn<TReason, TNewReason = TReason, TValue = void, TNewValue = void>(
     f: (value: TValue) => Result<TNewReason | TReason, TNewValue>
 ): (result: Result<TReason, TValue>) => Result<TNewReason | TReason, TNewValue> {
     return result => bindResult(result, f);
 }
 
-export async function bindAsyncResult<TReason, TValue, TNewReason, TNewValue>(
+export async function bindAsyncResult<
+    TReason,
+    TNewReason = TReason,
+    TValue = void,
+    TNewValue = void
+>(
     result: Result<TReason, TValue>,
     f: (value: TValue) => PromiseLike<Result<TNewReason | TReason, TNewValue>>
 ): Promise<Result<TNewReason | TReason, TNewValue>> {
@@ -87,7 +92,7 @@ export async function bindAsyncResult<TReason, TValue, TNewReason, TNewValue>(
     }
 }
 
-export function bindAsyncResultFn<TReason, TValue, TNewReason, TNewValue>(
+export function bindAsyncResultFn<TReason, TNewReason = TReason, TValue = void, TNewValue = void>(
     f: (value: TValue) => PromiseLike<Result<TNewReason | TReason, TNewValue>>
 ): (result: Result<TReason, TValue>) => Promise<Result<TNewReason | TReason, TNewValue>> {
     return async result => bindAsyncResult(result, f);
