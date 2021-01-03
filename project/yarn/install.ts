@@ -8,5 +8,7 @@ export interface YarnInstallFailureReason {
 }
 
 export async function yarnInstall(dir: string): Promise<YarnInstallResult> {
-    return yarn(dir).then(mapFailureFn(() => ({type: "yarn-install-failed"})));
+    return yarn(dir).then(
+        mapFailureFn((): YarnInstallFailureReason => ({type: "yarn-install-failed"}))
+    );
 }

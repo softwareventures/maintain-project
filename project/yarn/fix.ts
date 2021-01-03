@@ -8,5 +8,7 @@ export interface YarnFixFailureReason {
 }
 
 export async function yarnFix(dir: string): Promise<YarnFixResult> {
-    return yarn(dir, "fix").then(mapFailureFn(() => ({type: "yarn-fix-failed"})));
+    return yarn(dir, "fix").then(
+        mapFailureFn((): YarnFixFailureReason => ({type: "yarn-fix-failed"}))
+    );
 }
