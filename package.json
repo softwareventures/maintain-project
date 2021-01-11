@@ -32,7 +32,7 @@
     "@softwareventures/chain": "0.1.2",
     "@types/empty-dir": "2.0.0",
     "@types/escodegen": "0.0.6",
-    "@types/estree": "0.0.45",
+    "@types/estree": "0.0.46",
     "@types/jsdom": "16.2.5",
     "@types/node": "12.19.12",
     "@types/prettier-package-json": "2.1.0",
