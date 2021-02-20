@@ -7,8 +7,7 @@ import {cliUpdate} from "./update";
 
 export default function cli(): void {
     const program = new Command()
-        .storeOptionsAsProperties(false)
-        .passCommandToAction(false)
+        .allowExcessArguments(false)
         .name(last(name.split("/")) ?? "")
         .version(version);
 
