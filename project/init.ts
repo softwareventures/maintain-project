@@ -42,7 +42,10 @@ export default async function init(project: Project): Promise<InitResult> {
         gitInit
     ])
         .then(
-            mapFailureFn(() => {
+            mapFailureFn(failure => {
+                console.error(
+                    `Error: Internal error creating initial changeset: ${JSON.stringify(failure)}`
+                );
                 throw new Error("Internal error initializing project");
             })
         )
