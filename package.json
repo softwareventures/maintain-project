@@ -33,6 +33,7 @@
     "@types/empty-dir": "2.0.0",
     "@types/escodegen": "0.0.6",
     "@types/estree": "0.0.46",
+    "@types/hosted-git-info": "3.0.1",
     "@types/jsdom": "16.2.6",
     "@types/node": "12.20.4",
     "@types/prettier-package-json": "2.1.0",
