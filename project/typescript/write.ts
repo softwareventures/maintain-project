@@ -1,5 +1,5 @@
 import {FsChangeset, insert, insertFn, InsertResult} from "../../fs-changeset/fs-changeset";
-import {chainAsyncResultsFn, chainResults} from "../../result/result";
+import {chainAsyncResultsFn, chainResults, success} from "../../result/result";
 import {copy} from "../../template/copy";
 import {Project} from "../project";
 
@@ -42,6 +42,6 @@ function writeTypeDeclarations(
         return async fsChangeset =>
             file.then(file => insert(fsChangeset, "types/preact-debug.d.ts", file));
     } else {
-        return async fsChangeset => ({type: "success", value: fsChangeset});
+        return async fsChangeset => success(fsChangeset);
     }
 }

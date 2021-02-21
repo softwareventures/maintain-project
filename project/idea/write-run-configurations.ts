@@ -1,5 +1,5 @@
 import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
-import {chainAsyncResultsFn} from "../../result/result";
+import {chainAsyncResultsFn, success} from "../../result/result";
 import {copy} from "../../template/copy";
 import {modifyXml} from "../../template/modify-xml";
 import {Project} from "../project";
@@ -49,6 +49,6 @@ function writeIdeaRunConfigurationStart(
                 return dom;
             }).then(file => insert(fsChangeset, ".idea/runConfigurations/start.xml", file));
     } else {
-        return async fsChangeset => ({type: "success", value: fsChangeset});
+        return async fsChangeset => success(fsChangeset);
     }
 }

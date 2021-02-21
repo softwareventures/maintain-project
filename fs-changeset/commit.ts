@@ -3,7 +3,7 @@ import {resolve} from "path";
 import chain from "@softwareventures/chain";
 import {mapFn} from "../collections/iterators";
 import {liftPromises, liftResults, mapValue} from "../collections/maps";
-import {mapAsyncResultFn, mapResultFn, Result} from "../result/result";
+import {failure, mapAsyncResultFn, mapResultFn, Result, success} from "../result/result";
 import {Directory} from "./directory";
 import {File} from "./file";
 import {FileExists} from "./file-exists";
@@ -71,7 +71,7 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
         if (reason.code !== "EEXIST") {
             throw reason;
         } else if (!overwrite || (await fs.stat(options.path).then(stat => !stat.isDirectory()))) {
-            return {type: "failure", reasons: [{type: "file-exists", path: options.path}]};
+            return failure([{type: "file-exists", path: options.path}]);
         }
     }
 
@@ -93,13 +93,10 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
 async function openFile(options: OpenOptions<File>): Promise<OpenFileResult> {
     const flags = options.overwrite ? "r+" : "wx+";
     return fs.open(options.path, flags).then(
-        fileHandle => ({
-            type: "success",
-            value: {type: "open-file", fileHandle, data: options.node.data}
-        }),
+        fileHandle => success({type: "open-file", fileHandle, data: options.node.data}),
         reason => {
             if (reason.code === "EEXIST") {
-                return {type: "failure", reasons: [{type: "file-exists", path: options.path}]};
+                return failure([{type: "file-exists", path: options.path}]);
             } else {
                 throw reason;
             }

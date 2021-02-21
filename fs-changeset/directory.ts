@@ -1,7 +1,7 @@
 import {filter, head, isArray, tail} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import {insert as mapInsert} from "../collections/maps";
-import {mapFailureFn, mapResultFn, Result} from "../result/result";
+import {failure, mapFailureFn, mapResultFn, Result, success} from "../result/result";
 import {FileExists} from "./file-exists";
 import {FileNode} from "./file-node";
 
@@ -41,9 +41,9 @@ function insertInternal(root: Directory, path: readonly string[], file: FileNode
 
     if (entryName == null) {
         if (file.type === "directory") {
-            return {type: "success", value: root};
+            return success(root);
         } else {
-            return {type: "failure", reasons: [{type: "file-exists", path: ""}]};
+            return failure([{type: "file-exists", path: ""}]);
         }
     }
 
@@ -51,12 +51,9 @@ function insertInternal(root: Directory, path: readonly string[], file: FileNode
     const existingEntry = root.entries.get(entryName) ?? defaultEntry;
 
     if (existingEntry == null) {
-        return {
-            type: "success",
-            value: {...root, entries: mapInsert(root.entries, entryName, file)}
-        };
+        return success({...root, entries: mapInsert(root.entries, entryName, file)});
     } else if (existingEntry.type !== "directory") {
-        return {type: "failure", reasons: [{type: "file-exists", path: entryName}]};
+        return failure([{type: "file-exists", path: entryName}]);
     } else {
         return chain(insertInternal(existingEntry, tail(path), file))
             .map(

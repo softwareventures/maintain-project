@@ -1,4 +1,4 @@
-import {isSuccess, Result} from "../result/result";
+import {failure, isSuccess, Result, success} from "../result/result";
 import {intoArray, concatMap, zip} from "./iterators";
 
 export function copy<T, U>(map: ReadonlyMap<T, U>): Map<T, U> {
@@ -62,11 +62,8 @@ export function liftResults<TKey, TReason, TValue>(
 ): Result<TReason, Map<TKey, TValue>> {
     const [successes, failures] = partitionValue(map, isSuccess);
     if (empty(failures)) {
-        return {type: "success", value: mapValue(successes, success => success.value)};
+        return success(mapValue(successes, success => success.value));
     } else {
-        return {
-            type: "failure",
-            reasons: intoArray(concatMap(failures.values(), failure => failure.reasons))
-        };
+        return failure(intoArray(concatMap(failures.values(), failure => failure.reasons)));
     }
 }

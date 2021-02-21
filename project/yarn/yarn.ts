@@ -1,5 +1,5 @@
 import {fork} from "child_process";
-import {Result} from "../../result/result";
+import {failure, Result, success} from "../../result/result";
 
 export type YarnResult = Result<YarnFailureReason>;
 
@@ -14,9 +14,9 @@ export async function yarn(dir: string, ...args: string[]): Promise<YarnResult> 
             .on("error", reject)
             .on("exit", code => {
                 if (code === 0) {
-                    resolve({type: "success", value: undefined});
+                    resolve(success());
                 } else {
-                    resolve({type: "failure", reasons: [{type: "yarn-failed", code}]});
+                    resolve(failure([{type: "yarn-failed", code}]));
                 }
             })
     );

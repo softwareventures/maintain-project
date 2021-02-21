@@ -2,13 +2,14 @@ import * as escodegen from "escodegen";
 import {Program} from "estree";
 import {textFile} from "../../fs-changeset/file";
 import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {success} from "../../result/result";
 import {Project} from "../project";
 
 export function writeWebpackConfig(
     project: Project
 ): (fsChangeset: FsChangeset) => Promise<InsertResult> {
     if (project.target !== "webapp") {
-        return async fsChangeset => ({type: "success", value: fsChangeset});
+        return async fsChangeset => success(fsChangeset);
     }
 
     const program: Program = {

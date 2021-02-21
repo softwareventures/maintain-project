@@ -1,7 +1,7 @@
 import chain from "@softwareventures/chain";
 import {format as formatPackageJson} from "prettier-package-json";
 import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
-import {chainAsyncResultsFn} from "../../result/result";
+import {chainAsyncResultsFn, success} from "../../result/result";
 import {copy} from "../../template/copy";
 import {modifyText} from "../../template/modify-text";
 import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
@@ -124,6 +124,6 @@ function writeNpmIgnore(project: Project): (fsChangeset: FsChangeset) => Promise
         const file = copy("npmignore.template");
         return async fsChangeset => file.then(file => insert(fsChangeset, ".npmignore", file));
     } else {
-        return async fsChangeset => ({type: "success", value: fsChangeset});
+        return async fsChangeset => success(fsChangeset);
     }
 }
