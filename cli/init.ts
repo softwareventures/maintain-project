@@ -35,9 +35,9 @@ export function cliInit(path: string, options: InitOptions): void {
                         mapFn((reason: InitFailureReason): string => {
                             switch (reason.type) {
                                 case "file-exists":
-                                    return "Directory not empty";
+                                    return `File Exists: ${reason.path}`;
                                 case "not-a-directory":
-                                    return "Not a directory";
+                                    return `Not a Directory: ${reason.path}`;
                                 case "yarn-install-failed":
                                     return "yarn install failed";
                                 case "yarn-fix-failed":
@@ -45,7 +45,7 @@ export function cliInit(path: string, options: InitOptions): void {
                             }
                         })
                     )
-                    .map(forEachFn(message => console.error(message)));
+                    .map(forEachFn(message => console.error(`Error: ${message}`)));
                 exit(1);
             })
         )
