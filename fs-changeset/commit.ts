@@ -8,10 +8,11 @@ import {Directory} from "./directory";
 import {File} from "./file";
 import {FileExists} from "./file-exists";
 import {FsChangeset} from "./fs-changeset";
+import {NotADirectory} from "./not-a-directory";
 
 export type CommitResult = Result<CommitFailureReason>;
 
-export type CommitFailureReason = FileExists;
+export type CommitFailureReason = NotADirectory | FileExists;
 
 export async function commit(path: string, changeset: FsChangeset): Promise<CommitResult> {
     return open(path, changeset).then(mapAsyncResultFn(write));
@@ -45,7 +46,7 @@ type OpenNodeResult = Result<OpenFailureReason, OpenNode>;
 
 type OpenNode = OpenDirectory | OpenFile;
 
-type OpenFailureReason = FileExists;
+type OpenFailureReason = NotADirectory | FileExists;
 
 type OpenDirectoryResult = Result<OpenFailureReason, OpenDirectory>;
 
@@ -70,7 +71,9 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
     } catch (reason) {
         if (reason.code !== "EEXIST") {
             throw reason;
-        } else if (!overwrite || (await fs.stat(options.path).then(stat => !stat.isDirectory()))) {
+        } else if (await fs.stat(options.path).then(stat => !stat.isDirectory())) {
+            return failure([{type: "not-a-directory", path: options.path}]);
+        } else if (!overwrite) {
             return failure([{type: "file-exists", path: options.path}]);
         }
     }

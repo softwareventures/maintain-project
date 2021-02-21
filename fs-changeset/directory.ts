@@ -58,7 +58,7 @@ function insertInternal(root: Directory, path: readonly string[], file: FileNode
         return failure([{type: "not-a-directory", path: entryName}]);
     } else {
         return chain(insertInternal(existingEntry, tail(path), file))
-            .map(mapFailureFn(reason =>({...reason, path: `${entryName}/${reason.path}`})))
+            .map(mapFailureFn(reason => ({...reason, path: `${entryName}/${reason.path}`})))
             .map(
                 mapResultFn(newEntry => ({
                     ...root,
