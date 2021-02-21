@@ -13,6 +13,18 @@ export interface Failure<T = void> {
     readonly reasons: readonly T[];
 }
 
+export function success(): Success;
+export function success<T>(value: T): Success<T>;
+export function success<T>(value?: T): Success<T | undefined> {
+    return {type: "success", value};
+}
+
+export function failure(): Failure;
+export function failure<T>(reasons: readonly T[]): Failure<T>;
+export function failure<T>(reasons: readonly T[] = []): Failure<T> {
+    return {type: "failure", reasons};
+}
+
 export function isSuccess<TReason, TValue>(
     result: Result<TReason, TValue>
 ): result is Success<TValue> {
