@@ -1,10 +1,8 @@
-import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {FsStage, insert, InsertResult} from "../../fs-stage/fs-stage";
 import {modifyXml} from "../../template/modify-xml";
 import {Project} from "../project";
 
-export function writeIdeaModulesXml(
-    project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+export function writeIdeaModulesXml(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const file = modifyXml("idea.template/modules.xml", dom => {
         const document = dom.window.document;
 
@@ -25,5 +23,5 @@ export function writeIdeaModulesXml(
         return dom;
     });
 
-    return async fsChangeset => file.then(file => insert(fsChangeset, ".idea/modules.xml", file));
+    return async fsStage => file.then(file => insert(fsStage, ".idea/modules.xml", file));
 }

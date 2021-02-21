@@ -1,11 +1,9 @@
-import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {FsStage, insert, InsertResult} from "../../fs-stage/fs-stage";
 import {filterIgnore} from "../../template/filter-ignore";
 import {Project} from "../project";
 
-export function writeGitIgnore(
-    project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
-    return async fsChangeset =>
+export function writeGitIgnore(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
+    return async fsStage =>
         filterIgnore(
             "gitignore.template",
             line =>
@@ -14,5 +12,5 @@ export function writeGitIgnore(
                 (line !== "*.d.ts" || project.target === "npm") &&
                 (line !== "*.js.map" || project.target === "npm") &&
                 (line !== "!/types/*.d.ts" || project.target === "npm")
-        ).then(file => insert(fsChangeset, ".gitignore", file));
+        ).then(file => insert(fsStage, ".gitignore", file));
 }

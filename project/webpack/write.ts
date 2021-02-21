@@ -1,15 +1,13 @@
 import * as escodegen from "escodegen";
 import {Program} from "estree";
-import {textFile} from "../../fs-changeset/file";
-import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {textFile} from "../../fs-stage/file";
+import {FsStage, insert, InsertResult} from "../../fs-stage/fs-stage";
 import {success} from "../../result/result";
 import {Project} from "../project";
 
-export function writeWebpackConfig(
-    project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+export function writeWebpackConfig(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target !== "webapp") {
-        return async fsChangeset => success(fsChangeset);
+        return async fsStage => success(fsStage);
     }
 
     const program: Program = {
@@ -75,5 +73,5 @@ export function writeWebpackConfig(
     const text = escodegen.generate(program);
     const file = textFile(text);
 
-    return async fsChangeset => insert(fsChangeset, "webpack.config.js", file);
+    return async fsStage => insert(fsStage, "webpack.config.js", file);
 }

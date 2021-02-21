@@ -1,7 +1,7 @@
 import {promises as fs} from "fs";
 import {JSDOM} from "jsdom";
 import formatXml = require("xml-formatter");
-import {File} from "../fs-changeset/file";
+import {File} from "../fs-stage/file";
 
 export async function modifyXml(source: string, modify: (dom: JSDOM) => JSDOM): Promise<File> {
     const sourcePath = require.resolve(`./template/${source}`);

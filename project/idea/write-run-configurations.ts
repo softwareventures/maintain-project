@@ -1,4 +1,4 @@
-import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {FsStage, insert, InsertResult} from "../../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../../result/result";
 import {copy} from "../../template/copy";
 import {modifyXml} from "../../template/modify-xml";
@@ -6,7 +6,7 @@ import {Project} from "../project";
 
 export function writeIdeaRunConfigurations(
     project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([
         writeIdeaRunConfigurationFix,
         writeIdeaRunConfigurationLint,
@@ -15,29 +15,29 @@ export function writeIdeaRunConfigurations(
     ]);
 }
 
-async function writeIdeaRunConfigurationFix(fsChangeset: FsChangeset): Promise<InsertResult> {
+async function writeIdeaRunConfigurationFix(fsStage: FsStage): Promise<InsertResult> {
     return copy("idea.template/runConfigurations/fix.xml").then(file =>
-        insert(fsChangeset, ".idea/runConfigurations/fix.xml", file)
+        insert(fsStage, ".idea/runConfigurations/fix.xml", file)
     );
 }
 
-async function writeIdeaRunConfigurationLint(fsChangeset: FsChangeset): Promise<InsertResult> {
+async function writeIdeaRunConfigurationLint(fsStage: FsStage): Promise<InsertResult> {
     return copy("idea.template/runConfigurations/lint.xml").then(file =>
-        insert(fsChangeset, ".idea/runConfigurations/lint.xml", file)
+        insert(fsStage, ".idea/runConfigurations/lint.xml", file)
     );
 }
 
-async function writeIdeaRunConfigurationTest(fsChangeset: FsChangeset): Promise<InsertResult> {
+async function writeIdeaRunConfigurationTest(fsStage: FsStage): Promise<InsertResult> {
     return copy("idea.template/runConfigurations/test.xml").then(file =>
-        insert(fsChangeset, ".idea/runConfigurations/test.xml", file)
+        insert(fsStage, ".idea/runConfigurations/test.xml", file)
     );
 }
 
 function writeIdeaRunConfigurationStart(
     project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "webapp") {
-        return async fsChangeset =>
+        return async fsStage =>
             modifyXml("idea.template/runConfigurations/test.xml", dom => {
                 const document = dom.window.document;
 
@@ -47,8 +47,8 @@ function writeIdeaRunConfigurationStart(
                 command?.setAttribute("value", "start");
 
                 return dom;
-            }).then(file => insert(fsChangeset, ".idea/runConfigurations/start.xml", file));
+            }).then(file => insert(fsStage, ".idea/runConfigurations/start.xml", file));
     } else {
-        return async fsChangeset => success(fsChangeset);
+        return async fsStage => success(fsStage);
     }
 }

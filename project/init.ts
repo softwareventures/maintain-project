@@ -1,6 +1,6 @@
-import {commit, CommitFailureReason} from "../fs-changeset/commit";
-import {emptyDirectory} from "../fs-changeset/directory";
-import {FsChangeset} from "../fs-changeset/fs-changeset";
+import {commit, CommitFailureReason} from "../fs-stage/commit";
+import {emptyDirectory} from "../fs-stage/directory";
+import {FsStage} from "../fs-stage/fs-stage";
 import {bindAsyncResultFn, chainAsyncResults, mapFailureFn, Result} from "../result/result";
 import {writeEsLintIgnore} from "./eslint/write";
 import {gitInit} from "./git/init";
@@ -24,12 +24,12 @@ export type InitFailureReason =
     | YarnFixFailureReason;
 
 export default async function init(project: Project): Promise<InitResult> {
-    const fsChangeset: FsChangeset = {
+    const fsStage: FsStage = {
         root: emptyDirectory,
         overwrite: false
     };
 
-    return chainAsyncResults(fsChangeset, [
+    return chainAsyncResults(fsStage, [
         writeGitHubConfig,
         writeRenovateConfig(project),
         writePrettierIgnore(project),
@@ -44,12 +44,12 @@ export default async function init(project: Project): Promise<InitResult> {
         .then(
             mapFailureFn(failure => {
                 console.error(
-                    `Error: Internal error creating initial changeset: ${JSON.stringify(failure)}`
+                    `Error: Internal error creating initial file stage: ${JSON.stringify(failure)}`
                 );
                 throw new Error("Internal error initializing project");
             })
         )
-        .then(bindAsyncResultFn(async fsChangeset => commit(project.path, fsChangeset)))
+        .then(bindAsyncResultFn(async fsStage => commit(project.path, fsStage)))
         .then(
             bindAsyncResultFn<InitFailureReason>(async () => yarnInstall(project.path))
         )

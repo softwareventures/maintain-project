@@ -2,21 +2,21 @@ import {filterFn, map, mapFn} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import {JSDOM} from "jsdom";
 import formatXml = require("xml-formatter");
-import {textFile} from "../../../fs-changeset/file";
-import {FsChangeset, insert, InsertResult} from "../../../fs-changeset/fs-changeset";
+import {textFile} from "../../../fs-stage/file";
+import {FsStage, insert, InsertResult} from "../../../fs-stage/fs-stage";
 import {chainAsyncResultsFn} from "../../../result/result";
 import {Project} from "../../project";
 import {IdeaDictionary} from "./idea-dictionary";
 
 export function writeIdeaDictionaries(
     project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn(map(project.ideaProject?.dictionaries ?? [], writeIdeaDictionary));
 }
 
 function writeIdeaDictionary(
     dictionary: IdeaDictionary
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+): (fsStage: FsStage) => Promise<InsertResult> {
     const dom = new JSDOM("<component/>", {contentType: "application/xml"});
     const document = dom.window.document;
 
@@ -51,6 +51,5 @@ function writeIdeaDictionary(
 
     const file = textFile(xmlText);
 
-    return async fsChangeset =>
-        insert(fsChangeset, `.idea/dictionaries/${dictionary.name}.xml`, file);
+    return async fsStage => insert(fsStage, `.idea/dictionaries/${dictionary.name}.xml`, file);
 }

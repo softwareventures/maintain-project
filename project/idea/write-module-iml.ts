@@ -1,10 +1,8 @@
-import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {FsStage, insert, InsertResult} from "../../fs-stage/fs-stage";
 import {modifyXml} from "../../template/modify-xml";
 import {Project} from "../project";
 
-export function writeIdeaModuleIml(
-    project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+export function writeIdeaModuleIml(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const file = modifyXml("idea.template/maintain-project.iml", dom => {
         const document = dom.window.document;
 
@@ -16,6 +14,6 @@ export function writeIdeaModuleIml(
         return dom;
     });
 
-    return async fsChangeset =>
-        file.then(file => insert(fsChangeset, `.idea/${project.npmPackage.name}.iml`, file));
+    return async fsStage =>
+        file.then(file => insert(fsStage, `.idea/${project.npmPackage.name}.iml`, file));
 }

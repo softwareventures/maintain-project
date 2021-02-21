@@ -1,5 +1,5 @@
 import {promises as fs} from "fs";
-import {File} from "../fs-changeset/file";
+import {File} from "../fs-stage/file";
 
 export async function copy(source: string): Promise<File> {
     const sourcePath = require.resolve(`./template/${source}`);

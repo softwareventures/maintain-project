@@ -1,8 +1,8 @@
-import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {FsStage, insert, InsertResult} from "../../fs-stage/fs-stage";
 import {copy} from "../../template/copy";
 
-export async function writeGitHubConfig(fsChangeset: FsChangeset): Promise<InsertResult> {
+export async function writeGitHubConfig(fsStage: FsStage): Promise<InsertResult> {
     return copy("github.template/workflows/ci.yml").then(file =>
-        insert(fsChangeset, ".github/workflows/ci.yml", file)
+        insert(fsStage, ".github/workflows/ci.yml", file)
     );
 }

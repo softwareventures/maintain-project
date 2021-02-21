@@ -8,41 +8,41 @@ import {
 import {FileNode} from "./file-node";
 import {InsertFailureReason} from "./insert-failure-reason";
 
-export interface FsChangeset {
+export interface FsStage {
     readonly root: Directory;
     readonly overwrite?: boolean;
 }
 
-export type InsertResult = Result<InsertFailureReason, FsChangeset>;
+export type InsertResult = Result<InsertFailureReason, FsStage>;
 
 export function insert(
-    fsChangeset: FsChangeset,
+    stage: FsStage,
     path: string | readonly string[],
     node: FileNode
 ): InsertResult {
-    return chain(insertIntoDirectory(fsChangeset.root, path, node)).map(
-        mapResultFn(root => ({...fsChangeset, root}))
+    return chain(insertIntoDirectory(stage.root, path, node)).map(
+        mapResultFn(root => ({...stage, root}))
     ).value;
 }
 
 export function insertFn(
     path: string | readonly string[],
     node: FileNode
-): (fsChangeset: FsChangeset) => InsertResult {
-    return fsChangeset => insert(fsChangeset, path, node);
+): (fsStage: FsStage) => InsertResult {
+    return fsStage => insert(fsStage, path, node);
 }
 
 export function insertSubdirectory(
-    fsChangeset: FsChangeset,
+    fsStage: FsStage,
     path: string | readonly string[]
 ): InsertResult {
-    return chain(insertSubdirectoryIntoDirectory(fsChangeset.root, path)).map(
-        mapResultFn(root => ({...fsChangeset, root}))
+    return chain(insertSubdirectoryIntoDirectory(fsStage.root, path)).map(
+        mapResultFn(root => ({...fsStage, root}))
     ).value;
 }
 
 export function insertSubdirectoryFn(
     path: string | readonly string[]
-): (fsChangeset: FsChangeset) => InsertResult {
-    return fsChangeset => insertSubdirectory(fsChangeset, path);
+): (fsStage: FsStage) => InsertResult {
+    return fsStage => insertSubdirectory(fsStage, path);
 }

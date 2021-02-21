@@ -1,17 +1,12 @@
 import {mapFn} from "@softwareventures/array";
-import {
-    FsChangeset,
-    insertFn,
-    InsertResult,
-    insertSubdirectoryFn
-} from "../../fs-changeset/fs-changeset";
+import {FsStage, insertFn, InsertResult, insertSubdirectoryFn} from "../../fs-stage/fs-stage";
 import {asyncFn, liftFunctionFromPromise} from "../../promises/promises";
 import {chainAsyncResults, chainAsyncResultsFn, chainResultsFn} from "../../result/result";
 import {copy} from "../../template/copy";
 import {listTemplates} from "../../template/list";
 
-export async function gitInit(fsChangeset: FsChangeset): Promise<InsertResult> {
-    return chainAsyncResults(fsChangeset, [
+export async function gitInit(fsStage: FsStage): Promise<InsertResult> {
+    return chainAsyncResults(fsStage, [
         asyncFn(
             chainResultsFn([
                 insertSubdirectoryFn(".git/objects/info"),

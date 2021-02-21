@@ -1,5 +1,5 @@
 import {filterFn, mapFn} from "@softwareventures/array";
-import {FsChangeset, insertFn, InsertResult} from "../../fs-changeset/fs-changeset";
+import {FsStage, insertFn, InsertResult} from "../../fs-stage/fs-stage";
 import {liftFunctionFromPromise} from "../../promises/promises";
 import {chainAsyncResults, chainAsyncResultsFn} from "../../result/result";
 import {copy} from "../../template/copy";
@@ -12,7 +12,7 @@ import {writeIdeaRunConfigurations} from "./write-run-configurations";
 
 export function writeIdeaProjectFiles(
     project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([
         writeIdeaMiscFiles,
         writeIdeaModulesXml(project),
@@ -22,7 +22,7 @@ export function writeIdeaProjectFiles(
     ]);
 }
 
-async function writeIdeaMiscFiles(fsChangeset: FsChangeset): Promise<InsertResult> {
+async function writeIdeaMiscFiles(fsStage: FsStage): Promise<InsertResult> {
     return listTemplates("idea.template")
         .then(filterFn(path => path.split("/")[0] !== "dictionaries"))
         .then(filterFn(path => path.split("/")[0] !== "runConfigurations"))
@@ -36,5 +36,5 @@ async function writeIdeaMiscFiles(fsChangeset: FsChangeset): Promise<InsertResul
             )
         )
         .then(mapFn(liftFunctionFromPromise))
-        .then(async actions => chainAsyncResults(fsChangeset, actions));
+        .then(async actions => chainAsyncResults(fsStage, actions));
 }

@@ -1,6 +1,6 @@
 import {promises as fs} from "fs";
 import {filterFn} from "@softwareventures/array";
-import {File} from "../fs-changeset/file";
+import {File} from "../fs-stage/file";
 
 export async function filterIgnore(
     source: string,

@@ -1,19 +1,17 @@
 import chain from "@softwareventures/chain";
 import {format as formatPackageJson} from "prettier-package-json";
-import {FsChangeset, insert, InsertResult} from "../../fs-changeset/fs-changeset";
+import {FsStage, insert, InsertResult} from "../../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../../result/result";
 import {copy} from "../../template/copy";
 import {modifyText} from "../../template/modify-text";
 import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
 import {Project} from "../project";
 
-export function writeNpmFiles(
-    project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([writePackageJson(project), writeNpmIgnore(project)]);
 }
 
-function writePackageJson(project: Project): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+function writePackageJson(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const {npmPackage, gitHost} = project;
 
     const file = modifyText(
@@ -116,14 +114,14 @@ function writePackageJson(project: Project): (fsChangeset: FsChangeset) => Promi
                 ).value
     );
 
-    return async fsChangeset => file.then(file => insert(fsChangeset, "package.json", file));
+    return async fsStage => file.then(file => insert(fsStage, "package.json", file));
 }
 
-function writeNpmIgnore(project: Project): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+function writeNpmIgnore(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "npm") {
         const file = copy("npmignore.template");
-        return async fsChangeset => file.then(file => insert(fsChangeset, ".npmignore", file));
+        return async fsStage => file.then(file => insert(fsStage, ".npmignore", file));
     } else {
-        return async fsChangeset => success(fsChangeset);
+        return async fsStage => success(fsStage);
     }
 }

@@ -1,21 +1,20 @@
-import {FsChangeset, insert, insertFn, InsertResult} from "../../fs-changeset/fs-changeset";
+import {FsStage, insert, insertFn, InsertResult} from "../../fs-stage/fs-stage";
 import {chainAsyncResultsFn, chainResults, success} from "../../result/result";
 import {copy} from "../../template/copy";
 import {Project} from "../project";
 
 export function writeTypeScriptFiles(
     project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([
-        async fsChangeset => copy("index.ts").then(file => insert(fsChangeset, "index.ts", file)),
-        async fsChangeset =>
-            copy("index.test.ts").then(file => insert(fsChangeset, "index.test.ts", file)),
+        async fsStage => copy("index.ts").then(file => insert(fsStage, "index.ts", file)),
+        async fsStage => copy("index.test.ts").then(file => insert(fsStage, "index.test.ts", file)),
         writeTsConfigFiles(project),
         writeTypeDeclarations(project)
     ]);
 }
 
-function writeTsConfigFiles(project: Project): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+function writeTsConfigFiles(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const tsConfigJson =
         project.target === "webapp"
             ? copy("tsconfig.webapp.template.json")
@@ -25,23 +24,20 @@ function writeTsConfigFiles(project: Project): (fsChangeset: FsChangeset) => Pro
             ? copy("tsconfig.webapp.test.template.json")
             : copy("tsconfig.test.template.json");
 
-    return async fsChangeset =>
+    return async fsStage =>
         Promise.all([tsConfigJson, tsConfigTestJson]).then(([tsConfigJson, tsConfigTestJson]) =>
-            chainResults(fsChangeset, [
+            chainResults(fsStage, [
                 insertFn("tsconfig.json", tsConfigJson),
                 insertFn("tsconfig.test.json", tsConfigTestJson)
             ])
         );
 }
 
-function writeTypeDeclarations(
-    project: Project
-): (fsChangeset: FsChangeset) => Promise<InsertResult> {
+function writeTypeDeclarations(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "webapp") {
         const file = copy("types/preact-debug.d.ts");
-        return async fsChangeset =>
-            file.then(file => insert(fsChangeset, "types/preact-debug.d.ts", file));
+        return async fsStage => file.then(file => insert(fsStage, "types/preact-debug.d.ts", file));
     } else {
-        return async fsChangeset => success(fsChangeset);
+        return async fsStage => success(fsStage);
     }
 }

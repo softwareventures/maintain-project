@@ -7,29 +7,29 @@ import {failure, mapAsyncResultFn, mapResultFn, Result, success} from "../result
 import {Directory} from "./directory";
 import {File} from "./file";
 import {FileExists} from "./file-exists";
-import {FsChangeset} from "./fs-changeset";
+import {FsStage} from "./fs-stage";
 import {NotADirectory} from "./not-a-directory";
 
 export type CommitResult = Result<CommitFailureReason>;
 
 export type CommitFailureReason = NotADirectory | FileExists;
 
-export async function commit(path: string, changeset: FsChangeset): Promise<CommitResult> {
-    return open(path, changeset).then(mapAsyncResultFn(write));
+export async function commit(path: string, stage: FsStage): Promise<CommitResult> {
+    return open(path, stage).then(mapAsyncResultFn(write));
 }
 
-type OpenResult = Result<OpenFailureReason, OpenFsChangeset>;
+type OpenResult = Result<OpenFailureReason, OpenFsStage>;
 
-interface OpenFsChangeset {
-    readonly type: "open-fs-changeset";
+interface OpenFsStage {
+    readonly type: "open-fs-stage";
     readonly openRoot: OpenDirectory;
 }
 
-async function open(path: string, changeset: FsChangeset): Promise<OpenResult> {
-    const {root, overwrite = false} = changeset;
+async function open(path: string, stage: FsStage): Promise<OpenResult> {
+    const {root, overwrite = false} = stage;
     return openDirectory({path, node: root, overwrite}).then(
         mapResultFn(openRoot => ({
-            type: "open-fs-changeset",
+            type: "open-fs-stage",
             path,
             openRoot
         }))
@@ -107,8 +107,8 @@ async function openFile(options: OpenOptions<File>): Promise<OpenFileResult> {
     );
 }
 
-async function write(changeset: OpenFsChangeset): Promise<void> {
-    return writeDirectory(changeset.openRoot);
+async function write(stage: OpenFsStage): Promise<void> {
+    return writeDirectory(stage.openRoot);
 }
 
 async function writeDirectory(directory: OpenDirectory): Promise<void> {
