@@ -141,6 +141,23 @@ export function mapFailureFn<TReason, TValue, TNewReason>(
     return reason => mapFailure(reason, f);
 }
 
+export function bindFailure<TReason, TNewReason, TValue, TNewValue = TValue>(
+    result: Result<TReason, TValue>,
+    f: (reasons: readonly TReason[]) => Result<TNewReason, TNewValue>
+): Result<TNewReason, TValue | TNewValue> {
+    if (result.type === "success") {
+        return result;
+    } else {
+        return f(result.reasons);
+    }
+}
+
+export function bindFailureFn<TReason, TNewReason, TValue, TNewValue = TValue>(
+    f: (reasons: readonly TReason[]) => Result<TNewReason, TNewValue>
+): (result: Result<TReason, TValue>) => Result<TNewReason, TValue | TNewValue> {
+    return result => bindFailure(result, f);
+}
+
 export function chainResults<TReason, TValue>(
     initial: TValue,
     actions: Iterable<(value: TValue) => Result<TReason, TValue>>
