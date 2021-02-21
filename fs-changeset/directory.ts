@@ -54,6 +54,8 @@ function insertInternal(root: Directory, path: readonly string[], file: FileNode
 
     if (existingEntry == null) {
         return success({...root, entries: mapInsert(root.entries, entryName, file)});
+    } else if (path.length === 1 && file.type !== "directory") {
+        return failure([{type: "file-exists", path: entryName}]);
     } else if (existingEntry.type !== "directory") {
         return failure([{type: "not-a-directory", path: entryName}]);
     } else {
