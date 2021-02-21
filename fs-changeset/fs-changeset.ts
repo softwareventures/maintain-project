@@ -5,15 +5,15 @@ import {
     insert as insertIntoDirectory,
     insertSubdirectory as insertSubdirectoryIntoDirectory
 } from "./directory";
-import {FileExists} from "./file-exists";
 import {FileNode} from "./file-node";
+import {InsertFailureReason} from "./insert-failure-reason";
 
 export interface FsChangeset {
     readonly root: Directory;
     readonly overwrite?: boolean;
 }
 
-export type InsertResult = Result<FileExists, FsChangeset>;
+export type InsertResult = Result<InsertFailureReason, FsChangeset>;
 
 export function insert(
     fsChangeset: FsChangeset,

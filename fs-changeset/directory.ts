@@ -2,8 +2,8 @@ import {filter, head, isArray, tail} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import {insert as mapInsert} from "../collections/maps";
 import {failure, mapFailure, mapFailureFn, mapResultFn, Result, success} from "../result/result";
-import {FileExists} from "./file-exists";
 import {FileNode} from "./file-node";
+import {InsertFailureReason} from "./insert-failure-reason";
 import {ReadFileNodeResult} from "./read-file-node-result";
 
 export interface Directory {
@@ -14,8 +14,6 @@ export interface Directory {
 export const emptyDirectory: Directory = {type: "directory", entries: new Map()};
 
 export type InsertResult = Result<InsertFailureReason, Directory>;
-
-export type InsertFailureReason = FileExists;
 
 export function insert(
     root: Directory,
@@ -57,16 +55,10 @@ function insertInternal(root: Directory, path: readonly string[], file: FileNode
     if (existingEntry == null) {
         return success({...root, entries: mapInsert(root.entries, entryName, file)});
     } else if (existingEntry.type !== "directory") {
-        return failure([{type: "file-exists", path: entryName}]);
+        return failure([{type: "not-a-directory", path: entryName}]);
     } else {
         return chain(insertInternal(existingEntry, tail(path), file))
-            .map(
-                mapFailureFn(reason =>
-                    reason.type === "file-exists"
-                        ? {...reason, path: `${entryName}/${reason.path}`}
-                        : reason
-                )
-            )
+            .map(mapFailureFn(reason =>({...reason, path: `${entryName}/${reason.path}`})))
             .map(
                 mapResultFn(newEntry => ({
                     ...root,
