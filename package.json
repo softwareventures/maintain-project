@@ -59,7 +59,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.21.0",
     "prettier": "2.2.1",
-    "semantic-release": "17.4.1",
+    "semantic-release": "17.4.2",
     "shx": "0.3.3",
     "ts-node": "9.1.1",
     "typescript": "4.2.3"
