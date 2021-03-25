@@ -32,7 +32,7 @@
     "@softwareventures/chain": "0.1.2",
     "@types/empty-dir": "2.0.0",
     "@types/escodegen": "0.0.6",
-    "@types/estree": "0.0.46",
+    "@types/estree": "0.0.47",
     "@types/hosted-git-info": "3.0.1",
     "@types/jsdom": "16.2.7",
     "@types/node": "12.20.6",
