@@ -23,7 +23,7 @@
     "@softwareventures/prettier-config": "1.0.2",
     "@softwareventures/semantic-release-config": "1.1.1",
     "@softwareventures/tsconfig": "5.0.1",
-    "@softwareventures/webpack-config": "3.0.2",
+    "@softwareventures/webpack-config": "3.0.3",
     "ava": "3.15.0",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "7.23.0",
