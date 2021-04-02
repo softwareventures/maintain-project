@@ -34,7 +34,7 @@
     "@types/escodegen": "0.0.6",
     "@types/estree": "0.0.47",
     "@types/hosted-git-info": "3.0.1",
-    "@types/jsdom": "16.2.9",
+    "@types/jsdom": "16.2.10",
     "@types/node": "12.20.7",
     "@types/prettier-package-json": "2.1.0",
     "@types/recursive-readdir": "2.2.0",
