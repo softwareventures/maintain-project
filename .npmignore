@@ -9,6 +9,8 @@
 /template/template/idea.template/dictionaries
 /template/template/idea.template/workspace.xml
 /template/template/idea.template/tasks.xml
+*.ts
+!*.d.ts
 
 # yarn and npm
 package-lock.json
