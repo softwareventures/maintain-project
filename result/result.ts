@@ -1,5 +1,5 @@
 import {map} from "@softwareventures/array";
-import {fold} from "../collections/iterators";
+import {fold} from "@softwareventures/iterable";
 
 export type Result<TReason = void, TValue = void> = Success<TValue> | Failure<TReason>;
 

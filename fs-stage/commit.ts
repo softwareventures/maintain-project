@@ -1,7 +1,7 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
 import chain from "@softwareventures/chain";
-import {mapFn} from "../collections/iterators";
+import {mapFn} from "@softwareventures/iterable";
 import {liftPromises, liftResults, mapValue} from "../collections/maps";
 import {failure, mapAsyncResultFn, mapResultFn, Result, success} from "../result/result";
 import {Directory} from "./directory";

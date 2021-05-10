@@ -1,5 +1,5 @@
+import {toArray, concatMap, zip} from "@softwareventures/iterable";
 import {failure, isSuccess, Result, success} from "../result/result";
-import {intoArray, concatMap, zip} from "./iterators";
 
 export function copy<T, U>(map: ReadonlyMap<T, U>): Map<T, U> {
     return new Map(map);
@@ -64,6 +64,6 @@ export function liftResults<TKey, TReason, TValue>(
     if (empty(failures)) {
         return success(mapValue(successes, success => success.value));
     } else {
-        return failure(intoArray(concatMap(failures.values(), failure => failure.reasons)));
+        return failure(toArray(concatMap(failures.values(), failure => failure.reasons)));
     }
 }
