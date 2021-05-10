@@ -27,6 +27,9 @@
   "bin": {
     "maintain-project": "./index.js"
   },
+  "engines": {
+    "node": ">= 12"
+  },
   "dependencies": {
     "@softwareventures/array": "3.10.0",
     "@softwareventures/chain": "0.1.2",
