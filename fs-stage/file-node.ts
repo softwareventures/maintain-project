@@ -9,11 +9,11 @@ import {InsertFailureReason} from "./insert-failure-reason";
 
 export type FileNode = Directory | File;
 
-export function pathSegments(path: string | readonly string[]): readonly string[] {
-    return isArray(path) ? path : path.split("/");
+export function pathSegments(path: string): readonly string[] {
+    return path.split("/");
 }
 
-export function readFileNode(root: FileNode, path: string | readonly string[]): ReadFileNodeResult {
+export function readFileNode(root: FileNode, path: string): ReadFileNodeResult {
     return readFileNodeInternal(root, pathSegments(path));
 }
 
@@ -43,11 +43,7 @@ function readFileNodeInternal(root: FileNode, path: readonly string[]): ReadFile
 
 export type InsertResult = Result<InsertFailureReason, Directory>;
 
-export function insert(
-    root: FileNode,
-    path: string | readonly string[],
-    node: FileNode
-): InsertResult {
+export function insert(root: FileNode, path: string, node: FileNode): InsertResult {
     if (root.type !== "directory") {
         return failure([{type: "not-a-directory", path: ""}]);
     }
@@ -59,7 +55,7 @@ export function insert(
     );
 }
 
-export function insertSubdirectory(root: FileNode, path: string | readonly string[]): InsertResult {
+export function insertSubdirectory(root: FileNode, path: string): InsertResult {
     return insert(root, path, emptyDirectory);
 }
 

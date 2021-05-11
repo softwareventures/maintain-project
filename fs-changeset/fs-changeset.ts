@@ -1,3 +1,4 @@
+import {resolve} from "path";
 import {FileNode} from "../fs-stage/file-node";
 
 export interface FsChangeset {
@@ -6,5 +7,5 @@ export interface FsChangeset {
 }
 
 export function openFsChangeset(path: string): FsChangeset {
-    return {path};
+    return {path: resolve(path)};
 }
