@@ -1,4 +1,4 @@
-import {filter, head, isArray, tail} from "@softwareventures/array";
+import {head, initial, tail, foldFn, push} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import {failure, mapFailure, mapFailureFn, mapResultFn, Result, success} from "../result/result";
 import {insert as mapInsert} from "../collections/maps";
@@ -9,12 +9,34 @@ import {InsertFailureReason} from "./insert-failure-reason";
 
 export type FileNode = Directory | File;
 
-export function pathSegments(path: string): readonly string[] {
-    return path.split("/");
+export function resolvePathSegments(path: string): readonly string[] | null {
+    return chain(path)
+        .map(path => path.replace(/^\/*/, ""))
+        .map(path => path.replace(/\/*$/, ""))
+        .map(path => path.split(/\/+/))
+        .map(
+            foldFn(
+                (resolved, segment) =>
+                    resolved == null
+                        ? null
+                        : segment === "."
+                        ? resolved
+                        : segment === ".." && resolved.length > 0
+                        ? initial(resolved)
+                        : segment === ".."
+                        ? null
+                        : push(resolved, segment),
+                [] as readonly string[] | null
+            )
+        ).value;
 }
 
 export function readFileNode(root: FileNode, path: string): ReadFileNodeResult {
-    return readFileNodeInternal(root, pathSegments(path));
+    const segments = resolvePathSegments(path);
+    if (segments == null) {
+        return failure([{type: "invalid-path", path}]);
+    }
+    return readFileNodeInternal(root, segments);
 }
 
 function readFileNodeInternal(root: FileNode, path: readonly string[]): ReadFileNodeResult {
@@ -48,11 +70,12 @@ export function insert(root: FileNode, path: string, node: FileNode): InsertResu
         return failure([{type: "not-a-directory", path: ""}]);
     }
 
-    return insertInternal(
-        root,
-        filter(pathSegments(path), segment => segment !== ""),
-        node
-    );
+    const segments = resolvePathSegments(path);
+    if (segments == null) {
+        return failure([{type: "invalid-path", path}]);
+    }
+
+    return insertInternal(root, segments, node);
 }
 
 export function insertSubdirectory(root: FileNode, path: string): InsertResult {
