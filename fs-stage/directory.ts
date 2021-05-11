@@ -1,10 +1,9 @@
-import {filter, head, isArray, tail} from "@softwareventures/array";
+import {filter, head, tail} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import {insert as mapInsert} from "../collections/maps";
-import {failure, mapFailure, mapFailureFn, mapResultFn, Result, success} from "../result/result";
-import {FileNode} from "./file-node";
+import {failure, mapFailureFn, mapResultFn, Result, success} from "../result/result";
+import {FileNode, pathSegments} from "./file-node";
 import {InsertFailureReason} from "./insert-failure-reason";
-import {ReadFileNodeResult} from "./read-file-node-result";
 
 export interface Directory {
     readonly type: "directory";
@@ -32,10 +31,6 @@ export function insertSubdirectory(
     path: string | readonly string[]
 ): InsertResult {
     return insert(root, path, emptyDirectory);
-}
-
-function pathSegments(path: string | readonly string[]): readonly string[] {
-    return isArray(path) ? path : path.split("/");
 }
 
 function insertInternal(root: Directory, path: readonly string[], file: FileNode): InsertResult {
@@ -90,36 +85,5 @@ function* listInternal(pathPrefix: string, options: ListOptions): IterableIterat
         if (options.recursive && file.type === "directory") {
             yield* listInternal(`${path}/`, {...options, directory: file});
         }
-    }
-}
-
-export function readFileNode(
-    root: Directory,
-    path: string | readonly string[]
-): ReadFileNodeResult {
-    return readFileNodeInternal(root, pathSegments(path));
-}
-
-function readFileNodeInternal(root: FileNode, path: readonly string[]): ReadFileNodeResult {
-    const entryName = head(path);
-    const rest = tail(path);
-
-    if (entryName == null) {
-        return success(root);
-    } else if (rest.length === 0) {
-        return success(root);
-    } else if (root.type !== "directory") {
-        return failure([{type: "not-a-directory", path: entryName}]);
-    }
-
-    const entry = root.entries.get(entryName);
-
-    if (entry == null) {
-        return failure([{type: "file-not-found", path: entryName}]);
-    } else {
-        return mapFailure(readFileNodeInternal(entry, rest), reason => ({
-            ...reason,
-            path: `${entryName}/${reason.path}`
-        }));
     }
 }
