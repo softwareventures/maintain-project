@@ -1,11 +1,11 @@
 import chain from "@softwareventures/chain";
 import {mapResultFn, Result} from "../result/result";
+import {Directory} from "./directory";
 import {
-    Directory,
+    FileNode,
     insert as insertIntoDirectory,
     insertSubdirectory as insertSubdirectoryIntoDirectory
-} from "./directory";
-import {FileNode} from "./file-node";
+} from "./file-node";
 import {InsertFailureReason} from "./insert-failure-reason";
 
 export interface FsStage {
