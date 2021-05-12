@@ -3,6 +3,10 @@ export interface File {
     readonly data: ArrayBufferLike;
 }
 
+export function file(data: ArrayBufferLike): File {
+    return {type: "file", data};
+}
+
 export function textFile(text: string): File {
     return {type: "file", data: new TextEncoder().encode(text)};
 }
