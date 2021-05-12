@@ -1,10 +1,12 @@
 import {promises as fs} from "fs";
 import {resolve, sep} from "path";
-import {readFileNode as readFileNodeFromStage} from "../fs-stage/file-node";
-import {bindFailureAsyncFn, failure, success} from "../result/result";
+import {TextDecoder} from "util";
+import {FileNode, readFileNode as readFileNodeFromStage} from "../fs-stage/file-node";
+import {bindFailureAsyncFn, bindResultFn, failure, Result, success} from "../result/result";
 import {ReadFileNodeResult} from "../fs-stage/read-file-node-result";
 import {file} from "../fs-stage/file";
 import {resolvePathSegments} from "../fs-stage/path";
+import {ReadFileFailureReason} from "../fs-stage/read-file-failure-reason";
 import {FsChangeset} from "./fs-changeset";
 import {joinPath} from "./path";
 
@@ -56,4 +58,19 @@ async function readUnderlyingFileNode(
                     throw reason;
             }
         });
+}
+
+export type ReadTextFileResult = Result<ReadFileFailureReason, string>;
+
+export async function readTextFile(
+    changeset: FsChangeset,
+    path: string
+): Promise<ReadTextFileResult> {
+    return readFileNode(changeset, path).then(
+        bindResultFn<ReadFileFailureReason, ReadFileFailureReason, FileNode, string>(node =>
+            node.type === "file"
+                ? success(new TextDecoder().decode(node.data))
+                : failure([{type: "file-is-directory", path}])
+        )
+    );
 }
