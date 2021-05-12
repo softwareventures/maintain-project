@@ -204,3 +204,13 @@ export function chainAsyncResultsFn<TReason, TValue>(
 ): (initial: TValue) => Promise<Result<TReason, TValue>> {
     return async initial => chainAsyncResults(initial, actions);
 }
+
+export function toNullable<TValue>(result: Result<unknown, TValue>): TValue | null {
+    return result.type === "success" ? result.value : null;
+}
+
+export async function toAsyncNullable<TValue>(
+    result: Promise<Result<unknown, TValue>>
+): Promise<TValue | null> {
+    return result.then(toNullable);
+}
