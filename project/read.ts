@@ -4,9 +4,11 @@ import {readFileNode, readTextFile} from "../fs-changeset/file-node";
 import {mapAsyncResultFn, mapResultFn, Result} from "../result/result";
 import {ReadFileFailureReason} from "../fs-stage/read-file-failure-reason";
 import {gitHostFromUrl} from "./git/git-host";
-import {Project} from "./project";
+import {UpdatableProject} from "./project";
 
-export async function readProject(path: string): Promise<Result<ReadFileFailureReason, Project>> {
+export async function readProject(
+    path: string
+): Promise<Result<ReadFileFailureReason, UpdatableProject>> {
     const changeset = openFsChangeset(path);
 
     const packageJson = readTextFile(changeset, "package.json").then(mapResultFn(JSON.parse));
@@ -27,7 +29,7 @@ export async function readProject(path: string): Promise<Result<ReadFileFailureR
                     ? gitHostFromUrl(packageJson.repository)
                     : undefined;
 
-            return target.then(target => ({path, npmPackage, gitHost, target}));
+            return target.then(target => ({changeset, npmPackage, gitHost, target}));
         })
     );
 }

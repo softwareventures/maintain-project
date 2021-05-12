@@ -1,5 +1,5 @@
-import {Project} from "./project";
+import {UpdatableProject} from "./project";
 
-export async function update(project: Project): Promise<void> {
+export async function update(project: UpdatableProject): Promise<void> {
     // TODO
 }
