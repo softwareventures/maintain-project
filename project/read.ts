@@ -1,35 +1,33 @@
-import {promises as fs} from "fs";
-import {resolve} from "path";
+import chain from "@softwareventures/chain";
+import {openFsChangeset} from "../fs-changeset/fs-changeset";
+import {readFileNode, readTextFile} from "../fs-changeset/file-node";
+import {mapAsyncResultFn, mapResultFn, Result} from "../result/result";
+import {ReadFileFailureReason} from "../fs-stage/read-file-failure-reason";
 import {gitHostFromUrl} from "./git/git-host";
 import {Project} from "./project";
 
-export async function readProject(path: string): Promise<Project> {
-    path = resolve(path);
+export async function readProject(path: string): Promise<Result<ReadFileFailureReason, Project>> {
+    const changeset = openFsChangeset(path);
 
-    const packageJson = fs.readFile(resolve(path, "package.json"), "utf-8").then(JSON.parse);
+    const packageJson = readTextFile(changeset, "package.json").then(mapResultFn(JSON.parse));
 
-    const npmPackage = packageJson
-        .then(packageJson => packageJson.name ?? "")
-        .then(name => /^(?:(@.*?)\/)?(.*)$/.exec(name) ?? ["", "", ""])
-        .then(([_, scope, name]) => ({scope, name}));
+    const target = readFileNode(changeset, "webpack.config.js").then(result =>
+        result.type === "success" && result.value.type === "file" ? "webapp" : "npm"
+    );
 
-    const gitHost = packageJson.then(packageJson => packageJson.repository).then(gitHostFromUrl);
+    return packageJson.then(
+        mapAsyncResultFn(async packageJson => {
+            const npmPackage = chain(packageJson)
+                .map(packageJson => packageJson.name ?? "")
+                .map(name => /^(?:(@.*?)\/)?(.*)$/.exec(name) ?? ["", "", ""])
+                .map(([_, scope, name]) => ({scope, name})).value;
 
-    const target = fs
-        .stat(resolve(path, "webpack.config.js"))
-        .catch(reason => {
-            if (reason.code === "ENOENT") {
-                return undefined;
-            } else {
-                throw reason;
-            }
+            const gitHost =
+                typeof packageJson.repository === "string"
+                    ? gitHostFromUrl(packageJson.repository)
+                    : undefined;
+
+            return target.then(target => ({path, npmPackage, gitHost, target}));
         })
-        .then(stats => (stats?.isFile() ? "webapp" : "npm"));
-
-    return Promise.all([npmPackage, gitHost, target]).then(([npmPackage, gitHost, target]) => ({
-        path,
-        npmPackage,
-        gitHost,
-        target
-    }));
+    );
 }
