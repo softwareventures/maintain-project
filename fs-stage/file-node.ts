@@ -1,4 +1,4 @@
-import {head, initial, tail, foldFn, push} from "@softwareventures/array";
+import {head, tail} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import {failure, mapFailure, mapFailureFn, mapResultFn, Result, success} from "../result/result";
 import {insert as mapInsert} from "../collections/maps";
@@ -6,30 +6,9 @@ import {Directory, emptyDirectory} from "./directory";
 import {File} from "./file";
 import {ReadFileNodeResult} from "./read-file-node-result";
 import {InsertFailureReason} from "./insert-failure-reason";
+import {resolvePathSegments} from "./path";
 
 export type FileNode = Directory | File;
-
-export function resolvePathSegments(path: string): readonly string[] | null {
-    return chain(path)
-        .map(path => path.replace(/^\/*/, ""))
-        .map(path => path.replace(/\/*$/, ""))
-        .map(path => path.split(/\/+/))
-        .map(
-            foldFn(
-                (resolved, segment) =>
-                    resolved == null
-                        ? null
-                        : segment === "."
-                        ? resolved
-                        : segment === ".." && resolved.length > 0
-                        ? initial(resolved)
-                        : segment === ".."
-                        ? null
-                        : push(resolved, segment),
-                [] as readonly string[] | null
-            )
-        ).value;
-}
 
 export function readFileNode(root: FileNode, path: string): ReadFileNodeResult {
     const segments = resolvePathSegments(path);
