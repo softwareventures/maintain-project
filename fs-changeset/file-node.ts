@@ -12,12 +12,9 @@ import {resolvePathSegments} from "../fs-stage/path";
 import {ReadFileFailureReason} from "../fs-stage/read-file-failure-reason";
 import {FsChangeset} from "./fs-changeset";
 import {joinPath} from "./path";
-import {Directory, InternalDirectory} from "./directory";
-import {InternalFile} from "./file";
+import {Directory} from "./directory";
 
 export type FileNode = File | Directory;
-
-export type InternalFileNode = InternalFile | InternalDirectory;
 
 export async function readFileNode(
     changeset: FsChangeset,

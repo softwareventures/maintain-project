@@ -5,9 +5,3 @@ export interface File {
     readonly changeset: FsChangeset;
     readonly path: string;
 }
-
-export interface InternalFile {
-    readonly type: "fs-changeset-internal-file";
-    readonly underlyingMTime: bigint | null;
-    readonly data: ArrayBufferLike;
-}
