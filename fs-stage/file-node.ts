@@ -1,4 +1,4 @@
-import {head, tail} from "@softwareventures/array";
+import {first, tail} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import {failure, mapFailure, mapFailureFn, mapResultFn, Result, success} from "../result/result";
 import {insert as mapInsert} from "../collections/maps";
@@ -19,7 +19,7 @@ export function readFileNode(root: FileNode, path: string): ReadFileNodeResult {
 }
 
 function readFileNodeInternal(root: FileNode, path: readonly string[]): ReadFileNodeResult {
-    const entryName = head(path);
+    const entryName = first(path);
     const rest = tail(path);
 
     if (entryName == null) {
@@ -62,7 +62,7 @@ export function insertSubdirectory(root: FileNode, path: string): InsertResult {
 }
 
 function insertInternal(root: Directory, path: readonly string[], file: FileNode): InsertResult {
-    const entryName = head(path);
+    const entryName = first(path);
 
     if (entryName == null) {
         if (file.type === "directory") {
