@@ -1,5 +1,5 @@
 import {promises as fs} from "fs";
-import {resolve, sep} from "path";
+import {resolve} from "path";
 import {TextDecoder} from "util";
 import {FileNode, readFileNode as readFileNodeFromStage} from "../fs-stage/file-node";
 import {bindFailureAsyncFn, bindResultFn, failure, Result, success} from "../result/result";
@@ -44,7 +44,7 @@ async function readUnderlyingFileNode(
     path: readonly string[]
 ): Promise<ReadFileNodeResult> {
     return fs
-        .readFile(resolve(changeset.path, path.join(sep)))
+        .readFile(resolve(changeset.path, ...path))
         .then(data => success(file(data)))
         .catch(reason => {
             switch (reason.code) {
