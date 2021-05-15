@@ -1,12 +1,9 @@
-import {promises as fs} from "fs";
 import {resolve} from "path";
 import {failure, Failure, Result, success} from "../result/result";
 import {insert} from "../collections/maps";
-import {internalDirectory, InternalDirectory} from "./internal-directory";
-import {internalFile} from "./internal-file";
+import {InternalDirectory} from "./internal-directory";
 import {InternalFileNode} from "./internal-file-node";
-import {internalNoFile} from "./internal-no-file";
-import {internalSpecialFile} from "./internal-special-file";
+import {internalOpenUnderlyingFile} from "./internal-open-underlying-file";
 
 export type InternalOpenFileFailureReason =
     | InternalInvalidFilename
@@ -47,40 +44,28 @@ export async function internalOpenFile(
 
     const existingNode = directory.entries.get(filename);
 
-    const stat = await fs.stat(resolve(directory.path, filename), {bigint: true}).catch(reason => {
-        if (reason.code === "ENOENT") {
-            return null;
-        } else {
-            throw reason;
-        }
-    });
+    const underlyingFile = await internalOpenUnderlyingFile(resolve(directory.path, filename));
 
     if (existingNode == null) {
-        const newNode =
-            stat == null
-                ? internalNoFile
-                : stat.isDirectory()
-                ? internalDirectory({
-                      path: `${directory.path}/${filename}`,
-                      underlyingMTime: stat.mtimeMs
-                  })
-                : stat.isFile()
-                ? internalFile(stat.mtimeMs)
-                : internalSpecialFile(stat.mtimeMs);
-
         return success({
             parent: {
                 ...directory,
-                entries: insert(directory.entries, filename, newNode)
+                entries: insert(directory.entries, filename, underlyingFile)
             },
-            node: newNode
+            node: underlyingFile
         });
+    } else if (existingNode.type === "fs-changeset-internal-no-file") {
+        if (underlyingFile.type === "fs-changeset-internal-no-file") {
+            return success({parent: directory, node: existingNode});
+        } else {
+            return internalModifiedByAnotherProcess(filename);
+        }
     } else if (
-        existingNode.type === "fs-changeset-internal-no-file" ||
-        (existingNode.underlyingMTime === stat?.mtimeMs ?? null)
+        existingNode.type !== underlyingFile.type ||
+        existingNode.underlyingMTime !== underlyingFile.underlyingMTime
     ) {
-        return success({parent: directory, node: existingNode});
-    } else {
         return internalModifiedByAnotherProcess(filename);
+    } else {
+        return success({parent: directory, node: existingNode});
     }
 }

@@ -11,11 +11,15 @@ export async function readProject(
 ): Promise<Result<ReadFileFailureReason, UpdatableProject>> {
     const changeset = openFsChangeset(path);
 
-    const packageJson = readTextFile(changeset, "package.json").then(mapResultFn(JSON.parse));
+    const packageJson = changeset
+        .then(async changeset => readTextFile(changeset, "package.json"))
+        .then(mapResultFn(JSON.parse));
 
-    const target = readFileNode(changeset, "webpack.config.js").then(result =>
-        result.type === "success" && result.value.type === "file" ? "webapp" : "npm"
-    );
+    const target = changeset
+        .then(async changeset => readFileNode(changeset, "webpack.config.js"))
+        .then(result =>
+            result.type === "success" && result.value.type === "file" ? "webapp" : "npm"
+        );
 
     return packageJson.then(
         mapAsyncResultFn(async packageJson => {
@@ -29,7 +33,12 @@ export async function readProject(
                     ? gitHostFromUrl(packageJson.repository)
                     : undefined;
 
-            return target.then(target => ({changeset, npmPackage, gitHost, target}));
+            return Promise.all([changeset, target]).then(([changeset, target]) => ({
+                changeset,
+                npmPackage,
+                gitHost,
+                target
+            }));
         })
     );
 }
