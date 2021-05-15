@@ -101,7 +101,15 @@ export async function openFile(changeset: FsChangeset, path: string): Promise<Op
                 .then(
                     bindAsyncResultFn(async ({parent, node}) =>
                         openRecursive(node, tail(path))
-                            .then(mapResultFn(({node}) => ({internalUpdate: parent, node})))
+                            .then(
+                                mapResultFn(({node}) => ({
+                                    internalUpdate: parent,
+                                    node: {
+                                        ...node,
+                                        path: [path[0], ...node.path]
+                                    }
+                                }))
+                            )
                             .then(
                                 mapFailureFn(reason => ({
                                     ...reason,
