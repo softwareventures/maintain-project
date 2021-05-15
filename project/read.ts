@@ -1,45 +1,35 @@
-// TODO
-// import chain from "@softwareventures/chain";
-// import {openFsChangeset} from "../fs-changeset/fs-changeset";
-// import {readFileNode, readTextFile} from "../fs-changeset/file-node";
-// import {mapAsyncResultFn, mapResultFn, Result} from "../result/result";
-// import {ReadFileFailureReason} from "../fs-stage/read-file-failure-reason";
-// import {gitHostFromUrl} from "./git/git-host";
-// import {UpdatableProject} from "./project";
-//
-// export async function readProject(
-//     path: string
-// ): Promise<Result<ReadFileFailureReason, UpdatableProject>> {
-//     const changeset = openFsChangeset(path);
-//
-//     const packageJson = changeset
-//         .then(async changeset => readTextFile(changeset, "package.json"))
-//         .then(mapResultFn(JSON.parse));
-//
-//     const target = changeset
-//         .then(async changeset => readFileNode(changeset, "webpack.config.js"))
-//         .then(result =>
-//             result.type === "success" && result.value.type === "file" ? "webapp" : "npm"
-//         );
-//
-//     return packageJson.then(
-//         mapAsyncResultFn(async packageJson => {
-//             const npmPackage = chain(packageJson)
-//                 .map(packageJson => packageJson.name ?? "")
-//                 .map(name => /^(?:(@.*?)\/)?(.*)$/.exec(name) ?? ["", "", ""])
-//                 .map(([_, scope, name]) => ({scope, name})).value;
-//
-//             const gitHost =
-//                 typeof packageJson.repository === "string"
-//                     ? gitHostFromUrl(packageJson.repository)
-//                     : undefined;
-//
-//             return Promise.all([changeset, target]).then(([changeset, target]) => ({
-//                 changeset,
-//                 npmPackage,
-//                 gitHost,
-//                 target
-//             }));
-//         })
-//     );
-// }
+import {promises as fs} from "fs";
+import {resolve} from "path";
+import {gitHostFromUrl} from "./git/git-host";
+import {Project} from "./project";
+
+export async function readProject(path: string): Promise<Project> {
+    path = resolve(path);
+
+    const packageJson = fs.readFile(resolve(path, "package.json"), "utf-8").then(JSON.parse);
+
+    const npmPackage = packageJson
+        .then(packageJson => packageJson.name ?? "")
+        .then(name => /^(?:(@.*?)\/)?(.*)$/.exec(name) ?? ["", "", ""])
+        .then(([_, scope, name]) => ({scope, name}));
+
+    const gitHost = packageJson.then(packageJson => packageJson.repository).then(gitHostFromUrl);
+
+    const target = fs
+        .stat(resolve(path, "webpack.config.js"))
+        .catch(reason => {
+            if (reason.code === "ENOENT") {
+                return undefined;
+            } else {
+                throw reason;
+            }
+        })
+        .then(stats => (stats?.isFile() ? "webapp" : "npm"));
+
+    return Promise.all([npmPackage, gitHost, target]).then(([npmPackage, gitHost, target]) => ({
+        path,
+        npmPackage,
+        gitHost,
+        target
+    }));
+}
