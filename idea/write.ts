@@ -5,7 +5,7 @@ import {chainAsyncResults, chainAsyncResultsFn} from "../result/result";
 import {copyFromTemplate} from "../template/copy";
 import {listTemplates} from "../template/list";
 import {Project} from "../project/project";
-import {writeIdeaDictionaries} from "./dictionary/write";
+import {writeIdeaDictionary} from "./write-dictionary";
 import {writeIdeaModuleIml} from "./write-module-iml";
 import {writeIdeaModulesXml} from "./write-modules-xml";
 import {writeIdeaRunConfigurations} from "./write-run-configurations";
@@ -17,7 +17,7 @@ export function writeIdeaProjectFiles(
         writeIdeaMiscFiles,
         writeIdeaModulesXml(project),
         writeIdeaModuleIml(project),
-        writeIdeaDictionaries(project),
+        writeIdeaDictionary,
         writeIdeaRunConfigurations(project)
     ]);
 }
