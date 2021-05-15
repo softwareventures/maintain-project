@@ -7,7 +7,7 @@ export function writeIdeaModuleIml(project: Project): (fsStage: FsStage) => Prom
         const document = dom.window.document;
 
         const excludeFolder = document.querySelector(
-            'module:root>component[name=NewModuleRootManager]>content>excludeFolder[url="file://$MODULE_DIR$/template"]'
+            'module:root>component[name=NewModuleRootManager]>content>excludeFolder[url="file://$MODULE_DIR$/template/template"]'
         );
         excludeFolder?.parentNode?.removeChild(excludeFolder);
 
