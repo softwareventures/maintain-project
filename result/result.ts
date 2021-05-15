@@ -1,5 +1,11 @@
 import {map} from "@softwareventures/array";
-import {fold} from "@softwareventures/iterable";
+import {concatMap, filter, fold, toArray} from "@softwareventures/iterable";
+import {
+    asyncConcatMap,
+    asyncFilter,
+    AsyncIterableLike,
+    combineAsync
+} from "../collections/async-iterable";
 
 export type Result<TReason = void, TValue = void> = Success<TValue> | Failure<TReason>;
 
@@ -173,6 +179,18 @@ export function bindFailureAsyncFn<TReason, TNewReason, TValue, TNewValue = TVal
     f: (reasons: readonly TReason[]) => Promise<Result<TNewReason, TNewValue>>
 ): (result: Result<TReason, TValue>) => Promise<Result<TNewReason, TValue | TNewValue>> {
     return async result => bindFailureAsync(result, f);
+}
+
+export function combineResults<TReason>(results: Iterable<Result<TReason>>): Result<TReason> {
+    return failure(toArray(concatMap(filter(results, isFailure), ({reasons}) => reasons)));
+}
+
+export async function combineAsyncResults<TReason>(
+    results: AsyncIterableLike<Result<TReason>>
+): Promise<Result<TReason>> {
+    return combineAsync(
+        asyncConcatMap(asyncFilter(results, isFailure), ({reasons}) => reasons)
+    ).then(reasons => failure(reasons));
 }
 
 export function chainResults<TReason, TValue>(

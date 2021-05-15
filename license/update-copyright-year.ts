@@ -13,13 +13,13 @@ import {
 } from "@softwareventures/array";
 import {mapNullableFn} from "@softwareventures/nullable";
 import {Project} from "../project/project";
-import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
+import {insert} from "../fs-stage/fs-stage";
 import {readProjectText} from "../project/read-text";
 import {textFile} from "../fs-stage/file";
-import {success} from "../result/result";
 import {sortByDescendingFn, sortByFn} from "../collections/arrays";
+import {Update} from "../project/update";
 
-export function updateCopyrightYear(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
+export async function updateCopyrightYear(project: Project): Promise<Update | null> {
     const text = readProjectText(project, "LICENSE.md").catch(reason => {
         if (reason.code === "ENOENT") {
             return null;
@@ -91,6 +91,12 @@ export function updateCopyrightYear(project: Project): (fsStage: FsStage) => Pro
 
     const file = newText.then(mapNullableFn(textFile));
 
-    return async fsStage =>
-        file.then(file => (file == null ? success(fsStage) : insert(fsStage, "LICENSE.md", file)));
+    return file.then(file =>
+        file == null
+            ? null
+            : {
+                  log: "docs(LICENSE): update copyright year",
+                  apply: stage => insert(stage, "LICENSE.md", file)
+              }
+    );
 }
