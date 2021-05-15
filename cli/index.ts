@@ -17,6 +17,9 @@ export default function cli(): void {
         .option("--name <name>")
         .option("--github-owner <owner>")
         .option("--github-project <name>")
+        .option("--author-name <name>")
+        .option("--author-email <email>")
+        .option("--copyright-holder <name>")
         .option("--webapp")
         .action((destination, options) => cliInit(destination ?? cwd(), options));
 

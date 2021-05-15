@@ -1,5 +1,6 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
+import chain from "@softwareventures/chain";
 import {gitHostFromUrl} from "./git/git-host";
 import {Project} from "./project";
 
@@ -26,10 +27,23 @@ export async function readProject(path: string): Promise<Project> {
         })
         .then(stats => (stats?.isFile() ? "webapp" : "npm"));
 
-    return Promise.all([npmPackage, gitHost, target]).then(([npmPackage, gitHost, target]) => ({
-        path,
-        npmPackage,
-        gitHost,
-        target
-    }));
+    const author = packageJson.then(({author}) =>
+        typeof author === "object"
+            ? {name: author.name, email: author.email}
+            : typeof author === "string"
+            ? chain(/^\s*(.*)(?:\s+<\s*(.*)\s*>)?\s*$/.exec(author) ?? []).map(
+                  ([_, name, email]) => ({name, email})
+              ).value
+            : {}
+    );
+
+    return Promise.all([npmPackage, gitHost, target, author]).then(
+        ([npmPackage, gitHost, target, author]) => ({
+            path,
+            npmPackage,
+            gitHost,
+            target,
+            author
+        })
+    );
 }

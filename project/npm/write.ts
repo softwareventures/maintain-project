@@ -24,6 +24,7 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                     name: npmPackage.scope
                         ? `@${npmPackage.scope}/${npmPackage.name}`
                         : npmPackage.name,
+                    author: formatAuthor(project),
                     homepage: gitHost == null ? undefined : homepageUrl(gitHost),
                     bugs: gitHost == null ? undefined : bugsUrl(gitHost),
                     repository: gitHost == null ? undefined : repositoryShortcut(gitHost),
@@ -124,4 +125,10 @@ function writeNpmIgnore(project: Project): (fsStage: FsStage) => Promise<InsertR
     } else {
         return async fsStage => success(fsStage);
     }
+}
+
+function formatAuthor(project: Project): string {
+    return `${project.author?.name ?? ""}${
+        project.author?.email ? ` <${project.author.email}>` : ""
+    }`;
 }

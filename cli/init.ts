@@ -11,6 +11,9 @@ export interface InitOptions {
     readonly githubOwner?: string;
     readonly githubProject?: string;
     readonly webapp?: boolean;
+    readonly authorName?: string;
+    readonly authorEmail?: string;
+    readonly copyrightHolder?: string;
 }
 
 export function cliInit(path: string, options: InitOptions): void {
@@ -24,7 +27,12 @@ export function cliInit(path: string, options: InitOptions): void {
             project: options.githubProject
         },
         target: options.webapp ? "webapp" : "npm",
-        path
+        path,
+        author: {
+            name: options.authorName,
+            email: options.authorEmail
+        },
+        copyrightHolder: options.copyrightHolder
     })
         .then(init)
         .then(mapResultFn(() => exit(0)))
