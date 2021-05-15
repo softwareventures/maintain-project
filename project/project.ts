@@ -1,9 +1,9 @@
 import simpleGit from "simple-git";
-import {createGitHost, GitHost, GitHostOptions} from "./git/git-host";
-import {createIdeaProject} from "./idea/create";
-import {IdeaProject} from "./idea/idea-project";
-import {createNpmPackage, NpmPackage, NpmPackageOptions} from "./npm/npm-package";
-import {guessCopyrightHolder} from "./license/guess-copyright-holder";
+import {createGitHost, GitHost, GitHostOptions} from "../git/git-host";
+import {createIdeaProject} from "../idea/create";
+import {IdeaProject} from "../idea/idea-project";
+import {createNpmPackage, NpmPackage, NpmPackageOptions} from "../npm/npm-package";
+import {guessCopyrightHolder} from "../license/guess-copyright-holder";
 
 export interface Project {
     readonly path: string;

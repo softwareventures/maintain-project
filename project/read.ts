@@ -1,7 +1,7 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
 import chain from "@softwareventures/chain";
-import {gitHostFromUrl} from "./git/git-host";
+import {gitHostFromUrl} from "../git/git-host";
 import {Project} from "./project";
 
 export async function readProject(path: string): Promise<Project> {
