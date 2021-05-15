@@ -2,8 +2,8 @@ import chain from "@softwareventures/chain";
 import {format as formatPackageJson} from "prettier-package-json";
 import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../result/result";
-import {copy} from "../template/copy";
-import {modifyText} from "../template/modify-text";
+import {copyFromTemplate} from "../template/copy";
+import {modifyTemplateText} from "../template/modify-text";
 import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
 import {Project} from "../project/project";
 
@@ -14,7 +14,7 @@ export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<I
 function writePackageJson(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const {npmPackage, gitHost} = project;
 
-    const file = modifyText(
+    const file = modifyTemplateText(
         "package.json",
         text =>
             chain(text)
@@ -120,7 +120,7 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
 
 function writeNpmIgnore(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "npm") {
-        const file = copy("npmignore.template");
+        const file = copyFromTemplate("npmignore.template");
         return async fsStage => file.then(file => insert(fsStage, ".npmignore", file));
     } else {
         return async fsStage => success(fsStage);

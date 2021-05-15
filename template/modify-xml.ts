@@ -1,12 +1,13 @@
-import {promises as fs} from "fs";
 import {JSDOM} from "jsdom";
 import formatXml = require("xml-formatter");
 import {File} from "../fs-stage/file";
+import {readTemplateText} from "./read-text";
 
-export async function modifyXml(source: string, modify: (dom: JSDOM) => JSDOM): Promise<File> {
-    const sourcePath = require.resolve(`./template/${source}`);
-
-    const xmlText = fs.readFile(sourcePath, "utf-8");
+export async function modifyTemplateXml(
+    source: string,
+    modify: (dom: JSDOM) => JSDOM
+): Promise<File> {
+    const xmlText = readTemplateText(source);
     const dom = xmlText.then(xmlText => new JSDOM(xmlText, {contentType: "application/xml"}));
 
     const newDom = dom.then(modify);

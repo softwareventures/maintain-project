@@ -1,13 +1,12 @@
-import {promises as fs} from "fs";
 import {filterFn} from "@softwareventures/array";
 import {File} from "../fs-stage/file";
+import {readTemplateText} from "./read-text";
 
-export async function filterIgnore(
+export async function filterTemplateIgnore(
     source: string,
     filter: (line: string) => boolean
 ): Promise<File> {
-    const sourcePath = require.resolve(`./template/${source}`);
-    const text = fs.readFile(sourcePath, "utf-8");
+    const text = readTemplateText(source);
     const filteredText = text
         .then(text => text.split(/\r?\n/))
         .then(filterFn(filter))

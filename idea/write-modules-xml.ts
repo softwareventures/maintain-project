@@ -1,9 +1,9 @@
 import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
-import {modifyXml} from "../template/modify-xml";
+import {modifyTemplateXml} from "../template/modify-xml";
 import {Project} from "../project/project";
 
 export function writeIdeaModulesXml(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
-    const file = modifyXml("idea.template/modules.xml", dom => {
+    const file = modifyTemplateXml("idea.template/modules.xml", dom => {
         const document = dom.window.document;
 
         const module = document.querySelector("project:root>component>modules>module");

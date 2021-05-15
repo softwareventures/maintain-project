@@ -1,7 +1,7 @@
 import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../result/result";
-import {copy} from "../template/copy";
-import {modifyXml} from "../template/modify-xml";
+import {copyFromTemplate} from "../template/copy";
+import {modifyTemplateXml} from "../template/modify-xml";
 import {Project} from "../project/project";
 
 export function writeIdeaRunConfigurations(
@@ -16,19 +16,19 @@ export function writeIdeaRunConfigurations(
 }
 
 async function writeIdeaRunConfigurationFix(fsStage: FsStage): Promise<InsertResult> {
-    return copy("idea.template/runConfigurations/fix.xml").then(file =>
+    return copyFromTemplate("idea.template/runConfigurations/fix.xml").then(file =>
         insert(fsStage, ".idea/runConfigurations/fix.xml", file)
     );
 }
 
 async function writeIdeaRunConfigurationLint(fsStage: FsStage): Promise<InsertResult> {
-    return copy("idea.template/runConfigurations/lint.xml").then(file =>
+    return copyFromTemplate("idea.template/runConfigurations/lint.xml").then(file =>
         insert(fsStage, ".idea/runConfigurations/lint.xml", file)
     );
 }
 
 async function writeIdeaRunConfigurationTest(fsStage: FsStage): Promise<InsertResult> {
-    return copy("idea.template/runConfigurations/test.xml").then(file =>
+    return copyFromTemplate("idea.template/runConfigurations/test.xml").then(file =>
         insert(fsStage, ".idea/runConfigurations/test.xml", file)
     );
 }
@@ -38,7 +38,7 @@ function writeIdeaRunConfigurationStart(
 ): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "webapp") {
         return async fsStage =>
-            modifyXml("idea.template/runConfigurations/test.xml", dom => {
+            modifyTemplateXml("idea.template/runConfigurations/test.xml", dom => {
                 const document = dom.window.document;
 
                 const configuration = document.querySelector("configuration");

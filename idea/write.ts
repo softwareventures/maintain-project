@@ -2,7 +2,7 @@ import {filterFn, mapFn} from "@softwareventures/array";
 import {FsStage, insertFn, InsertResult} from "../fs-stage/fs-stage";
 import {liftFunctionFromPromise} from "../promises/promises";
 import {chainAsyncResults, chainAsyncResultsFn} from "../result/result";
-import {copy} from "../template/copy";
+import {copyFromTemplate} from "../template/copy";
 import {listTemplates} from "../template/list";
 import {Project} from "../project/project";
 import {writeIdeaDictionaries} from "./dictionary/write";
@@ -32,7 +32,9 @@ async function writeIdeaMiscFiles(fsStage: FsStage): Promise<InsertResult> {
         .then(filterFn(path => path !== "modules.xml"))
         .then(
             mapFn(async path =>
-                copy(`idea.template/${path}`).then(file => insertFn(`.idea/${path}`, file))
+                copyFromTemplate(`idea.template/${path}`).then(file =>
+                    insertFn(`.idea/${path}`, file)
+                )
             )
         )
         .then(mapFn(liftFunctionFromPromise))

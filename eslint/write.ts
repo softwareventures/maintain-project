@@ -1,10 +1,10 @@
 import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
-import {filterIgnore} from "../template/filter-ignore";
+import {filterTemplateIgnore} from "../template/filter-ignore";
 import {Project} from "../project/project";
 
 export function writeEsLintIgnore(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     return async fsStage =>
-        filterIgnore(
+        filterTemplateIgnore(
             "eslintignore.template",
             line =>
                 (line !== "/dist" || project.target === "webapp") &&

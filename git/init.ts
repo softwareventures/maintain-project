@@ -2,7 +2,7 @@ import {mapFn} from "@softwareventures/array";
 import {FsStage, insertFn, InsertResult, insertSubdirectoryFn} from "../fs-stage/fs-stage";
 import {asyncFn, liftFunctionFromPromise} from "../promises/promises";
 import {chainAsyncResults, chainAsyncResultsFn, chainResultsFn} from "../result/result";
-import {copy} from "../template/copy";
+import {copyFromTemplate} from "../template/copy";
 import {listTemplates} from "../template/list";
 
 export async function gitInit(fsStage: FsStage): Promise<InsertResult> {
@@ -20,7 +20,9 @@ export async function gitInit(fsStage: FsStage): Promise<InsertResult> {
             listTemplates("git.template")
                 .then(
                     mapFn(async path =>
-                        copy(`git.template/${path}`).then(file => insertFn(`.git/${path}`, file))
+                        copyFromTemplate(`git.template/${path}`).then(file =>
+                            insertFn(`.git/${path}`, file)
+                        )
                     )
                 )
                 .then(mapFn(liftFunctionFromPromise))
