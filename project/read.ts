@@ -31,7 +31,7 @@ export async function readProject(path: string): Promise<Project> {
         typeof author === "object"
             ? {name: author.name, email: author.email}
             : typeof author === "string"
-            ? chain(/^\s*(.*)(?:\s+<\s*(.*)\s*>)?\s*$/.exec(author) ?? []).map(
+            ? chain(/^\s*(.*?)(?:\s+<\s*(.*)\s*>)?\s*$/.exec(author) ?? []).map(
                   ([_, name, email]) => ({name, email})
               ).value
             : {}
