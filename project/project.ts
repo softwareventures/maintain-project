@@ -40,10 +40,12 @@ export async function createProject(options: ProjectOptions): Promise<Project> {
 
     const authorName = Promise.resolve(options.author?.name)
         .then(name => name ?? git.raw(["config", "user.name"]))
+        .then(name => name?.trim())
         .catch(() => undefined);
 
     const authorEmail = Promise.resolve(options.author?.email)
         .then(email => email ?? git.raw(["config", "user.email"]))
+        .then(email => email?.trim())
         .catch(() => undefined);
 
     const ideaProject = createIdeaProject();
