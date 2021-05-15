@@ -488,7 +488,7 @@
   dependencies:
     tslib "2.2.0"
 
-"@softwareventures/ordered@^0.2.0", "@softwareventures/ordered@^0.2.2":
+"@softwareventures/ordered@0.2.2", "@softwareventures/ordered@^0.2.0", "@softwareventures/ordered@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-0.2.2.tgz#e8b55c57a7219a90e0cc6a27a793c4598e5ae9aa"
   integrity sha512-n3Kkk9jZ+i2Az7YqnJR3TimhsVSiTfwN9ybDfPcJvvCge0cINszO754n4/pdlCyLYVOn2VzTVFDVTrj+xFvNFQ==

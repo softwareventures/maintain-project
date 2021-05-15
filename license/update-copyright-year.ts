@@ -1,0 +1,96 @@
+import {EOL} from "os";
+import chain from "@softwareventures/chain";
+import {
+    concat,
+    first,
+    map,
+    mapFn,
+    maximum,
+    minimum,
+    partitionWhileFn,
+    tail,
+    unshiftFn
+} from "@softwareventures/array";
+import {mapNullableFn} from "@softwareventures/nullable";
+import {Project} from "../project/project";
+import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
+import {readProjectText} from "../project/read-text";
+import {textFile} from "../fs-stage/file";
+import {success} from "../result/result";
+import {sortByDescendingFn, sortByFn} from "../collections/arrays";
+
+export function updateCopyrightYear(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
+    const text = readProjectText(project, "LICENSE.md").catch(reason => {
+        if (reason.code === "ENOENT") {
+            return null;
+        } else {
+            throw reason;
+        }
+    });
+
+    const newText = text.then(
+        mapNullableFn(text => {
+            const [copyrightLines, followingLines] = chain(text)
+                .map(license => license.split("\n"))
+                .map(mapFn(line => line.replace(/\r$/, "")))
+                .map(
+                    partitionWhileFn(
+                        line => !!line.match(/^\s*($|((Copyright|\(C\)|©)\s*)+.*\d{4})/i)
+                    )
+                ).value;
+
+            const copyrights = chain(copyrightLines)
+                .map(
+                    mapFn((text, index) => ({
+                        index,
+                        text,
+                        years: map(text.match(/\d{4,}/) ?? [], year => parseInt(year, 10))
+                    }))
+                )
+                .map(
+                    mapFn(({index, text, years}) => ({
+                        index,
+                        text,
+                        startYear: minimum(years),
+                        endYear: maximum(years)
+                    }))
+                )
+                .map(sortByDescendingFn(({endYear}) => endYear ?? -Infinity)).value;
+
+            const copyright = first(copyrights);
+            const currentYear = project.license.year;
+
+            if (copyright == null || (copyright.endYear ?? 0) >= currentYear) {
+                return null;
+            }
+
+            const assignee = copyright.text
+                .replace(/^\s*((Copyright|\(C\)|©)\s*)+/i, "")
+                .replace(/\d{4,}(\s*[-,]?\d{4,})*/g, "")
+                .replace(/\s+/g, " ")
+                .trim();
+
+            if (assignee === "") {
+                return null;
+            }
+
+            const updatedCopyright = {
+                index: copyright.index,
+                text: "Copyright `${copyright.startYear}-${currentYear} ${assignee}"
+            };
+
+            const updatedCopyrights = chain(tail(copyrights))
+                .map(mapFn(({index, text}) => ({index, text})))
+                .map(unshiftFn(updatedCopyright))
+                .map(sortByFn(({index}) => index))
+                .map(mapFn(({text}) => text)).value;
+
+            return concat([updatedCopyrights, followingLines]).join(EOL);
+        })
+    );
+
+    const file = newText.then(mapNullableFn(textFile));
+
+    return async fsStage =>
+        file.then(file => (file == null ? success(fsStage) : insert(fsStage, "LICENSE.md", file)));
+}
