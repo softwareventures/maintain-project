@@ -14,6 +14,10 @@ export interface Project {
         readonly name?: string;
         readonly email?: string;
     };
+    readonly license: {
+        readonly year: number;
+        readonly copyrightHolder?: string;
+    };
     readonly ideaProject?: IdeaProject;
 }
 
@@ -26,7 +30,9 @@ export interface ProjectOptions {
         readonly name?: string;
         readonly email?: string;
     };
-    readonly copyrightHolder?: string;
+    readonly license?: {
+        readonly copyrightHolder?: string;
+    };
 }
 
 export async function createProject(options: ProjectOptions): Promise<Project> {
@@ -54,7 +60,10 @@ export async function createProject(options: ProjectOptions): Promise<Project> {
                 gitHost: createGitHost(options),
                 target: options.target ?? "npm",
                 author: options.author,
-                copyrightHolder: guessCopyrightHolder(options),
+                license: {
+                    year: new Date().getUTCFullYear(),
+                    copyrightHolder: guessCopyrightHolder(options)
+                },
                 ideaProject
             }))
         );

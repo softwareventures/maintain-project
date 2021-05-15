@@ -15,6 +15,7 @@ import {writeTypeScriptFiles} from "./typescript/write";
 import {writeWebpackConfig} from "./webpack/write";
 import {yarnFix, YarnFixFailureReason} from "./yarn/fix";
 import {yarnInstall, YarnInstallFailureReason} from "./yarn/install";
+import {writeLicense} from "./license/write";
 
 export type InitResult = Result<InitFailureReason>;
 
@@ -39,6 +40,7 @@ export default async function init(project: Project): Promise<InitResult> {
         writeWebpackConfig(project),
         writeIdeaProjectFiles(project),
         writeNpmFiles(project),
+        writeLicense(project),
         gitInit
     ])
         .then(

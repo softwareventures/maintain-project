@@ -32,7 +32,9 @@ export function cliInit(path: string, options: InitOptions): void {
             name: options.authorName,
             email: options.authorEmail
         },
-        copyrightHolder: options.copyrightHolder
+        license: {
+            copyrightHolder: options.copyrightHolder
+        }
     })
         .then(init)
         .then(mapResultFn(() => exit(0)))

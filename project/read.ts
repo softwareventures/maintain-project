@@ -43,7 +43,10 @@ export async function readProject(path: string): Promise<Project> {
             npmPackage,
             gitHost,
             target,
-            author
+            author,
+            license: {
+                year: new Date().getUTCFullYear()
+            }
         })
     );
 }

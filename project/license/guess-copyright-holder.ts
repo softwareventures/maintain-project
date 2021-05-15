@@ -7,7 +7,7 @@ const byUsername = new Map([
 
 export function guessCopyrightHolder(options: ProjectOptions): string | undefined {
     return (
-        options.copyrightHolder ??
+        options.license?.copyrightHolder ??
         byUsername.get(options.npmPackage?.scope ?? "") ??
         byUsername.get(options.gitHost?.user ?? "") ??
         options.author?.name
