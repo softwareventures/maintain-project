@@ -11,8 +11,8 @@ export interface Project {
     readonly gitHost?: GitHost;
     readonly target: "npm" | "webapp";
     readonly author: {
-        name?: string;
-        email?: string;
+        readonly name?: string;
+        readonly email?: string;
     };
     readonly ideaProject?: IdeaProject;
 }
