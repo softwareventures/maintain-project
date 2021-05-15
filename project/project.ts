@@ -32,6 +32,8 @@ export interface ProjectOptions {
     };
 }
 
+export type ProjectSource = Project | {readonly path: string};
+
 export async function createProject(options: ProjectOptions): Promise<Project> {
     const git = simpleGit();
 

@@ -1,13 +1,16 @@
-import {promises as fs} from "fs";
 import {resolve} from "path";
 import chain from "@softwareventures/chain";
 import {gitHostFromUrl} from "../git/git-host";
+import {readProjectText} from "./read-text";
+import {statProjectFile} from "./stat-file";
 import {Project} from "./project";
 
 export async function readProject(path: string): Promise<Project> {
     path = resolve(path);
 
-    const packageJson = fs.readFile(resolve(path, "package.json"), "utf-8").then(JSON.parse);
+    const project = {path};
+
+    const packageJson = readProjectText(project, "package.json").then(JSON.parse);
 
     const npmPackage = packageJson
         .then(packageJson => packageJson.name ?? "")
@@ -16,8 +19,7 @@ export async function readProject(path: string): Promise<Project> {
 
     const gitHost = packageJson.then(packageJson => packageJson.repository).then(gitHostFromUrl);
 
-    const target = fs
-        .stat(resolve(path, "webpack.config.js"))
+    const target = statProjectFile(project, "webpack.config.js")
         .catch(reason => {
             if (reason.code === "ENOENT") {
                 return undefined;
