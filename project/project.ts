@@ -1,4 +1,3 @@
-import {FsChangeset} from "../fs-changeset/fs-changeset";
 import {createGitHost, GitHost, GitHostOptions} from "./git/git-host";
 import {createIdeaProject} from "./idea/create";
 import {IdeaProject} from "./idea/idea-project";
@@ -10,13 +9,6 @@ export interface Project {
     readonly gitHost?: GitHost;
     readonly target: "npm" | "webapp";
     readonly ideaProject?: IdeaProject;
-}
-
-export interface UpdatableProject {
-    readonly changeset: FsChangeset;
-    readonly npmPackage: NpmPackage;
-    readonly gitHost?: GitHost;
-    readonly target: "npm" | "webapp";
 }
 
 export interface ProjectOptions {
