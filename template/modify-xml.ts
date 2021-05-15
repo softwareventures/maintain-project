@@ -4,10 +4,10 @@ import {File} from "../fs-stage/file";
 import {readTemplateText} from "./read-text";
 
 export async function modifyTemplateXml(
-    source: string,
+    path: string,
     modify: (dom: JSDOM) => JSDOM
 ): Promise<File> {
-    const xmlText = readTemplateText(source);
+    const xmlText = readTemplateText(path);
     const dom = xmlText.then(xmlText => new JSDOM(xmlText, {contentType: "application/xml"}));
 
     const newDom = dom.then(modify);

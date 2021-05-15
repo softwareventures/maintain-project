@@ -3,10 +3,10 @@ import {File} from "../fs-stage/file";
 import {readTemplateText} from "./read-text";
 
 export async function filterTemplateIgnore(
-    source: string,
+    path: string,
     filter: (line: string) => boolean
 ): Promise<File> {
-    const text = readTemplateText(source);
+    const text = readTemplateText(path);
     const filteredText = text
         .then(text => text.split(/\r?\n/))
         .then(filterFn(filter))
