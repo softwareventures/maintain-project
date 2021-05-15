@@ -12,6 +12,7 @@ import {resolvePathSegments} from "../fs-stage/path";
 import {ReadFileFailureReason} from "../fs-stage/read-file-failure-reason";
 import {FsChangeset} from "./fs-changeset";
 import {joinPath} from "./path";
+import {File} from "./file";
 import {Directory} from "./directory";
 
 export type FileNode = File | Directory;
@@ -32,10 +33,10 @@ async function readFileNodeInternal(
     changeset: FsChangeset,
     path: readonly string[]
 ): Promise<ReadFileNodeResult> {
-    if (changeset.changeRoot == null) {
+    if (changeset.root == null) {
         return readUnderlyingFileNode(changeset, path);
     } else {
-        return Promise.resolve(readFileNodeFromStage(changeset.changeRoot, joinPath(path))).then(
+        return Promise.resolve(readFileNodeFromStage(changeset.root, joinPath(path))).then(
             bindFailureAsyncFn(async reasons =>
                 reasons.length === 1 && reasons[0]?.type === "file-not-found"
                     ? readUnderlyingFileNode(changeset, path)

@@ -1,9 +1,9 @@
 import {resolve} from "path";
-import {FileNode} from "../fs-stage/file-node";
+import {InternalFileNode} from "./internal-file-node";
 
 export interface FsChangeset {
     readonly path: string;
-    readonly changeRoot?: FileNode;
+    readonly root?: InternalFileNode;
 }
 
 export function openFsChangeset(path: string): FsChangeset {
