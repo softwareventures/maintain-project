@@ -44,7 +44,7 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
                     mapFn((text, index) => ({
                         index,
                         text,
-                        years: map(text.match(/\d{4,}/) ?? [], year => parseInt(year, 10))
+                        years: map(text.match(/\d{4,}/g) ?? [], year => parseInt(year, 10))
                     }))
                 )
                 .map(
