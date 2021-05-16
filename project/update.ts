@@ -15,7 +15,6 @@ import {
 import {emptyDirectory} from "../fs-stage/directory";
 import {updateCopyrightYear} from "../license/update-copyright-year";
 import {commit, CommitFailureReason} from "../fs-stage/commit";
-import {InsertFailureReason} from "../fs-stage/insert-failure-reason";
 import {excludeNull, mapFn} from "../collections/async-iterable";
 import {Project} from "./project";
 
@@ -52,19 +51,18 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
             .status()
             .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
             .then(
-                bindResultFn<GitNotClean, InsertFailureReason, void, FsStage>(() =>
-                    update.apply({root: emptyDirectory, overwrite: true})
+                bindResultFn(() =>
+                    chain(update.apply({root: emptyDirectory, overwrite: true}))
+                        .map(mapFailureFn(failure => {
+                            console.error(
+                                `Error: Internal error creating update file stage: ${JSON.stringify(
+                                    failure
+                                )}`
+                            );
+                            throw new Error("Internal error updating project");
+                        }))
+                        .value
                 )
-            )
-            .then(
-                mapFailureFn(failure => {
-                    console.error(
-                        `Error: Internal error creating update file stage: ${JSON.stringify(
-                            failure
-                        )}`
-                    );
-                    throw new Error("Internal error updating project");
-                })
             )
             .then(
                 bindAsyncResultFn<GitNotClean, CommitFailureReason, FsStage, void>(async stage =>
