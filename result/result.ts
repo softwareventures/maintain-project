@@ -1,11 +1,6 @@
 import {map} from "@softwareventures/array";
 import {concatMap, filter, fold, toArray} from "@softwareventures/iterable";
-import {
-    asyncConcatMap,
-    asyncFilter,
-    AsyncIterableLike,
-    combineAsync
-} from "../collections/async-iterable";
+import {asyncFilter, AsyncIterableLike, combineAsync} from "../collections/async-iterable";
 
 export type Result<TReason = void, TValue = void> = Success<TValue> | Failure<TReason>;
 
@@ -188,9 +183,11 @@ export function combineResults<TReason>(results: Iterable<Result<TReason>>): Res
 export async function combineAsyncResults<TReason>(
     results: AsyncIterableLike<Result<TReason>>
 ): Promise<Result<TReason>> {
-    return combineAsync(
-        asyncConcatMap(asyncFilter(results, isFailure), ({reasons}) => reasons)
-    ).then(reasons => failure(reasons));
+    return combineAsync(asyncFilter(results, isFailure)).then(failures =>
+        failures.length === 0
+            ? success()
+            : failure(toArray(concatMap(failures, failure => failure.reasons)))
+    );
 }
 
 export function chainResults<TReason, TValue>(
