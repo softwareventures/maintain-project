@@ -51,6 +51,7 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
         git
             .status()
             .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
+            .then(mapResultFn(() => console.log(`Applying update: ${update.log}`)))
             .then(
                 bindResultFn(
                     () =>
