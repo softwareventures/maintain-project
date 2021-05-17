@@ -1,0 +1,28 @@
+name: Maintain Project
+on:
+  schedule:
+    - cron: 5 0 1 * *
+env:
+  NODE_VERSION: 14.x
+jobs:
+  maintain-project:
+    name: Maintain Project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find yarn cache
+        id: find-yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: git checkout
+        uses: actions/checkout@v2
+      - name: Cache yarn dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{steps.find-yarn-cache.outputs.dir}}
+          key: ${{runner.os}}-node${{env.NODE_VERSION}}-yarn-${{hashFiles('**/yarn.lock')}}
+          restore-keys: ${{runner.os}}-node${{env.NODE_VERSION}}-yarn-${{hashFiles('**/yarn.lock')}}
+      - name: Set up Node.js v${{env.NODE_VERSION}}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{env.NODE_VERSION}}
+      - run: yarn
+      - run: yarn maintain-project

@@ -19,6 +19,7 @@
     "test": "ava",
     "lint": "tsc --noEmit && eslint . && prettier --check .",
     "fix": "tsc --noEmit && eslint --fix . && prettier --write .",
+    "maintain-project": "node . update",
     "semantic-release": "semantic-release"
   },
   "sideEffects": [
