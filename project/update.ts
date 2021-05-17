@@ -1,5 +1,6 @@
 import simpleGit, {SimpleGit} from "simple-git";
 import chain from "@softwareventures/chain";
+import {concat} from "@softwareventures/array";
 import {FsStage, InsertResult} from "../fs-stage/fs-stage";
 import {
     bindAsyncResultFn,
@@ -70,8 +71,14 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
                     commit(project.path, stage)
                 )
             )
-            .then(mapResultFn(() => git.add(".")))
-            .then(mapAsyncResultFn(() => git.status()))
-            .then(mapResultFn(status => (status.isClean() ? undefined : git.commit(update.log))))
+            .then(mapAsyncResultFn(async () => git.status()))
+            .then(mapResultFn(status => concat([status.modified, status.not_added])))
+            .then(
+                mapAsyncResultFn(async files =>
+                    files.length === 0
+                        ? undefined
+                        : git.add(files).then(async () => git.commit(update.log))
+                )
+            )
             .then(mapResultFn(() => undefined));
 }
