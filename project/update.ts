@@ -51,17 +51,18 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
             .status()
             .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
             .then(
-                bindResultFn(() =>
-                    chain(update.apply({root: emptyDirectory, overwrite: true}))
-                        .map(mapFailureFn(failure => {
-                            console.error(
-                                `Error: Internal error creating update file stage: ${JSON.stringify(
-                                    failure
-                                )}`
-                            );
-                            throw new Error("Internal error updating project");
-                        }))
-                        .value
+                bindResultFn(
+                    () =>
+                        chain(update.apply({root: emptyDirectory, overwrite: true})).map(
+                            mapFailureFn(failure => {
+                                console.error(
+                                    `Error: Internal error creating update file stage: ${JSON.stringify(
+                                        failure
+                                    )}`
+                                );
+                                throw new Error("Internal error updating project");
+                            })
+                        ).value
                 )
             )
             .then(
