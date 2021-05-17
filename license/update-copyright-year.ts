@@ -76,7 +76,9 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
 
             const updatedCopyright = {
                 index: copyright.index,
-                text: `Copyright ${copyright.startYear}-${currentYear} ${assignee}`
+                text: `Copyright ${
+                    copyright.startYear ? `${copyright.startYear}-` : ""
+                }${currentYear} ${assignee}`
             };
 
             const updatedCopyrights = chain(tail(copyrights))
