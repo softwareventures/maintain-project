@@ -26,3 +26,4 @@ jobs:
           node-version: ${{env.NODE_VERSION}}
       - run: yarn
       - run: yarn maintain-project
+      - run: git push
