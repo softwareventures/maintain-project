@@ -2,8 +2,8 @@ import {exit} from "process";
 import {forEachFn, mapFn} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import init, {InitFailureReason} from "../project/init";
-import {createProject} from "../project/project";
 import {bindFailureFn, mapResultFn} from "../result/result";
+import {createProject} from "../project/create";
 
 export interface InitOptions {
     readonly scope?: string;
