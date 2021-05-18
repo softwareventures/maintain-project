@@ -93,5 +93,8 @@
   "release": {
     "extends": "@softwareventures/semantic-release-config"
   },
-  "snyk": true
+  "snyk": true,
+  "publishConfig": {
+    "access": "public"
+  }
 }
