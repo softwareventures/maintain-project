@@ -1,8 +1,4 @@
 {
-  "extends": "@softwareventures/tsconfig",
-  "compilerOptions": {
-    "lib": ["dom", "es2017"],
-    "allowJs": true
-  },
+  "extends": "@softwareventures/tsconfig/dom",
   "exclude": ["**/test.ts", "**/*.test.ts", "template/template/**.ts"]
 }
