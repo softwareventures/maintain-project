@@ -6,6 +6,7 @@ import {copyFromTemplate} from "../template/copy";
 import {modifyTemplateText} from "../template/modify-text";
 import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
 import {Project} from "../project/project";
+import {nodeVersionRange} from "../node/version-range";
 
 export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([writePackageJson(project), writeNpmIgnore(project)]);
@@ -33,6 +34,9 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                         build: project.target === "webapp" ? json.scripts.build : undefined,
                         prepare: project.target === "npm" ? json.scripts.prepare : undefined,
                         start: project.target === "webapp" ? json.scripts.start : undefined
+                    },
+                    engines: {
+                        node: nodeVersionRange(project.node)
                     },
                     dependencies: {
                         ...json.dependencies,
@@ -94,17 +98,17 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                             "sideEffects",
                             "types",
                             "typings",
+                            "engines",
+                            "engine-strict",
+                            "engineStrict",
+                            "os",
+                            "cpu",
                             "dependencies",
                             "optionalDependencies",
                             "bundleDependencies",
                             "bundledDependencies",
                             "peerDependencies",
                             "devDependencies",
-                            "engines",
-                            "engine-strict",
-                            "engineStrict",
-                            "os",
-                            "cpu",
                             "eslintConfig",
                             "prettier",
                             "config",
