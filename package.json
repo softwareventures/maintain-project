@@ -41,7 +41,7 @@
     "@softwareventures/ordered": "0.2.2",
     "@types/empty-dir": "2.0.0",
     "@types/escodegen": "0.0.6",
-    "@types/estree": "0.0.47",
+    "@types/estree": "0.0.48",
     "@types/hosted-git-info": "3.0.1",
     "@types/jsdom": "16.2.10",
     "@types/node": "12.20.13",
