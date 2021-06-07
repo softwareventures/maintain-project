@@ -1,12 +1,12 @@
 import {GitHost, GitHostOptions} from "../git/git-host";
 import {NpmPackage, NpmPackageOptions} from "../npm/npm-package";
-import {NodeReleases} from "../node/node-releases";
+import {NodeVersions} from "../node/node-versions";
 
 export interface Project {
     readonly path: string;
     readonly npmPackage: NpmPackage;
     readonly gitHost?: GitHost;
-    readonly node: NodeReleases;
+    readonly node: NodeVersions;
     readonly target: "npm" | "webapp";
     readonly author: {
         readonly name?: string;

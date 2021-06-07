@@ -36,7 +36,7 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                         start: project.target === "webapp" ? json.scripts.start : undefined
                     },
                     engines: {
-                        node: nodeVersionRange(project.node)
+                        node: nodeVersionRange(project.node.currentReleases)
                     },
                     dependencies: {
                         ...json.dependencies,

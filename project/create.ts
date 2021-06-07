@@ -3,7 +3,7 @@ import {todayUtc} from "@softwareventures/date";
 import {createNpmPackage} from "../npm/npm-package";
 import {createGitHost} from "../git/git-host";
 import {guessCopyrightHolder} from "../license/guess-copyright-holder";
-import {createNodeReleases} from "../node/create";
+import {createNodeVersions} from "../node/create";
 import {Project, ProjectOptions} from "./project";
 
 export async function createProject(options: ProjectOptions): Promise<Project> {
@@ -30,7 +30,7 @@ export async function createProject(options: ProjectOptions): Promise<Project> {
             path: options.path,
             npmPackage: createNpmPackage(options),
             gitHost: createGitHost(options),
-            node: createNodeReleases(today),
+            node: createNodeVersions(today),
             target: options.target ?? "npm",
             author: options.author,
             license: {

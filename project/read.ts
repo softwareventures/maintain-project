@@ -2,7 +2,7 @@ import {resolve} from "path";
 import chain from "@softwareventures/chain";
 import {todayUtc} from "@softwareventures/date";
 import {gitHostFromUrl} from "../git/git-host";
-import {createNodeReleases} from "../node/create";
+import {createNodeVersions} from "../node/create";
 import {readProjectText} from "./read-text";
 import {statProjectFile} from "./stat-file";
 import {Project} from "./project";
@@ -48,7 +48,7 @@ export async function readProject(path: string): Promise<Project> {
             path,
             npmPackage,
             gitHost,
-            node: createNodeReleases(today),
+            node: createNodeVersions(today),
             target,
             author,
             license: {

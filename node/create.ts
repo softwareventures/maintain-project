@@ -3,9 +3,9 @@ import {entries} from "@softwareventures/dictionary";
 import chain from "@softwareventures/chain";
 import {parseIso8601, Date, beforeOrEqual, afterOrEqual} from "@softwareventures/date";
 import {filterFn, mapFn} from "@softwareventures/array";
-import {NodeReleases} from "./node-releases";
+import {NodeVersions} from "./node-versions";
 
-export function createNodeReleases(today: Date): NodeReleases {
+export function createNodeVersions(today: Date): NodeVersions {
     return chain(entries(releaseSchedule))
         .map(
             mapFn(([version, {start, end}]) => ({
@@ -24,5 +24,5 @@ export function createNodeReleases(today: Date): NodeReleases {
             )
         )
         .map(mapFn(({version}) => version))
-        .map(versions => ({versions})).value;
+        .map(currentReleases => ({targetVersions: currentReleases, currentReleases})).value;
 }
