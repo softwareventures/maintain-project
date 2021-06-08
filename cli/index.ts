@@ -19,6 +19,7 @@ export default function cli(): void {
         .option("--github-project <name>")
         .option("--author-name <name>")
         .option("--author-email <email>")
+        .option("--license <spdx-expression>")
         .option("--copyright-holder <name>")
         .option("--webapp")
         .action((destination, options) => cliInit(destination ?? cwd(), options));

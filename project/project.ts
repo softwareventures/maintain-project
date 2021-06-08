@@ -1,3 +1,4 @@
+import {Info as SpdxLicense} from "spdx-expression-parse";
 import {GitHost, GitHostOptions} from "../git/git-host";
 import {NpmPackage, NpmPackageOptions} from "../npm/npm-package";
 import {NodeVersions} from "../node/node-versions";
@@ -13,6 +14,7 @@ export interface Project {
         readonly email?: string;
     };
     readonly license: {
+        readonly spdxLicense?: SpdxLicense;
         readonly year: number;
         readonly copyrightHolder?: string;
     };
@@ -28,6 +30,7 @@ export interface ProjectOptions {
         readonly email?: string;
     };
     readonly license?: {
+        readonly spdxLicense?: SpdxLicense;
         readonly copyrightHolder?: string;
     };
 }

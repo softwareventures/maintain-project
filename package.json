@@ -48,6 +48,8 @@
     "@types/prettier-package-json": "2.1.0",
     "@types/recursive-readdir": "2.2.0",
     "@types/semver": "7.3.6",
+    "@types/spdx-correct": "2.0.0",
+    "@types/spdx-expression-parse": "3.0.0",
     "commander": "7.2.0",
     "empty-dir": "2.0.0",
     "escodegen": "2.0.0",
@@ -59,6 +61,8 @@
     "recursive-readdir": "2.2.2",
     "semver": "7.3.5",
     "simple-git": "2.39.0",
+    "spdx-correct": "3.1.1",
+    "spdx-expression-parse": "3.0.1",
     "tslib": "2.2.0",
     "xml-formatter": "2.4.0",
     "yarn": "1.22.10"

@@ -1,8 +1,10 @@
 import {resolve} from "path";
 import chain from "@softwareventures/chain";
 import {todayUtc} from "@softwareventures/date";
+import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {gitHostFromUrl} from "../git/git-host";
 import {createNodeVersions} from "../node/create";
+import {parseAndCorrectSpdxExpression} from "../license/spdx";
 import {readProjectText} from "./read-text";
 import {statProjectFile} from "./stat-file";
 import {Project} from "./project";
@@ -41,10 +43,16 @@ export async function readProject(path: string): Promise<Project> {
             : {}
     );
 
+    const spdxLicense = packageJson
+        .then(packageJson => packageJson.license)
+        .then(mapNullableFn(parseAndCorrectSpdxExpression))
+        .catch(() => undefined)
+        .then(mapNullFn(() => undefined));
+
     const today = todayUtc();
 
-    return Promise.all([npmPackage, gitHost, target, author]).then(
-        ([npmPackage, gitHost, target, author]) => ({
+    return Promise.all([npmPackage, gitHost, target, author, spdxLicense]).then(
+        ([npmPackage, gitHost, target, author, spdxLicense]) => ({
             path,
             npmPackage,
             gitHost,
@@ -52,6 +60,7 @@ export async function readProject(path: string): Promise<Project> {
             target,
             author,
             license: {
+                spdxLicense,
                 year: today.year
             }
         })

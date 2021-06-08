@@ -34,6 +34,7 @@ export async function createProject(options: ProjectOptions): Promise<Project> {
             target: options.target ?? "npm",
             author: options.author,
             license: {
+                spdxLicense: options.license?.spdxLicense,
                 year: today.year,
                 copyrightHolder: guessCopyrightHolder(options)
             }
