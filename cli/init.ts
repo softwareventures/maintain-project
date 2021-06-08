@@ -1,7 +1,6 @@
 import {exit} from "process";
 import {forEachFn, mapFn} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
-import {mapNullable} from "@softwareventures/nullable";
 import init, {InitFailureReason} from "../project/init";
 import {bindFailureFn, mapResultFn} from "../result/result";
 import {createProject} from "../project/create";
@@ -36,7 +35,7 @@ export function cliInit(path: string, options: InitOptions): void {
             email: options.authorEmail
         },
         license: {
-            spdxLicense: mapNullable(options.license, parseAndCorrectSpdxExpression) ?? undefined,
+            spdxLicense: parseAndCorrectSpdxExpression(options.license ?? "ISC"),
             copyrightHolder: options.copyrightHolder
         }
     })
