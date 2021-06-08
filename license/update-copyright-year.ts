@@ -7,6 +7,7 @@ import {
     mapFn,
     maximum,
     minimum,
+    partitionWhile,
     partitionWhileFn,
     tail,
     unshiftFn
@@ -28,16 +29,18 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
         }
     });
 
+    const copyrightLineRegExp = /^\s*($|((Copyright|\(C\)|©)\s*)+.*\d{4})/i;
+
     const newText = text.then(
         mapNullableFn(text => {
-            const [copyrightLines, followingLines] = chain(text)
+            const [titleLines, copyrightLines, followingLines] = chain(text)
                 .map(license => license.split("\n"))
                 .map(mapFn(line => line.replace(/\r$/, "")))
-                .map(
-                    partitionWhileFn(
-                        line => !!line.match(/^\s*($|((Copyright|\(C\)|©)\s*)+.*\d{4})/i)
-                    )
-                ).value;
+                .map(partitionWhileFn(line => !line.match(copyrightLineRegExp)))
+                .map(([titleLines, followingLines]) => [
+                    titleLines,
+                    ...partitionWhile(followingLines, line => !!line.match(copyrightLineRegExp))
+                ]).value;
 
             const copyrights = chain(copyrightLines)
                 .map(
@@ -81,13 +84,13 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
                 }${currentYear} ${assignee}`
             };
 
-            const updatedCopyrights = chain(tail(copyrights))
+            const updatedCopyrightLines = chain(tail(copyrights))
                 .map(mapFn(({index, text}) => ({index, text})))
                 .map(unshiftFn(updatedCopyright))
                 .map(sortByFn(({index}) => index))
                 .map(mapFn(({text}) => text)).value;
 
-            return concat([updatedCopyrights, followingLines]).join(EOL);
+            return concat([titleLines, updatedCopyrightLines, followingLines]).join(EOL);
         })
     );
 
