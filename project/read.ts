@@ -4,7 +4,7 @@ import {todayUtc} from "@softwareventures/date";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {gitHostFromUrl} from "../git/git-host";
 import {createNodeVersions} from "../node/create";
-import {parseAndCorrectSpdxExpression} from "../license/spdx";
+import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
 import {readProjectText} from "./read-text";
 import {statProjectFile} from "./stat-file";
 import {Project} from "./project";

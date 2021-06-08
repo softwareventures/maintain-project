@@ -1,7 +1,7 @@
-import {Info as SpdxLicense} from "spdx-expression-parse";
 import {GitHost, GitHostOptions} from "../git/git-host";
 import {NpmPackage, NpmPackageOptions} from "../npm/npm-package";
 import {NodeVersions} from "../node/node-versions";
+import {SpdxLicense} from "../license/spdx/spdx";
 
 export interface Project {
     readonly path: string;

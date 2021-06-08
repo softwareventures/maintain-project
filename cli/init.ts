@@ -5,7 +5,7 @@ import {mapNullable} from "@softwareventures/nullable";
 import init, {InitFailureReason} from "../project/init";
 import {bindFailureFn, mapResultFn} from "../result/result";
 import {createProject} from "../project/create";
-import {parseAndCorrectSpdxExpression} from "../license/spdx";
+import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
 
 export interface InitOptions {
     readonly scope?: string;
