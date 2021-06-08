@@ -68,7 +68,6 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
         git
             .status()
             .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
-            .then(mapResultFn(() => console.log(`Applying update: ${update.log}`)))
             .then(
                 bindAsyncResultFn<GitNotClean, UpdateFailureReason>(async () =>
                     update.type === "fs-stage-update"
@@ -88,5 +87,11 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
                         : git.add(files).then(async () => git.commit(update.log))
                 )
             )
-            .then(mapResultFn(() => undefined));
+            .then(
+                mapResultFn(commitResult => {
+                    if (commitResult != null) {
+                        console.log(`Applied update: ${update.log}`);
+                    }
+                })
+            );
 }
