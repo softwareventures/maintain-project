@@ -95,16 +95,25 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
 
 async function openFile(options: OpenOptions<File>): Promise<OpenFileResult> {
     const flags = options.overwrite ? "r+" : "wx+";
-    return fs.open(options.path, flags).then(
-        fileHandle => success({type: "open-file", fileHandle, data: options.node.data}),
-        reason => {
-            if (reason.code === "EEXIST") {
-                return failure([{type: "file-exists", path: options.path}]);
+    return fs
+        .open(options.path, flags)
+        .catch(async reason => {
+            if (reason.code === "ENOENT" && options.overwrite) {
+                return fs.open(options.path, "wx+");
             } else {
                 throw reason;
             }
-        }
-    );
+        })
+        .then(
+            fileHandle => success({type: "open-file", fileHandle, data: options.node.data}),
+            reason => {
+                if (reason.code === "EEXIST") {
+                    return failure([{type: "file-exists", path: options.path}]);
+                } else {
+                    throw reason;
+                }
+            }
+        );
 }
 
 async function write(stage: OpenFsStage): Promise<void> {
