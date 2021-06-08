@@ -16,6 +16,7 @@ import {emptyDirectory} from "../fs-stage/directory";
 import {updateCopyrightYear} from "../license/update-copyright-year";
 import {commit, CommitFailureReason} from "../fs-stage/commit";
 import {excludeNull, mapFn} from "../collections/async-iterable";
+import {addMissingLicense} from "../license/add-missing-license";
 import {Project} from "./project";
 
 export interface Update {
@@ -30,7 +31,7 @@ export type UpdateFailureReason = GitNotClean | CommitFailureReason;
 export async function updateProject(project: Project): Promise<UpdateResult> {
     const git = simpleGit(project.path);
 
-    return chain([updateCopyrightYear(project)])
+    return chain([updateCopyrightYear(project), addMissingLicense(project)])
         .map(excludeNull)
         .map(mapFn(step(project, git)))
         .map(combineAsyncResults).value;
