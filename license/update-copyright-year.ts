@@ -101,7 +101,7 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
             ? null
             : {
                   log: "docs(LICENSE): update copyright year",
-                  apply: stage => insert(stage, "LICENSE.md", file)
+                  apply: async stage => insert(stage, "LICENSE.md", file)
               }
     );
 }

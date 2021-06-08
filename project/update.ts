@@ -4,7 +4,6 @@ import {concat} from "@softwareventures/array";
 import {FsStage, InsertResult} from "../fs-stage/fs-stage";
 import {
     bindAsyncResultFn,
-    bindResultFn,
     combineAsyncResults,
     failure,
     mapAsyncResultFn,
@@ -21,7 +20,7 @@ import {Project} from "./project";
 
 export interface Update {
     readonly log: string;
-    readonly apply: (stage: FsStage) => InsertResult;
+    readonly apply: (stage: FsStage) => Promise<InsertResult>;
 }
 
 export type UpdateResult = Result<UpdateFailureReason>;
@@ -53,18 +52,17 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
             .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
             .then(mapResultFn(() => console.log(`Applying update: ${update.log}`)))
             .then(
-                bindResultFn(
-                    () =>
-                        chain(update.apply({root: emptyDirectory, overwrite: true})).map(
-                            mapFailureFn(failure => {
-                                console.error(
-                                    `Error: Internal error creating update file stage: ${JSON.stringify(
-                                        failure
-                                    )}`
-                                );
-                                throw new Error("Internal error updating project");
-                            })
-                        ).value
+                bindAsyncResultFn(async () =>
+                    update.apply({root: emptyDirectory, overwrite: true}).then(
+                        mapFailureFn(failure => {
+                            console.error(
+                                `Error: Internal error creating update file stage: ${JSON.stringify(
+                                    failure
+                                )}`
+                            );
+                            throw new Error("Internal error updating project");
+                        })
+                    )
                 )
             )
             .then(
