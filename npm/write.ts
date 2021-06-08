@@ -1,5 +1,6 @@
 import chain from "@softwareventures/chain";
 import {format as formatPackageJson} from "prettier-package-json";
+import {mapNullable} from "@softwareventures/nullable";
 import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../result/result";
 import {copyFromTemplate} from "../template/copy";
@@ -7,6 +8,7 @@ import {modifyTemplateText} from "../template/modify-text";
 import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
 import {Project} from "../project/project";
 import {nodeVersionRange} from "../node/version-range";
+import {formatSpdxExpression} from "../license/spdx/format";
 
 export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([writePackageJson(project), writeNpmIgnore(project)]);
@@ -29,6 +31,8 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                     homepage: gitHost == null ? undefined : homepageUrl(gitHost),
                     bugs: gitHost == null ? undefined : bugsUrl(gitHost),
                     repository: gitHost == null ? undefined : repositoryShortcut(gitHost),
+                    license:
+                        mapNullable(project.license.spdxLicense, formatSpdxExpression) ?? undefined,
                     scripts: {
                         ...json.scripts,
                         build: project.target === "webapp" ? json.scripts.build : undefined,
