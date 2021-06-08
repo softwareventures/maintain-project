@@ -18,6 +18,7 @@ export async function addMissingLicense(project: Project): Promise<Update | null
         .then(missing =>
             missing
                 ? {
+                      type: "fs-stage-update",
                       log: "docs(LICENSE): add missing LICENSE.md",
                       apply: writeLicense(project)
                   }

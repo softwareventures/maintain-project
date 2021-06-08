@@ -5,16 +5,16 @@ import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {gitHostFromUrl} from "../git/git-host";
 import {createNodeVersions} from "../node/create";
 import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
-import {readProjectText} from "./read-text";
 import {statProjectFile} from "./stat-file";
 import {Project} from "./project";
+import {readProjectJson} from "./read-json";
 
 export async function readProject(path: string): Promise<Project> {
     path = resolve(path);
 
     const project = {path};
 
-    const packageJson = readProjectText(project, "package.json").then(JSON.parse);
+    const packageJson = readProjectJson(project, "package.json");
 
     const npmPackage = packageJson
         .then(packageJson => packageJson.name ?? "")

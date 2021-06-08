@@ -54,7 +54,7 @@ export function cliInit(path: string, options: InitOptions): void {
                                 case "yarn-install-failed":
                                     return "yarn install failed";
                                 case "yarn-fix-failed":
-                                    return "Failed to apply code style rules";
+                                    return `Failed to apply code style rules: ${reason.path}`;
                             }
                         })
                     )

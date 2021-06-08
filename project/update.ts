@@ -7,31 +7,48 @@ import {
     combineAsyncResults,
     failure,
     mapAsyncResultFn,
-    mapFailureFn,
     mapResultFn,
     Result,
-    success
+    success,
+    throwFailureFn
 } from "../result/result";
 import {emptyDirectory} from "../fs-stage/directory";
 import {updateCopyrightYear} from "../license/update-copyright-year";
 import {commit, CommitFailureReason} from "../fs-stage/commit";
 import {excludeNull, mapFn} from "../collections/async-iterable";
 import {addMissingLicense} from "../license/add-missing-license";
+import {YarnFixFailureReason} from "../yarn/fix";
+import {applyCodeStyle} from "../yarn/apply-code-style";
 import {Project} from "./project";
 
-export interface Update {
+export type Update = FsStageUpdate | DirectUpdate;
+
+export interface FsStageUpdate {
+    readonly type: "fs-stage-update";
     readonly log: string;
     readonly apply: (stage: FsStage) => Promise<InsertResult>;
 }
 
+export interface DirectUpdate {
+    readonly type: "direct-update";
+    readonly log: string;
+    readonly apply: () => Promise<Result<UpdateStepFailureReason>>;
+}
+
 export type UpdateResult = Result<UpdateFailureReason>;
 
-export type UpdateFailureReason = GitNotClean | CommitFailureReason;
+export type UpdateFailureReason = GitNotClean | CommitFailureReason | UpdateStepFailureReason;
+
+export type UpdateStepFailureReason = YarnFixFailureReason;
 
 export async function updateProject(project: Project): Promise<UpdateResult> {
     const git = simpleGit(project.path);
 
-    return chain([updateCopyrightYear(project), addMissingLicense(project)])
+    return chain([
+        applyCodeStyle(project),
+        updateCopyrightYear(project),
+        addMissingLicense(project)
+    ])
         .map(excludeNull)
         .map(mapFn(step(project, git)))
         .map(combineAsyncResults).value;
@@ -53,22 +70,13 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
             .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
             .then(mapResultFn(() => console.log(`Applying update: ${update.log}`)))
             .then(
-                bindAsyncResultFn(async () =>
-                    update.apply({root: emptyDirectory, overwrite: true}).then(
-                        mapFailureFn(failure => {
-                            console.error(
-                                `Error: Internal error creating update file stage: ${JSON.stringify(
-                                    failure
-                                )}`
-                            );
-                            throw new Error("Internal error updating project");
-                        })
-                    )
-                )
-            )
-            .then(
-                bindAsyncResultFn<GitNotClean, CommitFailureReason, FsStage, void>(async stage =>
-                    commit(project.path, stage)
+                bindAsyncResultFn<GitNotClean, UpdateFailureReason>(async () =>
+                    update.type === "fs-stage-update"
+                        ? update
+                              .apply({root: emptyDirectory, overwrite: true})
+                              .then(throwFailureFn("Internal error creating update file stage"))
+                              .then(async stage => commit(project.path, stage))
+                        : update.apply()
                 )
             )
             .then(mapAsyncResultFn(async () => git.status()))

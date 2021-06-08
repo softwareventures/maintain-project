@@ -229,3 +229,20 @@ export async function toAsyncNullable<TValue>(
 ): Promise<TValue | null> {
     return result.then(toNullable);
 }
+
+export function throwFailure<TValue>(result: Result<unknown, TValue>, message?: string): TValue {
+    if (result.type === "success") {
+        return result.value;
+    } else {
+        throw new Error(
+            (message == null ? "" : `${message}:\n`) +
+                map(result.reasons, reason => JSON.stringify(reason)).join("\n")
+        );
+    }
+}
+
+export function throwFailureFn<TValue>(
+    message: string
+): (result: Result<unknown, TValue>) => TValue {
+    return result => throwFailure(result, message);
+}
