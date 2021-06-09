@@ -1,27 +1,16 @@
 import {Project} from "../project/project";
 import {Update} from "../project/update";
-import {statProjectFile} from "../project/stat-file";
+import {projectFileExists} from "../project/file-exists";
 import {writeLicense} from "./write";
 
 export async function addMissingLicense(project: Project): Promise<Update | null> {
-    return statProjectFile(project, "LICENSE.md")
-        .then(
-            () => false,
-            reason => {
-                if (reason.code === "ENOENT") {
-                    return true;
-                } else {
-                    throw reason;
-                }
-            }
-        )
-        .then(missing =>
-            missing
-                ? {
-                      type: "fs-stage-update",
-                      log: "docs(LICENSE): add missing LICENSE.md",
-                      apply: writeLicense(project)
-                  }
-                : null
-        );
+    return projectFileExists(project, "LICENSE.md").then(exists =>
+        exists
+            ? null
+            : {
+                  type: "fs-stage-update",
+                  log: "docs(LICENSE): add missing LICENSE.md",
+                  apply: writeLicense(project)
+              }
+    );
 }
