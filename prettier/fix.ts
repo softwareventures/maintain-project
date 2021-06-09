@@ -1,8 +1,16 @@
 import {resolve} from "path";
 import {mapFn} from "@softwareventures/array";
+import {mapNullFn} from "@softwareventures/nullable";
 import {ProjectSource} from "../project/project";
 import {readProjectJson} from "../project/read-json";
-import {combineAsyncResults, mapFailureFn, Result, success} from "../result/result";
+import {
+    combineAsyncResults,
+    mapFailureFn,
+    mapResultFn,
+    Result,
+    success,
+    toNullable
+} from "../result/result";
 import {yarn} from "../yarn/yarn";
 
 export type PrettierFixResult = Result<PrettierFixFailureReason>;
@@ -43,17 +51,14 @@ export async function prettierFixFilesIfAvailable(
 
 export async function isPrettierAvailable(project: ProjectSource): Promise<boolean> {
     return readProjectJson(project, "package.json")
-        .catch(reason => {
-            if (reason instanceof SyntaxError || reason.code === "ENOENT") {
-                return false;
-            } else {
-                throw reason;
-            }
-        })
         .then(
-            packageJson =>
-                packageJsonDependsOnPrettier(packageJson) && yarnPrettierCanRun(packageJson)
-        );
+            mapResultFn(
+                packageJson =>
+                    packageJsonDependsOnPrettier(packageJson) && yarnPrettierCanRun(packageJson)
+            )
+        )
+        .then(toNullable)
+        .then(mapNullFn(() => false));
 }
 
 function packageJsonDependsOnPrettier(packageJson: any): boolean {

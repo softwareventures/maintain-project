@@ -220,6 +220,33 @@ export function chainAsyncResultsFn<TReason, TValue>(
     return async initial => chainAsyncResults(initial, actions);
 }
 
+type InferReasons<T> = T extends ReadonlyArray<Result<infer Reasons, unknown>> ? Reasons : never;
+type InferValue<T> = T extends Success<infer Value> ? Value : never;
+
+export function allResults<T extends Array<Result<unknown, unknown>>>(
+    results: readonly [...T]
+): Result<InferReasons<T>, {[K in keyof T]: InferValue<T[K]>}> {
+    return fold(
+        results,
+        (acc, result) =>
+            bindResult(acc, accValues => mapResult(result, value => [...accValues, value])),
+        success([]) as Result<any, any[]>
+    ) as any;
+}
+
+type InferAwaited<T> = T extends Promise<infer Value> ? Value : T;
+type InferAwaiteds<T extends unknown[]> = {[K in keyof T]: InferAwaited<T[K]>};
+
+export async function allAsyncResults<
+    T extends Array<Promise<Result<unknown, unknown>> | Result<unknown, unknown>>
+>(
+    results: readonly [...T]
+): Promise<
+    Result<InferReasons<InferAwaiteds<T>>, {[K in keyof T]: InferValue<InferAwaited<T[K]>>}>
+> {
+    return Promise.all(results).then(results => allResults(results) as any);
+}
+
 export function toNullable<TValue>(result: Result<unknown, TValue>): TValue | null {
     return result.type === "success" ? result.value : null;
 }

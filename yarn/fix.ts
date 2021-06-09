@@ -1,4 +1,5 @@
-import {mapFailureFn, Result, success} from "../result/result";
+import {mapNullFn} from "@softwareventures/nullable";
+import {mapFailureFn, mapResultFn, Result, success, toNullable} from "../result/result";
 import {ProjectSource} from "../project/project";
 import {readProjectJson} from "../project/read-json";
 import {yarn} from "./yarn";
@@ -24,19 +25,14 @@ export async function yarnFixIfAvailable(project: ProjectSource): Promise<YarnFi
 
 export async function isYarnFixAvailable(project: ProjectSource): Promise<boolean> {
     return readProjectJson(project, "package.json")
-        .catch(reason => {
-            if (reason instanceof SyntaxError) {
-                return false;
-            } else if (reason.code === "ENOENT") {
-                return false;
-            } else {
-                throw reason;
-            }
-        })
         .then(
-            packageJson =>
-                typeof packageJson === "object" &&
-                typeof packageJson?.scripts === "object" &&
-                typeof packageJson?.scripts?.fix === "string"
-        );
+            mapResultFn(
+                packageJson =>
+                    typeof packageJson === "object" &&
+                    typeof packageJson?.scripts === "object" &&
+                    typeof packageJson?.scripts?.fix === "string"
+            )
+        )
+        .then(toNullable)
+        .then(mapNullFn(() => false));
 }
