@@ -19,6 +19,7 @@ import {excludeNull, mapFn} from "../collections/async-iterable";
 import {addMissingLicense} from "../license/add-missing-license";
 import {YarnFixFailureReason} from "../yarn/fix";
 import {applyCodeStyle} from "../yarn/apply-code-style";
+import {PrettierFixFailureReason, prettierFixFilesIfAvailable} from "../prettier/fix";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -39,7 +40,7 @@ export type UpdateResult = Result<UpdateFailureReason>;
 
 export type UpdateFailureReason = GitNotClean | CommitFailureReason | UpdateStepFailureReason;
 
-export type UpdateStepFailureReason = YarnFixFailureReason;
+export type UpdateStepFailureReason = YarnFixFailureReason | PrettierFixFailureReason;
 
 export async function updateProject(project: Project): Promise<UpdateResult> {
     const git = simpleGit(project.path);
@@ -80,6 +81,11 @@ function step(project: Project, git: SimpleGit): (update: Update) => Promise<Upd
             )
             .then(mapAsyncResultFn(async () => git.status()))
             .then(mapResultFn(status => concat([status.modified, status.not_added])))
+            .then(
+                bindAsyncResultFn(async files =>
+                    prettierFixFilesIfAvailable(project, files).then(mapResultFn(() => files))
+                )
+            )
             .then(
                 mapAsyncResultFn(async files =>
                     files.length === 0

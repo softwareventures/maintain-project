@@ -21,6 +21,7 @@ export function cliUpdate(path: string, options: object): void {
                                 case "git-not-clean":
                                     return `Git working copy not clean: ${reason.path}`;
                                 case "yarn-fix-failed":
+                                case "prettier-fix-failed":
                                     return `Failed to apply code style rules: ${reason.path}`;
                             }
                         })
