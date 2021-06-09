@@ -1,17 +1,10 @@
 import {resolve} from "path";
 import {mapFn} from "@softwareventures/array";
-import {mapNullFn} from "@softwareventures/nullable";
 import {ProjectSource} from "../project/project";
-import {readProjectJson} from "../project/read-json";
-import {
-    combineAsyncResults,
-    mapFailureFn,
-    mapResultFn,
-    Result,
-    success,
-    toNullable
-} from "../result/result";
+import {combineAsyncResults, mapFailureFn, Result, success} from "../result/result";
 import {yarn} from "../yarn/yarn";
+import {projectDevDependsOn} from "../project/dev-depends-on";
+import {readProjectScript} from "../project/read-script";
 
 export type PrettierFixResult = Result<PrettierFixFailureReason>;
 
@@ -50,32 +43,11 @@ export async function prettierFixFilesIfAvailable(
 }
 
 export async function isPrettierAvailable(project: ProjectSource): Promise<boolean> {
-    return readProjectJson(project, "package.json")
-        .then(
-            mapResultFn(
-                packageJson =>
-                    packageJsonDependsOnPrettier(packageJson) && yarnPrettierCanRun(packageJson)
-            )
-        )
-        .then(toNullable)
-        .then(mapNullFn(() => false));
-}
-
-function packageJsonDependsOnPrettier(packageJson: any): boolean {
-    return (
-        typeof packageJson === "object" &&
-        ((typeof packageJson?.dependencies === "object" &&
-            typeof packageJson?.dependencies?.prettier === "string") ||
-            (typeof packageJson?.devDependencies === "object" &&
-                typeof packageJson?.devDependencies?.prettier === "string"))
-    );
-}
-
-function yarnPrettierCanRun(packageJson: any): boolean {
-    return (
-        typeof packageJson === "object" &&
-        (typeof packageJson?.scripts !== "object" ||
-            packageJson?.scripts?.prettier == null ||
-            String(packageJson?.scripts?.prettier).trim() === "prettier")
+    return Promise.all([
+        projectDevDependsOn(project, "prettier"),
+        readProjectScript(project, "prettier")
+    ]).then(
+        ([hasDependency, script]) =>
+            hasDependency && (script == null || script.trim() === "prettier")
     );
 }
