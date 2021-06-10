@@ -57,7 +57,7 @@ export function mapResultFn<TReason, TValue, TNewValue>(
 
 export async function mapAsyncResult<TReason, TValue, TNewValue>(
     result: Result<TReason, TValue>,
-    f: (value: TValue) => PromiseLike<TNewValue>
+    f: (value: TValue) => PromiseLike<TNewValue> | TNewValue
 ): Promise<Result<TReason, TNewValue>> {
     if (result.type === "success") {
         return Promise.resolve(f(result.value)).then(value => ({type: "success", value}));
@@ -67,7 +67,7 @@ export async function mapAsyncResult<TReason, TValue, TNewValue>(
 }
 
 export function mapAsyncResultFn<TReason, TValue, TNewValue>(
-    f: (value: TValue) => PromiseLike<TNewValue>
+    f: (value: TValue) => PromiseLike<TNewValue> | TNewValue
 ): (result: Result<TReason, TValue>) => Promise<Result<TReason, TNewValue>> {
     return async result => mapAsyncResult(result, f);
 }
