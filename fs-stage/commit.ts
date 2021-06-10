@@ -137,5 +137,8 @@ async function writeDirectory(directory: OpenDirectory): Promise<void> {
 }
 
 async function writeFile(file: OpenFile): Promise<void> {
-    return fs.writeFile(file.fileHandle, file.data).then(async () => file.fileHandle.close());
+    return fs
+        .writeFile(file.fileHandle, file.data)
+        .then(async () => file.fileHandle.truncate(file.data.byteLength))
+        .then(async () => file.fileHandle.close());
 }
