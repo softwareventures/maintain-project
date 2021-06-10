@@ -1,6 +1,6 @@
 import {mapFailureFn, Result, success} from "../result/result";
 import {ProjectSource} from "../project/project";
-import {readProjectScript} from "../project/read-script";
+import {readProjectScript} from "../npm/read-script";
 import {yarn} from "./yarn";
 
 export type YarnFixResult = Result<YarnFixFailureReason>;

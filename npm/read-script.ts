@@ -1,7 +1,7 @@
 import {mapNullableFn} from "@softwareventures/nullable";
 import {mapResultFn, toNullable} from "../result/result";
-import {ProjectSource} from "./project";
-import {readProjectJson} from "./read-json";
+import {ProjectSource} from "../project/project";
+import {readProjectJson} from "../project/read-json";
 
 export async function readProjectScript(
     project: ProjectSource,

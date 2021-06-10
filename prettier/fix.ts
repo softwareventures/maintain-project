@@ -3,7 +3,7 @@ import {mapFn} from "@softwareventures/array";
 import {ProjectSource} from "../project/project";
 import {combineAsyncResults, mapFailureFn, Result, success} from "../result/result";
 import {yarn} from "../yarn/yarn";
-import {readProjectScript} from "../project/read-script";
+import {readProjectScript} from "../npm/read-script";
 import {isPrettierProject} from "./is-prettier-project";
 
 export type PrettierFixResult = Result<PrettierFixFailureReason>;
