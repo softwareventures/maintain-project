@@ -1,4 +1,4 @@
-export type AsyncIterableLike<T> = Iterable<Promise<T>> | AsyncIterable<T>;
+export type AsyncIterableLike<T> = Iterable<Promise<T> | T> | AsyncIterable<T>;
 
 export function filter<T, U extends T>(
     iterable: AsyncIterableLike<T>,
@@ -108,7 +108,7 @@ export const asyncMapFn = mapFn;
 
 export async function* asyncConcatMap<T, U>(
     iterable: AsyncIterableLike<T>,
-    f: (element: T) => AsyncIterableLike<U> | Iterable<U>
+    f: (element: T) => AsyncIterableLike<U>
 ): AsyncIterable<U> {
     for await (const a of iterable) {
         for await (const b of f(a)) {
@@ -118,7 +118,7 @@ export async function* asyncConcatMap<T, U>(
 }
 
 export function asyncConcatMapFn<T, U>(
-    f: (element: T) => AsyncIterableLike<U> | Iterable<U>
+    f: (element: T) => AsyncIterableLike<U>
 ): (iterable: AsyncIterableLike<T>) => AsyncIterable<U> {
     return iterable => asyncConcatMap(iterable, f);
 }
