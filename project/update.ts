@@ -20,6 +20,7 @@ import {addMissingLicense} from "../license/add-missing-license";
 import {YarnFixFailureReason} from "../yarn/fix";
 import {applyCodeStyle} from "../yarn/apply-code-style";
 import {PrettierFixFailureReason, prettierFixFilesIfAvailable} from "../prettier/fix";
+import {updateFixScript} from "../npm/update-fix-script";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -46,6 +47,7 @@ export async function updateProject(project: Project): Promise<UpdateResult> {
     const git = simpleGit(project.path);
 
     return chain([
+        updateFixScript(project),
         applyCodeStyle(project),
         updateCopyrightYear(project),
         addMissingLicense(project)

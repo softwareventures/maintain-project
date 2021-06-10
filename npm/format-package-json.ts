@@ -1,6 +1,6 @@
 import {format} from "prettier-package-json";
 
-export function formatPackageJson(json: any): string {
+export function formatPackageJson(json: object): string {
     return format(json, {
         keyOrder: [
             "private",
