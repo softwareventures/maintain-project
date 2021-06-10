@@ -1,5 +1,4 @@
 import chain from "@softwareventures/chain";
-import {format as formatPackageJson} from "prettier-package-json";
 import {mapNullable} from "@softwareventures/nullable";
 import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../result/result";
@@ -9,6 +8,7 @@ import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
 import {Project} from "../project/project";
 import {nodeVersionRange} from "../node/version-range";
 import {formatSpdxExpression} from "../license/spdx/format";
+import {formatPackageJson} from "./format-package-json";
 
 export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([writePackageJson(project), writeNpmIgnore(project)]);
@@ -75,52 +75,7 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                                 : undefined
                     }
                 }))
-                .map(json =>
-                    formatPackageJson(json, {
-                        keyOrder: [
-                            "private",
-                            "name",
-                            "version",
-                            "description",
-                            "keywords",
-                            "author",
-                            "maintainers",
-                            "contributors",
-                            "homepage",
-                            "bugs",
-                            "repository",
-                            "license",
-                            "scripts",
-                            "main",
-                            "module",
-                            "browser",
-                            "man",
-                            "preferGlobal",
-                            "bin",
-                            "files",
-                            "directories",
-                            "sideEffects",
-                            "types",
-                            "typings",
-                            "engines",
-                            "engine-strict",
-                            "engineStrict",
-                            "os",
-                            "cpu",
-                            "dependencies",
-                            "optionalDependencies",
-                            "bundleDependencies",
-                            "bundledDependencies",
-                            "peerDependencies",
-                            "devDependencies",
-                            "eslintConfig",
-                            "prettier",
-                            "config",
-                            "ava",
-                            "release"
-                        ]
-                    })
-                ).value
+                .map(formatPackageJson).value
     );
 
     return async fsStage => file.then(file => insert(fsStage, "package.json", file));
