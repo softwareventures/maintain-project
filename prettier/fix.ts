@@ -3,6 +3,7 @@ import {mapFn} from "@softwareventures/array";
 import {ProjectSource} from "../project/project";
 import {combineAsyncResults, mapFailureFn, Result, success} from "../result/result";
 import {yarn} from "../yarn/yarn";
+import {readProjectScript} from "../project/read-script";
 import {isPrettierProject} from "./is-prettier-project";
 
 export type PrettierFixResult = Result<PrettierFixFailureReason>;
@@ -36,7 +37,14 @@ export async function prettierFixFilesIfAvailable(
     project: ProjectSource,
     relativePaths: readonly string[]
 ): Promise<PrettierFixResult> {
-    return isPrettierProject(project).then(async available =>
+    return canYarnRunPrettier(project).then(async available =>
         available ? prettierFixFiles(project, relativePaths) : success()
+    );
+}
+
+async function canYarnRunPrettier(project: ProjectSource): Promise<boolean> {
+    return Promise.all([isPrettierProject(project), readProjectScript(project, "prettier")]).then(
+        ([hasDependency, script]) =>
+            hasDependency && (script == null || script.trim() === "prettier")
     );
 }
