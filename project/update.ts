@@ -21,6 +21,7 @@ import {YarnFixFailureReason} from "../yarn/fix";
 import {applyCodeStyle} from "../yarn/apply-code-style";
 import {PrettierFixFailureReason, prettierFixFilesIfAvailable} from "../prettier/fix";
 import {updateFixScript} from "../npm/update-fix-script";
+import {updateLintScript} from "../npm/update-lint-script";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -46,7 +47,13 @@ export type UpdateStepFailureReason = YarnFixFailureReason | PrettierFixFailureR
 export async function updateProject(project: Project): Promise<UpdateResult> {
     const git = simpleGit(project.path);
 
-    return chain([updateFixScript, applyCodeStyle, updateCopyrightYear, addMissingLicense])
+    return chain([
+        updateLintScript,
+        updateFixScript,
+        applyCodeStyle,
+        updateCopyrightYear,
+        addMissingLicense
+    ])
         .map(mapAsyncFn(step(project, git)))
         .map(combineAsyncResults).value;
 }
