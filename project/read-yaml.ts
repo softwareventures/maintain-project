@@ -14,10 +14,14 @@ export interface InvalidYaml {
     readonly path: string;
 }
 
-export async function readProjectYaml(project: ProjectSource, path: string): Promise<ReadYamlResult> {
+export async function readProjectYaml(
+    project: ProjectSource,
+    path: string
+): Promise<ReadYamlResult> {
     return readProjectText(project, path)
         .then(text => load(text, {schema: JSON_SCHEMA}))
-        .then(yaml => success(yaml),
+        .then(
+            yaml => success(yaml),
             reason => {
                 if (reason.code === "ENOENT") {
                     return failure([{type: "file-not-found", path}]);
@@ -26,5 +30,6 @@ export async function readProjectYaml(project: ProjectSource, path: string): Pro
                 } else {
                     throw reason;
                 }
-            });
+            }
+        );
 }

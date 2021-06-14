@@ -1,5 +1,5 @@
 import {coerce, copy, findIndex} from "@softwareventures/array";
-import {compare, reverse} from "@softwareventures/ordered";
+import {Comparator, compare, reverse} from "@softwareventures/ordered";
 import {all, zip} from "@softwareventures/iterable";
 
 export function findExtract<T, U extends T>(
@@ -35,6 +35,10 @@ export function excludeIndex<T>(array: ArrayLike<T>, index: number): T[] {
     return [...a.slice(0, index), ...a.slice(index + 1)];
 }
 
+export function sortFn<T>(comparator: Comparator<T>): (array: ArrayLike<T>) => T[] {
+    return array => copy(array).sort(comparator);
+}
+
 export function sortByFn<T, U extends string | number | boolean>(
     f: (element: T) => U
 ): (array: readonly T[]) => T[] {
@@ -53,4 +57,8 @@ export function arraysEqual<T>(a: ArrayLike<T>, b: ArrayLike<T>, equal = default
 
 function defaultEqual(a: unknown, b: unknown): boolean {
     return a === b;
+}
+
+export function only<T>(a: ArrayLike<T>): T | null {
+    return a.length === 1 ? a[0] : null;
 }

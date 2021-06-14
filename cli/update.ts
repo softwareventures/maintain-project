@@ -1,15 +1,16 @@
 import {exit} from "process";
 import chain from "@softwareventures/chain";
 import {forEachFn, mapFn} from "@softwareventures/array";
-import {readProject} from "../project/read";
+import {readProject, ReadProjectFailureReason} from "../project/read";
 import {bindAsyncResultFn, bindFailureFn} from "../result/result";
 import {UpdateFailureReason, updateProject} from "../project/update";
-import {ReadJsonFailureReason} from "../project/read-json";
 import {Project} from "../project/project";
 
 export function cliUpdate(path: string, options: object): void {
     readProject(path)
-        .then(bindAsyncResultFn<ReadJsonFailureReason, UpdateFailureReason, Project>(updateProject))
+        .then(
+            bindAsyncResultFn<ReadProjectFailureReason, UpdateFailureReason, Project>(updateProject)
+        )
         .then(
             bindFailureFn(reasons => {
                 chain(reasons)
@@ -24,6 +25,8 @@ export function cliUpdate(path: string, options: object): void {
                                     return `File Exists: ${reason.path}`;
                                 case "invalid-json":
                                     return `Invalid JSON: ${reason.path}`;
+                                case "invalid-yaml":
+                                    return `Invalid YAML: ${reason.path}`;
                                 case "git-not-clean":
                                     return `Git working copy not clean: ${reason.path}`;
                                 case "yarn-fix-failed":

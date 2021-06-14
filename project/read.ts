@@ -3,14 +3,16 @@ import chain from "@softwareventures/chain";
 import {todayUtc} from "@softwareventures/date";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {gitHostFromUrl} from "../git/git-host";
-import {createNodeVersions} from "../node/create";
 import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
 import {allAsyncResults, mapResultFn, Result} from "../result/result";
+import {readNodeVersions, ReadNodeVersionsFailureReason} from "../node/read";
 import {statProjectFile} from "./stat-file";
 import {Project} from "./project";
 import {ReadJsonFailureReason, readProjectJson} from "./read-json";
 
-export type ReadProjectResult = Result<ReadJsonFailureReason, Project>;
+export type ReadProjectResult = Result<ReadProjectFailureReason, Project>;
+
+export type ReadProjectFailureReason = ReadJsonFailureReason | ReadNodeVersionsFailureReason;
 
 export async function readProject(path: string): Promise<ReadProjectResult> {
     path = resolve(path);
@@ -63,13 +65,15 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
 
     const today = todayUtc();
 
+    const node = readNodeVersions(project, today);
+
     return target.then(async target =>
-        allAsyncResults([npmPackage, gitHost, author, spdxLicense]).then(
-            mapResultFn(([npmPackage, gitHost, author, spdxLicense]) => ({
+        allAsyncResults([npmPackage, gitHost, author, spdxLicense, node]).then(
+            mapResultFn(([npmPackage, gitHost, author, spdxLicense, node]) => ({
                 path,
                 npmPackage,
                 gitHost,
-                node: createNodeVersions(today),
+                node,
                 target,
                 author,
                 license: {
