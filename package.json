@@ -56,7 +56,7 @@
     "hosted-git-info": "3.0.8",
     "js-yaml": "4.1.0",
     "jsdom": "16.6.0",
-    "node-releases": "1.1.72",
+    "node-releases": "1.1.73",
     "non-null": "2.0.1",
     "prettier-package-json": "2.1.3",
     "recursive-readdir": "2.2.2",
