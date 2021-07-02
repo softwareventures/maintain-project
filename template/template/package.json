@@ -37,7 +37,7 @@
     "webpack-dev-server": "3.11.2"
   },
   "dependencies": {
-    "@types/webpack-env": "1.16.1",
+    "@types/webpack-env": "1.16.2",
     "tslib": "2.3.0"
   },
   "eslintConfig": {
