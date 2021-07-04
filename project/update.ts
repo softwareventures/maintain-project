@@ -1,6 +1,7 @@
 import simpleGit, {SimpleGit} from "simple-git";
 import chain from "@softwareventures/chain";
-import {concat} from "@softwareventures/array";
+import {concat, map} from "@softwareventures/array";
+import wrap = require("wordwrap");
 import {mapFn as mapAsyncFn} from "../collections/async-iterable";
 import {FsStage, InsertResult} from "../fs-stage/fs-stage";
 import {
@@ -30,12 +31,14 @@ export type Update = FsStageUpdate | DirectUpdate;
 export interface FsStageUpdate {
     readonly type: "fs-stage-update";
     readonly log: string;
+    readonly breaking?: readonly string[];
     readonly apply: (stage: FsStage) => Promise<InsertResult>;
 }
 
 export interface DirectUpdate {
     readonly type: "direct-update";
     readonly log: string;
+    readonly breaking?: readonly string[];
     readonly apply: () => Promise<Result<UpdateStepFailureReason>>;
 }
 
@@ -45,8 +48,13 @@ export type UpdateFailureReason = GitNotClean | CommitFailureReason | UpdateStep
 
 export type UpdateStepFailureReason = YarnFixFailureReason | PrettierFixFailureReason;
 
-export async function updateProject(project: Project): Promise<UpdateResult> {
-    const git = simpleGit(project.path);
+export interface UpdateProjectOptions {
+    readonly project: Project;
+    readonly breaking?: boolean;
+}
+
+export async function updateProject(options: UpdateProjectOptions): Promise<UpdateResult> {
+    const git = simpleGit(options.project.path);
 
     return chain([
         updateLintScript,
@@ -56,7 +64,7 @@ export async function updateProject(project: Project): Promise<UpdateResult> {
         addMissingLicense,
         addNewNodeVersionsToPackageJson
     ])
-        .map(mapAsyncFn(step(project, git)))
+        .map(mapAsyncFn(step(options, git)))
         .map(combineAsyncResults).value;
 }
 
@@ -70,7 +78,7 @@ export function gitNotClean(path: string): GitNotClean {
 }
 
 function step(
-    project: Project,
+    {project, breaking}: UpdateProjectOptions,
     git: SimpleGit
 ): (update: (project: Project) => Promise<Update | null>) => Promise<UpdateResult> {
     return async update =>
@@ -78,6 +86,11 @@ function step(
             .status()
             .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
             .then(mapAsyncResultFn(async () => update(project)))
+            .then(
+                mapAsyncResultFn(async update =>
+                    breaking || (update?.breaking?.length ?? 0) === 0 ? update : null
+                )
+            )
             .then(bindAsyncResultFn(async update => commitUpdate(project, git, update)));
 }
 
@@ -102,7 +115,7 @@ async function commitUpdate(
             mapAsyncResultFn(async files =>
                 files.length === 0
                     ? undefined
-                    : git.add(files).then(async () => git.commit(update.log))
+                    : git.add(files).then(async () => git.commit(generateCommitLog(update)))
             )
         )
         .then(
@@ -112,6 +125,15 @@ async function commitUpdate(
                 }
             })
         );
+}
+
+function generateCommitLog(update: Update): string {
+    return (
+        update.log +
+        map(update.breaking ?? [], breaking => wrap(62)(`\n\nBREAKING CHANGE: ${breaking}`)).join(
+            ""
+        )
+    );
 }
 
 async function writeUpdate(project: Project, update: Update): Promise<UpdateResult> {

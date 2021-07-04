@@ -6,10 +6,16 @@ import {bindAsyncResultFn, bindFailureFn} from "../result/result";
 import {UpdateFailureReason, updateProject} from "../project/update";
 import {Project} from "../project/project";
 
-export function cliUpdate(path: string, options: object): void {
+export interface UpdateOptions {
+    readonly breaking?: boolean;
+}
+
+export function cliUpdate(path: string, {breaking}: UpdateOptions): void {
     readProject(path)
         .then(
-            bindAsyncResultFn<ReadProjectFailureReason, UpdateFailureReason, Project>(updateProject)
+            bindAsyncResultFn<ReadProjectFailureReason, UpdateFailureReason, Project>(
+                async project => updateProject({project, breaking})
+            )
         )
         .then(
             bindFailureFn(reasons => {

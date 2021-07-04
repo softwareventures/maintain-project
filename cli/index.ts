@@ -24,7 +24,10 @@ export default function cli(): void {
         .option("--webapp")
         .action((destination, options) => cliInit(destination ?? cwd(), options));
 
-    program.command("update [path]").action((path, options) => cliUpdate(path ?? cwd(), options));
+    program
+        .command("update [path]")
+        .option("--breaking")
+        .action((path, options) => cliUpdate(path ?? cwd(), options));
 
     program.parse(argv);
 }
