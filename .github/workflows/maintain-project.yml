@@ -12,6 +12,10 @@ jobs:
       - name: Find yarn cache
         id: find-yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Configure git credentials
+        uses: OleksiyRudenko/gha-git-credentials@v2
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
       - name: git checkout
         uses: actions/checkout@v2
       - name: Cache yarn dependencies
