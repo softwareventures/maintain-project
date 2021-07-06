@@ -27,6 +27,7 @@ import {addNewNodeVersionsToPackageJson} from "../npm/add-new-node-versions";
 import {addNewNodeVersionsToGitHubActions} from "../github/add-new-node-versions";
 import {applyCodeStyleToPackageJson} from "../npm/apply-code-style";
 import {useLatestNodeToDeploy} from "../github/use-latest-node-to-deploy";
+import {useLatestNodeToMaintain} from "../github/use-latest-node-to-maintain";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -68,7 +69,8 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
         addMissingLicense,
         addNewNodeVersionsToPackageJson,
         addNewNodeVersionsToGitHubActions,
-        useLatestNodeToDeploy
+        useLatestNodeToDeploy,
+        useLatestNodeToMaintain
     ])
         .map(mapAsyncFn(step(options, git)))
         .map(combineAsyncResults).value;
