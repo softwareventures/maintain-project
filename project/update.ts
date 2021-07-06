@@ -24,6 +24,7 @@ import {PrettierFixFailureReason, prettierFixFilesIfAvailable} from "../prettier
 import {updateFixScript} from "../npm/update-fix-script";
 import {updateLintScript} from "../npm/update-lint-script";
 import {addNewNodeVersionsToPackageJson} from "../npm/add-new-node-versions";
+import {addNewNodeVersionsToGitHubActions} from "../github/add-new-node-versions";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -62,7 +63,8 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
         applyCodeStyle,
         updateCopyrightYear,
         addMissingLicense,
-        addNewNodeVersionsToPackageJson
+        addNewNodeVersionsToPackageJson,
+        addNewNodeVersionsToGitHubActions
     ])
         .map(mapAsyncFn(step(options, git)))
         .map(combineAsyncResults).value;
