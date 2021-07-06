@@ -1,5 +1,5 @@
 import chain from "@softwareventures/chain";
-import {excludeFn} from "@softwareventures/array";
+import {excludeFn, mapFn} from "@softwareventures/array";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
 import {Project} from "../project/project";
@@ -16,6 +16,7 @@ import {nodeVersionRange} from "../node/version-range";
 import {noneNull} from "../collections/arrays";
 import {insert} from "../fs-stage/fs-stage";
 import {looseLtr} from "../semver/loose-ltr";
+import {looseSort} from "../semver/loose-sort";
 import {modifyPackageJson} from "./modify-package-json";
 
 export async function addNewNodeVersionsToPackageJson(
@@ -35,15 +36,22 @@ export async function addNewNodeVersionsToPackageJson(
                       .map(nodeVersionRange).value
         )
     );
-    const file = allAsyncResults([oldVersionRange, newVersionRange]).then(
-        bindAsyncResultFn(async ([oldVersionRange, newVersionRange]) =>
-            newVersionRange == null || newVersionRange === ""
+    const resultVersionRange = allAsyncResults([oldVersionRange, newVersionRange])
+        .then(mapResultFn(mapFn(range => (range === "" ? null : range))))
+        .then(mapResultFn(noneNull))
+        .then(mapResultFn(mapNullableFn(ranges => ranges.join(" || "))))
+        .then(mapResultFn(mapNullableFn(range => range.split(/\s*\|\|\s*/))))
+        .then(mapResultFn(mapNullableFn(looseSort)))
+        .then(mapResultFn(mapNullableFn(ranges => ranges.join(" || "))));
+    const file = resultVersionRange.then(
+        bindAsyncResultFn(async range =>
+            range == null
                 ? success(null)
                 : modifyPackageJson(project, packageJson => ({
                       ...packageJson,
                       engines: {
                           ...packageJson?.engines,
-                          node: `${oldVersionRange} || ${newVersionRange}`
+                          node: range
                       }
                   }))
         )
