@@ -46,7 +46,8 @@ export async function addNewNodeVersionsToGitHubActions(
                 )
             )
         )
-        .then(mapResultFn(mapNullableFn(mapFn(version => `${version}.x`))));
+        .then(mapResultFn(mapNullableFn(mapFn(version => `${version}.x`))))
+        .then(mapResultFn(mapNullableFn(versions => (versions.length === 0 ? null : versions))));
     const resultVersions = allAsyncResults([oldVersions, newVersions])
         .then(mapResultFn(noneNull))
         .then(mapResultFn(mapNullableFn(concat)))
