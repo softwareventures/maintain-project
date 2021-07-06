@@ -40,7 +40,7 @@
     "@softwareventures/nullable": "1.4.0",
     "@softwareventures/ordered": "0.2.2",
     "@types/empty-dir": "2.0.0",
-    "@types/escodegen": "0.0.6",
+    "@types/escodegen": "0.0.7",
     "@types/estree": "0.0.49",
     "@types/hosted-git-info": "3.0.1",
     "@types/jsdom": "16.2.12",
