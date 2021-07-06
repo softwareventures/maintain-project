@@ -117,6 +117,8 @@ async function commitUpdate(
                 prettierFixFilesIfAvailable(project, files).then(mapResultFn(() => files))
             )
         )
+        .then(mapAsyncResultFn(async () => git.status()))
+        .then(mapResultFn(status => concat([status.modified, status.not_added])))
         .then(
             mapAsyncResultFn(async files =>
                 files.length === 0
@@ -126,7 +128,7 @@ async function commitUpdate(
         )
         .then(
             mapResultFn(commitResult => {
-                if (commitResult != null) {
+                if (commitResult != null && commitResult.commit !== "") {
                     console.log(`Applied update: ${update.log}`);
                 }
             })
