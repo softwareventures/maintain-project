@@ -23,7 +23,7 @@ import {applyCodeStyle} from "../yarn/apply-code-style";
 import {PrettierFixFailureReason, prettierFixFilesIfAvailable} from "../prettier/fix";
 import {updateFixScript} from "../npm/update-fix-script";
 import {updateLintScript} from "../npm/update-lint-script";
-import {addNewNodeVersionsToPackageJson} from "../npm/add-new-versions";
+import {addNewNodeVersionsToPackageJson} from "../npm/add-new-node-versions";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
