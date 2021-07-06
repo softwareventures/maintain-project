@@ -6,8 +6,8 @@
     "automated",
     "create-project",
     "maintain-project",
-    "typescript",
-    "template"
+    "template",
+    "typescript"
   ],
   "author": "Daniel Cassidy <mail@danielcassidy.me.uk>",
   "homepage": "https://github.com/softwareventures/maintain-project",
@@ -15,19 +15,19 @@
   "repository": "github:softwareventures/maintain-project",
   "license": "ISC",
   "scripts": {
-    "prepare": "shx rm -rf template/template/idea.template && shx cp -r .idea template/template/idea.template && tsc",
-    "test": "ava",
-    "lint": "tsc --noEmit && eslint . && prettier --check .",
     "fix": "tsc --noEmit && eslint --fix . && prettier --write .",
+    "lint": "tsc --noEmit && eslint . && prettier --check .",
     "maintain-project": "node . update",
-    "semantic-release": "semantic-release"
+    "prepare": "shx rm -rf template/template/idea.template && shx cp -r .idea template/template/idea.template && tsc",
+    "semantic-release": "semantic-release",
+    "test": "ava"
+  },
+  "bin": {
+    "maintain-project": "./index.js"
   },
   "sideEffects": [
     "./index.js"
   ],
-  "bin": {
-    "maintain-project": "./index.js"
-  },
   "engines": {
     "node": ">= 12"
   },
@@ -105,8 +105,8 @@
   "release": {
     "extends": "@softwareventures/semantic-release-config"
   },
-  "snyk": true,
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "snyk": true
 }
