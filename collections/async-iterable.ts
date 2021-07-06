@@ -123,6 +123,25 @@ export function asyncConcatMapFn<T, U>(
     return iterable => asyncConcatMap(iterable, f);
 }
 
+export async function asyncFold<T, U>(
+    iterable: AsyncIterableLike<T>,
+    f: (accumulator: U, element: T) => Promise<U> | U,
+    initial: U
+): Promise<U> {
+    let accumulator = initial;
+    for await (const element of iterable) {
+        accumulator = await f(accumulator, element);
+    }
+    return accumulator;
+}
+
+export function asyncFoldFn<T, U>(
+    f: (accumulator: U, element: T) => Promise<U> | U,
+    initial: U
+): (iterable: AsyncIterableLike<T>) => Promise<U> {
+    return async iterable => asyncFold(iterable, f, initial);
+}
+
 export async function combineAsync<T>(iterable: AsyncIterableLike<T>): Promise<T[]> {
     const result = [] as T[];
     for await (const element of iterable) {

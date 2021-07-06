@@ -1,6 +1,11 @@
 import {map} from "@softwareventures/array";
 import {concatMap, filter, fold, toArray} from "@softwareventures/iterable";
-import {asyncFilter, AsyncIterableLike, combineAsync} from "../collections/async-iterable";
+import {
+    asyncFilter,
+    asyncFold,
+    AsyncIterableLike,
+    combineAsync
+} from "../collections/async-iterable";
 
 export type Result<TReason = void, TValue = void> = Success<TValue> | Failure<TReason>;
 
@@ -218,6 +223,41 @@ export function chainAsyncResultsFn<TReason, TValue>(
     actions: Iterable<(value: TValue) => PromiseLike<Result<TReason, TValue>>>
 ): (initial: TValue) => Promise<Result<TReason, TValue>> {
     return async initial => chainAsyncResults(initial, actions);
+}
+
+export async function tolerantFoldAsyncResults<TElement, TReason, TAccumulator>(
+    iterable: AsyncIterableLike<TElement>,
+    f: (
+        accumulator: TAccumulator,
+        element: TElement
+    ) => Promise<Result<TReason, TAccumulator>> | Result<TReason, TAccumulator>,
+    initial: TAccumulator
+): Promise<Result<TReason, TAccumulator>> {
+    return asyncFold(
+        iterable,
+        async ({accumulator, reasons}, element) =>
+            Promise.resolve(f(accumulator, element))
+                .then(mapResultFn(accumulator => ({accumulator, reasons})))
+                .then(
+                    bindFailureFn(reasons2 =>
+                        success({accumulator, reasons: [...reasons, ...reasons2]})
+                    )
+                )
+                .then(throwFailure),
+        {accumulator: initial, reasons: [] as TReason[]}
+    ).then(({accumulator, reasons}) =>
+        reasons.length === 0 ? success(accumulator) : failure(reasons)
+    );
+}
+
+export function tolerantFoldAsyncResultsFn<TElement, TReason, TAccumulator>(
+    f: (
+        accumulator: TAccumulator,
+        element: TElement
+    ) => Promise<Result<TReason, TAccumulator>> | Result<TReason, TAccumulator>,
+    initial: TAccumulator
+): (iterable: AsyncIterableLike<TElement>) => Promise<Result<TReason, TAccumulator>> {
+    return async iterable => tolerantFoldAsyncResults(iterable, f, initial);
 }
 
 type InferReasons<T> = T extends ReadonlyArray<Result<infer Reasons, unknown>> ? Reasons : never;

@@ -13,7 +13,7 @@ export interface UpdateOptions {
 export function cliUpdate(path: string, {breaking}: UpdateOptions): void {
     readProject(path)
         .then(
-            bindAsyncResultFn<ReadProjectFailureReason, UpdateFailureReason, Project>(
+            bindAsyncResultFn<ReadProjectFailureReason, UpdateFailureReason, Project, Project>(
                 async project => updateProject({project, breaking})
             )
         )

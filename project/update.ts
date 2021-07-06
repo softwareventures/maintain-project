@@ -1,18 +1,16 @@
 import simpleGit, {SimpleGit} from "simple-git";
-import chain from "@softwareventures/chain";
 import {concat, map} from "@softwareventures/array";
 import wrap = require("wordwrap");
-import {mapFn as mapAsyncFn} from "../collections/async-iterable";
 import {FsStage, InsertResult} from "../fs-stage/fs-stage";
 import {
     bindAsyncResultFn,
-    combineAsyncResults,
     failure,
     mapAsyncResultFn,
     mapResultFn,
     Result,
     success,
-    throwFailureFn
+    throwFailureFn,
+    tolerantFoldAsyncResultsFn
 } from "../result/result";
 import {emptyDirectory} from "../fs-stage/directory";
 import {updateCopyrightYear} from "../license/update-copyright-year";
@@ -37,6 +35,7 @@ export interface FsStageUpdate {
     readonly log: string;
     readonly breaking?: readonly string[];
     readonly apply: (stage: FsStage) => Promise<InsertResult>;
+    readonly updatedProject?: Project;
 }
 
 export interface DirectUpdate {
@@ -44,9 +43,10 @@ export interface DirectUpdate {
     readonly log: string;
     readonly breaking?: readonly string[];
     readonly apply: () => Promise<Result<UpdateStepFailureReason>>;
+    readonly updatedProject?: Project;
 }
 
-export type UpdateResult = Result<UpdateFailureReason>;
+export type UpdateResult = Result<UpdateFailureReason, Project>;
 
 export type UpdateFailureReason = GitNotClean | CommitFailureReason | UpdateStepFailureReason;
 
@@ -60,7 +60,7 @@ export interface UpdateProjectOptions {
 export async function updateProject(options: UpdateProjectOptions): Promise<UpdateResult> {
     const git = simpleGit(options.project.path);
 
-    return chain([
+    return Promise.resolve([
         applyCodeStyleToPackageJson,
         updateLintScript,
         updateFixScript,
@@ -71,9 +71,12 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
         addNewNodeVersionsToGitHubActions,
         useLatestNodeToDeploy,
         useLatestNodeToMaintain
-    ])
-        .map(mapAsyncFn(step(options, git)))
-        .map(combineAsyncResults).value;
+    ]).then(
+        tolerantFoldAsyncResultsFn(
+            async (project, update) => step({...options, project, git, update}),
+            options.project
+        )
+    );
 }
 
 export interface GitNotClean {
@@ -85,21 +88,22 @@ export function gitNotClean(path: string): GitNotClean {
     return {type: "git-not-clean", path};
 }
 
-function step(
-    {project, breaking}: UpdateProjectOptions,
-    git: SimpleGit
-): (update: (project: Project) => Promise<Update | null>) => Promise<UpdateResult> {
-    return async update =>
-        git
-            .status()
-            .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
-            .then(mapAsyncResultFn(async () => update(project)))
-            .then(
-                mapAsyncResultFn(async update =>
-                    breaking || (update?.breaking?.length ?? 0) === 0 ? update : null
-                )
+interface StepOptions extends UpdateProjectOptions {
+    readonly git: SimpleGit;
+    readonly update: (project: Project) => Promise<Update | null>;
+}
+
+async function step({project, breaking, git, update}: StepOptions): Promise<UpdateResult> {
+    return git
+        .status()
+        .then(status => (status.isClean() ? success() : failure([gitNotClean(project.path)])))
+        .then(mapAsyncResultFn(async () => update(project)))
+        .then(
+            mapAsyncResultFn(async update =>
+                breaking || (update?.breaking?.length ?? 0) === 0 ? update : null
             )
-            .then(bindAsyncResultFn(async update => commitUpdate(project, git, update)));
+        )
+        .then(bindAsyncResultFn(async update => commitUpdate(project, git, update)));
 }
 
 async function commitUpdate(
@@ -108,7 +112,7 @@ async function commitUpdate(
     update: Update | null
 ): Promise<UpdateResult> {
     if (update == null) {
-        return success();
+        return success(project);
     }
 
     return writeUpdate(project, update)
@@ -132,6 +136,9 @@ async function commitUpdate(
             mapResultFn(commitResult => {
                 if (commitResult != null && commitResult.commit !== "") {
                     console.log(`Applied update: ${update.log}`);
+                    return update.updatedProject ?? project;
+                } else {
+                    return project;
                 }
             })
         );
@@ -146,7 +153,9 @@ function generateCommitLog(update: Update): string {
     );
 }
 
-async function writeUpdate(project: Project, update: Update): Promise<UpdateResult> {
+type WriteUpdateResult = Result<UpdateFailureReason>;
+
+async function writeUpdate(project: Project, update: Update): Promise<WriteUpdateResult> {
     switch (update.type) {
         case "fs-stage-update":
             return update
