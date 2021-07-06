@@ -58,7 +58,7 @@ export function sortByDescendingFn<T, U extends string | number | boolean>(
 }
 
 export function arraysEqual<T>(a: ArrayLike<T>, b: ArrayLike<T>, equal = defaultEqual): boolean {
-    return all(zip(coerce(a), coerce(b)), equal);
+    return a.length === b.length && all(zip(coerce(a), coerce(b)), equal);
 }
 
 function defaultEqual(a: unknown, b: unknown): boolean {
