@@ -7,7 +7,7 @@ import {
     mapFn,
     uniqueAdjacentByIdentity
 } from "@softwareventures/array";
-import {coerce, compare, intersects} from "semver";
+import {intersects} from "semver";
 import chain from "@softwareventures/chain";
 import {ProjectSource} from "../project/project";
 import {ReadJsonFailureReason, readProjectJson} from "../project/read-json";
@@ -20,7 +20,8 @@ import {
     success
 } from "../result/result";
 import {readProjectYaml, ReadYamlFailureReason} from "../project/read-yaml";
-import {only, sortFn} from "../collections/arrays";
+import {only} from "../collections/arrays";
+import {looseSort} from "../semver/loose-sort";
 import {NodeVersions} from "./node-versions";
 import {nodeReleasesSupportedInDateRange} from "./releases-supported-in-date-range";
 
@@ -64,7 +65,7 @@ export async function readNodeVersions(
 
     const targetVersions = allAsyncResults([packageJsonNodeVersions, ciWorkflowNodeVersions])
         .then(mapResultFn(concat))
-        .then(mapResultFn(sortFn((a, b) => compare(coerce(a) ?? "0.0.0", coerce(b) ?? "0.0.0"))))
+        .then(mapResultFn(looseSort))
         .then(mapResultFn(uniqueAdjacentByIdentity));
 
     return targetVersions.then(mapResultFn(targetVersions => ({currentReleases, targetVersions})));

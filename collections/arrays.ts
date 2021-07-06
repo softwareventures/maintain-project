@@ -41,8 +41,12 @@ export function noneNull<T extends ArrayLike<unknown>>(array: T): NoneNull<T> | 
     return _noneNull(array) as unknown as NoneNull<T>;
 }
 
+export function sort<T>(array: ArrayLike<T>, comparator: Comparator<T>): T[] {
+    return copy(array).sort(comparator);
+}
+
 export function sortFn<T>(comparator: Comparator<T>): (array: ArrayLike<T>) => T[] {
-    return array => copy(array).sort(comparator);
+    return array => sort(array, comparator);
 }
 
 export function sortByFn<T, U extends string | number | boolean>(
