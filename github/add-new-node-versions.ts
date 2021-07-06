@@ -1,11 +1,10 @@
-import {concat, excludeFn, isArray, map, mapFn} from "@softwareventures/array";
+import {concat, excludeFn, mapFn} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
-import {mapNullableFn} from "@softwareventures/nullable";
+import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {intersects} from "semver";
-import {stringify} from "yaml";
 import {Project} from "../project/project";
 import {FsStageUpdate} from "../project/update";
-import {readProjectYaml} from "../project/read-yaml";
+import {readProjectYamlAsDocument} from "../project/read-yaml";
 import {
     allAsyncResults,
     bindAsyncResultFn,
@@ -14,28 +13,25 @@ import {
     toAsyncNullable
 } from "../result/result";
 import {looseLtr} from "../semver/loose-ltr";
-import {textFile} from "../fs-stage/file";
 import {looseSort} from "../semver/loose-sort";
 import {noneNull} from "../collections/arrays";
 import {insert} from "../fs-stage/fs-stage";
+import {textFile} from "../fs-stage/file";
 
 export async function addNewNodeVersionsToGitHubActions(
     project: Project
 ): Promise<FsStageUpdate | null> {
-    const workflow = readProjectYaml(project, ".github/workflows/ci.yml");
+    const workflow = readProjectYamlAsDocument(project, ".github/workflows/ci.yml");
     const oldVersions = workflow
         .then(
-            mapResultFn(yaml => yaml?.jobs?.["build-and-test"]?.strategy?.matrix?.["node-version"])
-        )
-        .then(
-            mapResultFn(versions =>
-                isArray(versions)
-                    ? map(versions, String)
-                    : typeof versions === "string"
-                    ? [versions]
-                    : []
+            mapResultFn(
+                workflow =>
+                    workflow.getIn(["jobs", "build-and-test", "strategy", "matrix", "node-version"])
+                        ?.items
             )
-        );
+        )
+        .then(mapResultFn(mapNullableFn(mapFn(String))))
+        .then(mapResultFn(mapNullFn(() => [] as string[])));
     const oldVersionRange = oldVersions
         .then(mapResultFn(versions => versions.join(" || ")))
         .then(mapResultFn(versions => (versions.length === 0 ? null : versions)));
@@ -55,31 +51,25 @@ export async function addNewNodeVersionsToGitHubActions(
         .then(mapResultFn(noneNull))
         .then(mapResultFn(mapNullableFn(concat)))
         .then(mapResultFn(mapNullableFn(looseSort)));
-    const file = allAsyncResults([workflow, resultVersions]).then(
-        bindAsyncResultFn(async ([workflow, versions]) =>
-            versions == null
-                ? success(null)
-                : success(
-                      textFile(
-                          stringify({
-                              ...workflow,
-                              jobs: {
-                                  ...workflow?.jobs,
-                                  ["build-and-test"]: {
-                                      ...workflow?.jobs?.["build-and-test"],
-                                      strategy: {
-                                          ...workflow?.jobs?.["build-and-test"]?.strategy,
-                                          matrix: {
-                                              ...workflow?.jobs?.["build-and-test"]?.strategy
-                                                  ?.matrix,
-                                              ["node-version"]: versions
-                                          }
-                                      }
-                                  }
-                              }
-                          })
-                      )
-                  )
+    const resultWorkflow = allAsyncResults([workflow, resultVersions])
+        .then(mapResultFn(noneNull))
+        .then(
+            mapResultFn(
+                mapNullableFn(([workflow, resultVersions]) => {
+                    workflow.getIn([
+                        "jobs",
+                        "build-and-test",
+                        "strategy",
+                        "matrix",
+                        "node-version"
+                    ]).items = resultVersions;
+                    return workflow;
+                })
+            )
+        );
+    const file = resultWorkflow.then(
+        bindAsyncResultFn(async workflow =>
+            workflow == null ? success(null) : success(textFile(String(workflow)))
         )
     );
 
