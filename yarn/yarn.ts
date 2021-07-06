@@ -10,7 +10,7 @@ export interface YarnFailureReason {
 
 export async function yarn(dir: string, ...args: string[]): Promise<YarnResult> {
     return new Promise((resolve, reject) =>
-        fork(require.resolve("yarn/bin/yarn.js"), args, {cwd: dir, stdio: "inherit"})
+        fork(require.resolve("yarn/bin/yarn.js"), args, {cwd: dir, stdio: "ignore"})
             .on("error", reject)
             .on("exit", code => {
                 if (code === 0) {
