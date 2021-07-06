@@ -615,11 +615,6 @@
   resolved "https://registry.yarnpkg.com/@types/is-integer/-/is-integer-1.0.0.tgz#8393445ad14b2b51c9ac7e91220de0efc8de2028"
   integrity sha512-AAFRQhSVYdpQgKEkUY+bMRL8yAZSq7h7AY14iSK1xod4wOdH4Gc/KMAR4tlSo9Sf5KsYizWwlJOnLCbet5AU2A==
 
-"@types/js-yaml@4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@types/js-yaml/-/js-yaml-4.0.1.tgz#5544730b65a480b18ace6b6ce914e519cec2d43b"
-  integrity sha512-xdOvNmXmrZqqPy3kuCQ+fz6wA0xU5pji9cd1nDrflWaAWtYLLGk5ykW0H6yg5TVyehHP1pfmuuSaZkhP+kspVA==
-
 "@types/jsdom@16.2.12":
   version "16.2.12"
   resolved "https://registry.yarnpkg.com/@types/jsdom/-/jsdom-16.2.12.tgz#2d47f5c9f7e40b4d5d9b5f0534c736dc475f9569"
@@ -705,6 +700,13 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/wordwrap/-/wordwrap-1.0.1.tgz#6cfbe1e2ea03a30831453389e5fdec8be40fd178"
   integrity sha512-xe+rWyom8xn0laMWH3M7elOpWj2rDQk+3f13RAur89GKsf4FO5qmBNtXXtwepFo2XNgQI0nePdCEStoHFnNvWg==
+
+"@types/yaml@1.9.7":
+  version "1.9.7"
+  resolved "https://registry.yarnpkg.com/@types/yaml/-/yaml-1.9.7.tgz#2331f36e0aac91311a63d33eb026c21687729679"
+  integrity sha512-8WMXRDD1D+wCohjfslHDgICd2JtMATZU8CkhH8LVJqcJs6dyYj5TGptzP8wApbmEullGBSsCEzzap73DQ1HJaA==
+  dependencies:
+    yaml "*"
 
 "@typescript-eslint/eslint-plugin-tslint@^2.31.0 || ^3.0.0 || ^4.0.0 || ^4.21.0":
   version "4.28.1"
@@ -993,11 +995,6 @@ argparse@^1.0.7:
   integrity sha512-o5Roy6tNG4SL/FOkCAN6RzjiakZS25RLYFrcMttJqbdd8BWrnA+fGz57iN5Pb06pvBGvl5gQ0B48dJlslXvoTg==
   dependencies:
     sprintf-js "~1.0.2"
-
-argparse@^2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
-  integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
 
 argv-formatter@~1.0.0:
   version "1.0.0"
@@ -3430,13 +3427,6 @@ js-tokens@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
-
-js-yaml@4.1.0:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-4.1.0.tgz#c1fb65f8f5017901cdd2c951864ba18458a10602"
-  integrity sha512-wpxZs9NoxZaJESJGIZTyDEaYpl0FKSA+FB9aJiyemKhMwkxQg63h4T1KJgUGHpTqPDNRcmmYLugrRjJlBtWvRA==
-  dependencies:
-    argparse "^2.0.1"
 
 js-yaml@^3.13.1, js-yaml@^3.14.0:
   version "3.14.1"
@@ -6427,7 +6417,7 @@ yallist@^4.0.0:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml@^1.10.0:
+yaml@*, yaml@1.10.2, yaml@^1.10.0:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/yaml/-/yaml-1.10.2.tgz#2301c5ffbf12b467de8da2333a459e29e7920e4b"
   integrity sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==

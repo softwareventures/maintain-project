@@ -2,7 +2,7 @@ import {concat, excludeFn, isArray, map, mapFn} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
 import {mapNullableFn} from "@softwareventures/nullable";
 import {intersects} from "semver";
-import {dump, JSON_SCHEMA} from "js-yaml";
+import {stringify} from "yaml";
 import {Project} from "../project/project";
 import {FsStageUpdate} from "../project/update";
 import {readProjectYaml} from "../project/read-yaml";
@@ -61,32 +61,23 @@ export async function addNewNodeVersionsToGitHubActions(
                 ? success(null)
                 : success(
                       textFile(
-                          dump(
-                              {
-                                  ...workflow,
-                                  jobs: {
-                                      ...workflow?.jobs,
-                                      ["build-and-test"]: {
-                                          ...workflow?.jobs?.["build-and-test"],
-                                          strategy: {
-                                              ...workflow?.jobs?.["build-and-test"]?.strategy,
-                                              matrix: {
-                                                  ...workflow?.jobs?.["build-and-test"]?.strategy
-                                                      ?.matrix,
-                                                  ["node-version"]: versions
-                                              }
+                          stringify({
+                              ...workflow,
+                              jobs: {
+                                  ...workflow?.jobs,
+                                  ["build-and-test"]: {
+                                      ...workflow?.jobs?.["build-and-test"],
+                                      strategy: {
+                                          ...workflow?.jobs?.["build-and-test"]?.strategy,
+                                          matrix: {
+                                              ...workflow?.jobs?.["build-and-test"]?.strategy
+                                                  ?.matrix,
+                                              ["node-version"]: versions
                                           }
                                       }
                                   }
-                              },
-                              {
-                                  indent: 2,
-                                  flowLevel: -1,
-                                  schema: JSON_SCHEMA,
-                                  lineWidth: 100,
-                                  quotingType: '"'
                               }
-                          )
+                          })
                       )
                   )
         )
