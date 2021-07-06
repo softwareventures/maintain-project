@@ -48,7 +48,7 @@
     "@types/node": "12.20.15",
     "@types/prettier-package-json": "2.1.0",
     "@types/recursive-readdir": "2.2.0",
-    "@types/semver": "7.3.6",
+    "@types/semver": "7.3.7",
     "@types/spdx-correct": "2.0.0",
     "@types/wordwrap": "1.0.1",
     "commander": "8.0.0",
