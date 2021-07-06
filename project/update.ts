@@ -25,6 +25,7 @@ import {updateFixScript} from "../npm/update-fix-script";
 import {updateLintScript} from "../npm/update-lint-script";
 import {addNewNodeVersionsToPackageJson} from "../npm/add-new-node-versions";
 import {addNewNodeVersionsToGitHubActions} from "../github/add-new-node-versions";
+import {applyCodeStyleToPackageJson} from "../npm/apply-code-style";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -58,6 +59,7 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
     const git = simpleGit(options.project.path);
 
     return chain([
+        applyCodeStyleToPackageJson,
         updateLintScript,
         updateFixScript,
         applyCodeStyle,
