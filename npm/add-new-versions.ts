@@ -1,6 +1,6 @@
 import chain from "@softwareventures/chain";
 import {excludeFn} from "@softwareventures/array";
-import {coerce, intersects, ltr} from "semver";
+import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
 import {Project} from "../project/project";
 import {FsStageUpdate} from "../project/update";
@@ -15,6 +15,7 @@ import {
 import {nodeVersionRange} from "../node/version-range";
 import {noneNull} from "../collections/arrays";
 import {insert} from "../fs-stage/fs-stage";
+import {looseLtr} from "../semver/loose-ltr";
 import {modifyPackageJson} from "./modify-package-json";
 
 export async function addNewNodeVersionsToPackageJson(
@@ -30,7 +31,7 @@ export async function addNewNodeVersionsToPackageJson(
                 ? null
                 : chain(project.node.currentReleases)
                       .map(excludeFn(release => intersects(range, `^${release}`)))
-                      .map(excludeFn(release => ltr(coerce(release) ?? "0.0.0", range)))
+                      .map(excludeFn(release => looseLtr(release, range)))
                       .map(nodeVersionRange).value
         )
     );
