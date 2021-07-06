@@ -79,7 +79,9 @@ export async function addNewNodeVersionsToGitHubActions(
         .then(
             mapNullableFn(([newVersions, file]) => ({
                 type: "fs-stage-update",
-                log: `ci(github): add node versions ${newVersions.join(" || ")} to CI workflow`,
+                log: `ci(github): add node version${
+                    newVersions.length > 1 ? "s" : ""
+                } ${newVersions.join(" || ")} to CI workflow`,
                 apply: async stage => insert(stage, ".github/workflows/ci.yml", file)
             }))
         );
