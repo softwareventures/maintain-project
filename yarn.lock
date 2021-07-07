@@ -480,16 +480,16 @@
   resolved "https://registry.yarnpkg.com/@softwareventures/chain/-/chain-1.0.0.tgz#07be3b7d0f8713fbdd2159b995bfd24390067860"
   integrity sha512-cfpAxZFi5XoNwGWHmtoRpwUaD4rvLM4cgzKgxkU9zkUSCBgf0ToBzdfY1vUlntljgjXf08NjEi9xc7wkFuf6Pg==
 
-"@softwareventures/date@1.5.1":
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-1.5.1.tgz#8d0971f9b86e25412aa0e9c3e0f3f93ac13f4052"
-  integrity sha512-1H2ofTrYloQadM0ZumYTGfeV7rP1phQXj3BvkT5VsX9Z2c4b4s47jRYlfFQKxbcEEJWKNaNH0aw1Mck6KnudAw==
+"@softwareventures/date@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-2.0.0.tgz#091c3537c62a3c8fa221f2005fa262ebc043d343"
+  integrity sha512-ZKkVYVU7zqfPC5evOPbDH+hgtdP5m9+LVXT8ipAvmSepHQAoG+e0VayNzDHKDMsunqzy2TC+ju1n9Pp/aoaRXg==
   dependencies:
-    "@softwareventures/ordered" "^0.2.1"
+    "@softwareventures/ordered" "^0.2.1 || ^1.0.0"
     "@types/is-integer" "1.0.0"
     is-integer "1.0.7"
     is-integer-in-range "^1.0.0 || ^2.0.0"
-    tslib "^1.9.3 || ^2.0.0"
+    tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
 
 "@softwareventures/dictionary@1.0.0":
   version "1.0.0"
@@ -537,14 +537,14 @@
   dependencies:
     tslib "2.2.0"
 
-"@softwareventures/ordered@1.0.0", "@softwareventures/ordered@^0.2.0 || ^1.0.0":
+"@softwareventures/ordered@1.0.0", "@softwareventures/ordered@^0.2.0 || ^1.0.0", "@softwareventures/ordered@^0.2.1 || ^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-1.0.0.tgz#d803eef43bb0b4ccfcd78d2928fe38b5109ad99e"
   integrity sha512-SUFUYDWEPAS54LpGH+mRHwkGuTINPDt4OOS3h/Zr9f12JPFz2cqh6Xxwg75BZqwaeONuUwmklJVMRmgvxSSkPA==
   dependencies:
     tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
 
-"@softwareventures/ordered@^0.2.1", "@softwareventures/ordered@^0.2.2":
+"@softwareventures/ordered@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-0.2.2.tgz#e8b55c57a7219a90e0cc6a27a793c4598e5ae9aa"
   integrity sha512-n3Kkk9jZ+i2Az7YqnJR3TimhsVSiTfwN9ybDfPcJvvCge0cINszO754n4/pdlCyLYVOn2VzTVFDVTrj+xFvNFQ==
