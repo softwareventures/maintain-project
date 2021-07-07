@@ -530,7 +530,14 @@
   dependencies:
     tslib "2.2.0"
 
-"@softwareventures/ordered@0.2.2", "@softwareventures/ordered@^0.2.0", "@softwareventures/ordered@^0.2.1", "@softwareventures/ordered@^0.2.2":
+"@softwareventures/ordered@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-1.0.0.tgz#d803eef43bb0b4ccfcd78d2928fe38b5109ad99e"
+  integrity sha512-SUFUYDWEPAS54LpGH+mRHwkGuTINPDt4OOS3h/Zr9f12JPFz2cqh6Xxwg75BZqwaeONuUwmklJVMRmgvxSSkPA==
+  dependencies:
+    tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
+
+"@softwareventures/ordered@^0.2.0", "@softwareventures/ordered@^0.2.1", "@softwareventures/ordered@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-0.2.2.tgz#e8b55c57a7219a90e0cc6a27a793c4598e5ae9aa"
   integrity sha512-n3Kkk9jZ+i2Az7YqnJR3TimhsVSiTfwN9ybDfPcJvvCge0cINszO754n4/pdlCyLYVOn2VzTVFDVTrj+xFvNFQ==
@@ -5980,7 +5987,7 @@ tslib@2.2.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.2.0.tgz#fb2c475977e35e241311ede2693cee1ec6698f5c"
   integrity sha512-gS9GVHRU+RGn5KQM2rllAlR3dU6m7AcpJKdtH8gFvQiC4Otgk98XnmMU+nZenHt/+VhnBPWwgrJsyrdcw6i23w==
 
-tslib@2.3.0, "tslib@^1.11.2 || ^2.0.0", "tslib@^1.9.3 || ^2.0.0", tslib@^2.0.0:
+tslib@2.3.0, "tslib@^1.11.2 || ^2.0.0", "tslib@^1.9.3 || ^2.0.0", "tslib@^1.9.3 || ^2.0.0 || ^2.1.0", tslib@^2.0.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.3.0.tgz#803b8cdab3e12ba581a4ca41c8839bbb0dacb09e"
   integrity sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==
