@@ -6,6 +6,7 @@ import {gitHostFromUrl} from "../git/git-host";
 import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
 import {allAsyncResults, mapResultFn, Result} from "../result/result";
 import {readNodeVersions, ReadNodeVersionsFailureReason} from "../node/read";
+import {guessCopyrightHolder} from "../license/guess-copyright-holder";
 import {statProjectFile} from "./stat-file";
 import {Project} from "./project";
 import {ReadJsonFailureReason, readProjectJson} from "./read-json";
@@ -45,7 +46,7 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
         .then(
             mapResultFn(author =>
                 typeof author === "object"
-                    ? {name: author?.name, email: author?.email}
+                    ? {name: String(author?.name), email: String(author?.email)}
                     : typeof author === "string"
                     ? chain(/^\s*(.*?)(?:\s+<\s*(.*)\s*>)?\s*$/.exec(author) ?? []).map(
                           ([_, name, email]) => ({name, email})
@@ -78,7 +79,8 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
                 author,
                 license: {
                     spdxLicense,
-                    year: today.year
+                    year: today.year,
+                    copyrightHolder: guessCopyrightHolder({npmPackage, gitHost, author})
                 }
             }))
         )
