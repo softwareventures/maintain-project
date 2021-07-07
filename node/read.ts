@@ -9,6 +9,7 @@ import {
 } from "@softwareventures/array";
 import {intersects} from "semver";
 import chain from "@softwareventures/chain";
+import {mapNullFn} from "@softwareventures/nullable";
 import {ProjectSource} from "../project/project";
 import {ReadJsonFailureReason, readProjectJson} from "../project/read-json";
 import {
@@ -39,14 +40,15 @@ export async function readNodeVersions(
         .then(mapResultFn(packageJson => packageJson?.engines?.node))
         .then(
             mapResultFn(versions =>
-                typeof versions === "string" ? extractMajorNodeVersions(versions, today) : []
+                typeof versions === "string" ? extractMajorNodeVersions(versions, today) : null
             )
         )
         .then(
             bindFailureFn(reasons =>
-                only(reasons)?.type === "file-not-found" ? success([]) : failure(reasons)
+                only(reasons)?.type === "file-not-found" ? success(null) : failure(reasons)
             )
-        );
+        )
+        .then(mapResultFn(mapNullFn(() => nodeReleasesSupportedInDateRange({end: today}))));
 
     const ciWorkflowNodeVersions = readProjectYaml(project, ".github/workflows/ci.yml")
         .then(
