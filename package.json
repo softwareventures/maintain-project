@@ -32,7 +32,7 @@
     "node": ">= 12"
   },
   "dependencies": {
-    "@softwareventures/array": "4.1.1",
+    "@softwareventures/array": "4.1.2",
     "@softwareventures/chain": "0.1.2",
     "@softwareventures/date": "1.5.1",
     "@softwareventures/dictionary": "0.8.1",
