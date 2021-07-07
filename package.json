@@ -36,7 +36,7 @@
     "@softwareventures/chain": "1.0.0",
     "@softwareventures/date": "2.0.1",
     "@softwareventures/dictionary": "1.0.1",
-    "@softwareventures/iterable": "2.0.0",
+    "@softwareventures/iterable": "2.0.2",
     "@softwareventures/nullable": "2.0.0",
     "@softwareventures/ordered": "1.0.0",
     "@types/empty-dir": "2.0.0",
