@@ -54,7 +54,7 @@
     "commander": "8.0.0",
     "empty-dir": "2.0.0",
     "escodegen": "2.0.0",
-    "hosted-git-info": "3.0.8",
+    "hosted-git-info": "4.0.2",
     "jsdom": "16.6.0",
     "node-releases": "1.1.73",
     "non-null": "2.0.1",
