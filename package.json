@@ -37,7 +37,7 @@
     "@softwareventures/date": "1.5.1",
     "@softwareventures/dictionary": "0.8.1",
     "@softwareventures/iterable": "2.0.0",
-    "@softwareventures/nullable": "1.4.0",
+    "@softwareventures/nullable": "2.0.0",
     "@softwareventures/ordered": "1.0.0",
     "@types/empty-dir": "2.0.0",
     "@types/escodegen": "0.0.7",
