@@ -9,7 +9,7 @@ export async function addMissingLicense(project: Project): Promise<Update | null
             ? null
             : {
                   type: "fs-stage-update",
-                  log: "docs(LICENSE): add missing LICENSE.md",
+                  log: "docs(license): add missing LICENSE.md",
                   apply: writeLicense(project)
               }
     );
