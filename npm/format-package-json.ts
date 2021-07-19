@@ -43,6 +43,6 @@ export function formatPackageJson(json: object): string {
             "config",
             "ava",
             "release"
-        ]
+        ] as any[]
     });
 }
