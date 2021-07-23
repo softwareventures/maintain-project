@@ -47,7 +47,7 @@
     "@types/node": "12.20.16",
     "@types/parse-author": "2.0.1",
     "@types/recursive-readdir": "2.2.0",
-    "@types/semver": "7.3.7",
+    "@types/semver": "7.3.8",
     "@types/spdx-correct": "2.0.0",
     "@types/wordwrap": "1.0.1",
     "@types/yaml": "1.9.7",
