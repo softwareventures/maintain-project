@@ -69,7 +69,7 @@
     "wordwrap": "1.0.0",
     "xml-formatter": "2.4.0",
     "yaml": "1.10.2",
-    "yarn": "1.22.10"
+    "yarn": "1.22.11"
   },
   "devDependencies": {
     "@softwareventures/eslint-config": "4.0.2",
