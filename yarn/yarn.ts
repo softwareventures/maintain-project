@@ -1,5 +1,6 @@
 import {fork} from "child_process";
 import {failure, Result, success} from "../result/result";
+import {ProjectSource} from "../project/project";
 
 export type YarnResult = Result<YarnFailureReason>;
 
@@ -8,9 +9,9 @@ export interface YarnFailureReason {
     readonly code: number | null;
 }
 
-export async function yarn(dir: string, ...args: string[]): Promise<YarnResult> {
+export async function yarn(project: ProjectSource, ...args: string[]): Promise<YarnResult> {
     return new Promise((resolve, reject) =>
-        fork(require.resolve("yarn/bin/yarn.js"), args, {cwd: dir, stdio: "ignore"})
+        fork(require.resolve("yarn/bin/yarn.js"), args, {cwd: project.path, stdio: "ignore"})
             .on("error", reject)
             .on("exit", code => {
                 if (code === 0) {

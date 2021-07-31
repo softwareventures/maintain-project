@@ -45,6 +45,6 @@ export default async function init(project: Project): Promise<InitResult> {
     ])
         .then(throwFailureFn("Internal error creating initial file stage"))
         .then(async fsStage => commit(project.path, fsStage))
-        .then(bindAsyncResultFn<InitFailureReason>(async () => yarnInstall(project.path)))
-        .then(bindAsyncResultFn<InitFailureReason>(async () => yarnFix(project.path)));
+        .then(bindAsyncResultFn<InitFailureReason>(async () => yarnInstall(project)))
+        .then(bindAsyncResultFn<InitFailureReason>(async () => yarnFix(project)));
 }

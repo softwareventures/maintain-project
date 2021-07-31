@@ -20,7 +20,7 @@ export async function prettierFixFiles(
     return Promise.resolve(relativePaths)
         .then(
             mapFn(async path =>
-                yarn(project.path, "prettier", "--write", path).then(
+                yarn(project, "prettier", "--write", path).then(
                     mapFailureFn(
                         (): PrettierFixFailureReason => ({
                             type: "prettier-fix-failed",

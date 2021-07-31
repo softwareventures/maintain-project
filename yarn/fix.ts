@@ -10,15 +10,15 @@ export interface YarnFixFailureReason {
     readonly path: string;
 }
 
-export async function yarnFix(dir: string): Promise<YarnFixResult> {
-    return yarn(dir, "fix").then(
-        mapFailureFn((): YarnFixFailureReason => ({type: "yarn-fix-failed", path: dir}))
+export async function yarnFix(project: ProjectSource): Promise<YarnFixResult> {
+    return yarn(project, "fix").then(
+        mapFailureFn((): YarnFixFailureReason => ({type: "yarn-fix-failed", path: project.path}))
     );
 }
 
 export async function yarnFixIfAvailable(project: ProjectSource): Promise<YarnFixResult> {
     return isYarnFixAvailable(project).then(async available =>
-        available ? yarnFix(project.path) : success()
+        available ? yarnFix(project) : success()
     );
 }
 
