@@ -3,7 +3,7 @@ import {emptyDirectory} from "../fs-stage/directory";
 import {FsStage} from "../fs-stage/fs-stage";
 import {bindAsyncResultFn, chainAsyncResults, Result, throwFailureFn} from "../result/result";
 import {writeEsLintIgnore} from "../eslint/write";
-import {gitInit} from "../git/init";
+import {gitInit, GitInitFailureReason} from "../git/init";
 import {writeGitIgnore} from "../git/write";
 import {writeGitHubConfig} from "../github/write";
 import {writeIdeaProjectFiles} from "../idea/write";
@@ -21,6 +21,7 @@ export type InitResult = Result<InitFailureReason>;
 
 export type InitFailureReason =
     | CommitFailureReason
+    | GitInitFailureReason
     | YarnInstallFailureReason
     | YarnFixFailureReason;
 
@@ -40,11 +41,11 @@ export default async function init(project: Project): Promise<InitResult> {
         writeWebpackConfig(project),
         writeIdeaProjectFiles(project),
         writeNpmFiles(project),
-        writeLicense(project),
-        gitInit
+        writeLicense(project)
     ])
         .then(throwFailureFn("Internal error creating initial file stage"))
         .then(async fsStage => commit(project.path, fsStage))
+        .then(bindAsyncResultFn<InitFailureReason>(async () => gitInit(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnInstall(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnFix(project)));
 }

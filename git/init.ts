@@ -1,32 +1,16 @@
-import {mapFn} from "@softwareventures/array";
-import {FsStage, insertFn, InsertResult, insertSubdirectoryFn} from "../fs-stage/fs-stage";
-import {asyncFn, liftFunctionFromPromise} from "../promises/promises";
-import {chainAsyncResults, chainAsyncResultsFn, chainResultsFn} from "../result/result";
-import {copyFromTemplate} from "../template/copy";
-import {listTemplates} from "../template/list";
+import simpleGit from "simple-git";
+import {failure, Result, success} from "../result/result";
+import {ProjectSource} from "../project/project";
 
-export async function gitInit(fsStage: FsStage): Promise<InsertResult> {
-    return chainAsyncResults(fsStage, [
-        asyncFn(
-            chainResultsFn([
-                insertSubdirectoryFn(".git/objects/info"),
-                insertSubdirectoryFn(".git/objects/pack"),
-                insertSubdirectoryFn(".git/refs/heads"),
-                insertSubdirectoryFn(".git/refs/tags"),
-                insertSubdirectoryFn(".git/hooks")
-            ])
-        ),
-        liftFunctionFromPromise(
-            listTemplates("git.template")
-                .then(
-                    mapFn(async path =>
-                        copyFromTemplate(`git.template/${path}`).then(file =>
-                            insertFn(`.git/${path}`, file)
-                        )
-                    )
-                )
-                .then(mapFn(liftFunctionFromPromise))
-                .then(chainAsyncResultsFn)
-        )
-    ]);
+export type GitInitResult = Result<GitInitFailureReason>;
+
+export interface GitInitFailureReason {
+    readonly type: "git-init-failed";
+}
+
+export async function gitInit(project: ProjectSource): Promise<GitInitResult> {
+    return simpleGit(project.path)
+        .init()
+        .then(() => success())
+        .catch(() => failure([{type: "git-init-failed"}]));
 }
