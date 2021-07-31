@@ -48,6 +48,7 @@ export async function readNodeVersions(
                 workflow => workflow?.jobs?.["build-and-test"]?.strategy?.matrix?.["node-version"]
             )
         )
+        .then(mapResultFn(versions => (typeof versions === "string" ? [versions] : versions)))
         .then(mapResultFn(versions => (isArray(versions) ? versions : [])))
         .then(mapResultFn(mapFn(String)))
         .then(mapResultFn(concatMapFn(version => extractMajorNodeVersions(version, today))))
