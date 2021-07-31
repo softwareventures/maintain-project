@@ -1,4 +1,4 @@
-import {exclude, first, map, partition} from "@softwareventures/array";
+import {exclude, filter, first, map, partition} from "@softwareventures/array";
 import {intersects} from "semver";
 import {Project} from "../project/project";
 import {Update} from "../project/update";
@@ -12,15 +12,23 @@ import {FsStage, insert} from "../fs-stage/fs-stage";
 import {nodeVersionRange} from "./version-range";
 
 export async function dropOldNodeVersions(project: Project): Promise<Update | null> {
-    const range = nodeVersionRange(project.node.currentReleases);
-    const firstInRange = first(looseSort(project.node.currentReleases));
+    const currentReleaseRange = nodeVersionRange(project.node.currentReleases);
+    const earliestCurrentRelease = first(looseSort(project.node.currentReleases));
 
-    if (firstInRange == null) {
+    if (earliestCurrentRelease == null) {
         return null;
     }
 
+    const targetVersions = filter(project.node.targetVersions, version =>
+        intersects(currentReleaseRange, `^${version}`)
+    );
+
+    const targetRange = nodeVersionRange(targetVersions);
+
     const versionsToDrop = looseSort(
-        exclude(project.node.targetVersions, version => intersects(range, `^${version}`))
+        exclude(project.node.targetVersions, version =>
+            intersects(currentReleaseRange, `^${version}`)
+        )
     );
 
     if (versionsToDrop.length === 0) {
@@ -28,21 +36,20 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
     }
 
     const [versionsToDropBeforeRange, middleVersionsToDrop] = partition(versionsToDrop, version =>
-        looseLtr(version, range)
+        looseLtr(version, currentReleaseRange)
     );
     const versionRangeToDrop = [
-        ...(versionsToDropBeforeRange.length > 1 ? [`< ${firstInRange}`] : []),
-        ...(versionsToDropBeforeRange.length === 1
-            ? map(versionsToDropBeforeRange, version => `^${version}`)
-            : []),
-        ...map(middleVersionsToDrop, version => `^${version}`)
+        ...(versionsToDropBeforeRange.length > 1
+            ? [`< ${earliestCurrentRelease}`]
+            : versionsToDropBeforeRange),
+        ...map(middleVersionsToDrop, version => `${version}`)
     ].join(" || ");
 
     const newPackageJsonFile = modifyPackageJson(project, packageJson => ({
         ...packageJson,
         engines: {
             ...packageJson?.engines,
-            node: range
+            node: targetRange
         }
     })).then(toNullable);
 
@@ -59,7 +66,7 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
                 if (versions == null) {
                     return null;
                 } else {
-                    versions.items = map(project.node.currentReleases, release => `${release}.x`);
+                    versions.items = map(targetVersions, release => `${release}.x`);
                     return textFile(String(workflow));
                 }
             })
@@ -94,7 +101,7 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
                           ...project,
                           node: {
                               ...project.node,
-                              targetVersions: project.node.currentReleases
+                              targetVersions
                           }
                       }
                   }
