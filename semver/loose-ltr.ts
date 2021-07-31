@@ -1,5 +1,6 @@
-import {coerce, ltr} from "semver";
+import {ltr} from "semver";
+import {looseCoerce} from "./loose-coerce";
 
 export function looseLtr(version: string, range: string): boolean {
-    return ltr(coerce(version) ?? "0.0.0", range);
+    return ltr(looseCoerce(version), range);
 }

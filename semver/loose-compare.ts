@@ -1,6 +1,7 @@
 import {Comparison} from "@softwareventures/ordered";
-import {coerce, compare} from "semver";
+import {compare} from "semver";
+import {looseCoerce} from "./loose-coerce";
 
 export function looseCompare(a: string, b: string): Comparison {
-    return compare(coerce(a) ?? "0.0.0", coerce(b) ?? "0.0.0");
+    return compare(looseCoerce(a), looseCoerce(b) ?? "0.0.0");
 }
