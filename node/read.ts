@@ -1,12 +1,5 @@
 import {Date} from "@softwareventures/date";
-import {
-    concat,
-    concatMapFn,
-    filterFn,
-    isArray,
-    mapFn,
-    uniqueAdjacentByIdentity
-} from "@softwareventures/array";
+import {concatMapFn, filterFn, isArray, mapFn} from "@softwareventures/array";
 import {intersects} from "semver";
 import chain from "@softwareventures/chain";
 import {mapNullFn} from "@softwareventures/nullable";
@@ -22,7 +15,6 @@ import {
 } from "../result/result";
 import {readProjectYaml, ReadYamlFailureReason} from "../project/read-yaml";
 import {only} from "../collections/arrays";
-import {looseSort} from "../semver/loose-sort";
 import {NodeVersions} from "./node-versions";
 import {nodeReleasesSupportedInDateRange} from "./releases-supported-in-date-range";
 
@@ -36,7 +28,7 @@ export async function readNodeVersions(
 ): Promise<ReadNodeVersionsResult> {
     const currentReleases = nodeReleasesSupportedInDateRange({start: today, end: today});
 
-    const packageJsonNodeVersions = readProjectJson(project, "package.json")
+    const targetVersions = readProjectJson(project, "package.json")
         .then(mapResultFn(packageJson => packageJson?.engines?.node))
         .then(
             mapResultFn(versions =>
@@ -50,7 +42,7 @@ export async function readNodeVersions(
         )
         .then(mapResultFn(mapNullFn(() => nodeReleasesSupportedInDateRange({end: today}))));
 
-    const ciWorkflowNodeVersions = readProjectYaml(project, ".github/workflows/ci.yml")
+    const testedVersions = readProjectYaml(project, ".github/workflows/ci.yml")
         .then(
             mapResultFn(
                 workflow => workflow?.jobs?.["build-and-test"]?.strategy?.matrix?.["node-version"]
@@ -65,12 +57,13 @@ export async function readNodeVersions(
             )
         );
 
-    const targetVersions = allAsyncResults([packageJsonNodeVersions, ciWorkflowNodeVersions])
-        .then(mapResultFn(concat))
-        .then(mapResultFn(looseSort))
-        .then(mapResultFn(uniqueAdjacentByIdentity));
-
-    return targetVersions.then(mapResultFn(targetVersions => ({currentReleases, targetVersions})));
+    return allAsyncResults([targetVersions, testedVersions]).then(
+        mapResultFn(([targetVersions, testedVersions]) => ({
+            targetVersions,
+            testedVersions,
+            currentReleases
+        }))
+    );
 }
 
 function extractMajorNodeVersions(versions: string, today: Date): string[] {
