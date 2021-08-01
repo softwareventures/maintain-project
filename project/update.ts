@@ -22,7 +22,7 @@ import {PrettierFixFailureReason, prettierFixFilesIfAvailable} from "../prettier
 import {updateFixScript} from "../npm/update-fix-script";
 import {updateLintScript} from "../npm/update-lint-script";
 import {addNewNodeVersionsToPackageJson} from "../npm/add-new-node-versions";
-import {addNewNodeVersionsToGitHubActions} from "../github/add-new-node-versions";
+import {addMissingNodeVersionsToGitHubActions} from "../github/add-missing-node-versions";
 import {applyCodeStyleToPackageJson} from "../npm/apply-code-style";
 import {useLatestNodeToDeploy} from "../github/use-latest-node-to-deploy";
 import {useLatestNodeToMaintain} from "../github/use-latest-node-to-maintain";
@@ -68,11 +68,11 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
         applyCodeStyle,
         updateCopyrightYear,
         addMissingLicense,
+        dropOldNodeVersions,
         addNewNodeVersionsToPackageJson,
-        addNewNodeVersionsToGitHubActions,
+        addMissingNodeVersionsToGitHubActions,
         useLatestNodeToDeploy,
-        useLatestNodeToMaintain,
-        dropOldNodeVersions
+        useLatestNodeToMaintain
     ]).then(
         tolerantFoldAsyncResultsFn(
             async (project, update) => step({...options, project, git, update}),
