@@ -1,5 +1,5 @@
 import {last} from "@softwareventures/array";
-import {mapNullableFn} from "@softwareventures/nullable";
+import {mapNullable, mapNullableFn, notNull} from "@softwareventures/nullable";
 import {FsStageUpdate} from "../project/update";
 import {readProjectYamlAsDocument} from "../project/read-yaml";
 import {Project} from "../project/project";
@@ -20,14 +20,15 @@ export async function useLatestNodeToMaintain(project: Project): Promise<FsStage
     const oldVersion = workflow
         .then(mapResultFn(workflow => workflow.getIn(["env", "NODE_VERSION"])))
         .then(mapResultFn(mapNullableFn(String)));
-    const newVersion = oldVersion
-        .then(mapResultFn(mapNullableFn(() => last(looseSort(project.node.currentReleases)))))
-        .then(mapResultFn(mapNullableFn(version => `${version}.x`)));
-    const resultWorkflow = allAsyncResults([workflow, oldVersion, newVersion])
+    const newVersion = mapNullable(
+        last(looseSort(project.node.currentReleases)),
+        version => `${version}.x`
+    );
+    const resultWorkflow = allAsyncResults([workflow, oldVersion])
         .then(mapResultFn(noneNull))
         .then(
             mapResultFn(
-                mapNullableFn(([workflow, oldVersion, newVersion]) => {
+                mapNullableFn(([workflow, oldVersion]) => {
                     if (oldVersion !== newVersion) {
                         workflow.setIn(["env", "NODE_VERSION"], newVersion);
                         return workflow;
@@ -43,13 +44,11 @@ export async function useLatestNodeToMaintain(project: Project): Promise<FsStage
         )
     );
 
-    return toAsyncNullable(allAsyncResults([newVersion, file]))
-        .then(mapNullableFn(noneNull))
-        .then(
-            mapNullableFn(([newVersion, file]) => ({
-                type: "fs-stage-update",
-                log: `ci(github): use node ${newVersion} in maintain-project workflow`,
-                apply: async stage => insert(stage, ".github/workflows/maintain-project.yml", file)
-            }))
-        );
+    return toAsyncNullable(file).then(
+        mapNullableFn(file => ({
+            type: "fs-stage-update",
+            log: `ci(github): use node ${notNull(newVersion)} in maintain-project workflow`,
+            apply: async stage => insert(stage, ".github/workflows/maintain-project.yml", file)
+        }))
+    );
 }
