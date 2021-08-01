@@ -18,7 +18,7 @@ jobs:
       - name: Configure git credentials
         uses: OleksiyRudenko/gha-git-credentials@v2
         with:
-          token: ${{secrets.GITHUB_TOKEN}}
+          token: ${{secrets.MAINTAIN_GITHUB_TOKEN}}
       - name: Cache yarn dependencies
         uses: actions/cache@v2
         with:
