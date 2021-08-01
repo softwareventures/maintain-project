@@ -38,12 +38,17 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
     const [versionsToDropBeforeRange, middleVersionsToDrop] = partition(versionsToDrop, version =>
         looseLtr(version, currentReleaseRange)
     );
-    const versionRangeToDrop = [
+
+    const versionsToDropText = [
         ...(versionsToDropBeforeRange.length > 1
             ? [`< ${earliestCurrentRelease}`]
             : versionsToDropBeforeRange),
-        ...map(middleVersionsToDrop, version => `${version}`)
-    ].join(" || ");
+        ...middleVersionsToDrop
+    ].join(", ");
+
+    const breakingText = `node version${
+        versionsToDrop.length === 1 ? "" : "s"
+    } ${versionsToDropText} ${versionsToDrop.length === 1 ? "is" : "are"} no longer supported.`;
 
     const newPackageJsonFile = modifyPackageJson(project, packageJson => ({
         ...packageJson,
@@ -90,12 +95,8 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
                 ? null
                 : {
                       type: "fs-stage-update",
-                      log: `feat(node): drop support for node ${versionRangeToDrop}`,
-                      breaking: [
-                          `node ${versionRangeToDrop} ${
-                              versionsToDrop.length === 1 ? "is" : "are"
-                          } no longer supported.`
-                      ],
+                      log: `feat(node): drop support for node ${versionsToDropText}`,
+                      breaking: [breakingText],
                       apply: async stage => chainAsyncResults(stage, actions),
                       updatedProject: {
                           ...project,
