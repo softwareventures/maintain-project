@@ -23,13 +23,17 @@ export async function useLatestNodeToMaintain(project: Project): Promise<FsStage
     const newVersion = oldVersion
         .then(mapResultFn(mapNullableFn(() => last(looseSort(project.node.currentReleases)))))
         .then(mapResultFn(mapNullableFn(version => `${version}.x`)));
-    const resultWorkflow = allAsyncResults([workflow, newVersion])
+    const resultWorkflow = allAsyncResults([workflow, oldVersion, newVersion])
         .then(mapResultFn(noneNull))
         .then(
             mapResultFn(
-                mapNullableFn(([workflow, newVersion]) => {
-                    workflow.setIn(["env", "NODE_VERSION"], newVersion);
-                    return workflow;
+                mapNullableFn(([workflow, oldVersion, newVersion]) => {
+                    if (oldVersion !== newVersion) {
+                        workflow.setIn(["env", "NODE_VERSION"], newVersion);
+                        return workflow;
+                    } else {
+                        return null;
+                    }
                 })
             )
         );
