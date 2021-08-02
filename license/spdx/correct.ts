@@ -18,6 +18,11 @@ export function correctSpdxLicense(license: SpdxLicense): SpdxLicense {
         };
     } else if ("licenseId" in license && proprietaryLicenses.has(license.licenseId.toUpperCase())) {
         return license;
+    } else if ("exceptionId" in license) {
+        return {
+            ...correctSpdxLicense({licenseId: license.licenseId, plus: license.plus}),
+            exceptionId: license.exceptionId
+        };
     } else {
         const correctedExpression = spdxCorrect(formatSpdxExpression(license));
         if (correctedExpression == null) {
