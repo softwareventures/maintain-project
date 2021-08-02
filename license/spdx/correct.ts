@@ -7,6 +7,8 @@ export function parseAndCorrectSpdxExpression(text: string): SpdxLicense {
     return correctSpdxLicense(parseSpdxExpression(text));
 }
 
+const proprietaryLicenses = new Set(["PROPRIETARY", "UNLICENSED"]);
+
 export function correctSpdxLicense(license: SpdxLicense): SpdxLicense {
     if ("operator" in license) {
         return {
@@ -14,6 +16,8 @@ export function correctSpdxLicense(license: SpdxLicense): SpdxLicense {
             operator: license.operator,
             right: correctSpdxLicense(license.right)
         };
+    } else if ("licenseId" in license && proprietaryLicenses.has(license.licenseId.toUpperCase())) {
+        return license;
     } else {
         const correctedExpression = spdxCorrect(formatSpdxExpression(license));
         if (correctedExpression == null) {
