@@ -9,6 +9,7 @@ import {isPrettierProject} from "../prettier/is-prettier-project";
 import {isEslintProject} from "../eslint/is-eslint-project";
 import {arraysEqual, findExtract} from "../collections/arrays";
 import {insert} from "../fs-stage/fs-stage";
+import {isTslintProject} from "../tslint/is-tslint-project";
 import {modifyProjectScript} from "./modify-script";
 import {readProjectScript} from "./read-script";
 
@@ -28,6 +29,7 @@ export async function updateLintFixScript(
 
     const isPrettier = isPrettierProject(project);
     const isEslint = isEslintProject(project);
+    const isTslint = isTslintProject(project);
 
     const commands = existingScript
         .then(mapNullableFn(script => script.split("&&")))
@@ -44,8 +46,12 @@ export async function updateLintFixScript(
                 commands2,
                 command => !!command.match(/^eslint(\s|$)/)
             );
-            const [existingPrettierCommand, commands4] = findExtract(
+            const [existingTslintCommand, commands4] = findExtract(
                 commands3,
+                command => !!command.match(/^tslint(\s|$)/)
+            );
+            const [existingPrettierCommand, commands5] = findExtract(
+                commands4,
                 command => !!command.match(/^prettier(\s|$)/)
             );
 
@@ -77,12 +83,25 @@ export async function updateLintFixScript(
                 )
             );
 
+            const tslintCommand = Promise.resolve(
+                mapNull(existingTslintCommand, async () =>
+                    isTslint.then(isTslint =>
+                        isTslint
+                            ? script === "fix"
+                                ? "tslint --fix --project ."
+                                : "tslint --project ."
+                            : null
+                    )
+                )
+            );
+
             return Promise.all([tscCommand, prettierCommand, eslintCommand])
                 .then(([tscCommand, prettierCommand, eslintCommand]) => [
                     tscCommand,
                     eslintCommand,
+                    tslintCommand,
                     prettierCommand,
-                    ...commands4
+                    ...commands5
                 ])
                 .then(excludeNull);
         })
