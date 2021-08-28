@@ -2,6 +2,7 @@ import {promises as fs} from "fs";
 import {resolve} from "path";
 import chain from "@softwareventures/chain";
 import {mapFn} from "@softwareventures/iterable";
+import {hasProperty} from "unknown";
 import {liftPromises, liftResults, mapValue} from "../collections/maps";
 import {failure, mapAsyncResultFn, mapResultFn, Result, success} from "../result/result";
 import {Directory} from "./directory";
@@ -69,7 +70,7 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
     try {
         await fs.mkdir(options.path);
     } catch (reason) {
-        if (reason.code !== "EEXIST") {
+        if (!hasProperty(reason, "code") || reason.code !== "EEXIST") {
             throw reason;
         } else if (await fs.stat(options.path).then(stat => !stat.isDirectory())) {
             return failure([{type: "not-a-directory", path: options.path}]);
