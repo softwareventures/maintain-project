@@ -95,8 +95,8 @@ export async function updateLintFixScript(
                 )
             );
 
-            return Promise.all([tscCommand, prettierCommand, eslintCommand])
-                .then(([tscCommand, prettierCommand, eslintCommand]) => [
+            return Promise.all([tscCommand, prettierCommand, eslintCommand, tslintCommand])
+                .then(([tscCommand, prettierCommand, eslintCommand, tslintCommand]) => [
                     tscCommand,
                     eslintCommand,
                     tslintCommand,
