@@ -51,7 +51,7 @@
     "@types/spdx-correct": "2.0.0",
     "@types/wordwrap": "1.0.1",
     "@types/yaml": "1.9.7",
-    "commander": "8.1.0",
+    "commander": "8.2.0",
     "empty-dir": "2.0.0",
     "escodegen": "2.0.0",
     "hosted-git-info": "4.0.2",
