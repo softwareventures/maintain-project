@@ -1,34 +1,30 @@
-import {append, exclude, map} from "@softwareventures/array";
-import chain from "@softwareventures/chain";
+import {map, partition} from "@softwareventures/array";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
 import {Project} from "../project/project";
 import {FsStageUpdate} from "../project/update";
 import {toAsyncNullable} from "../result/result";
-import {looseSort} from "../semver/loose-sort";
 import {insert} from "../fs-stage/fs-stage";
 import {modifyCiWorkflow} from "./modify-ci-workflow";
 
-export async function addMissingNodeVersionsToGitHubActions(
+export async function removeUnsupportedNodeVersions(
     project: Project
 ): Promise<FsStageUpdate | null> {
-    if (project.node.testedVersions.length === 0) {
+    if (project.node.targetVersions.length === 0 || project.node.testedVersions.length === 0) {
         return null;
     }
 
-    const oldVersionRange = map(project.node.testedVersions, version => `^${version}`).join(" || ");
-
-    const newVersions = exclude(project.node.targetVersions, version =>
-        intersects(oldVersionRange, `^${version}`)
+    const targetVersionRange = map(project.node.targetVersions, version => `^${version}`).join(
+        " || "
     );
 
-    if (newVersions.length === 0) {
+    const [resultVersions, removeVersions] = partition(project.node.testedVersions, version =>
+        intersects(version, targetVersionRange)
+    );
+
+    if (removeVersions.length === 0) {
         return null;
     }
-
-    const resultVersions = chain(newVersions)
-        .map(append(project.node.testedVersions))
-        .map(looseSort).value;
 
     const file = modifyCiWorkflow(project, workflow => {
         workflow.getIn(["jobs", "build-and-test", "strategy", "matrix", "node-version"]).items =
@@ -39,9 +35,9 @@ export async function addMissingNodeVersionsToGitHubActions(
     return toAsyncNullable(file).then(
         mapNullableFn(file => ({
             type: "fs-stage-update",
-            log: `ci(github): add node version${
-                newVersions.length > 1 ? "s" : ""
-            } ${newVersions.join(", ")} to CI workflow`,
+            log: `ci(github): remove node version${
+                removeVersions.length > 1 ? "s" : ""
+            } ${removeVersions.join(", ")} from CI workflow`,
             apply: async stage => insert(stage, ".github/workflows/ci.yml", file),
             updatedProject: {
                 ...project,

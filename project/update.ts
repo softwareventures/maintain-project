@@ -27,6 +27,7 @@ import {applyCodeStyleToPackageJson} from "../npm/apply-code-style";
 import {useLatestNodeToDeploy} from "../github/use-latest-node-to-deploy";
 import {useLatestNodeToMaintain} from "../github/use-latest-node-to-maintain";
 import {dropOldNodeVersions} from "../node/drop-old-versions";
+import {removeUnsupportedNodeVersions} from "../github/remove-unsupported-node-versions";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -68,6 +69,7 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
         applyCodeStyle,
         updateCopyrightYear,
         addMissingLicense,
+        removeUnsupportedNodeVersions,
         dropOldNodeVersions,
         addNewNodeVersionsToPackageJson,
         addMissingNodeVersionsToGitHubActions,
