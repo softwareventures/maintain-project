@@ -9,5 +9,5 @@ export async function modifyCiWorkflow(
     project: ProjectSource,
     modify: (workflow: Document.Parsed) => Document.Parsed
 ): Promise<Result<ReadYamlFailureReason, File>> {
-    return modifyProjectYaml(project, ".github/workflows/ci", modify);
+    return modifyProjectYaml(project, ".github/workflows/ci.yml", modify);
 }
