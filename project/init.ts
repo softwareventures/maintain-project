@@ -32,7 +32,7 @@ export default async function init(project: Project): Promise<InitResult> {
     };
 
     return chainAsyncResults(fsStage, [
-        writeGitHubConfig,
+        writeGitHubConfig(project),
         writeRenovateConfig(project),
         writePrettierIgnore(project),
         writeGitIgnore(project),
