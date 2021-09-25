@@ -1,4 +1,4 @@
-import {failure, Result, success} from "../result/result";
+import {failure, mapResultFn, Result} from "../result/result";
 import {FileNotFound} from "../fs-stage/file-not-found";
 import {ProjectSource} from "./project";
 import {readProjectText} from "./read-text";
@@ -17,17 +17,12 @@ export async function readProjectJson(
     path: string
 ): Promise<ReadJsonResult> {
     return readProjectText(project, path)
-        .then(JSON.parse)
-        .then(
-            json => success(json),
-            reason => {
-                if (reason.code === "ENOENT") {
-                    return failure([{type: "file-not-found", path}]);
-                } else if (reason instanceof SyntaxError) {
-                    return failure([{type: "invalid-json", path}]);
-                } else {
-                    throw reason;
-                }
+        .then(mapResultFn(JSON.parse))
+        .catch(reason => {
+            if (reason instanceof SyntaxError) {
+                return failure([{type: "invalid-json", path}]);
+            } else {
+                throw reason;
             }
-        );
+        });
 }

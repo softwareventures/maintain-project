@@ -19,15 +19,10 @@ import {readProjectText} from "../project/read-text";
 import {textFile} from "../fs-stage/file";
 import {sortByDescendingFn, sortByFn} from "../collections/arrays";
 import {Update} from "../project/update";
+import {toNullable} from "../result/result";
 
 export async function updateCopyrightYear(project: Project): Promise<Update | null> {
-    const text = readProjectText(project, "LICENSE.md").catch(reason => {
-        if (reason.code === "ENOENT") {
-            return null;
-        } else {
-            throw reason;
-        }
-    });
+    const text = readProjectText(project, "LICENSE.md").then(toNullable);
 
     const copyrightLineRegExp = /^\s*($|((Copyright|\(C\)|©)\s*)+.*\d{4})/i;
 

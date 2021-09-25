@@ -1,6 +1,6 @@
 import {Document, parse, parseDocument} from "yaml";
 import {map} from "@softwareventures/array";
-import {failure, Result, success} from "../result/result";
+import {bindResultFn, failure, mapResultFn, Result, success} from "../result/result";
 import {FileNotFound} from "../fs-stage/file-not-found";
 import {ProjectSource} from "./project";
 import {readProjectText} from "./read-text";
@@ -20,19 +20,14 @@ export async function readProjectYaml(
     path: string
 ): Promise<ReadYamlResult> {
     return readProjectText(project, path)
-        .then(text => parse(text))
-        .then(
-            yaml => success(yaml),
-            reason => {
-                if (reason.code === "ENOENT") {
-                    return failure([{type: "file-not-found", path}]);
-                } else if ("code" in reason) {
-                    throw reason;
-                } else {
-                    return failure([{type: "invalid-yaml", reason, path}]);
-                }
+        .then(mapResultFn(parse))
+        .catch(reason => {
+            if ("code" in reason) {
+                throw reason;
+            } else {
+                return failure([{type: "invalid-yaml", reason, path}]);
             }
-        );
+        });
 }
 
 export type ReadYamlAsDocumentResult = Result<ReadYamlFailureReason, Document.Parsed>;
@@ -42,22 +37,22 @@ export async function readProjectYamlAsDocument(
     path: string
 ): Promise<ReadYamlAsDocumentResult> {
     return readProjectText(project, path)
-        .then(text => parseDocument(text))
+        .then(mapResultFn(parseDocument))
         .then(
-            document =>
-                document.errors.length === 0
-                    ? success(document)
-                    : failure(
-                          map(document.errors, reason => ({type: "invalid-yaml", reason, path}))
-                      ),
-            reason => {
-                if (reason.code === "ENOENT") {
-                    return failure([{type: "file-not-found", path}]);
-                } else if ("code" in reason) {
-                    throw reason;
-                } else {
-                    return failure([{type: "invalid-yaml", reason, path}]);
-                }
+            bindResultFn<FileNotFound, ReadYamlFailureReason, Document.Parsed, Document.Parsed>(
+                document =>
+                    document.errors.length === 0
+                        ? success(document)
+                        : failure(
+                              map(document.errors, reason => ({type: "invalid-yaml", reason, path}))
+                          )
+            )
+        )
+        .catch(reason => {
+            if ("code" in reason) {
+                throw reason;
+            } else {
+                return failure([{type: "invalid-yaml", reason, path}]);
             }
-        );
+        });
 }
