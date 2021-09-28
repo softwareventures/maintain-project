@@ -1,18 +1,15 @@
 import {resolve} from "path";
-import {promises as fs} from "fs";
 import {excludeFn, excludeNull, filterFn, mapFn} from "@softwareventures/array";
 import {mapNullFn} from "@softwareventures/nullable";
 import {ProjectSource} from "../../project/project";
 import {readProjectText} from "../../project/read-text";
 import {mapResultFn, toNullable} from "../../result/result";
 import {splitWhereFn} from "../../collections/arrays";
+import {readProjectDirectory} from "../../project/read-directory";
 import {GitIgnore, gitIgnoreComment, gitIgnoreEntry, GitIgnoreGroup} from "./git-ignore";
 
 export async function readGitIgnore(project: ProjectSource, path = ""): Promise<GitIgnore> {
-    const absolutePath = resolve(project.path, path);
-    // TODO readProjectDirectory
-    const subDirectories = fs
-        .readdir(absolutePath, {withFileTypes: true})
+    const subDirectories = readProjectDirectory(project, path)
         .then(filterFn(entry => entry.isDirectory()))
         .then(mapFn(entry => entry.name))
         .then(mapFn(async subDirectory => readGitIgnore(project, resolve(path, subDirectory))))

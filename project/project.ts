@@ -2,10 +2,12 @@ import {GitHost, GitHostOptions} from "../git/git-host";
 import {NpmPackage, NpmPackageOptions} from "../npm/npm-package";
 import {NodeVersions} from "../node/node-versions";
 import {SpdxLicense} from "../license/spdx/spdx";
+import {GitProject} from "../git/git-project";
 
 export interface Project {
     readonly path: string;
     readonly npmPackage: NpmPackage;
+    readonly git?: GitProject;
     readonly gitHost?: GitHost;
     readonly node: NodeVersions;
     readonly target: "npm" | "webapp";
