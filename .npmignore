@@ -11,6 +11,7 @@
 /template/template/idea.template/tasks.xml
 *.ts
 !*.d.ts
+!/template/template/**/*.ts
 
 # yarn and npm
 package-lock.json
