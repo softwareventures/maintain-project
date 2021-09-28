@@ -72,3 +72,26 @@ function defaultEqual(a: unknown, b: unknown): boolean {
 export function only<T>(a: ArrayLike<T>): T | null {
     return a.length === 1 ? a[0] : null;
 }
+
+export function splitWhere<T>(array: ArrayLike<T>, predicate: (element: T) => boolean): T[][] {
+    let current: T[] = [];
+    const result = [current];
+
+    for (let i = 0; i < array.length; ++i) {
+        const element = array[i];
+        if (predicate(element)) {
+            current = [];
+            result.push(current);
+        } else {
+            current.push(element);
+        }
+    }
+
+    return result;
+}
+
+export function splitWhereFn<T>(
+    predicate: (element: T) => boolean
+): (array: ArrayLike<T>) => T[][] {
+    return array => splitWhere(array, predicate);
+}
