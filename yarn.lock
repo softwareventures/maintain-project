@@ -613,10 +613,10 @@
   resolved "https://registry.yarnpkg.com/@tsconfig/node16/-/node16-1.0.2.tgz#423c77877d0569db20e1fc80885ac4118314010e"
   integrity sha512-eZxlbI8GZscaGS7kkc/trHTT5xgrjH3/1n2JDwusC9iahPKWMRvRjJSAN5mCXviuTGQ/lHnhvv8Q1YTpnfz9gA==
 
-"@types/empty-dir@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@types/empty-dir/-/empty-dir-2.0.0.tgz#fc40e385727b1625c5cb5021ecf9cd28efeafe8a"
-  integrity sha512-wyXug9Ay49frbC8fd+QDnoe1ByBk+wDz+acg+cacXWSnrph2v1wyLm3dSVnGLYAzMsfmga0asuBl2Da9IeQx2w==
+"@types/empty-dir@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@types/empty-dir/-/empty-dir-2.0.1.tgz#edd37caf29d2311fd79daa0b22758d604ea0859b"
+  integrity sha512-A18y8TofYTdztBxGRVNxI95H/QK1ESHzYhtJC96AmDoZgbllOhwiubHB2YO3WbUqDA2AKY2ZLF3S5nCLkN7RzQ==
   dependencies:
     "@types/node" "*"
 
