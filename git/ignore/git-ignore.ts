@@ -1,6 +1,5 @@
 export interface GitIgnore {
-    readonly path: string;
-    readonly subDirectories: readonly GitIgnore[];
+    readonly subdirectories: ReadonlyMap<string, GitIgnore>;
     readonly entries: readonly GitIgnoreGroup[];
 }
 

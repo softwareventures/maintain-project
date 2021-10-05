@@ -9,11 +9,18 @@ import {readProjectDirectory} from "../../project/read-directory";
 import {GitIgnore, gitIgnoreComment, gitIgnoreEntry, GitIgnoreGroup} from "./git-ignore";
 
 export async function readGitIgnore(project: ProjectSource, path = ""): Promise<GitIgnore> {
-    const subDirectories = readProjectDirectory(project, path)
+    const subdirectories = readProjectDirectory(project, path)
         .then(filterFn(entry => entry.isDirectory()))
         .then(mapFn(entry => entry.name))
-        .then(mapFn(async subDirectory => readGitIgnore(project, resolve(path, subDirectory))))
-        .then(async subDirectories => Promise.all(subDirectories));
+        .then(
+            mapFn(async subdirectory =>
+                readGitIgnore(project, resolve(path, subdirectory)).then(
+                    (ignore: GitIgnore): [string, GitIgnore] => [subdirectory, ignore]
+                )
+            )
+        )
+        .then(async ignores => Promise.all(ignores))
+        .then(ignores => new Map<string, GitIgnore>(ignores));
     const entries = readProjectText(project, resolve(path, ".gitignore"))
         .then(mapResultFn(text => text.split(/\r?\n|\r/)))
         .then(mapResultFn(splitWhereFn(line => /^\s*$/.test(line))))
@@ -32,9 +39,8 @@ export async function readGitIgnore(project: ProjectSource, path = ""): Promise<
         .then(toNullable)
         .then(mapNullFn((): GitIgnoreGroup[] => []));
 
-    return Promise.all([subDirectories, entries]).then(([subDirectories, entries]) => ({
-        path,
-        subDirectories,
+    return Promise.all([subdirectories, entries]).then(([subdirectories, entries]) => ({
+        subdirectories,
         entries
     }));
 }
