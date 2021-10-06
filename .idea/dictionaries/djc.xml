@@ -6,7 +6,12 @@
       <w>ecco</w>
       <w>eccosolutions</w>
       <w>eslintignore</w>
+      <w>nobrace</w>
+      <w>noextglob</w>
+      <w>nonegate</w>
+      <w>noquantifiers</w>
       <w>npmignore</w>
+      <w>picomatch</w>
       <w>prettierignore</w>
       <w>selfclosing</w>
       <w>snyk</w>
