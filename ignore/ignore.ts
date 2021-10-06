@@ -4,48 +4,48 @@ import chain from "@softwareventures/chain";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import picomatch = require("picomatch");
 
-export interface GitIgnore {
-    readonly subdirectories: ReadonlyMap<string, GitIgnore>;
-    readonly entries: readonly GitIgnoreGroup[];
+export interface Ignore {
+    readonly subdirectories: ReadonlyMap<string, Ignore>;
+    readonly entries: readonly IgnoreGroup[];
 }
 
-export type GitIgnoreGroup = readonly GitIgnoreLine[];
+export type IgnoreGroup = readonly IgnoreLine[];
 
-export type GitIgnoreLine = GitIgnoreComment | GitIgnoreEntry;
+export type IgnoreLine = IgnoreComment | IgnoreEntry;
 
-export interface GitIgnoreComment {
-    readonly type: "git-ignore-comment";
+export interface IgnoreComment {
+    readonly type: "ignore-comment";
     readonly text: string;
 }
 
-export interface GitIgnoreEntry {
-    readonly type: "git-ignore-entry";
+export interface IgnoreEntry {
+    readonly type: "ignore-entry";
     readonly text: string;
 }
 
-export function gitIgnoreComment(text: string): GitIgnoreComment {
-    return {type: "git-ignore-comment", text};
+export function ignoreComment(text: string): IgnoreComment {
+    return {type: "ignore-comment", text};
 }
 
-export function gitIgnoreEntry(text: string): GitIgnoreEntry {
-    return {type: "git-ignore-entry", text};
+export function ignoreEntry(text: string): IgnoreEntry {
+    return {type: "ignore-entry", text};
 }
 
-export type GitIgnoreStatus = "ignored" | "explicitly-not-ignored" | "not-ignored";
+export type IgnoreStatus = "ignored" | "explicitly-not-ignored" | "not-ignored";
 
-export function isGitIgnored(ignore: GitIgnore, path: string): GitIgnoreStatus {
-    return isGitIgnoredInternal(ignore, posix.normalize(path).split(posix.sep));
+export function isIgnored(ignore: Ignore, path: string): IgnoreStatus {
+    return isIgnoredInternal(ignore, posix.normalize(path).split(posix.sep));
 }
 
-function isGitIgnoredInternal(ignore: GitIgnore, segments: readonly string[]): GitIgnoreStatus {
+function isIgnoredInternal(ignore: Ignore, segments: readonly string[]): IgnoreStatus {
     if (first(segments) === "..") {
         return "not-ignored";
     }
 
     const subdirectoryStatus = chain(first(segments))
         .map(mapNullableFn(dir => ignore.subdirectories.get(dir)))
-        .map(mapNullableFn(ignore => isGitIgnoredInternal(ignore, tail(segments))))
-        .map(mapNullFn((): GitIgnoreStatus => "not-ignored")).value;
+        .map(mapNullableFn(ignore => isIgnoredInternal(ignore, tail(segments))))
+        .map(mapNullFn((): IgnoreStatus => "not-ignored")).value;
 
     if (subdirectoryStatus !== "not-ignored") {
         return subdirectoryStatus;
@@ -55,17 +55,17 @@ function isGitIgnoredInternal(ignore: GitIgnore, segments: readonly string[]): G
 
     return chain(ignore.entries)
         .map(concat)
-        .map(mapFn(line => isGitIgnoredByLine(line, path)))
+        .map(mapFn(line => isIgnoredByLine(line, path)))
         .map(
-            foldFn<GitIgnoreStatus, GitIgnoreStatus>(
+            foldFn<IgnoreStatus, IgnoreStatus>(
                 (status, lineStatus) => (lineStatus === "not-ignored" ? status : lineStatus),
                 "not-ignored"
             )
         ).value;
 }
 
-function isGitIgnoredByLine(line: GitIgnoreLine, path: string): GitIgnoreStatus {
-    if (line.type !== "git-ignore-entry") {
+function isIgnoredByLine(line: IgnoreLine, path: string): IgnoreStatus {
+    if (line.type !== "ignore-entry") {
         return "not-ignored";
     }
 

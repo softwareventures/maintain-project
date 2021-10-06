@@ -1,26 +1,26 @@
 import {resolve} from "path";
 import {excludeFn, excludeNull, filterFn, mapFn} from "@softwareventures/array";
 import {mapNullFn} from "@softwareventures/nullable";
-import {ProjectSource} from "../../project/project";
-import {readProjectText} from "../../project/read-text";
-import {mapResultFn, toNullable} from "../../result/result";
-import {splitWhereFn} from "../../collections/arrays";
-import {readProjectDirectory} from "../../project/read-directory";
-import {GitIgnore, gitIgnoreComment, gitIgnoreEntry, GitIgnoreGroup} from "./git-ignore";
+import {ProjectSource} from "../project/project";
+import {readProjectText} from "../project/read-text";
+import {mapResultFn, toNullable} from "../result/result";
+import {splitWhereFn} from "../collections/arrays";
+import {readProjectDirectory} from "../project/read-directory";
+import {Ignore, ignoreComment, ignoreEntry, IgnoreGroup} from "./ignore";
 
-export async function readGitIgnore(project: ProjectSource, path = ""): Promise<GitIgnore> {
+export async function readGitIgnore(project: ProjectSource, path = ""): Promise<Ignore> {
     const subdirectories = readProjectDirectory(project, path)
         .then(filterFn(entry => entry.isDirectory()))
         .then(mapFn(entry => entry.name))
         .then(
             mapFn(async subdirectory =>
                 readGitIgnore(project, resolve(path, subdirectory)).then(
-                    (ignore: GitIgnore): [string, GitIgnore] => [subdirectory, ignore]
+                    (ignore: Ignore): [string, Ignore] => [subdirectory, ignore]
                 )
             )
         )
         .then(async ignores => Promise.all(ignores))
-        .then(ignores => new Map<string, GitIgnore>(ignores));
+        .then(ignores => new Map<string, Ignore>(ignores));
     const entries = readProjectText(project, resolve(path, ".gitignore"))
         .then(mapResultFn(text => text.split(/\r?\n|\r/)))
         .then(mapResultFn(splitWhereFn(line => /^\s*$/.test(line))))
@@ -31,13 +31,13 @@ export async function readGitIgnore(project: ProjectSource, path = ""): Promise<
             mapResultFn(
                 mapFn(
                     mapFn(([comment, entry]) =>
-                        comment == null ? gitIgnoreEntry(entry) : gitIgnoreComment(comment)
+                        comment == null ? ignoreEntry(entry) : ignoreComment(comment)
                     )
                 )
             )
         )
         .then(toNullable)
-        .then(mapNullFn((): GitIgnoreGroup[] => []));
+        .then(mapNullFn((): IgnoreGroup[] => []));
 
     return Promise.all([subdirectories, entries]).then(([subdirectories, entries]) => ({
         subdirectories,

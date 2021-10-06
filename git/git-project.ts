@@ -1,5 +1,5 @@
-import {GitIgnore} from "./ignore/git-ignore";
+import {Ignore} from "../ignore/ignore";
 
 export interface GitProject {
-    readonly ignore: GitIgnore;
+    readonly ignore: Ignore;
 }
