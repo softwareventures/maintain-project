@@ -4,10 +4,13 @@ import {createNpmPackage} from "../npm/npm-package";
 import {createGitHost} from "../git/git-host";
 import {guessCopyrightHolder} from "../license/guess-copyright-holder";
 import {createNodeVersions} from "../node/create";
+import {createGitProject} from "../git/create";
 import {Project, ProjectOptions} from "./project";
 
 export async function createProject(options: ProjectOptions): Promise<Project> {
     const git = simpleGit();
+
+    const gitProject = createGitProject(options);
 
     const authorName = Promise.resolve(options.author?.name)
         .then(name => name ?? git.raw(["config", "user.name"]))
@@ -21,14 +24,16 @@ export async function createProject(options: ProjectOptions): Promise<Project> {
 
     const today = todayUtc();
 
-    return Promise.all([authorName, authorEmail])
-        .then(([authorName, authorEmail]) => ({
+    return Promise.all([gitProject, authorName, authorEmail])
+        .then(([gitProject, authorName, authorEmail]) => ({
             ...options,
+            gitProject,
             author: {name: authorName, email: authorEmail}
         }))
         .then(options => ({
             path: options.path,
             npmPackage: createNpmPackage(options),
+            gitProject: options.gitProject,
             gitHost: createGitHost(options),
             node: createNodeVersions(today),
             target: options.target ?? "npm",
