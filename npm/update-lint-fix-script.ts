@@ -1,6 +1,6 @@
 import {mapNull, mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {excludeNull, mapFn} from "@softwareventures/array";
-import {ProjectSource} from "../project/project";
+import {Project} from "../project/project";
 import {FsStageUpdate} from "../project/update";
 import {isTypescriptProject} from "../typescript/is-typescript-project";
 import {readTsconfig} from "../typescript/read-tsconfig";
@@ -9,12 +9,11 @@ import {isPrettierProject} from "../prettier/is-prettier-project";
 import {isEslintProject} from "../eslint/is-eslint-project";
 import {arraysEqual, findExtract} from "../collections/arrays";
 import {insert} from "../fs-stage/fs-stage";
-import {isTslintProject} from "../tslint/is-tslint-project";
 import {modifyProjectScript} from "./modify-script";
 import {readProjectScript} from "./read-script";
 
 export async function updateLintFixScript(
-    project: ProjectSource,
+    project: Project,
     script: "lint" | "fix"
 ): Promise<FsStageUpdate | null> {
     const existingScript = readProjectScript(project, script);
@@ -29,7 +28,6 @@ export async function updateLintFixScript(
 
     const isPrettier = isPrettierProject(project);
     const isEslint = isEslintProject(project);
-    const isTslint = isTslintProject(project);
 
     const commands = existingScript
         .then(mapNullableFn(script => script.split("&&")))
@@ -83,20 +81,14 @@ export async function updateLintFixScript(
                 )
             );
 
-            const tslintCommand = Promise.resolve(
-                mapNull(existingTslintCommand, async () =>
-                    isTslint.then(isTslint =>
-                        isTslint
-                            ? script === "fix"
-                                ? "tslint --fix --project ."
-                                : "tslint --project ."
-                            : null
-                    )
+            const tslintCommand = mapNull(existingTslintCommand, () =>
+                mapNull(project.tslint, () =>
+                    script === "fix" ? "tslint --fix --project ." : "tslint --project ."
                 )
             );
 
-            return Promise.all([tscCommand, prettierCommand, eslintCommand, tslintCommand])
-                .then(([tscCommand, prettierCommand, eslintCommand, tslintCommand]) => [
+            return Promise.all([tscCommand, prettierCommand, eslintCommand])
+                .then(([tscCommand, prettierCommand, eslintCommand]) => [
                     tscCommand,
                     eslintCommand,
                     tslintCommand,

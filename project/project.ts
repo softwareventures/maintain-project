@@ -3,6 +3,7 @@ import {NpmPackage, NpmPackageOptions} from "../npm/npm-package";
 import {NodeVersions} from "../node/node-versions";
 import {SpdxLicense} from "../license/spdx/spdx";
 import {GitProject} from "../git/git-project";
+import {TslintProject} from "../tslint/tslint-project";
 
 export interface Project {
     readonly path: string;
@@ -11,6 +12,7 @@ export interface Project {
     readonly gitHost?: GitHost;
     readonly node: NodeVersions;
     readonly target: "npm" | "webapp";
+    readonly tslint?: TslintProject;
     readonly author: {
         readonly name?: string;
         readonly email?: string;
