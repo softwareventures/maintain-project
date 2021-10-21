@@ -102,7 +102,8 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
                           ...project,
                           node: {
                               ...project.node,
-                              targetVersions
+                              targetVersions,
+                              testedVersions: targetVersions
                           }
                       }
                   }
