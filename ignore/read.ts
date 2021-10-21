@@ -1,33 +1,42 @@
 import {basename, dirname, join} from "path";
-import {excludeFn, excludeNull, filterFn, mapFn} from "@softwareventures/array";
+import {Dirent} from "fs";
+import {excludeNull, filterFn, mapFn} from "@softwareventures/array";
 import {mapNullFn} from "@softwareventures/nullable";
-import {ProjectSource} from "../project/project";
-import {readProjectText} from "../project/read-text";
+import {ReadTextResult} from "../project/read-text";
 import {mapResultFn, toNullable} from "../result/result";
 import {splitWhereFn} from "../collections/arrays";
-import {readProjectDirectory} from "../project/read-directory";
 import {Ignore, ignoreComment, ignoreEntry, IgnoreGroup} from "./ignore";
 
-export async function readProjectIgnore(project: ProjectSource, path: string): Promise<Ignore> {
+export interface ReadIgnoreOptions {
+    path: string;
+    readDirectory: (path: string) => Promise<readonly Dirent[]>;
+    readText: (path: string) => Promise<ReadTextResult>;
+}
+
+export async function readIgnore({
+    path,
+    readDirectory,
+    readText
+}: ReadIgnoreOptions): Promise<Ignore> {
     const dir = dirname(path);
     const file = basename(path);
 
-    const subdirectories = readProjectDirectory(project, dir)
+    const subdirectories = readDirectory(dir)
         .then(filterFn(entry => entry.isDirectory()))
         .then(mapFn(entry => entry.name))
         .then(
             mapFn(async subdirectory =>
-                readProjectIgnore(project, join(dir, subdirectory, file)).then(
+                readIgnore({path: join(dir, subdirectory, file), readDirectory, readText}).then(
                     (ignore: Ignore): [string, Ignore] => [subdirectory, ignore]
                 )
             )
         )
         .then(async ignores => Promise.all(ignores))
         .then(ignores => new Map<string, Ignore>(ignores));
-    const entries = readProjectText(project, path)
+
+    const entries = readText(path)
         .then(mapResultFn(text => text.split(/\r?\n|\r/)))
         .then(mapResultFn(splitWhereFn(line => /^\s*$/.test(line))))
-        .then(mapResultFn(excludeFn(group => group.length === 0)))
         .then(mapResultFn(mapFn(mapFn(line => /^\s*(?:#\s*(.*)|(.*))\s*$/.exec(line)))))
         .then(mapResultFn(mapFn(excludeNull)))
         .then(
