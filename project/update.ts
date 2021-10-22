@@ -28,6 +28,7 @@ import {useLatestNodeToDeploy} from "../github/use-latest-node-to-deploy";
 import {useLatestNodeToMaintain} from "../github/use-latest-node-to-maintain";
 import {dropOldNodeVersions} from "../node/drop-old-versions";
 import {removeUnsupportedNodeVersions} from "../github/remove-unsupported-node-versions";
+import {removeTslintFromTestScript} from "../npm/remove-tslint-from-test-script";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -66,6 +67,7 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
         applyCodeStyleToPackageJson,
         updateLintScript,
         updateFixScript,
+        removeTslintFromTestScript,
         applyCodeStyle,
         updateCopyrightYear,
         addMissingLicense,
