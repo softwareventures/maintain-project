@@ -1,4 +1,4 @@
-import {coerce, copy, findIndex, noneNull as _noneNull} from "@softwareventures/array";
+import {coerce, copy, findIndex} from "@softwareventures/array";
 import {Comparator, compare, reverse} from "@softwareventures/ordered";
 import {all, zip} from "@softwareventures/iterable";
 
@@ -33,12 +33,6 @@ export function findExtractFn<T>(
 export function excludeIndex<T>(array: ArrayLike<T>, index: number): T[] {
     const a = Array.from(array);
     return [...a.slice(0, index), ...a.slice(index + 1)];
-}
-
-export type NoneNull<T extends ArrayLike<unknown>> = {[K in keyof T]: NonNullable<T[K]>};
-
-export function noneNull<T extends ArrayLike<unknown>>(array: T): NoneNull<T> | null {
-    return _noneNull(array) as unknown as NoneNull<T>;
 }
 
 export function sort<T>(array: ArrayLike<T>, comparator: Comparator<T>): T[] {

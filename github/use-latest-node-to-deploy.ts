@@ -1,5 +1,5 @@
 import {mapNullable, mapNullableFn, notNull} from "@softwareventures/nullable";
-import {last} from "@softwareventures/array";
+import {last, noneNull} from "@softwareventures/array";
 import {Project} from "../project/project";
 import {FsStageUpdate} from "../project/update";
 import {readProjectYamlAsDocument} from "../project/read-yaml";
@@ -11,7 +11,6 @@ import {
     toAsyncNullable
 } from "../result/result";
 import {looseSort} from "../semver/loose-sort";
-import {noneNull} from "../collections/arrays";
 import {textFile} from "../fs-stage/file";
 import {insert} from "../fs-stage/fs-stage";
 
