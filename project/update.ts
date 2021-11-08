@@ -135,7 +135,11 @@ async function commitUpdate(
             mapAsyncResultFn(async files =>
                 files.length === 0
                     ? undefined
-                    : git.add(files).then(async () => git.commit(generateCommitLog(update)))
+                    : git
+                          .add(files)
+                          .then(async () =>
+                              git.commit(generateCommitLog(update), {"--no-verify": null})
+                          )
             )
         )
         .then(
