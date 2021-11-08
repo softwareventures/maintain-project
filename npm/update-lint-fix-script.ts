@@ -1,4 +1,4 @@
-import {mapNull, mapNullableFn, mapNullFn} from "@softwareventures/nullable";
+import {mapNull, mapNullable, mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {excludeNull, mapFn} from "@softwareventures/array";
 import {Project} from "../project/project";
 import {FsStageUpdate} from "../project/update";
@@ -82,7 +82,7 @@ export async function updateLintFixScript(
             );
 
             const tslintCommand = mapNull(existingTslintCommand, () =>
-                mapNull(project.tslint, () =>
+                mapNullable(project.tslint, () =>
                     script === "fix" ? "tslint --fix --project ." : "tslint --project ."
                 )
             );
