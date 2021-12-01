@@ -15,7 +15,7 @@
   "repository": "github:softwareventures/maintain-project",
   "license": "ISC",
   "scripts": {
-    "fix": "tsc --noEmit && eslint --fix . && prettier --write .",
+    "fix": "tsc --noEmit && eslint --fix . && tslint --fix --project . && prettier --write .",
     "lint": "tsc --noEmit && eslint . && tslint --project . && prettier --check .",
     "maintain-project": "node . update",
     "prepare": "shx rm -rf template/template/idea.template && shx cp -r .idea template/template/idea.template && tsc",
