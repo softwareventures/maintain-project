@@ -58,7 +58,7 @@
     "jsdom": "18.1.1",
     "node-releases": "2.0.1",
     "non-null": "2.0.1",
-    "picomatch": "2.3.0",
+    "picomatch": "2.3.1",
     "prettier-package-json": "2.6.0",
     "recursive-readdir": "2.2.2",
     "semver": "7.3.5",
