@@ -1,5 +1,5 @@
 import {mapNull, mapNullable, mapNullableFn, mapNullFn} from "@softwareventures/nullable";
-import {excludeNull, mapFn} from "@softwareventures/array";
+import {equal as arraysEqual, excludeNull, mapFn} from "@softwareventures/array";
 import {Project} from "../project/project";
 import {FsStageUpdate} from "../project/update";
 import {isTypescriptProject} from "../typescript/is-typescript-project";
@@ -7,7 +7,7 @@ import {readTsconfig} from "../typescript/read-tsconfig";
 import {isSuccess, mapResultFn, toNullable} from "../result/result";
 import {isPrettierProject} from "../prettier/is-prettier-project";
 import {isEslintProject} from "../eslint/is-eslint-project";
-import {arraysEqual, findExtract} from "../collections/arrays";
+import {findExtract} from "../collections/arrays";
 import {insert} from "../fs-stage/fs-stage";
 import {modifyProjectScript} from "./modify-script";
 import {readProjectScript} from "./read-script";

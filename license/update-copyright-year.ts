@@ -9,6 +9,8 @@ import {
     minimum,
     partitionWhile,
     partitionWhileFn,
+    sortByDescendingFn,
+    sortByFn,
     tail,
     unshiftFn
 } from "@softwareventures/array";
@@ -17,7 +19,6 @@ import {Project} from "../project/project";
 import {insert} from "../fs-stage/fs-stage";
 import {readProjectText} from "../project/read-text";
 import {textFile} from "../fs-stage/file";
-import {sortByDescendingFn, sortByFn} from "../collections/arrays";
 import {Update} from "../project/update";
 import {toNullable} from "../result/result";
 

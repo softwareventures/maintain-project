@@ -1,5 +1,5 @@
 import {Date} from "@softwareventures/date";
-import {concatMapFn, filterFn, isArray, mapFn} from "@softwareventures/array";
+import {concatMapFn, filterFn, isArray, mapFn, only} from "@softwareventures/array";
 import {intersects} from "semver";
 import chain from "@softwareventures/chain";
 import {mapNullFn} from "@softwareventures/nullable";
@@ -14,7 +14,6 @@ import {
     success
 } from "../result/result";
 import {readProjectYaml, ReadYamlFailureReason} from "../project/read-yaml";
-import {only} from "../collections/arrays";
 import {NodeVersions} from "./node-versions";
 import {nodeReleasesSupportedInDateRange} from "./releases-supported-in-date-range";
 

@@ -1,6 +1,4 @@
-import {coerce, copy, findIndex} from "@softwareventures/array";
-import {Comparator, compare, reverse} from "@softwareventures/ordered";
-import {all, zip} from "@softwareventures/iterable";
+import {findIndex} from "@softwareventures/array";
 
 export function findExtract<T, U extends T>(
     array: ArrayLike<T>,
@@ -33,38 +31,6 @@ export function findExtractFn<T>(
 export function excludeIndex<T>(array: ArrayLike<T>, index: number): T[] {
     const a = Array.from(array);
     return [...a.slice(0, index), ...a.slice(index + 1)];
-}
-
-export function sort<T>(array: ArrayLike<T>, comparator: Comparator<T>): T[] {
-    return copy(array).sort(comparator);
-}
-
-export function sortFn<T>(comparator: Comparator<T>): (array: ArrayLike<T>) => T[] {
-    return array => sort(array, comparator);
-}
-
-export function sortByFn<T, U extends string | number | boolean>(
-    f: (element: T) => U
-): (array: readonly T[]) => T[] {
-    return array => copy(array).sort((a, b) => compare(f(a) as any, f(b) as any));
-}
-
-export function sortByDescendingFn<T, U extends string | number | boolean>(
-    f: (element: T) => U
-): (array: readonly T[]) => T[] {
-    return array => copy(array).sort((a, b) => reverse(compare)(f(a) as any, f(b) as any));
-}
-
-export function arraysEqual<T>(a: ArrayLike<T>, b: ArrayLike<T>, equal = defaultEqual): boolean {
-    return a.length === b.length && all(zip(coerce(a), coerce(b)), equal);
-}
-
-function defaultEqual(a: unknown, b: unknown): boolean {
-    return a === b;
-}
-
-export function only<T>(a: ArrayLike<T>): T | null {
-    return a.length === 1 ? a[0] : null;
 }
 
 export function splitWhere<T>(array: ArrayLike<T>, predicate: (element: T) => boolean): T[][] {
