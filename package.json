@@ -43,7 +43,7 @@
     "@types/escodegen": "0.0.7",
     "@types/estree": "0.0.50",
     "@types/hosted-git-info": "3.0.2",
-    "@types/jsdom": "16.2.13",
+    "@types/jsdom": "16.2.14",
     "@types/node": "12.20.37",
     "@types/parse-author": "2.0.1",
     "@types/picomatch": "2.3.0",
