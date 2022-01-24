@@ -2,8 +2,8 @@ import {argv, cwd} from "process";
 import {last} from "@softwareventures/array";
 import {Command} from "commander";
 import {name, version} from "../package.json";
-import {cliInit} from "./init";
-import {cliUpdate} from "./update";
+import {cliInit, InitOptions} from "./init";
+import {cliUpdate, UpdateOptions} from "./update";
 
 export default function cli(): void {
     const program = new Command()
@@ -22,12 +22,14 @@ export default function cli(): void {
         .option("--license <spdx-expression>")
         .option("--copyright-holder <name>")
         .option("--webapp")
-        .action((destination, options) => cliInit(destination ?? cwd(), options));
+        .action((destination, options) =>
+            cliInit(String(destination ?? cwd()), options as InitOptions)
+        );
 
     program
         .command("update [path]")
         .option("--breaking")
-        .action((path, options) => cliUpdate(path ?? cwd(), options));
+        .action((path, options) => cliUpdate(String(path ?? cwd()), options as UpdateOptions));
 
     program.parse(argv);
 }

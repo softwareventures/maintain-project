@@ -26,7 +26,7 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
 
     const npmPackage = packageJson
         .then(mapResultFn(packageJson => packageJson?.name ?? ""))
-        .then(mapResultFn(name => /^(?:(@.*?)\/)?(.*)$/.exec(name) ?? ["", "", ""]))
+        .then(mapResultFn(name => /^(?:(@.*?)\/)?(.*)$/.exec(String(name)) ?? ["", "", ""]))
         .then(mapResultFn(([_, scope, name]) => ({scope, name})));
 
     const git = readGitProject(project);

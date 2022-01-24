@@ -1,3 +1,4 @@
+import {mapNullable} from "@softwareventures/nullable";
 import {ProjectSource} from "../project/project";
 import {Result} from "../result/result";
 import {ReadJsonFailureReason} from "../project/read-json";
@@ -13,7 +14,7 @@ export async function modifyProjectScript(
         ...json,
         scripts: {
             ...json?.scripts,
-            [name]: modify(json?.scripts?.[name]) ?? undefined
+            [name]: modify(mapNullable(json?.scripts?.[name], String)) ?? undefined
         }
     }));
 }
