@@ -4,7 +4,7 @@ on:
 #    - cron: 5 0 1 * *
   workflow_dispatch: null
 env:
-  NODE_VERSION: 17.x
+  NODE_VERSION: 16.x
 jobs:
   maintain-project:
     name: Maintain Project
