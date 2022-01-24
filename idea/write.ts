@@ -1,6 +1,6 @@
 import {filterFn, mapFn} from "@softwareventures/array";
+import {applyAsync} from "@softwareventures/promise";
 import {FsStage, insertFn, InsertResult} from "../fs-stage/fs-stage";
-import {liftFunctionFromPromise} from "../promises/promises";
 import {chainAsyncResults, chainAsyncResultsFn} from "../result/result";
 import {copyFromTemplate} from "../template/copy";
 import {listTemplates} from "../template/list";
@@ -37,6 +37,6 @@ async function writeIdeaMiscFiles(fsStage: FsStage): Promise<InsertResult> {
                 )
             )
         )
-        .then(mapFn(liftFunctionFromPromise))
+        .then(mapFn(applyAsync))
         .then(async actions => chainAsyncResults(fsStage, actions));
 }
