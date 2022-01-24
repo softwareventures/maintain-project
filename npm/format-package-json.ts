@@ -15,6 +15,7 @@ export function formatPackageJson(json: object): string {
             "bugs",
             "repository",
             "license",
+            "type",
             "scripts",
             "main",
             "module",
