@@ -125,8 +125,9 @@ async function commitUpdate(
         .then(mapAsyncResultFn(async () => git.status()))
         .then(mapResultFn(status => concat([status.modified, status.not_added])))
         .then(
-            bindAsyncResultFn(async files =>
-                prettierFixFilesIfAvailable(project, files).then(mapResultFn(() => files))
+            bindAsyncResultFn(
+                async files =>
+                    prettierFixFilesIfAvailable(project, files).then(() => success(files)) // Ignore failure
             )
         )
         .then(mapAsyncResultFn(async () => git.status()))
