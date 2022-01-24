@@ -670,10 +670,10 @@
   resolved "https://registry.yarnpkg.com/@types/is-integer/-/is-integer-1.0.0.tgz#8393445ad14b2b51c9ac7e91220de0efc8de2028"
   integrity sha512-AAFRQhSVYdpQgKEkUY+bMRL8yAZSq7h7AY14iSK1xod4wOdH4Gc/KMAR4tlSo9Sf5KsYizWwlJOnLCbet5AU2A==
 
-"@types/jsdom@16.2.13":
-  version "16.2.13"
-  resolved "https://registry.yarnpkg.com/@types/jsdom/-/jsdom-16.2.13.tgz#126c8b7441b159d6234610a48de77b6066f1823f"
-  integrity sha512-8JQCjdeAidptSsOcRWk2iTm9wCcwn9l+kRG6k5bzUacrnm1ezV4forq0kWjUih/tumAeoG+OspOvQEbbRucBTw==
+"@types/jsdom@16.2.14":
+  version "16.2.14"
+  resolved "https://registry.yarnpkg.com/@types/jsdom/-/jsdom-16.2.14.tgz#26fe9da6a8870715b154bb84cd3b2e53433d8720"
+  integrity sha512-6BAy1xXEmMuHeAJ4Fv4yXKwBDTGTOseExKE3OaHiNycdHdZw59KfYzrt0DkDluvwmik1HRt6QS7bImxUmpSy+w==
   dependencies:
     "@types/node" "*"
     "@types/parse5" "*"
