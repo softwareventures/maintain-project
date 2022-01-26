@@ -8,6 +8,7 @@ import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
 import {Project} from "../project/project";
 import {nodeVersionRange} from "../node/version-range";
 import {formatSpdxExpression} from "../license/spdx/format";
+import {projectTemplateId} from "../template/project-template-id";
 import {formatPackageJson} from "./format-package-json";
 
 export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
@@ -17,16 +18,21 @@ export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<I
 function writePackageJson(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const {npmPackage, gitHost} = project;
 
-    const file = modifyTemplateText(
-        "package.json",
-        text =>
+    const file = modifyTemplateText({
+        templateId: projectTemplateId(project),
+        pathSegments: ["package.json"],
+        modify: text =>
             chain(text)
                 .map(JSON.parse)
                 .map(json => ({
                     ...json,
+                    private: true,
                     name: npmPackage.scope
                         ? `@${npmPackage.scope}/${npmPackage.name}`
                         : npmPackage.name,
+                    version: "0.0.0-development",
+                    description: "",
+                    keywords: [],
                     author: formatAuthor(project),
                     homepage: gitHost == null ? undefined : homepageUrl(gitHost),
                     bugs: gitHost == null ? undefined : bugsUrl(gitHost),
@@ -73,17 +79,18 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                             project.target === "webapp"
                                 ? json.devDependencies["webpack-dev-server"]
                                 : undefined
-                    }
+                    },
+                    publishConfig: undefined
                 }))
                 .map(formatPackageJson).value
-    );
+    });
 
     return async fsStage => file.then(file => insert(fsStage, "package.json", file));
 }
 
 function writeNpmIgnore(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "npm") {
-        const file = copyFromTemplate("npmignore.template");
+        const file = copyFromTemplate(projectTemplateId(project), "npmignore.template");
         return async fsStage => file.then(file => insert(fsStage, ".npmignore", file));
     } else {
         return async fsStage => success(fsStage);

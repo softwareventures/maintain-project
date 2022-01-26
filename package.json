@@ -18,7 +18,7 @@
     "fix": "tsc --noEmit && eslint --fix . && prettier --write .",
     "lint": "tsc --noEmit && eslint . && prettier --check .",
     "maintain-project": "node . update",
-    "prepare": "shx rm -rf template/template/idea.template && shx cp -r .idea template/template/idea.template && tsc",
+    "prepare": "tsc",
     "semantic-release": "semantic-release",
     "test": "ava"
   },
@@ -40,6 +40,8 @@
     "@softwareventures/nullable": "2.0.0",
     "@softwareventures/ordered": "1.0.0",
     "@softwareventures/promise": "1.0.1",
+    "@softwareventures/template-node-project": "1.0.0",
+    "@softwareventures/template-webpack-project": "1.0.0",
     "@types/empty-dir": "2.0.1",
     "@types/escodegen": "0.0.7",
     "@types/estree": "0.0.50",

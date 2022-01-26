@@ -10,7 +10,12 @@ import {Project, ProjectOptions} from "./project";
 export async function createProject(options: ProjectOptions): Promise<Project> {
     const git = simpleGit();
 
-    const gitProject = createGitProject(options);
+    const protoProject = {
+        path: options.path,
+        target: options.target ?? "npm"
+    };
+
+    const gitProject = createGitProject(protoProject);
 
     const authorName = Promise.resolve(options.author?.name)
         .then(name => name ?? git.raw(["config", "user.name"]))
@@ -27,6 +32,7 @@ export async function createProject(options: ProjectOptions): Promise<Project> {
     return Promise.all([gitProject, authorName, authorEmail])
         .then(([gitProject, authorName, authorEmail]) => ({
             ...options,
+            ...protoProject,
             gitProject,
             author: {name: authorName, email: authorEmail}
         }))
@@ -36,7 +42,7 @@ export async function createProject(options: ProjectOptions): Promise<Project> {
             gitProject: options.gitProject,
             gitHost: createGitHost(options),
             node: createNodeVersions(today),
-            target: options.target ?? "npm",
+            target: options.target,
             author: options.author,
             license: {
                 spdxLicense: options.license?.spdxLicense,

@@ -1,4 +1,4 @@
-import {basename, dirname} from "path";
+import {posix} from "path";
 import {anyFn} from "@softwareventures/array";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {readIgnore} from "../ignore/read";
@@ -6,15 +6,23 @@ import {failure, success} from "../result/result";
 import {Ignore} from "../ignore/ignore";
 import {readTemplateDirectory} from "./read-directory";
 import {readTemplateText} from "./read-text";
+import {TemplateId} from "./template";
 
-export async function readTemplateIgnore(name: string): Promise<Ignore> {
+export async function readTemplateIgnore(
+    templateId: TemplateId,
+    path: string,
+    ...pathSegments: string[]
+): Promise<Ignore> {
     return readIgnore({
-        path: name,
-        readDirectory: async path => readTemplateDirectory(path),
+        path: posix.join(path, ...pathSegments),
+        basename: posix.basename,
+        dirname: posix.dirname,
+        join: posix.join,
+        readDirectory: async path => readTemplateDirectory(templateId, path),
         readText: async path =>
-            readTemplateDirectory(dirname(path))
-                .then(anyFn(dirent => dirent.name === basename(path) && dirent.isFile()))
-                .then(exists => (exists ? readTemplateText(path) : null))
+            readTemplateDirectory(templateId, posix.dirname(path))
+                .then(anyFn(dirent => dirent.name === posix.basename(path) && dirent.isFile()))
+                .then(exists => (exists ? readTemplateText(templateId, path) : null))
                 .then(mapNullableFn(text => success(text)))
                 .then(mapNullFn(() => failure([{type: "file-not-found", path}])))
     });

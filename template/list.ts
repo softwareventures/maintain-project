@@ -1,12 +1,15 @@
-import {dirname, relative, resolve, sep} from "path";
+import {relative, sep} from "path";
 import {mapFn} from "@softwareventures/array";
 import recursiveReadDir = require("recursive-readdir");
+import {TemplateId, templatePath} from "./template";
 
-export async function listTemplates(path: string): Promise<string[]> {
-    const templateDir = dirname(require.resolve("./template/index.ts"));
-    const relativeDir = resolve(templateDir, path);
-    return recursiveReadDir(relativeDir)
-        .then(mapFn(path => relative(relativeDir, path)))
+export async function listTemplateFiles(
+    templateId: TemplateId,
+    ...pathSegments: string[]
+): Promise<string[]> {
+    const directoryPath = templatePath(templateId, ...pathSegments);
+    return recursiveReadDir(directoryPath)
+        .then(mapFn(path => relative(directoryPath, path)))
         .then(mapFn(path => path.split(sep)))
         .then(mapFn(path => path.join("/")));
 }

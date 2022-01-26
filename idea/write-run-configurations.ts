@@ -3,34 +3,44 @@ import {chainAsyncResultsFn, success} from "../result/result";
 import {copyFromTemplate} from "../template/copy";
 import {modifyTemplateXml} from "../template/modify-xml";
 import {Project} from "../project/project";
+import {projectTemplateId} from "../template/project-template-id";
 
 export function writeIdeaRunConfigurations(
     project: Project
 ): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([
-        writeIdeaRunConfigurationFix,
-        writeIdeaRunConfigurationLint,
-        writeIdeaRunConfigurationTest,
+        writeIdeaRunConfigurationFix(project),
+        writeIdeaRunConfigurationLint(project),
+        writeIdeaRunConfigurationTest(project),
         writeIdeaRunConfigurationStart(project)
     ]);
 }
 
-async function writeIdeaRunConfigurationFix(fsStage: FsStage): Promise<InsertResult> {
-    return copyFromTemplate("idea.template/runConfigurations/fix.xml").then(file =>
-        insert(fsStage, ".idea/runConfigurations/fix.xml", file)
-    );
+function writeIdeaRunConfigurationFix(
+    project: Project
+): (fsStage: FsStage) => Promise<InsertResult> {
+    return async fsStage =>
+        copyFromTemplate(projectTemplateId(project), ".idea", "runConfigurations", "fix.xml").then(
+            file => insert(fsStage, ".idea/runConfigurations/fix.xml", file)
+        );
 }
 
-async function writeIdeaRunConfigurationLint(fsStage: FsStage): Promise<InsertResult> {
-    return copyFromTemplate("idea.template/runConfigurations/lint.xml").then(file =>
-        insert(fsStage, ".idea/runConfigurations/lint.xml", file)
-    );
+function writeIdeaRunConfigurationLint(
+    project: Project
+): (fsStage: FsStage) => Promise<InsertResult> {
+    return async fsStage =>
+        copyFromTemplate(projectTemplateId(project), ".idea", "runConfigurations", "lint.xml").then(
+            file => insert(fsStage, ".idea/runConfigurations/lint.xml", file)
+        );
 }
 
-async function writeIdeaRunConfigurationTest(fsStage: FsStage): Promise<InsertResult> {
-    return copyFromTemplate("idea.template/runConfigurations/test.xml").then(file =>
-        insert(fsStage, ".idea/runConfigurations/test.xml", file)
-    );
+function writeIdeaRunConfigurationTest(
+    project: Project
+): (fsStage: FsStage) => Promise<InsertResult> {
+    return async fsStage =>
+        copyFromTemplate(projectTemplateId(project), ".idea", "runConfigurations", "test.xml").then(
+            file => insert(fsStage, ".idea/runConfigurations/test.xml", file)
+        );
 }
 
 function writeIdeaRunConfigurationStart(
@@ -38,15 +48,19 @@ function writeIdeaRunConfigurationStart(
 ): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "webapp") {
         return async fsStage =>
-            modifyTemplateXml("idea.template/runConfigurations/test.xml", dom => {
-                const document = dom.window.document;
+            modifyTemplateXml({
+                templateId: projectTemplateId(project),
+                pathSegments: [".idea", "runConfigurations", "test.xml"],
+                modify: dom => {
+                    const document = dom.window.document;
 
-                const configuration = document.querySelector("configuration");
-                configuration?.setAttribute("name", "start");
-                const command = document.querySelector("command");
-                command?.setAttribute("value", "start");
+                    const configuration = document.querySelector("configuration");
+                    configuration?.setAttribute("name", "start");
+                    const command = document.querySelector("command");
+                    command?.setAttribute("value", "start");
 
-                return dom;
+                    return dom;
+                }
             }).then(file => insert(fsStage, ".idea/runConfigurations/start.xml", file));
     } else {
         return async fsStage => success(fsStage);

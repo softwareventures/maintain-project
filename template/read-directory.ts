@@ -1,8 +1,9 @@
 import {Dirent, promises as fs} from "fs";
-import {dirname, resolve} from "path";
+import {TemplateId, templatePath} from "./template";
 
-export async function readTemplateDirectory(path: string): Promise<Dirent[]> {
-    const templateDir = dirname(require.resolve("./template/index.ts"));
-    const absolutePath = resolve(templateDir, path);
-    return fs.readdir(absolutePath, {withFileTypes: true});
+export async function readTemplateDirectory(
+    templateId: TemplateId,
+    ...pathSegments: string[]
+): Promise<Dirent[]> {
+    return fs.readdir(templatePath(templateId, ...pathSegments), {withFileTypes: true});
 }

@@ -1,26 +1,31 @@
 import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
 import {modifyTemplateXml} from "../template/modify-xml";
 import {Project} from "../project/project";
+import {projectTemplateId} from "../template/project-template-id";
 
 export function writeIdeaModulesXml(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
-    const file = modifyTemplateXml("idea.template/modules.xml", dom => {
-        const document = dom.window.document;
+    const file = modifyTemplateXml({
+        templateId: projectTemplateId(project),
+        pathSegments: [".idea", "modules.xml"],
+        modify: dom => {
+            const document = dom.window.document;
 
-        const module = document.querySelector("project:root>component>modules>module");
-        const fileUrl = module
-            ?.getAttribute("fileurl")
-            ?.replace(/maintain-project\.iml$/, `${project.npmPackage.name}.iml`);
-        if (fileUrl != null) {
-            module?.setAttribute("fileurl", fileUrl);
-        }
-        const filePath = module
-            ?.getAttribute("filepath")
-            ?.replace(/maintain-project\.iml$/, `${project.npmPackage.name}.iml`);
-        if (filePath != null) {
-            module?.setAttribute("filepath", filePath);
-        }
+            const module = document.querySelector("project:root>component>modules>module");
+            const fileUrl = module
+                ?.getAttribute("fileurl")
+                ?.replace(/[^/]*\.iml$/, `${project.npmPackage.name}.iml`);
+            if (fileUrl != null) {
+                module?.setAttribute("fileurl", fileUrl);
+            }
+            const filePath = module
+                ?.getAttribute("filepath")
+                ?.replace(/[^/]*\.iml$/, `${project.npmPackage.name}.iml`);
+            if (filePath != null) {
+                module?.setAttribute("filepath", filePath);
+            }
 
-        return dom;
+            return dom;
+        }
     });
 
     return async fsStage => file.then(file => insert(fsStage, ".idea/modules.xml", file));

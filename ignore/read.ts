@@ -1,4 +1,3 @@
-import {basename, dirname, join} from "path";
 import {Dirent} from "fs";
 import {excludeNull, filterFn, mapFn} from "@softwareventures/array";
 import {mapNullFn} from "@softwareventures/nullable";
@@ -9,12 +8,18 @@ import {Ignore, ignoreComment, ignoreEntry, IgnoreGroup} from "./ignore";
 
 export interface ReadIgnoreOptions {
     path: string;
+    dirname: (path: string) => string;
+    basename: (path: string) => string;
+    join: (...paths: string[]) => string;
     readDirectory: (path: string) => Promise<readonly Dirent[]>;
     readText: (path: string) => Promise<ReadTextResult>;
 }
 
 export async function readIgnore({
     path,
+    dirname,
+    basename,
+    join,
     readDirectory,
     readText
 }: ReadIgnoreOptions): Promise<Ignore> {
@@ -26,9 +31,14 @@ export async function readIgnore({
         .then(mapFn(entry => entry.name))
         .then(
             mapFn(async subdirectory =>
-                readIgnore({path: join(dir, subdirectory, file), readDirectory, readText}).then(
-                    (ignore: Ignore): [string, Ignore] => [subdirectory, ignore]
-                )
+                readIgnore({
+                    path: join(dir, subdirectory, file),
+                    dirname,
+                    basename,
+                    join,
+                    readDirectory,
+                    readText
+                }).then((ignore: Ignore): [string, Ignore] => [subdirectory, ignore])
             )
         )
         .then(async ignores => Promise.all(ignores))
