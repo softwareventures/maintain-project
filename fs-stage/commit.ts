@@ -61,7 +61,7 @@ type OpenFileResult = Result<OpenFailureReason, OpenFile>;
 interface OpenFile {
     readonly type: "open-file";
     readonly fileHandle: fs.FileHandle;
-    readonly data: ArrayBufferLike;
+    readonly data: Uint8Array;
 }
 
 async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirectoryResult> {

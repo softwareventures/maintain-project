@@ -1,9 +1,9 @@
 export interface File {
     readonly type: "file";
-    readonly data: ArrayBufferLike;
+    readonly data: Uint8Array;
 }
 
-export function file(data: ArrayBufferLike): File {
+export function file(data: Uint8Array): File {
     return {type: "file", data};
 }
 

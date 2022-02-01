@@ -15,9 +15,9 @@ export async function readTemplateIgnore(
 ): Promise<Ignore> {
     return readIgnore({
         path: posix.join(path, ...pathSegments),
-        basename: posix.basename,
-        dirname: posix.dirname,
-        join: posix.join,
+        basename: path => posix.basename(path),
+        dirname: path => posix.dirname(path),
+        join: (...paths) => posix.join(...paths),
         readDirectory: async path => readTemplateDirectory(templateId, path),
         readText: async path =>
             readTemplateDirectory(templateId, posix.dirname(path))
