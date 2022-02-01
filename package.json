@@ -29,7 +29,7 @@
     "./index.js"
   ],
   "engines": {
-    "node": "^12 || ^14 || >=16"
+    "node": "^14 || >=16"
   },
   "dependencies": {
     "@softwareventures/array": "5.0.0",
