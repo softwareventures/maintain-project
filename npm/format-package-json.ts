@@ -26,6 +26,7 @@ export function formatPackageJson(json: object): string {
             "files",
             "directories",
             "sideEffects",
+            "exports",
             "types",
             "typings",
             "engines",
