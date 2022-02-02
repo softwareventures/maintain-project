@@ -574,10 +574,10 @@
   dependencies:
     tslib "1.14.1"
 
-"@softwareventures/promise@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@softwareventures/promise/-/promise-1.0.1.tgz#86cc6ee416038078dd0aada99ce8efc50fcb39ec"
-  integrity sha512-YNIq1lhX05ItW7yUoEKqNlqsmUOxq7F2CoSp0qFIWG+H/R9tNaK+bTBLpc1sCraA+HuSB2Q3/Vbd7W/oSdH/DQ==
+"@softwareventures/promise@1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@softwareventures/promise/-/promise-1.0.2.tgz#cb3713bd412b208858320473e5db9bdbb3c2ed28"
+  integrity sha512-K58dHd3mD+yAPHuPMUY7ZYlICHSRSPkMzFcEArSaRqUR0ZO13CByHdXMiD0diDDMnvKOFFrWBJG756oiANwErQ==
   dependencies:
     tslib "^2.3.1"
 

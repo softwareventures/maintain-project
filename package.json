@@ -39,7 +39,7 @@
     "@softwareventures/iterable": "2.0.2",
     "@softwareventures/nullable": "2.0.0",
     "@softwareventures/ordered": "1.0.0",
-    "@softwareventures/promise": "1.0.1",
+    "@softwareventures/promise": "1.0.2",
     "@softwareventures/template-node-project": "1.0.0",
     "@softwareventures/template-webpack-project": "1.0.0",
     "@types/empty-dir": "2.0.1",
