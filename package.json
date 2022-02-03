@@ -34,7 +34,7 @@
   "dependencies": {
     "@softwareventures/array": "5.0.1",
     "@softwareventures/chain": "1.0.1",
-    "@softwareventures/date": "2.0.1",
+    "@softwareventures/date": "2.0.3",
     "@softwareventures/dictionary": "1.0.1",
     "@softwareventures/iterable": "2.0.2",
     "@softwareventures/nullable": "2.0.0",

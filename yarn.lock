@@ -511,10 +511,10 @@
   resolved "https://registry.yarnpkg.com/@softwareventures/chain/-/chain-1.0.1.tgz#79099066f5274e1cccf447a935f0b50372c1a673"
   integrity sha512-1nJZ88aGuadOVQtUDf5ja1PNeSXWtstkfJ9uqwPi5Xepm4n2zss6toiTC4DLsY8bKROTrdnxlTgG+8M4nCnigg==
 
-"@softwareventures/date@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-2.0.1.tgz#ce173e7be03763f5b463c817fb3c14536980c00c"
-  integrity sha512-ShYwL8CxNxgSyEyecrBu0m5pJGg1mej7i+O4QqeUUocHeTegsyVX7T86/xStkqO/WZkZqSbgk70NkYpCNsuB0A==
+"@softwareventures/date@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-2.0.3.tgz#d3d2b3e0cd7370eb6476a45e769f70bfdb9e69ea"
+  integrity sha512-53ak/QmNnDdf8YudJDvaqQLls0qOCxOcvNEZh0Tuk9gj+vb4JyH9fWBtB83JGYwce6Agnn2BopRqztV6o+B9bA==
   dependencies:
     "@softwareventures/ordered" "^0.2.1 || ^1.0.0"
     "@types/is-integer" "1.0.0"
