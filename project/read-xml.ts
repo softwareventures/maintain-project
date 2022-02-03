@@ -1,12 +1,11 @@
 import {JSDOM} from "jsdom";
 import {failure, mapResultFn, Result} from "../result/result";
-import {FileNotFound} from "../fs-stage/file-not-found";
 import {ProjectSource} from "./project";
-import {readProjectText} from "./read-text";
+import {readProjectText, ReadTextFailureReason} from "./read-text";
 
 export type ReadXmlResult = Result<ReadXmlFailureReason, JSDOM>;
 
-export type ReadXmlFailureReason = FileNotFound | InvalidXml;
+export type ReadXmlFailureReason = ReadTextFailureReason | InvalidXml;
 
 export interface InvalidXml {
     readonly type: "invalid-xml";

@@ -1,11 +1,10 @@
 import {failure, mapResultFn, Result} from "../result/result";
-import {FileNotFound} from "../fs-stage/file-not-found";
 import {ProjectSource} from "./project";
-import {readProjectText} from "./read-text";
+import {readProjectText, ReadTextFailureReason} from "./read-text";
 
 export type ReadJsonResult = Result<ReadJsonFailureReason, any>;
 
-export type ReadJsonFailureReason = FileNotFound | InvalidJson;
+export type ReadJsonFailureReason = ReadTextFailureReason | InvalidJson;
 
 export interface InvalidJson {
     readonly type: "invalid-json";

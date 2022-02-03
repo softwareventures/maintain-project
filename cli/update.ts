@@ -25,6 +25,8 @@ export function cliUpdate(path: string, {breaking}: UpdateOptions): void {
                             switch (reason.type) {
                                 case "file-not-found":
                                     return `File Not Found: ${reason.path}`;
+                                case "file-is-directory":
+                                    return `File Is A Directory: ${reason.path}`;
                                 case "not-a-directory":
                                     return `Not a Directory: ${reason.path}`;
                                 case "file-exists":

@@ -1,13 +1,12 @@
 import {Document, parse, parseDocument} from "yaml";
 import {map} from "@softwareventures/array";
 import {bindResultFn, failure, mapResultFn, Result, success} from "../result/result";
-import {FileNotFound} from "../fs-stage/file-not-found";
 import {ProjectSource} from "./project";
-import {readProjectText} from "./read-text";
+import {readProjectText, ReadTextFailureReason} from "./read-text";
 
 export type ReadYamlResult = Result<ReadYamlFailureReason, any>;
 
-export type ReadYamlFailureReason = FileNotFound | InvalidYaml;
+export type ReadYamlFailureReason = ReadTextFailureReason | InvalidYaml;
 
 export interface InvalidYaml {
     readonly type: "invalid-yaml";
@@ -39,13 +38,17 @@ export async function readProjectYamlAsDocument(
     return readProjectText(project, path)
         .then(mapResultFn(parseDocument))
         .then(
-            bindResultFn<FileNotFound, ReadYamlFailureReason, Document.Parsed, Document.Parsed>(
-                document =>
-                    document.errors.length === 0
-                        ? success(document)
-                        : failure(
-                              map(document.errors, reason => ({type: "invalid-yaml", reason, path}))
-                          )
+            bindResultFn<
+                ReadTextFailureReason,
+                ReadYamlFailureReason,
+                Document.Parsed,
+                Document.Parsed
+            >(document =>
+                document.errors.length === 0
+                    ? success(document)
+                    : failure(
+                          map(document.errors, reason => ({type: "invalid-yaml", reason, path}))
+                      )
             )
         )
         .catch(reason => {
