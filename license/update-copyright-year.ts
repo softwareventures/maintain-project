@@ -73,7 +73,7 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
 
                 const assignee = copyright.text
                     .replace(/^\s*((Copyright|\(C\)|©)\s*)+/i, "")
-                    .replace(/\d{4,}(\s*[-,]?\d{4,})*/g, "")
+                    .replace(/\d{4,}(\s*[-,]?\s*\d{4,})*/g, "")
                     .replace(/\s+/g, " ")
                     .trim();
 
