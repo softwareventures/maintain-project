@@ -2,9 +2,9 @@ name: Maintain Project
 on:
   #  schedule:
   #    - cron: 5 0 1 * *
-  workflow_dispatch: null
+  workflow_dispatch:
 env:
-  NODE_VERSION: 16.x
+  NODE_VERSION: 17.x
 jobs:
   maintain-project:
     name: Maintain Project
