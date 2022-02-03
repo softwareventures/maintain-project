@@ -30,6 +30,7 @@ import {dropOldNodeVersions} from "../node/drop-old-versions";
 import {removeUnsupportedNodeVersions} from "../github/remove-unsupported-node-versions";
 import {removeTslintFromTestScript} from "../npm/remove-tslint-from-test-script";
 import {addYarnLintToCiWorkflow} from "../github/add-yarn-lint-to-ci-workflow";
+import {addMissingIdeaRunConfigurations} from "../idea/add-missing-run-configurations";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -78,7 +79,8 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
         addNewNodeVersionsToPackageJson,
         addMissingNodeVersionsToGitHubActions,
         useLatestNodeToDeploy,
-        useLatestNodeToMaintain
+        useLatestNodeToMaintain,
+        addMissingIdeaRunConfigurations
     ]).then(
         tolerantFoldAsyncResultsFn(
             async (project, update) => step({...options, project, git, update}),

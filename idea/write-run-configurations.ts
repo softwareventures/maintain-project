@@ -16,7 +16,7 @@ export function writeIdeaRunConfigurations(
     ]);
 }
 
-function writeIdeaRunConfigurationFix(
+export function writeIdeaRunConfigurationFix(
     project: Project
 ): (fsStage: FsStage) => Promise<InsertResult> {
     return async fsStage =>
@@ -25,7 +25,7 @@ function writeIdeaRunConfigurationFix(
         );
 }
 
-function writeIdeaRunConfigurationLint(
+export function writeIdeaRunConfigurationLint(
     project: Project
 ): (fsStage: FsStage) => Promise<InsertResult> {
     return async fsStage =>
@@ -34,7 +34,7 @@ function writeIdeaRunConfigurationLint(
         );
 }
 
-function writeIdeaRunConfigurationTest(
+export function writeIdeaRunConfigurationTest(
     project: Project
 ): (fsStage: FsStage) => Promise<InsertResult> {
     return async fsStage =>
@@ -43,7 +43,7 @@ function writeIdeaRunConfigurationTest(
         );
 }
 
-function writeIdeaRunConfigurationStart(
+export function writeIdeaRunConfigurationStart(
     project: Project
 ): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "webapp") {
