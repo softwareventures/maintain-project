@@ -9,6 +9,7 @@ import {readNodeVersions, ReadNodeVersionsFailureReason} from "../node/read";
 import {guessCopyrightHolder} from "../license/guess-copyright-holder";
 import {readGitProject} from "../git/read";
 import {readTslintProject} from "../tslint/read";
+import {readEslintProject} from "../eslint/read";
 import {statProjectFile} from "./stat-file";
 import {Project} from "./project";
 import {ReadJsonFailureReason, readProjectJson} from "./read-json";
@@ -47,6 +48,8 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
 
     const tslint = readTslintProject(project);
 
+    const eslint = readEslintProject(project);
+
     const author = packageJson
         .then(mapResultFn(packageJson => packageJson?.author))
         .then(
@@ -74,7 +77,7 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
 
     const node = readNodeVersions(project, today);
 
-    return Promise.all([git, target, tslint]).then(async ([git, target, tslint]) =>
+    return Promise.all([git, target, tslint, eslint]).then(async ([git, target, tslint, eslint]) =>
         allAsyncResults([npmPackage, gitHost, author, spdxLicense, node]).then(
             mapResultFn(([npmPackage, gitHost, author, spdxLicense, node]) => ({
                 path,
@@ -84,6 +87,7 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
                 node,
                 target,
                 tslint,
+                eslint,
                 author,
                 license: {
                     spdxLicense,

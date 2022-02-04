@@ -4,6 +4,7 @@ import {NodeVersions} from "../node/node-versions";
 import {SpdxLicense} from "../license/spdx/spdx";
 import {GitProject} from "../git/git-project";
 import {TslintProject} from "../tslint/tslint-project";
+import {EslintProject} from "../eslint/eslint-project";
 
 export interface Project {
     readonly path: string;
@@ -13,6 +14,7 @@ export interface Project {
     readonly node: NodeVersions;
     readonly target: "npm" | "webapp";
     readonly tslint?: TslintProject;
+    readonly eslint?: EslintProject;
     readonly author: {
         readonly name?: string;
         readonly email?: string;

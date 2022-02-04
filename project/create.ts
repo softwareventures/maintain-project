@@ -43,6 +43,7 @@ export async function createProject(options: ProjectOptions): Promise<Project> {
             gitHost: createGitHost(options),
             node: createNodeVersions(today),
             target: options.target,
+            eslint: {preset: "softwareventures"},
             author: options.author,
             license: {
                 spdxLicense: options.license?.spdxLicense,

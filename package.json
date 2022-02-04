@@ -32,6 +32,7 @@
     "node": "^14 || >=16"
   },
   "dependencies": {
+    "@eslint/eslintrc": "1.0.5",
     "@softwareventures/array": "5.0.1",
     "@softwareventures/chain": "1.0.1",
     "@softwareventures/date": "2.0.3",
@@ -44,6 +45,7 @@
     "@softwareventures/template-webpack-project": "1.0.0",
     "@types/empty-dir": "2.0.1",
     "@types/escodegen": "0.0.7",
+    "@types/eslint": "8.4.1",
     "@types/estree": "0.0.50",
     "@types/hosted-git-info": "3.0.2",
     "@types/jsdom": "16.2.14",
