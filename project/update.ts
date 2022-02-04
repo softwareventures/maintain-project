@@ -31,6 +31,7 @@ import {removeUnsupportedNodeVersions} from "../github/remove-unsupported-node-v
 import {removeTslintFromTestScript} from "../npm/remove-tslint-from-test-script";
 import {addYarnLintToCiWorkflow} from "../github/add-yarn-lint-to-ci-workflow";
 import {addMissingIdeaRunConfigurations} from "../idea/add-missing-run-configurations";
+import {enableDisableIdeaTslintInspection} from "../idea/enable-disable-tslint";
 import {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
@@ -71,6 +72,7 @@ export async function updateProject(options: UpdateProjectOptions): Promise<Upda
         updateFixScript,
         addYarnLintToCiWorkflow,
         removeTslintFromTestScript,
+        enableDisableIdeaTslintInspection,
         applyCodeStyle,
         updateCopyrightYear,
         addMissingLicense,
