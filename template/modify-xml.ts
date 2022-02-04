@@ -1,8 +1,8 @@
 import {JSDOM} from "jsdom";
 import formatXml = require("xml-formatter");
 import {File} from "../fs-stage/file";
-import {readTemplateText} from "./read-text";
 import {TemplateId} from "./template";
+import {readTemplateXml} from "./read-xml";
 
 export interface ModifyTemplateXmlOptions {
     readonly templateId: TemplateId;
@@ -15,8 +15,7 @@ export async function modifyTemplateXml({
     pathSegments,
     modify
 }: ModifyTemplateXmlOptions): Promise<File> {
-    const xmlText = readTemplateText(templateId, ...pathSegments);
-    const dom = xmlText.then(xmlText => new JSDOM(xmlText, {contentType: "application/xml"}));
+    const dom = readTemplateXml(templateId, ...pathSegments);
 
     const newDom = dom.then(modify);
     const newXmlText = newDom
