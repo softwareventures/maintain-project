@@ -1,6 +1,6 @@
 import {JSDOM} from "jsdom";
-import formatXml = require("xml-formatter");
 import {File} from "../fs-stage/file";
+import {formatIdeaXml} from "../idea/format-idea-xml";
 import {TemplateId} from "./template";
 import {readTemplateXml} from "./read-xml";
 
@@ -18,16 +18,7 @@ export async function modifyTemplateXml({
     const dom = readTemplateXml(templateId, ...pathSegments);
 
     const newDom = dom.then(modify);
-    const newXmlText = newDom
-        .then(newDom => newDom.serialize())
-        .then(newXmlText =>
-            formatXml(newXmlText, {
-                collapseContent: true,
-                indentation: "  ",
-                stripComments: true,
-                whiteSpaceAtEndOfSelfclosingTag: true
-            })
-        );
+    const newXmlText = newDom.then(formatIdeaXml);
 
     const data = newXmlText.then(newXmlText => new TextEncoder().encode(newXmlText));
     return data.then(data => ({type: "file", data}));
