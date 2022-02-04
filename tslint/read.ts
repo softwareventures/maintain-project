@@ -15,11 +15,11 @@ export async function readTslintProject(
     const configPath = Configuration.findConfigurationPath(null, project.path);
     const config = mapNullable(configPath, path => Configuration.readConfigurationFile(path));
 
-    if (!(await dependsOnTslint)) {
+    if (!(await dependsOnTslint) || config == null) {
         return undefined;
     } else if (
         (await dependsOnSoftwareVenturesPreset) &&
-        config?.extends?.includes("@softwareventures/tslint-rules")
+        config.extends?.includes("@softwareventures/tslint-rules")
     ) {
         return {preset: "softwareventures"};
     } else {
