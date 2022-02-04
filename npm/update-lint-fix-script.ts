@@ -6,7 +6,6 @@ import {isTypescriptProject} from "../typescript/is-typescript-project";
 import {readTsconfig} from "../typescript/read-tsconfig";
 import {isSuccess, mapResultFn, toNullable} from "../result/result";
 import {isPrettierProject} from "../prettier/is-prettier-project";
-import {isEslintProject} from "../eslint/is-eslint-project";
 import {findExtract} from "../collections/arrays";
 import {insert} from "../fs-stage/fs-stage";
 import {modifyProjectScript} from "./modify-script";
@@ -27,7 +26,6 @@ export async function updateLintFixScript(
         .then(result => result != null && isSuccess(result) && result.value);
 
     const isPrettier = isPrettierProject(project);
-    const isEslint = isEslintProject(project);
 
     const commands = existingScript
         .then(mapNullableFn(script => script.split("&&")))
@@ -73,11 +71,9 @@ export async function updateLintFixScript(
                 )
             );
 
-            const eslintCommand = Promise.resolve(
-                mapNull(existingEslintCommand, async () =>
-                    isEslint.then(isEslint =>
-                        isEslint ? (script === "fix" ? "eslint --fix ." : "eslint .") : null
-                    )
+            const eslintCommand = mapNull(existingEslintCommand, () =>
+                mapNullable(project.eslint, () =>
+                    script === "fix" ? "eslint --fix ." : "eslint ."
                 )
             );
 
