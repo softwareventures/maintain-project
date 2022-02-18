@@ -29,6 +29,7 @@ export function formatPackageJson(json: object): string {
             "exports",
             "types",
             "typings",
+            "typesVersions",
             "engines",
             "engine-strict",
             "engineStrict",
