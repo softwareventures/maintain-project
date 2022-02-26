@@ -28,7 +28,7 @@ jobs:
           key: ${{runner.os}}-node${{env.NODE_VERSION}}-yarn-${{hashFiles('**/yarn.lock')}}
           restore-keys: ${{runner.os}}-node${{env.NODE_VERSION}}-yarn-${{hashFiles('**/yarn.lock')}}
       - name: Set up Node.js v${{env.NODE_VERSION}}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{env.NODE_VERSION}}
       - run: yarn
