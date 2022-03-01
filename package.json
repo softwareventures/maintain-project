@@ -90,7 +90,7 @@
     "prettier": "2.5.1",
     "semantic-release": "19.0.2",
     "shx": "0.3.4",
-    "ts-node": "10.5.0"
+    "ts-node": "10.6.0"
   },
   "eslintConfig": {
     "root": true,
