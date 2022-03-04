@@ -14,7 +14,7 @@ jobs:
         id: find-yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: git checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           token: ${{secrets.MAINTAIN_GITHUB_TOKEN}}
       - name: Configure git credentials
