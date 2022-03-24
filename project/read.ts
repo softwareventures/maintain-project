@@ -10,9 +10,9 @@ import {guessCopyrightHolder} from "../license/guess-copyright-holder";
 import {readGitProject} from "../git/read";
 import {readTslintProject} from "../tslint/read";
 import {readEslintProject} from "../eslint/read";
-import {statProjectFile} from "./stat-file";
 import {Project} from "./project";
 import {ReadJsonFailureReason, readProjectJson} from "./read-json";
+import {projectFileExists} from "./file-exists";
 
 export type ReadProjectResult = Result<ReadProjectFailureReason, Project>;
 
@@ -36,15 +36,9 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
         .then(mapResultFn(packageJson => packageJson?.repository))
         .then(mapResultFn(gitHostFromUrl));
 
-    const target = statProjectFile(project, "webpack.config.js")
-        .catch(reason => {
-            if (reason.code === "ENOENT") {
-                return undefined;
-            } else {
-                throw reason;
-            }
-        })
-        .then(stats => (stats?.isFile() ? "webapp" : "npm"));
+    const target = projectFileExists(project, "webpack.config.cjs")
+        .then(webpack => webpack || projectFileExists(project, "webpack.config.js"))
+        .then(webpack => (webpack ? "webapp" : "npm"));
 
     const tslint = readTslintProject(project);
 
