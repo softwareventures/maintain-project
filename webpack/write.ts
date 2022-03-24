@@ -15,6 +15,13 @@ export function writeWebpackConfig(project: Project): (fsStage: FsStage) => Prom
         sourceType: "module",
         body: [
             {
+                type: "ExpressionStatement",
+                expression: {
+                    type: "Literal",
+                    value: "use strict"
+                }
+            },
+            {
                 type: "VariableDeclaration",
                 kind: "const",
                 declarations: [
