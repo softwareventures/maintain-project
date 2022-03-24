@@ -73,5 +73,5 @@ export function writeWebpackConfig(project: Project): (fsStage: FsStage) => Prom
     const text = escodegen.generate(program);
     const file = textFile(text);
 
-    return async fsStage => insert(fsStage, "webpack.config.js", file);
+    return async fsStage => insert(fsStage, "webpack.config.cjs", file);
 }
