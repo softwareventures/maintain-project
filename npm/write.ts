@@ -39,12 +39,6 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                     repository: gitHost == null ? undefined : repositoryShortcut(gitHost),
                     license:
                         mapNullable(project.license.spdxLicense, formatSpdxExpression) ?? undefined,
-                    scripts: {
-                        ...json.scripts,
-                        build: project.target === "webapp" ? json.scripts.build : undefined,
-                        prepare: project.target === "npm" ? json.scripts.prepare : undefined,
-                        start: project.target === "webapp" ? json.scripts.start : undefined
-                    },
                     engines: {
                         node: nodeVersionRange(project.node.currentReleases)
                     },
