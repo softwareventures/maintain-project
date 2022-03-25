@@ -1,7 +1,6 @@
 import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../result/result";
 import {copyFromTemplate} from "../template/copy";
-import {modifyTemplateXml} from "../template/modify-xml";
 import {Project} from "../project/project";
 import {projectTemplateId} from "../template/project-template-id";
 
@@ -48,20 +47,12 @@ export function writeIdeaRunConfigurationStart(
 ): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target === "webapp") {
         return async fsStage =>
-            modifyTemplateXml({
-                templateId: projectTemplateId(project),
-                pathSegments: [".idea", "runConfigurations", "test.xml"],
-                modify: dom => {
-                    const document = dom.window.document;
-
-                    const configuration = document.querySelector("configuration");
-                    configuration?.setAttribute("name", "start");
-                    const command = document.querySelector("command");
-                    command?.setAttribute("value", "start");
-
-                    return dom;
-                }
-            }).then(file => insert(fsStage, ".idea/runConfigurations/start.xml", file));
+            copyFromTemplate(
+                projectTemplateId(project),
+                ".idea",
+                "runConfigurations",
+                "start.xml"
+            ).then(file => insert(fsStage, ".idea/runConfigurations/start.xml", file));
     } else {
         return async fsStage => success(fsStage);
     }

@@ -42,38 +42,6 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                     engines: {
                         node: nodeVersionRange(project.node.currentReleases)
                     },
-                    dependencies: {
-                        ...json.dependencies,
-                        "@types/webpack-env":
-                            project.target === "webapp"
-                                ? json.dependencies["@types/webpack-env"]
-                                : undefined
-                    },
-                    devDependencies: {
-                        ...json.devDependencies,
-                        "@softwareventures/tsconfig":
-                            project.target === "npm"
-                                ? json.devDependencies["@softwareventures/tsconfig"]
-                                : undefined,
-                        "@softwareventures/webpack-config":
-                            project.target === "webapp"
-                                ? json.devDependencies["@softwareventures/webpack-config"]
-                                : undefined,
-                        "ts-loader":
-                            project.target === "webapp"
-                                ? json.devDependencies["ts-loader"]
-                                : undefined,
-                        "webpack":
-                            project.target === "webapp" ? json.devDependencies.webpack : undefined,
-                        "webpack-cli":
-                            project.target === "webapp"
-                                ? json.devDependencies["webpack-cli"]
-                                : undefined,
-                        "webpack-dev-server":
-                            project.target === "webapp"
-                                ? json.devDependencies["webpack-dev-server"]
-                                : undefined
-                    },
                     publishConfig: undefined
                 }))
                 .map(formatPackageJson).value
