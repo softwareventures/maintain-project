@@ -15,6 +15,7 @@ import {writeWebpackConfig} from "../webpack/write";
 import {yarnFix, YarnFixFailureReason} from "../yarn/fix";
 import {yarnInstall, YarnInstallFailureReason} from "../yarn/install";
 import {writeLicense} from "../license/write";
+import {writeHuskyConfig} from "../husky/write";
 import {Project} from "./project";
 
 export type InitResult = Result<InitFailureReason>;
@@ -37,6 +38,7 @@ export default async function init(project: Project): Promise<InitResult> {
         writePrettierIgnore(project),
         writeGitIgnore(project),
         writeEsLintIgnore(project),
+        writeHuskyConfig(project),
         writeTypeScriptFiles(project),
         writeWebpackConfig(project),
         writeIdeaProjectFiles(project),
