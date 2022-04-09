@@ -1,4 +1,4 @@
 {
   "extends": "@softwareventures/tsconfig/dom",
-  "exclude": ["**/test.ts", "**/*.test.ts", "template/template/**.ts"]
+  "exclude": ["**/test.ts", "**/*.test.ts"]
 }
