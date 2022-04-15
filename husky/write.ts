@@ -1,18 +1,23 @@
+import {mapFn} from "@softwareventures/array";
+import {allAsync} from "@softwareventures/promise";
 import {Project} from "../project/project";
-import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
+import {FsStage, insertFn, InsertResult} from "../fs-stage/fs-stage";
 import {copyFromTemplate} from "../template/copy";
 import {projectTemplateId} from "../template/project-template-id";
-import {bindAsyncResultFn} from "../result/result";
+import {chainResults} from "../result/result";
 
 export function writeHuskyConfig(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     return async fsStage =>
-        copyFromTemplate(projectTemplateId(project), ".husky", "common.sh")
-            .then(file => insert(fsStage, ".husky/common.sh", file))
+        Promise.resolve(["common.sh", "pre-commit", "commit-msg"])
             .then(
-                bindAsyncResultFn(async fsStage =>
-                    copyFromTemplate(projectTemplateId(project), ".husky", "pre-commit").then(
-                        file => insert(fsStage, ".husky/pre-commit", file)
-                    )
+                mapFn(async filename =>
+                    copyFromTemplate(projectTemplateId(project), ".husky", filename).then(file => ({
+                        filename,
+                        file
+                    }))
                 )
-            );
+            )
+            .then(allAsync)
+            .then(mapFn(({filename, file}) => insertFn(`.husky/${filename}`, file)))
+            .then(async insertions => chainResults(fsStage, insertions));
 }
