@@ -632,13 +632,13 @@
   dependencies:
     tslib "2.3.1"
 
-"@softwareventures/template-webpack-project@1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/template-webpack-project/-/template-webpack-project-1.3.0.tgz#75aa3fd6afdd6e27ae52232a8511bf695224b553"
-  integrity sha512-TxD7UabaPhvMHnhdjAhkluYZ0AvZJeozj4O5b3ntKLjje6SA1Yk4y5JJXum2aL7tebS/gafZ+2nAf4CAzyiVQA==
+"@softwareventures/template-webpack-project@1.3.1":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@softwareventures/template-webpack-project/-/template-webpack-project-1.3.1.tgz#efcb140147202857a523e0bf9dd4a89c48e5d823"
+  integrity sha512-OE9MZaFdsjrfj62ls89TCEPeAJCQIRo7Pq6H14zONJ04t6sFB11ZI1xoPgReNHsqjqQ8+dni0cvkss5jXW0O8A==
   dependencies:
     "@types/webpack-env" "1.16.4"
-    tslib "2.3.1"
+    tslib "2.4.0"
 
 "@softwareventures/tsconfig@5.1.1":
   version "5.1.1"
