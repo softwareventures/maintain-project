@@ -164,23 +164,6 @@ export function bindFailureFn<TReason, TNewReason, TValue, TNewValue = TValue>(
     return result => bindFailure(result, f);
 }
 
-export async function bindFailureAsync<TReason, TNewReason, TValue, TNewValue = TValue>(
-    result: Result<TReason, TValue>,
-    f: (reasons: readonly TReason[]) => Promise<Result<TNewReason, TNewValue>>
-): Promise<Result<TNewReason, TValue | TNewValue>> {
-    if (result.type === "success") {
-        return result;
-    } else {
-        return f(result.reasons);
-    }
-}
-
-export function bindFailureAsyncFn<TReason, TNewReason, TValue, TNewValue = TValue>(
-    f: (reasons: readonly TReason[]) => Promise<Result<TNewReason, TNewValue>>
-): (result: Result<TReason, TValue>) => Promise<Result<TNewReason, TValue | TNewValue>> {
-    return async result => bindFailureAsync(result, f);
-}
-
 export function combineResults<TReason>(results: Iterable<Result<TReason>>): Result<TReason> {
     return failure(toArray(concatMap(filter(results, isFailure), ({reasons}) => reasons)));
 }
