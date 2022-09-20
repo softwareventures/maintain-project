@@ -86,7 +86,7 @@
     "@softwareventures/tsconfig": "5.1.1",
     "@typescript-eslint/eslint-plugin": "5.38.0",
     "@typescript-eslint/parser": "5.38.0",
-    "ava": "4.2.0",
+    "ava": "4.3.3",
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.23.1",
     "eslint-config-prettier": "8.5.0",
