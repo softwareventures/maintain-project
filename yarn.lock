@@ -574,10 +574,10 @@
     dictionary-types "^1.2.0 || ^2.0.0"
     tslib "2.3.0"
 
-"@softwareventures/eslint-config@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/eslint-config/-/eslint-config-6.0.0.tgz#280a7fcc048db6901f0d29c87bd7a42e0e291840"
-  integrity sha512-CrkDwaRukQyFYTXAFWgPxkLoArfAYQYfh5gqQDipJhT2PQ73MKca3YgSWi93M1VNhmEtVhONelUZhpR0GhTpwg==
+"@softwareventures/eslint-config@7.0.0":
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/eslint-config/-/eslint-config-7.0.0.tgz#73dc53d98d7dd880a9a9e4694ee9fabb8d541f4c"
+  integrity sha512-Cf5KdrtNxttVvqq8K8toS8ekVXJBpZvL1KykjxCWKsM9eIpLnFdYCgklO9FvZY65A1wD7lIgyklpFisPg7bYew==
   dependencies:
     tslib "^2.3.1"
 
