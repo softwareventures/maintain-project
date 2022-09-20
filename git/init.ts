@@ -1,6 +1,7 @@
 import simpleGit from "simple-git";
-import {failure, Result, success} from "../result/result";
-import {ProjectSource} from "../project/project";
+import type {Result} from "../result/result";
+import {failure, success} from "../result/result";
+import type {ProjectSource} from "../project/project";
 
 export type GitInitResult = Result<GitInitFailureReason>;
 

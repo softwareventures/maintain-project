@@ -1,11 +1,12 @@
 import chain from "@softwareventures/chain";
 import {mapNullable} from "@softwareventures/nullable";
-import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import {insert} from "../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../result/result";
 import {copyFromTemplate} from "../template/copy";
 import {modifyTemplateText} from "../template/modify-text";
 import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
-import {Project} from "../project/project";
+import type {Project} from "../project/project";
 import {nodeVersionRange} from "../node/version-range";
 import {formatSpdxExpression} from "../license/spdx/format";
 import {projectTemplateId} from "../template/project-template-id";
@@ -24,12 +25,14 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
         modify: text =>
             chain(text)
                 .map(JSON.parse)
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-return
                 .map(json => ({
                     ...json,
                     private: true,
-                    name: npmPackage.scope
-                        ? `@${npmPackage.scope}/${npmPackage.name}`
-                        : npmPackage.name,
+                    name:
+                        npmPackage.scope == null
+                            ? npmPackage.name
+                            : `@${npmPackage.scope}/${npmPackage.name}`,
                     version: "0.0.0-development",
                     description: "",
                     keywords: [],
@@ -61,6 +64,6 @@ function writeNpmIgnore(project: Project): (fsStage: FsStage) => Promise<InsertR
 
 function formatAuthor(project: Project): string {
     return `${project.author?.name ?? ""}${
-        project.author?.email ? ` <${project.author.email}>` : ""
+        project.author?.email == null ? "" : ` <${project.author.email}>`
     }`;
 }

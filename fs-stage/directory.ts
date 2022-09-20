@@ -1,4 +1,4 @@
-import {FileNode} from "./file-node";
+import type {FileNode} from "./file-node";
 
 export interface Directory {
     readonly type: "directory";
@@ -24,7 +24,7 @@ export function list(options: ListOptions): IterableIterator<Entry> {
 function* listInternal(pathPrefix: string, options: ListOptions): IterableIterator<Entry> {
     for (const [path, file] of options.directory.entries) {
         yield {path: pathPrefix + path, file};
-        if (options.recursive && file.type === "directory") {
+        if ((options.recursive ?? false) && file.type === "directory") {
             yield* listInternal(`${path}/`, {...options, directory: file});
         }
     }

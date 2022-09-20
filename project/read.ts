@@ -2,16 +2,20 @@ import {resolve} from "path";
 import chain from "@softwareventures/chain";
 import {todayUtc} from "@softwareventures/date";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
+import {hasProperty} from "unknown";
 import {gitHostFromUrl} from "../git/git-host";
 import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
-import {allAsyncResults, mapResultFn, Result} from "../result/result";
-import {readNodeVersions, ReadNodeVersionsFailureReason} from "../node/read";
+import type {Result} from "../result/result";
+import {allAsyncResults, mapResultFn} from "../result/result";
+import type {ReadNodeVersionsFailureReason} from "../node/read";
+import {readNodeVersions} from "../node/read";
 import {guessCopyrightHolder} from "../license/guess-copyright-holder";
 import {readGitProject} from "../git/read";
 import {readTslintProject} from "../tslint/read";
 import {readEslintProject} from "../eslint/read";
-import {Project} from "./project";
-import {ReadJsonFailureReason, readProjectJson} from "./read-json";
+import type {Project} from "./project";
+import type {ReadJsonFailureReason} from "./read-json";
+import {readProjectJson} from "./read-json";
 import {projectFileExists} from "./file-exists";
 
 export type ReadProjectResult = Result<ReadProjectFailureReason, Project>;
@@ -19,22 +23,28 @@ export type ReadProjectResult = Result<ReadProjectFailureReason, Project>;
 export type ReadProjectFailureReason = ReadJsonFailureReason | ReadNodeVersionsFailureReason;
 
 export async function readProject(path: string): Promise<ReadProjectResult> {
-    path = resolve(path);
+    const path2 = resolve(path);
 
-    const project = {path};
+    const project = {path: path2};
 
     const packageJson = readProjectJson(project, "package.json");
 
     const npmPackage = packageJson
-        .then(mapResultFn(packageJson => packageJson?.name ?? ""))
-        .then(mapResultFn(name => /^(?:(@.*?)\/)?(.*)$/.exec(String(name)) ?? ["", "", ""]))
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        .then(mapResultFn(packageJson => String(packageJson?.name ?? "")))
+        .then(mapResultFn(name => /^(?:(@.*?)\/)?(.*)$/u.exec(String(name)) ?? ["", "", ""]))
         .then(mapResultFn(([_, scope, name]) => ({scope, name})));
 
     const git = readGitProject(project);
 
     const gitHost = packageJson
-        .then(mapResultFn(packageJson => packageJson?.repository))
-        .then(mapResultFn(gitHostFromUrl));
+        .then(
+            mapResultFn(packageJson =>
+                hasProperty(packageJson, "repository") ? String(packageJson.repository) : null
+            )
+        )
+        .then(mapResultFn(mapNullableFn(gitHostFromUrl)))
+        .then(mapResultFn(gitHost => gitHost ?? undefined));
 
     const target = projectFileExists(project, "webpack.config.cjs")
         .then(webpack => webpack || projectFileExists(project, "webpack.config.js"))
@@ -45,13 +55,20 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
     const eslint = readEslintProject(project);
 
     const author = packageJson
-        .then(mapResultFn(packageJson => packageJson?.author))
+        .then(
+            mapResultFn((packageJson: unknown) =>
+                hasProperty(packageJson, "author") ? packageJson.author : null
+            )
+        )
         .then(
             mapResultFn(author =>
                 typeof author === "object"
-                    ? {name: String(author?.name), email: String(author?.email)}
+                    ? {
+                          ...(hasProperty(author, "name") ? {name: String(author.name)} : null),
+                          ...(hasProperty(author, "email") ? {email: String(author.email)} : null)
+                      }
                     : typeof author === "string"
-                    ? chain(/^\s*(.*?)(?:\s+<\s*(.*)\s*>)?\s*$/.exec(author) ?? []).map(
+                    ? chain(/^\s*(.*?)(?:\s+<\s*(.*)\s*>)?\s*$/u.exec(author) ?? []).map(
                           ([_, name, email]) => ({name, email})
                       ).value
                     : {}
@@ -60,8 +77,10 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
 
     const spdxLicense = packageJson
         .then(
-            mapResultFn(packageJson =>
-                typeof packageJson?.license === "string" ? packageJson?.license : null
+            mapResultFn((packageJson: unknown) =>
+                hasProperty(packageJson, "license") && typeof packageJson.license === "string"
+                    ? packageJson.license
+                    : null
             )
         )
         .then(mapResultFn(mapNullableFn(parseAndCorrectSpdxExpression)))
@@ -74,7 +93,7 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
     return Promise.all([git, target, tslint, eslint]).then(async ([git, target, tslint, eslint]) =>
         allAsyncResults([npmPackage, gitHost, author, spdxLicense, node]).then(
             mapResultFn(([npmPackage, gitHost, author, spdxLicense, node]) => ({
-                path,
+                path: path2,
                 npmPackage,
                 git,
                 gitHost,

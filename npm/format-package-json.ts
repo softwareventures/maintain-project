@@ -1,4 +1,5 @@
 import {format} from "prettier-package-json";
+import type {PackageJsonKey} from "prettier-package-json/build/types";
 
 export function formatPackageJson(json: object): string {
     return format(json, {
@@ -46,6 +47,6 @@ export function formatPackageJson(json: object): string {
             "config",
             "ava",
             "release"
-        ] as any[]
+        ] as unknown as PackageJsonKey[]
     });
 }

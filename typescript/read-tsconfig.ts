@@ -1,7 +1,10 @@
-import {ParsedCommandLine, parseJsonConfigFileContent, sys} from "typescript";
-import {ProjectSource} from "../project/project";
-import {ReadJsonFailureReason, readProjectJson} from "../project/read-json";
-import {mapResultFn, Result} from "../result/result";
+import type {ParsedCommandLine} from "typescript";
+import {parseJsonConfigFileContent, sys} from "typescript";
+import type {ProjectSource} from "../project/project";
+import type {ReadJsonFailureReason} from "../project/read-json";
+import {readProjectJson} from "../project/read-json";
+import type {Result} from "../result/result";
+import {mapResultFn} from "../result/result";
 
 export type ReadTsconfigResult = Result<ReadJsonFailureReason, ParsedCommandLine>;
 

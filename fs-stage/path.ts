@@ -3,9 +3,9 @@ import {foldFn, initial, push} from "@softwareventures/array";
 
 export function resolvePathSegments(path: string): readonly string[] | null {
     return chain(path)
-        .map(path => path.replace(/^\/*/, ""))
-        .map(path => path.replace(/\/*$/, ""))
-        .map(path => path.split(/\/+/))
+        .map(path => path.replace(/^\/*/u, ""))
+        .map(path => path.replace(/\/*$/u, ""))
+        .map(path => path.split(/\/+/u))
         .map(
             foldFn(
                 (resolved, segment) =>

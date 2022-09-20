@@ -1,5 +1,6 @@
-import {mapFailureFn, Result} from "../result/result";
-import {ProjectSource} from "../project/project";
+import type {Result} from "../result/result";
+import {mapFailureFn} from "../result/result";
+import type {ProjectSource} from "../project/project";
 import {yarn} from "./yarn";
 
 export type YarnInstallResult = Result<YarnInstallFailureReason>;

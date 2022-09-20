@@ -1,8 +1,9 @@
 import {promises as fs} from "fs";
 import spdxLicenseList = require("spdx-license-list/full");
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
-import {Project} from "../project/project";
-import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
+import type {Project} from "../project/project";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import {insert} from "../fs-stage/fs-stage";
 import {success} from "../result/result";
 import {textFile} from "../fs-stage/file";
 

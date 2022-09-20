@@ -1,6 +1,7 @@
 import {promises as fs} from "fs";
-import {File} from "../fs-stage/file";
-import {TemplateId, templatePath} from "./template";
+import type {File} from "../fs-stage/file";
+import type {TemplateId} from "./template";
+import {templatePath} from "./template";
 
 export async function copyFromTemplate(
     templateId: TemplateId,

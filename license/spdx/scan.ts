@@ -6,7 +6,7 @@ export interface SpdxToken {
 export function scanSpdxExpression(text: string): SpdxToken[] {
     return text
         .trim()
-        .split(/\s+|(?=[+()])|(?<=[+()])/)
+        .split(/\s+|(?=[+()])|(?<=[+()])/u)
         .map(tokenOf);
 }
 

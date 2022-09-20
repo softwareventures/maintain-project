@@ -1,8 +1,8 @@
 import {Configuration} from "tslint";
 import {mapNullable} from "@softwareventures/nullable";
-import {ProjectSource} from "../project/project";
+import type {ProjectSource} from "../project/project";
 import {projectDevDependsOn} from "../project/dev-depends-on";
-import {TslintProject} from "./tslint-project";
+import type {TslintProject} from "./tslint-project";
 
 export async function readTslintProject(
     project: ProjectSource
@@ -19,7 +19,7 @@ export async function readTslintProject(
         return undefined;
     } else if (
         (await dependsOnSoftwareVenturesPreset) &&
-        config.extends?.includes("@softwareventures/tslint-rules")
+        (config.extends?.includes("@softwareventures/tslint-rules") ?? false)
     ) {
         return {preset: "softwareventures"};
     } else {

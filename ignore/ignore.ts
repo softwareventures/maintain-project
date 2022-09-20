@@ -70,8 +70,8 @@ function isIgnoredByLine(line: IgnoreLine, path: string): IgnoreStatus {
     }
 
     const text = line.text.trim();
-    const negate = line.text.charAt(0) === "!";
-    const matcher = picomatch(text.replace(/^!/, "").trim(), {
+    const negate = line.text.startsWith("!");
+    const matcher = picomatch(text.replace(/^!/u, "").trim(), {
         basename: true,
         posix: false,
         dot: true,

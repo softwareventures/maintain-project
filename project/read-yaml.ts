@@ -1,9 +1,15 @@
-import {Document, parse, parseDocument} from "yaml";
+import type {Document} from "yaml";
+import {parse, parseDocument} from "yaml";
 import {map} from "@softwareventures/array";
-import {bindResultFn, failure, mapResultFn, Result, success} from "../result/result";
-import {ProjectSource} from "./project";
-import {readProjectText, ReadTextFailureReason} from "./read-text";
+import {hasProperty} from "unknown";
+import type {Result} from "../result/result";
+import {bindResultFn, failure, mapResultFn, success} from "../result/result";
+import type {ProjectSource} from "./project";
+import type {ReadTextFailureReason} from "./read-text";
+import {readProjectText} from "./read-text";
 
+// FIXME Use `unknown` instead
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ReadYamlResult = Result<ReadYamlFailureReason, any>;
 
 export type ReadYamlFailureReason = ReadTextFailureReason | InvalidYaml;
@@ -20,8 +26,8 @@ export async function readProjectYaml(
 ): Promise<ReadYamlResult> {
     return readProjectText(project, path)
         .then(mapResultFn(parse))
-        .catch(reason => {
-            if ("code" in reason) {
+        .catch((reason: unknown) => {
+            if (hasProperty(reason, "code") || !(reason instanceof Error)) {
                 throw reason;
             } else {
                 return failure([{type: "invalid-yaml", reason, path}]);
@@ -51,8 +57,8 @@ export async function readProjectYamlAsDocument(
                       )
             )
         )
-        .catch(reason => {
-            if ("code" in reason) {
+        .catch((reason: unknown) => {
+            if (hasProperty(reason, "code") || !(reason instanceof Error)) {
                 throw reason;
             } else {
                 return failure([{type: "invalid-yaml", reason, path}]);

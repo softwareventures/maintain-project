@@ -1,7 +1,7 @@
 import {mapNullable, mapNullableFn, notNull} from "@softwareventures/nullable";
 import {last, noneNull} from "@softwareventures/array";
-import {Project} from "../project/project";
-import {FsStageUpdate} from "../project/update";
+import type {Project} from "../project/project";
+import type {FsStageUpdate} from "../project/update";
 import {readProjectYamlAsDocument} from "../project/read-yaml";
 import {
     allAsyncResults,
@@ -17,7 +17,7 @@ import {insert} from "../fs-stage/fs-stage";
 export async function useLatestNodeToDeploy(project: Project): Promise<FsStageUpdate | null> {
     const workflow = readProjectYamlAsDocument(project, ".github/workflows/ci.yml");
     const oldVersion = workflow
-        .then(mapResultFn(workflow => workflow.getIn(["env", "DEPLOY_NODE_VERSION"])))
+        .then(mapResultFn(workflow => workflow.getIn(["env", "DEPLOY_NODE_VERSION"]) as unknown))
         .then(mapResultFn(mapNullableFn(String)));
     const newVersion = mapNullable(
         last(looseSort(project.node.currentReleases)),

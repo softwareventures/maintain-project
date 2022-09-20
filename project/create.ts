@@ -5,7 +5,7 @@ import {createGitHost} from "../git/git-host";
 import {guessCopyrightHolder} from "../license/guess-copyright-holder";
 import {createNodeVersions} from "../node/create";
 import {createGitProject} from "../git/create";
-import {Project, ProjectOptions} from "./project";
+import type {Project, ProjectOptions} from "./project";
 
 export async function createProject(options: ProjectOptions): Promise<Project> {
     const git = simpleGit();

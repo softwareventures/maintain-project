@@ -1,10 +1,13 @@
 import {exit} from "process";
 import chain from "@softwareventures/chain";
 import {forEachFn, mapFn} from "@softwareventures/array";
-import {readProject, ReadProjectFailureReason} from "../project/read";
+import {hasProperty} from "unknown";
+import type {ReadProjectFailureReason} from "../project/read";
+import {readProject} from "../project/read";
 import {bindAsyncResultFn, bindFailureFn} from "../result/result";
-import {UpdateFailureReason, updateProject} from "../project/update";
-import {Project} from "../project/project";
+import type {UpdateFailureReason} from "../project/update";
+import {updateProject} from "../project/update";
+import type {Project} from "../project/project";
 
 export interface UpdateOptions {
     readonly breaking?: boolean;
@@ -43,12 +46,12 @@ export function cliUpdate(path: string, {breaking}: UpdateOptions): void {
                             }
                         })
                     )
-                    .map(forEachFn(message => console.error(`Error: ${message}`)));
+                    .map(forEachFn(message => void console.error(`Error: ${message}`)));
                 exit(1);
             })
         )
         .catch(reason => {
-            if (!!reason && reason.message) {
+            if (hasProperty(reason, "message")) {
                 console.error(reason.message);
             } else {
                 console.error(reason);

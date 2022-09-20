@@ -1,12 +1,12 @@
 import {mapNullableFn} from "@softwareventures/nullable";
-import {Project} from "../project/project";
-import {FsStageUpdate} from "../project/update";
+import type {Project} from "../project/project";
+import type {FsStageUpdate} from "../project/update";
 import {toNullable} from "../result/result";
 import {insert} from "../fs-stage/fs-stage";
 import {modifyPackageJson} from "./modify-package-json";
 
 export async function applyCodeStyleToPackageJson(project: Project): Promise<FsStageUpdate | null> {
-    return modifyPackageJson(project, packageJson => packageJson)
+    return modifyPackageJson(project, packageJson => packageJson as unknown)
         .then(toNullable)
         .then(
             mapNullableFn(file => ({

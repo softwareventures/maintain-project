@@ -1,5 +1,5 @@
-import {Date} from "@softwareventures/date";
-import {NodeVersions} from "./node-versions";
+import type {Date} from "@softwareventures/date";
+import type {NodeVersions} from "./node-versions";
 import {nodeReleasesSupportedInDateRange} from "./releases-supported-in-date-range";
 
 export function createNodeVersions(today: Date): NodeVersions {

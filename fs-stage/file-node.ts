@@ -1,11 +1,13 @@
 import {first, tail} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
-import {failure, mapFailure, mapFailureFn, mapResultFn, Result, success} from "../result/result";
+import type {Result} from "../result/result";
+import {failure, mapFailure, mapFailureFn, mapResultFn, success} from "../result/result";
 import {insert as mapInsert} from "../collections/maps";
-import {Directory, emptyDirectory} from "./directory";
-import {File} from "./file";
-import {ReadFileNodeResult} from "./read-file-node-result";
-import {InsertFailureReason} from "./insert-failure-reason";
+import type {Directory} from "./directory";
+import {emptyDirectory} from "./directory";
+import type {File} from "./file";
+import type {ReadFileNodeResult} from "./read-file-node-result";
+import type {InsertFailureReason} from "./insert-failure-reason";
 import {resolvePathSegments} from "./path";
 
 export type FileNode = Directory | File;

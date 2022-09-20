@@ -6,6 +6,6 @@ export function nodeVersionRange(versions: readonly string[]): string {
     return chain(versions)
         .map(looseSort)
         .map(mapFn(version => `^${version}`))
-        .map(ranges => [...initial(ranges), last(ranges)?.replace(/^\^/, ">=")])
+        .map(ranges => [...initial(ranges), last(ranges)?.replace(/^\^/u, ">=")])
         .map(versions => versions.join(" || ")).value;
 }

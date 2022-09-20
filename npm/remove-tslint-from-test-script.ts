@@ -1,7 +1,7 @@
 import {mapNullable, mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {mapFn} from "@softwareventures/array";
-import {FsStageUpdate} from "../project/update";
-import {ProjectSource} from "../project/project";
+import type {FsStageUpdate} from "../project/update";
+import type {ProjectSource} from "../project/project";
 import {findExtract} from "../collections/arrays";
 import {toNullable} from "../result/result";
 import {insert} from "../fs-stage/fs-stage";
@@ -20,9 +20,8 @@ export async function removeTslintFromTestScript(
 
     const newCommands = commands
         .then(commands => {
-            const [tslintCommand, newCommands] = findExtract(
-                commands,
-                command => !!command.match(/^tslint(\s|$)/)
+            const [tslintCommand, newCommands] = findExtract(commands, command =>
+                Boolean(command.match(/^tslint(\s|$)/u))
             );
             return mapNullable(tslintCommand, () => newCommands);
         })

@@ -1,5 +1,5 @@
 import {isSuccess, mapResultFn} from "../result/result";
-import {ProjectSource} from "./project";
+import type {ProjectSource} from "./project";
 import {readProjectJson} from "./read-json";
 
 export async function projectDevDependsOn(
@@ -10,7 +10,9 @@ export async function projectDevDependsOn(
         .then(
             mapResultFn(
                 packageJson =>
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                     typeof packageJson?.dependencies?.[dependency] === "string" ||
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                     typeof packageJson?.devDependencies?.[dependency] === "string"
             )
         )

@@ -1,5 +1,5 @@
 import spdxCorrect = require("spdx-correct");
-import {SpdxLicense} from "./spdx";
+import type {SpdxLicense} from "./spdx";
 import {parseSpdxExpression} from "./parse";
 import {formatSpdxExpression} from "./format";
 

@@ -1,8 +1,8 @@
 import {sep} from "path";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {first, tail} from "@softwareventures/array";
-import {Project} from "../project/project";
-import {FsStageUpdate} from "../project/update";
+import type {Project} from "../project/project";
+import type {FsStageUpdate} from "../project/update";
 import {readProjectXml} from "../project/read-xml";
 import {toAsyncNullable} from "../result/result";
 import {readTemplateXml} from "../template/read-xml";
@@ -47,7 +47,7 @@ export async function enableDisableIdeaTslintInspection(
                 const tools = dom.window.document.querySelectorAll(
                     "component:root>profile>inspection_tool[class=TsLint]"
                 );
-                tail(tools).forEach(tool => tool.remove());
+                tail(tools).forEach(tool => void tool.remove());
                 const tool = first(tools);
                 if (project.tslint == null) {
                     tool?.remove();

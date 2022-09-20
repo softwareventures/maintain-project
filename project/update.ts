@@ -1,24 +1,27 @@
-import simpleGit, {SimpleGit} from "simple-git";
+import type {SimpleGit} from "simple-git";
+import simpleGit from "simple-git";
 import {concat, map} from "@softwareventures/array";
 import wrap = require("wordwrap");
-import {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import type {Result} from "../result/result";
 import {
     bindAsyncResultFn,
     failure,
     mapAsyncResultFn,
     mapResultFn,
-    Result,
     success,
     throwFailureFn,
     tolerantFoldAsyncResultsFn
 } from "../result/result";
 import {emptyDirectory} from "../fs-stage/directory";
 import {updateCopyrightYear} from "../license/update-copyright-year";
-import {commit, CommitFailureReason} from "../fs-stage/commit";
+import type {CommitFailureReason} from "../fs-stage/commit";
+import {commit} from "../fs-stage/commit";
 import {addMissingLicense} from "../license/add-missing-license";
-import {YarnFixFailureReason} from "../yarn/fix";
+import type {YarnFixFailureReason} from "../yarn/fix";
 import {applyCodeStyle} from "../yarn/apply-code-style";
-import {PrettierFixFailureReason, prettierFixFilesIfAvailable} from "../prettier/fix";
+import type {PrettierFixFailureReason} from "../prettier/fix";
+import {prettierFixFilesIfAvailable} from "../prettier/fix";
 import {updateFixScript} from "../npm/update-fix-script";
 import {updateLintScript} from "../npm/update-lint-script";
 import {addNewNodeVersionsToPackageJson} from "../npm/add-new-node-versions";
@@ -33,7 +36,7 @@ import {addYarnLintToCiWorkflow} from "../github/add-yarn-lint-to-ci-workflow";
 import {addMissingIdeaRunConfigurations} from "../idea/add-missing-run-configurations";
 import {enableDisableIdeaTslintInspection} from "../idea/enable-disable-tslint";
 import {enableDisableIdeaEslintInspection} from "../idea/enable-disable-eslint";
-import {Project} from "./project";
+import type {Project} from "./project";
 
 export type Update = FsStageUpdate | DirectUpdate;
 
@@ -114,7 +117,7 @@ async function step({project, breaking, git, update}: StepOptions): Promise<Upda
         .then(mapAsyncResultFn(async () => update(project)))
         .then(
             mapAsyncResultFn(async update =>
-                breaking || (update?.breaking?.length ?? 0) === 0 ? update : null
+                (breaking ?? false) || (update?.breaking?.length ?? 0) === 0 ? update : null
             )
         )
         .then(bindAsyncResultFn(async update => commitUpdate(project, git, update)));

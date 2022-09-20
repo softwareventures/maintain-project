@@ -1,20 +1,16 @@
-import {Date} from "@softwareventures/date";
+import type {Date} from "@softwareventures/date";
 import {concatMapFn, filterFn, isArray, mapFn, only} from "@softwareventures/array";
 import {intersects} from "semver";
 import chain from "@softwareventures/chain";
 import {mapNullFn} from "@softwareventures/nullable";
-import {ProjectSource} from "../project/project";
-import {ReadJsonFailureReason, readProjectJson} from "../project/read-json";
-import {
-    allAsyncResults,
-    bindFailureFn,
-    failure,
-    mapResultFn,
-    Result,
-    success
-} from "../result/result";
-import {readProjectYaml, ReadYamlFailureReason} from "../project/read-yaml";
-import {NodeVersions} from "./node-versions";
+import type {ProjectSource} from "../project/project";
+import type {ReadJsonFailureReason} from "../project/read-json";
+import {readProjectJson} from "../project/read-json";
+import type {Result} from "../result/result";
+import {allAsyncResults, bindFailureFn, failure, mapResultFn, success} from "../result/result";
+import type {ReadYamlFailureReason} from "../project/read-yaml";
+import {readProjectYaml} from "../project/read-yaml";
+import type {NodeVersions} from "./node-versions";
 import {nodeReleasesSupportedInDateRange} from "./releases-supported-in-date-range";
 
 export type ReadNodeVersionsResult = Result<ReadNodeVersionsFailureReason, NodeVersions>;
@@ -28,7 +24,8 @@ export async function readNodeVersions(
     const currentReleases = nodeReleasesSupportedInDateRange({start: today, end: today});
 
     const targetVersions = readProjectJson(project, "package.json")
-        .then(mapResultFn(packageJson => packageJson?.engines?.node))
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        .then(mapResultFn(packageJson => packageJson?.engines?.node as unknown))
         .then(
             mapResultFn(versions =>
                 typeof versions === "string" ? extractMajorNodeVersions(versions, today) : null
@@ -44,7 +41,12 @@ export async function readNodeVersions(
     const testedVersions = readProjectYaml(project, ".github/workflows/ci.yml")
         .then(
             mapResultFn(
-                workflow => workflow?.jobs?.["build-and-test"]?.strategy?.matrix?.["node-version"]
+                workflow =>
+                    // FIXME
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    workflow?.jobs?.["build-and-test"]?.strategy?.matrix?.[
+                        "node-version"
+                    ] as unknown
             )
         )
         .then(mapResultFn(versions => (typeof versions === "string" ? [versions] : versions)))

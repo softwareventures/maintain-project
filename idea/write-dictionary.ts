@@ -3,7 +3,8 @@ import {filterFn, mapFn} from "@softwareventures/array";
 import {JSDOM} from "jsdom";
 import formatXml = require("xml-formatter");
 import {textFile} from "../fs-stage/file";
-import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import {insert} from "../fs-stage/fs-stage";
 
 export async function writeIdeaDictionary(fsStage: FsStage): Promise<InsertResult> {
     const words = fs

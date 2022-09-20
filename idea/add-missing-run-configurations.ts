@@ -1,7 +1,7 @@
 import {mapNullableFn} from "@softwareventures/nullable";
 import {excludeNull, only} from "@softwareventures/array";
-import {Project} from "../project/project";
-import {FsStageUpdate} from "../project/update";
+import type {Project} from "../project/project";
+import type {FsStageUpdate} from "../project/update";
 import {readProjectScript} from "../npm/read-script";
 import {chainAsyncResults} from "../result/result";
 import {readProjectRunConfiguration} from "./read-run-configuration";

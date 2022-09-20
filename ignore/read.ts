@@ -1,10 +1,11 @@
-import {Dirent} from "fs";
+import type {Dirent} from "fs";
 import {excludeNull, filterFn, mapFn} from "@softwareventures/array";
 import {mapNullFn} from "@softwareventures/nullable";
-import {ReadTextResult} from "../project/read-text";
+import type {ReadTextResult} from "../project/read-text";
 import {mapResultFn, toNullable} from "../result/result";
 import {splitWhereFn} from "../collections/arrays";
-import {Ignore, ignoreComment, ignoreEntry, IgnoreGroup} from "./ignore";
+import type {Ignore, IgnoreGroup} from "./ignore";
+import {ignoreComment, ignoreEntry} from "./ignore";
 
 export interface ReadIgnoreOptions {
     path: string;
@@ -45,9 +46,9 @@ export async function readIgnore({
         .then(ignores => new Map<string, Ignore>(ignores));
 
     const entries = readText(path)
-        .then(mapResultFn(text => text.split(/\r?\n|\r/)))
-        .then(mapResultFn(splitWhereFn(line => /^\s*$/.test(line))))
-        .then(mapResultFn(mapFn(mapFn(line => /^\s*(?:#\s*(.*)|(.*))\s*$/.exec(line)))))
+        .then(mapResultFn(text => text.split(/\r?\n|\r/u)))
+        .then(mapResultFn(splitWhereFn(line => /^\s*$/u.test(line))))
+        .then(mapResultFn(mapFn(mapFn(line => /^\s*(?:#\s*(.*)|(.*))\s*$/u.exec(line)))))
         .then(mapResultFn(mapFn(excludeNull)))
         .then(
             mapResultFn(

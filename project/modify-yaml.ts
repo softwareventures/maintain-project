@@ -1,8 +1,11 @@
-import {Document} from "yaml";
-import {mapResultFn, Result} from "../result/result";
-import {File, textFile} from "../fs-stage/file";
-import {ProjectSource} from "./project";
-import {readProjectYamlAsDocument, ReadYamlFailureReason} from "./read-yaml";
+import type {Document} from "yaml";
+import type {Result} from "../result/result";
+import {mapResultFn} from "../result/result";
+import type {File} from "../fs-stage/file";
+import {textFile} from "../fs-stage/file";
+import type {ProjectSource} from "./project";
+import type {ReadYamlFailureReason} from "./read-yaml";
+import {readProjectYamlAsDocument} from "./read-yaml";
 
 export async function modifyProjectYaml(
     project: ProjectSource,

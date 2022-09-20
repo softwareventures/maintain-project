@@ -1,7 +1,9 @@
 import {exit} from "process";
 import {forEachFn, mapFn} from "@softwareventures/array";
 import chain from "@softwareventures/chain";
-import init, {InitFailureReason} from "../project/init";
+import {hasProperty} from "unknown";
+import type {InitFailureReason} from "../project/init";
+import init from "../project/init";
 import {bindFailureFn, mapResultFn} from "../result/result";
 import {createProject} from "../project/create";
 import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
@@ -28,7 +30,7 @@ export function cliInit(path: string, options: InitOptions): void {
             user: options.githubOwner,
             project: options.githubProject
         },
-        target: options.webapp ? "webapp" : "npm",
+        target: options.webapp ?? false ? "webapp" : "npm",
         path,
         author: {
             name: options.authorName,
@@ -60,12 +62,12 @@ export function cliInit(path: string, options: InitOptions): void {
                             }
                         })
                     )
-                    .map(forEachFn(message => console.error(`Error: ${message}`)));
+                    .map(forEachFn(message => void console.error(`Error: ${message}`)));
                 exit(1);
             })
         )
         .catch(reason => {
-            if (!!reason && reason.message) {
+            if (Boolean(reason) && hasProperty(reason, "message")) {
                 console.error(reason.message);
             } else {
                 console.error(reason);

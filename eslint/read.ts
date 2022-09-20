@@ -4,11 +4,11 @@ import {mapNullableFn} from "@softwareventures/nullable";
 import {hasProperty} from "unknown";
 import {contains, isArray} from "@softwareventures/array";
 import {projectDevDependsOn} from "../project/dev-depends-on";
-import {ProjectSource} from "../project/project";
+import type {ProjectSource} from "../project/project";
 import {readProjectJson} from "../project/read-json";
 import {toAsyncNullable} from "../result/result";
 import {readProjectYaml} from "../project/read-yaml";
-import {EslintProject} from "./eslint-project";
+import type {EslintProject} from "./eslint-project";
 
 export async function readEslintProject(
     project: ProjectSource

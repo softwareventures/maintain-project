@@ -15,16 +15,17 @@ import {
     unshiftFn
 } from "@softwareventures/array";
 import {mapNullableFn} from "@softwareventures/nullable";
-import {Project} from "../project/project";
-import {FsStage, insert} from "../fs-stage/fs-stage";
+import type {Project} from "../project/project";
+import type {FsStage} from "../fs-stage/fs-stage";
+import {insert} from "../fs-stage/fs-stage";
 import {readProjectText} from "../project/read-text";
 import {textFile} from "../fs-stage/file";
-import {Update} from "../project/update";
+import type {Update} from "../project/update";
 import {chainAsyncResultsFn, toNullable} from "../result/result";
 import {asyncExcludeNull, asyncMapFn, combineAsync} from "../collections/async-iterable";
 
 export async function updateCopyrightYear(project: Project): Promise<Update | null> {
-    const copyrightLineRegExp = /^\s*($|((Copyright|\(C\)|©)\s*)+.*\d{4})/i;
+    const copyrightLineRegExp = /^\s*($|((Copyright|\(C\)|©)\s*)+.*\d{4})/iu;
 
     return chain(["LICENSE.md", "LICENSE.txt", "LICENSE"])
         .map(
@@ -39,11 +40,13 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
             asyncMapFn(({filename, text}) => {
                 const [titleLines, copyrightLines, followingLines] = chain(text)
                     .map(license => license.split("\n"))
-                    .map(mapFn(line => line.replace(/\r$/, "")))
-                    .map(partitionWhileFn(line => !line.match(copyrightLineRegExp)))
+                    .map(mapFn(line => line.replace(/\r$/u, "")))
+                    .map(partitionWhileFn(line => line.match(copyrightLineRegExp) == null))
                     .map(([titleLines, followingLines]) => [
                         titleLines,
-                        ...partitionWhile(followingLines, line => !!line.match(copyrightLineRegExp))
+                        ...partitionWhile(followingLines, line =>
+                            Boolean(line.match(copyrightLineRegExp))
+                        )
                     ]).value;
 
                 const copyrights = chain(copyrightLines)
@@ -51,7 +54,7 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
                         mapFn((text, index) => ({
                             index,
                             text,
-                            years: map(text.match(/\d{4,}/g) ?? [], year => parseInt(year, 10))
+                            years: map(text.match(/\d{4,}/gu) ?? [], year => parseInt(year, 10))
                         }))
                     )
                     .map(
@@ -72,9 +75,9 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
                 }
 
                 const assignee = copyright.text
-                    .replace(/^\s*((Copyright|\(C\)|©)\s*)+/i, "")
-                    .replace(/\d{4,}(\s*[-,]?\s*\d{4,})*/g, "")
-                    .replace(/\s+/g, " ")
+                    .replace(/^\s*((Copyright|\(C\)|©)\s*)+/iu, "")
+                    .replace(/\d{4,}(\s*[-,]?\s*\d{4,})*/gu, "")
+                    .replace(/\s+/gu, " ")
                     .trim();
 
                 if (assignee === "") {
@@ -84,7 +87,7 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
                 const updatedCopyright = {
                     index: copyright.index,
                     text: `Copyright ${
-                        copyright.startYear ? `${copyright.startYear}-` : ""
+                        copyright.startYear == null ? "" : `${copyright.startYear}-`
                     }${currentYear} ${assignee}`
                 };
 

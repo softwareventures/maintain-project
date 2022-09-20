@@ -1,4 +1,4 @@
-import {JSDOM} from "jsdom";
+import type {JSDOM} from "jsdom";
 import formatXml = require("xml-formatter");
 
 export function formatIdeaXml(dom: JSDOM): string {

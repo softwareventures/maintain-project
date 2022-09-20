@@ -1,5 +1,6 @@
-import {mapFailureFn, Result, success} from "../result/result";
-import {ProjectSource} from "../project/project";
+import type {Result} from "../result/result";
+import {mapFailureFn, success} from "../result/result";
+import type {ProjectSource} from "../project/project";
 import {readProjectScript} from "../npm/read-script";
 import {yarn} from "./yarn";
 

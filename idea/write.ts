@@ -1,10 +1,11 @@
 import {filterFn, mapFn} from "@softwareventures/array";
 import {applyAsync} from "@softwareventures/promise";
-import {FsStage, insertFn, InsertResult} from "../fs-stage/fs-stage";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import {insertFn} from "../fs-stage/fs-stage";
 import {chainAsyncResults, chainAsyncResultsFn} from "../result/result";
 import {copyFromTemplate} from "../template/copy";
 import {listTemplateFiles} from "../template/list";
-import {Project} from "../project/project";
+import type {Project} from "../project/project";
 import {projectTemplateId} from "../template/project-template-id";
 import {writeIdeaDictionary} from "./write-dictionary";
 import {writeIdeaModuleIml} from "./write-module-iml";
@@ -30,7 +31,7 @@ function writeIdeaMiscFiles(project: Project): (fsStage: FsStage) => Promise<Ins
             .then(filterFn(path => path.split("/")[0] !== "runConfigurations"))
             .then(filterFn(path => path !== "workspace.xml"))
             .then(filterFn(path => path !== "task.xml"))
-            .then(filterFn(path => !path.match(/\.iml$/)))
+            .then(filterFn(path => !path.endsWith(".iml")))
             .then(filterFn(path => path !== "modules.xml"))
             .then(
                 mapFn(async path =>

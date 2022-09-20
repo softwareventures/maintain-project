@@ -1,14 +1,16 @@
 import {exclude, filter, first, map, partition} from "@softwareventures/array";
 import {intersects} from "semver";
-import {Project} from "../project/project";
-import {Update} from "../project/update";
+import {hasProperty} from "unknown";
+import type {Project} from "../project/project";
+import type {Update} from "../project/update";
 import {looseSort} from "../semver/loose-sort";
 import {looseLtr} from "../semver/loose-ltr";
 import {modifyPackageJson} from "../npm/modify-package-json";
 import {readProjectYamlAsDocument} from "../project/read-yaml";
 import {chainAsyncResults, mapResultFn, toNullable} from "../result/result";
 import {textFile} from "../fs-stage/file";
-import {FsStage, insert} from "../fs-stage/fs-stage";
+import type {FsStage} from "../fs-stage/fs-stage";
+import {insert} from "../fs-stage/fs-stage";
 import {nodeVersionRange} from "./version-range";
 
 export async function dropOldNodeVersions(project: Project): Promise<Update | null> {
@@ -50,13 +52,19 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
         versionsToDrop.length === 1 ? "" : "s"
     } ${versionsToDropText} ${versionsToDrop.length === 1 ? "is" : "are"} no longer supported.`;
 
-    const newPackageJsonFile = modifyPackageJson(project, packageJson => ({
-        ...packageJson,
-        engines: {
-            ...packageJson?.engines,
-            node: targetRange
-        }
-    })).then(toNullable);
+    const newPackageJsonFile = modifyPackageJson(
+        project,
+        packageJson =>
+            ({
+                ...packageJson,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                engines: {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    ...packageJson?.engines,
+                    node: targetRange
+                }
+            } as unknown)
+    ).then(toNullable);
 
     const newWorkflowFile = readProjectYamlAsDocument(project, ".github/workflows/ci.yml")
         .then(
@@ -67,12 +75,12 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
                     "strategy",
                     "matrix",
                     "node-version"
-                ]);
-                if (versions == null) {
-                    return null;
-                } else {
+                ]) as unknown;
+                if (hasProperty(versions, "items")) {
                     versions.items = map(targetVersions, release => `${release}.x`);
                     return textFile(String(workflow));
+                } else {
+                    return null;
                 }
             })
         )

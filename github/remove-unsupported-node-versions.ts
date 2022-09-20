@@ -1,8 +1,8 @@
 import {map, partition} from "@softwareventures/array";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
-import {Project} from "../project/project";
-import {FsStageUpdate} from "../project/update";
+import type {Project} from "../project/project";
+import type {FsStageUpdate} from "../project/update";
 import {toAsyncNullable} from "../result/result";
 import {insert} from "../fs-stage/fs-stage";
 import {modifyCiWorkflow} from "./modify-ci-workflow";
@@ -27,6 +27,8 @@ export async function removeUnsupportedNodeVersions(
     }
 
     const file = modifyCiWorkflow(project, workflow => {
+        // FIXME
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         workflow.getIn(["jobs", "build-and-test", "strategy", "matrix", "node-version"]).items =
             map(resultVersions, version => `${version}.x`);
         return workflow;

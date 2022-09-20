@@ -1,7 +1,7 @@
 import {mapNull, mapNullable, mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {equal as arraysEqual, excludeNull, mapFn} from "@softwareventures/array";
-import {Project} from "../project/project";
-import {FsStageUpdate} from "../project/update";
+import type {Project} from "../project/project";
+import type {FsStageUpdate} from "../project/update";
 import {isTypescriptProject} from "../typescript/is-typescript-project";
 import {readTsconfig} from "../typescript/read-tsconfig";
 import {isSuccess, mapResultFn, toNullable} from "../result/result";
@@ -23,7 +23,8 @@ export async function updateLintFixScript(
     );
     const isTsNoEmit = tsconfig
         .then(mapNullableFn(mapResultFn(tsconfig => tsconfig.options.noEmit)))
-        .then(result => result != null && isSuccess(result) && result.value);
+        .then(result => result != null && isSuccess(result) && result.value)
+        .then(value => value ?? false);
 
     const isPrettier = isPrettierProject(project);
 
@@ -34,21 +35,17 @@ export async function updateLintFixScript(
 
     const newCommands = commands
         .then(async commands => {
-            const [existingTscCommand, commands2] = findExtract(
-                commands,
-                command => !!command.match(/^tsc(\s|$)/)
+            const [existingTscCommand, commands2] = findExtract(commands, command =>
+                Boolean(command.match(/^tsc(\s|$)/u))
             );
-            const [existingEslintCommand, commands3] = findExtract(
-                commands2,
-                command => !!command.match(/^eslint(\s|$)/)
+            const [existingEslintCommand, commands3] = findExtract(commands2, command =>
+                Boolean(command.match(/^eslint(\s|$)/u))
             );
-            const [existingTslintCommand, commands4] = findExtract(
-                commands3,
-                command => !!command.match(/^tslint(\s|$)/)
+            const [existingTslintCommand, commands4] = findExtract(commands3, command =>
+                Boolean(command.match(/^tslint(\s|$)/u))
             );
-            const [existingPrettierCommand, commands5] = findExtract(
-                commands4,
-                command => !!command.match(/^prettier(\s|$)/)
+            const [existingPrettierCommand, commands5] = findExtract(commands4, command =>
+                Boolean(command.match(/^prettier(\s|$)/u))
             );
 
             const tscCommand = Promise.resolve(

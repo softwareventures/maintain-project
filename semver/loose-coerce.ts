@@ -1,6 +1,8 @@
-import {coerce, parse, SemVer} from "semver";
+import type {SemVer} from "semver";
+import {coerce, parse} from "semver";
+import {notNull} from "@softwareventures/nullable";
 
-const zero = parse("0.0.0") as SemVer;
+const zero = notNull(parse("0.0.0"));
 
 export function looseCoerce(version: string): SemVer {
     return coerce(version) ?? zero;

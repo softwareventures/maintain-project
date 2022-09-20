@@ -1,5 +1,6 @@
 import {promises as fs} from "fs";
-import {TemplateId, templatePath} from "./template";
+import type {TemplateId} from "./template";
+import {templatePath} from "./template";
 
 export async function readTemplateText(
     templateId: TemplateId,

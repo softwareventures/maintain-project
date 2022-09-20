@@ -1,7 +1,8 @@
 import {resolve} from "path";
 import {mapFn} from "@softwareventures/array";
-import {ProjectSource} from "../project/project";
-import {combineAsyncResults, mapFailureFn, Result, success} from "../result/result";
+import type {ProjectSource} from "../project/project";
+import type {Result} from "../result/result";
+import {combineAsyncResults, mapFailureFn, success} from "../result/result";
 import {yarn} from "../yarn/yarn";
 import {readProjectScript} from "../npm/read-script";
 import {isPrettierProject} from "./is-prettier-project";

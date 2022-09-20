@@ -1,9 +1,12 @@
-import {commit, CommitFailureReason} from "../fs-stage/commit";
+import type {CommitFailureReason} from "../fs-stage/commit";
+import {commit} from "../fs-stage/commit";
 import {emptyDirectory} from "../fs-stage/directory";
-import {FsStage} from "../fs-stage/fs-stage";
-import {bindAsyncResultFn, chainAsyncResults, Result, throwFailureFn} from "../result/result";
+import type {FsStage} from "../fs-stage/fs-stage";
+import type {Result} from "../result/result";
+import {bindAsyncResultFn, chainAsyncResults, throwFailureFn} from "../result/result";
 import {writeEsLintIgnore} from "../eslint/write";
-import {gitInit, GitInitFailureReason} from "../git/init";
+import type {GitInitFailureReason} from "../git/init";
+import {gitInit} from "../git/init";
 import {writeGitIgnore} from "../git/write";
 import {writeGitHubConfig} from "../github/write";
 import {writeIdeaProjectFiles} from "../idea/write";
@@ -12,12 +15,14 @@ import {writePrettierIgnore} from "../prettier/write";
 import {writeRenovateConfig} from "../renovate/write";
 import {writeTypeScriptFiles} from "../typescript/write";
 import {writeWebpackConfig} from "../webpack/write";
-import {yarnFix, YarnFixFailureReason} from "../yarn/fix";
-import {yarnInstall, YarnInstallFailureReason} from "../yarn/install";
+import type {YarnFixFailureReason} from "../yarn/fix";
+import {yarnFix} from "../yarn/fix";
+import type {YarnInstallFailureReason} from "../yarn/install";
+import {yarnInstall} from "../yarn/install";
 import {writeLicense} from "../license/write";
 import {writeHuskyConfig} from "../husky/write";
 import {writeCommitlintConfig} from "../commitlint/write";
-import {Project} from "./project";
+import type {Project} from "./project";
 
 export type InitResult = Result<InitFailureReason>;
 

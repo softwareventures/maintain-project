@@ -1,6 +1,7 @@
 import {sep} from "path";
-import {ProjectSource} from "../project/project";
-import {readProjectXml, ReadXmlResult} from "../project/read-xml";
+import type {ProjectSource} from "../project/project";
+import type {ReadXmlResult} from "../project/read-xml";
+import {readProjectXml} from "../project/read-xml";
 
 export async function readProjectRunConfiguration(
     project: ProjectSource,

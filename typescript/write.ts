@@ -1,7 +1,8 @@
-import {FsStage, insert, insertFn, InsertResult} from "../fs-stage/fs-stage";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import {insert, insertFn} from "../fs-stage/fs-stage";
 import {chainAsyncResultsFn, chainResults, success} from "../result/result";
 import {copyFromTemplate} from "../template/copy";
-import {Project} from "../project/project";
+import type {Project} from "../project/project";
 import {projectTemplateId} from "../template/project-template-id";
 
 export function writeTypeScriptFiles(

@@ -1,5 +1,5 @@
 import {JSDOM} from "jsdom";
-import {TemplateId} from "./template";
+import type {TemplateId} from "./template";
 import {readTemplateText} from "./read-text";
 
 export async function readTemplateXml(

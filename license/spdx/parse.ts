@@ -1,6 +1,7 @@
 import {first, tail} from "@softwareventures/array";
-import {scanSpdxExpression, SpdxToken} from "./scan";
-import {
+import type {SpdxToken} from "./scan";
+import {scanSpdxExpression} from "./scan";
+import type {
     CombinationOperator,
     CompoundExpression,
     SimpleExpression,

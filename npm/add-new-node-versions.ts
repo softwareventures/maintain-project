@@ -2,8 +2,8 @@ import chain from "@softwareventures/chain";
 import {any, append, excludeFn, first} from "@softwareventures/array";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
-import {Project} from "../project/project";
-import {FsStageUpdate} from "../project/update";
+import type {Project} from "../project/project";
+import type {FsStageUpdate} from "../project/update";
 import {toAsyncNullable} from "../result/result";
 import {nodeVersionRange} from "../node/version-range";
 import {insert} from "../fs-stage/fs-stage";
@@ -36,13 +36,19 @@ export async function addNewNodeVersionsToPackageJson(
 
     const resultVersionRange = nodeVersionRange(resultVersions);
 
-    const file = modifyPackageJson(project, packageJson => ({
-        ...packageJson,
-        engines: {
-            ...packageJson?.engines,
-            node: resultVersionRange
-        }
-    }));
+    const file = modifyPackageJson(
+        project,
+        packageJson =>
+            ({
+                ...packageJson,
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+                engines: {
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                    ...packageJson?.engines,
+                    node: resultVersionRange
+                }
+            } as unknown)
+    );
 
     return toAsyncNullable(file).then(
         mapNullableFn(file => ({

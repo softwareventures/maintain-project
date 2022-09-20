@@ -1,7 +1,11 @@
-import {failure, mapResultFn, Result} from "../result/result";
-import {ProjectSource} from "./project";
-import {readProjectText, ReadTextFailureReason} from "./read-text";
+import type {Result} from "../result/result";
+import {failure, mapResultFn} from "../result/result";
+import type {ProjectSource} from "./project";
+import type {ReadTextFailureReason} from "./read-text";
+import {readProjectText} from "./read-text";
 
+// FIXME Use `unknown`
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ReadJsonResult = Result<ReadJsonFailureReason, any>;
 
 export type ReadJsonFailureReason = ReadTextFailureReason | InvalidJson;

@@ -1,5 +1,6 @@
-import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
-import {Project} from "../project/project";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import {insert} from "../fs-stage/fs-stage";
+import type {Project} from "../project/project";
 import {copyFromTemplate} from "../template/copy";
 import {projectTemplateId} from "../template/project-template-id";
 

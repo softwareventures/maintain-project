@@ -1,4 +1,4 @@
-import {ProjectSource} from "../project/project";
+import type {ProjectSource} from "../project/project";
 import {projectDevDependsOn} from "../project/dev-depends-on";
 
 export async function isPrettierProject(project: ProjectSource): Promise<boolean> {

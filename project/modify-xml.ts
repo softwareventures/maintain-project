@@ -1,8 +1,11 @@
-import {JSDOM} from "jsdom";
-import {mapResultFn, Result} from "../result/result";
-import {File, textFile} from "../fs-stage/file";
-import {ProjectSource} from "./project";
-import {readProjectXml, ReadXmlFailureReason} from "./read-xml";
+import type {JSDOM} from "jsdom";
+import type {Result} from "../result/result";
+import {mapResultFn} from "../result/result";
+import type {File} from "../fs-stage/file";
+import {textFile} from "../fs-stage/file";
+import type {ProjectSource} from "./project";
+import type {ReadXmlFailureReason} from "./read-xml";
+import {readProjectXml} from "./read-xml";
 
 export async function modifyProjectXml(
     project: ProjectSource,

@@ -1,19 +1,21 @@
 import {map} from "@softwareventures/array";
 import {concatMap, filter, fold, toArray} from "@softwareventures/iterable";
-import {
-    asyncFilter,
-    asyncFold,
-    AsyncIterableLike,
-    combineAsync
-} from "../collections/async-iterable";
+import type {AsyncIterableLike} from "../collections/async-iterable";
+import {asyncFilter, asyncFold, combineAsync} from "../collections/async-iterable";
 
+// https://github.com/typescript-eslint/typescript-eslint/issues/5644
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 export type Result<TReason = void, TValue = void> = Success<TValue> | Failure<TReason>;
 
+// https://github.com/typescript-eslint/typescript-eslint/issues/5644
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 export interface Success<T = void> {
     readonly type: "success";
     readonly value: T;
 }
 
+// https://github.com/typescript-eslint/typescript-eslint/issues/5644
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 export interface Failure<T = void> {
     readonly type: "failure";
     readonly reasons: readonly T[];
@@ -77,6 +79,8 @@ export function mapAsyncResultFn<TReason, TValue, TNewValue>(
     return async result => mapAsyncResult(result, f);
 }
 
+// https://github.com/typescript-eslint/typescript-eslint/issues/5644
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 export function bindResult<TReason, TNewReason = TReason, TValue = void, TNewValue = void>(
     result: Result<TReason, TValue>,
     f: (value: TValue) => Result<TNewReason | TReason, TNewValue>
@@ -88,6 +92,8 @@ export function bindResult<TReason, TNewReason = TReason, TValue = void, TNewVal
     }
 }
 
+// https://github.com/typescript-eslint/typescript-eslint/issues/5644
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 export function bindResultFn<TReason, TNewReason = TReason, TValue = void, TNewValue = void>(
     f: (value: TValue) => Result<TNewReason | TReason, TNewValue>
 ): (result: Result<TReason, TValue>) => Result<TNewReason | TReason, TNewValue> {
@@ -97,7 +103,11 @@ export function bindResultFn<TReason, TNewReason = TReason, TValue = void, TNewV
 export async function bindAsyncResult<
     TReason,
     TNewReason = TReason,
+    // https://github.com/typescript-eslint/typescript-eslint/issues/5644
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     TValue = void,
+    // https://github.com/typescript-eslint/typescript-eslint/issues/5644
+    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
     TNewValue = void
 >(
     result: Result<TReason, TValue>,
@@ -110,6 +120,8 @@ export async function bindAsyncResult<
     }
 }
 
+// https://github.com/typescript-eslint/typescript-eslint/issues/5644
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
 export function bindAsyncResultFn<TReason, TNewReason = TReason, TValue = void, TNewValue = void>(
     f: (value: TValue) => PromiseLike<Result<TNewReason | TReason, TNewValue>>
 ): (result: Result<TReason, TValue>) => Promise<Result<TNewReason | TReason, TNewValue>> {
@@ -182,7 +194,7 @@ export function chainResults<TReason, TValue>(
     initial: TValue,
     actions: Iterable<(value: TValue) => Result<TReason, TValue>>
 ): Result<TReason, TValue> {
-    return fold(actions, bindResult, {type: "success", value: initial} as Result<TReason, TValue>);
+    return fold(actions, bindResult, success(initial) as Result<TReason, TValue>);
 }
 
 export function chainResultsFn<TReason, TValue>(
@@ -253,8 +265,8 @@ export function allResults<T extends Array<Result<unknown, unknown>>>(
         results,
         (acc, result) =>
             bindResult(acc, accValues => mapResult(result, value => [...accValues, value])),
-        success([]) as Result<any, any[]>
-    ) as any;
+        success([]) as Result<unknown, unknown[]>
+    ) as unknown as Result<InferReasons<T>, {[K in keyof T]: InferValue<T[K]>}>;
 }
 
 type InferAwaited<T> = T extends Promise<infer Value> ? Value : T;
@@ -267,7 +279,13 @@ export async function allAsyncResults<
 ): Promise<
     Result<InferReasons<InferAwaiteds<T>>, {[K in keyof T]: InferValue<InferAwaited<T[K]>>}>
 > {
-    return Promise.all(results).then(results => allResults(results) as any);
+    return Promise.all(results).then(
+        results =>
+            allResults(results) as unknown as Result<
+                InferReasons<InferAwaiteds<T>>,
+                {[K in keyof T]: InferValue<InferAwaited<T[K]>>}
+            >
+    );
 }
 
 export function toNullable<TValue>(result: Result<unknown, TValue>): TValue | null {

@@ -1,14 +1,14 @@
 import {sep} from "path";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {first, tail} from "@softwareventures/array";
-import {Project} from "../project/project";
+import type {Project} from "../project/project";
 import {toAsyncNullable} from "../result/result";
 import {readProjectXml} from "../project/read-xml";
 import {readTemplateXml} from "../template/read-xml";
 import {projectTemplateId} from "../template/project-template-id";
 import {insert} from "../fs-stage/fs-stage";
 import {textFile} from "../fs-stage/file";
-import {FsStageUpdate} from "../project/update";
+import type {FsStageUpdate} from "../project/update";
 import {formatIdeaXml} from "./format-idea-xml";
 
 export async function enableDisableIdeaEslintInspection(
@@ -47,7 +47,7 @@ export async function enableDisableIdeaEslintInspection(
                 const tools = dom.window.document.querySelectorAll(
                     "component:root>profile>inspection_tool[class=Eslint]"
                 );
-                tail(tools).forEach(tool => tool.remove());
+                tail(tools).forEach(tool => void tool.remove());
                 const tool = first(tools);
                 if (project.eslint == null) {
                     tool?.remove();

@@ -1,5 +1,6 @@
 import {toArray, concatMap, zip} from "@softwareventures/iterable";
-import {failure, isSuccess, Result, success} from "../result/result";
+import type {Result} from "../result/result";
+import {failure, isSuccess, success} from "../result/result";
 
 export function copy<T, U>(map: ReadonlyMap<T, U>): Map<T, U> {
     return new Map(map);
@@ -10,7 +11,7 @@ export function empty<T, U>(map: ReadonlyMap<T, U>): boolean {
 }
 
 export function mapValue<T, U, V>(map: ReadonlyMap<T, U>, f: (value: U, key: T) => V): Map<T, V> {
-    const result = new Map();
+    const result = new Map<T, V>();
     for (const [key, value] of map.entries()) {
         result.set(key, f(value, key));
     }
@@ -35,8 +36,8 @@ export function partitionValue<TKey, TValue>(
     map: ReadonlyMap<TKey, TValue>,
     predicate: (value: TValue) => boolean
 ): [Map<TKey, TValue>, Map<TKey, TValue>] {
-    const a = new Map();
-    const b = new Map();
+    const a = new Map<TKey, TValue>();
+    const b = new Map<TKey, TValue>();
     for (const [key, value] of map.entries()) {
         if (predicate(value)) {
             a.set(key, value);

@@ -1,5 +1,6 @@
 import releaseSchedule = require("node-releases/data/release-schedule/release-schedule.json");
-import {afterOrEqual, beforeOrEqual, Date, parseIso8601} from "@softwareventures/date";
+import type {Date} from "@softwareventures/date";
+import {afterOrEqual, beforeOrEqual, parseIso8601} from "@softwareventures/date";
 import chain from "@softwareventures/chain";
 import {entries} from "@softwareventures/dictionary";
 import {filterFn, mapFn} from "@softwareventures/array";
@@ -13,7 +14,7 @@ export function nodeReleasesSupportedInDateRange(dates: DateRange): string[] {
     return chain(entries(releaseSchedule))
         .map(
             mapFn(([version, {start, end}]) => ({
-                version: version.replace(/^v/, ""),
+                version: version.replace(/^v/u, ""),
                 start: parseIso8601(start),
                 end: parseIso8601(end)
             }))

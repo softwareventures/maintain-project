@@ -1,5 +1,7 @@
-import {Dirent, promises as fs} from "fs";
-import {TemplateId, templatePath} from "./template";
+import type {Dirent} from "fs";
+import {promises as fs} from "fs";
+import type {TemplateId} from "./template";
+import {templatePath} from "./template";
 
 export async function readTemplateDirectory(
     templateId: TemplateId,

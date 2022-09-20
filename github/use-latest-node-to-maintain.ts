@@ -1,8 +1,8 @@
 import {last, noneNull} from "@softwareventures/array";
 import {mapNullable, mapNullableFn, notNull} from "@softwareventures/nullable";
-import {FsStageUpdate} from "../project/update";
+import type {FsStageUpdate} from "../project/update";
 import {readProjectYamlAsDocument} from "../project/read-yaml";
-import {Project} from "../project/project";
+import type {Project} from "../project/project";
 import {
     allAsyncResults,
     bindAsyncResultFn,
@@ -17,7 +17,7 @@ import {insert} from "../fs-stage/fs-stage";
 export async function useLatestNodeToMaintain(project: Project): Promise<FsStageUpdate | null> {
     const workflow = readProjectYamlAsDocument(project, ".github/workflows/maintain-project.yml");
     const oldVersion = workflow
-        .then(mapResultFn(workflow => workflow.getIn(["env", "NODE_VERSION"])))
+        .then(mapResultFn(workflow => workflow.getIn(["env", "NODE_VERSION"]) as unknown))
         .then(mapResultFn(mapNullableFn(String)));
     const newVersion = mapNullable(
         last(looseSort(project.node.currentReleases)),

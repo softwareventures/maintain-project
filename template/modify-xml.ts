@@ -1,7 +1,7 @@
-import {JSDOM} from "jsdom";
-import {File} from "../fs-stage/file";
+import type {JSDOM} from "jsdom";
+import type {File} from "../fs-stage/file";
 import {formatIdeaXml} from "../idea/format-idea-xml";
-import {TemplateId} from "./template";
+import type {TemplateId} from "./template";
 import {readTemplateXml} from "./read-xml";
 
 export interface ModifyTemplateXmlOptions {

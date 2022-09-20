@@ -1,6 +1,7 @@
-import {Document, parseDocument} from "yaml";
+import type {Document} from "yaml";
+import {parseDocument} from "yaml";
 import {readTemplateText} from "./read-text";
-import {TemplateId} from "./template";
+import type {TemplateId} from "./template";
 
 export async function readTemplateYamlAsDocument(
     templateId: TemplateId,

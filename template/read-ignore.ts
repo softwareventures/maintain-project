@@ -3,10 +3,10 @@ import {anyFn} from "@softwareventures/array";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {readIgnore} from "../ignore/read";
 import {failure, success} from "../result/result";
-import {Ignore} from "../ignore/ignore";
+import type {Ignore} from "../ignore/ignore";
 import {readTemplateDirectory} from "./read-directory";
 import {readTemplateText} from "./read-text";
-import {TemplateId} from "./template";
+import type {TemplateId} from "./template";
 
 export async function readTemplateIgnore(
     templateId: TemplateId,

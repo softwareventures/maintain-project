@@ -1,6 +1,7 @@
-import {FsStage, insert, InsertResult} from "../fs-stage/fs-stage";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
+import {insert} from "../fs-stage/fs-stage";
 import {modifyTemplateXml} from "../template/modify-xml";
-import {Project} from "../project/project";
+import type {Project} from "../project/project";
 import {projectTemplateId} from "../template/project-template-id";
 
 export function writeIdeaModulesXml(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
@@ -13,13 +14,13 @@ export function writeIdeaModulesXml(project: Project): (fsStage: FsStage) => Pro
             const module = document.querySelector("project:root>component>modules>module");
             const fileUrl = module
                 ?.getAttribute("fileurl")
-                ?.replace(/[^/]*\.iml$/, `${project.npmPackage.name}.iml`);
+                ?.replace(/[^/]*\.iml$/u, `${project.npmPackage.name}.iml`);
             if (fileUrl != null) {
                 module?.setAttribute("fileurl", fileUrl);
             }
             const filePath = module
                 ?.getAttribute("filepath")
-                ?.replace(/[^/]*\.iml$/, `${project.npmPackage.name}.iml`);
+                ?.replace(/[^/]*\.iml$/u, `${project.npmPackage.name}.iml`);
             if (filePath != null) {
                 module?.setAttribute("filepath", filePath);
             }

@@ -1,4 +1,4 @@
-import {Comparison} from "@softwareventures/ordered";
+import type {Comparison} from "@softwareventures/ordered";
 import {compare} from "semver";
 import {looseCoerce} from "./loose-coerce";
 

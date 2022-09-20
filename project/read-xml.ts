@@ -1,7 +1,9 @@
 import {JSDOM} from "jsdom";
-import {failure, mapResultFn, Result} from "../result/result";
-import {ProjectSource} from "./project";
-import {readProjectText, ReadTextFailureReason} from "./read-text";
+import type {Result} from "../result/result";
+import {failure, mapResultFn} from "../result/result";
+import type {ProjectSource} from "./project";
+import type {ReadTextFailureReason} from "./read-text";
+import {readProjectText} from "./read-text";
 
 export type ReadXmlResult = Result<ReadXmlFailureReason, JSDOM>;
 

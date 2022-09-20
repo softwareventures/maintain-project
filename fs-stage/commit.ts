@@ -4,12 +4,13 @@ import chain from "@softwareventures/chain";
 import {mapFn} from "@softwareventures/iterable";
 import {hasProperty} from "unknown";
 import {liftPromises, liftResults, mapValue} from "../collections/maps";
-import {failure, mapAsyncResultFn, mapResultFn, Result, success} from "../result/result";
-import {Directory} from "./directory";
-import {File} from "./file";
-import {FileExists} from "./file-exists";
-import {FsStage} from "./fs-stage";
-import {NotADirectory} from "./not-a-directory";
+import type {Result} from "../result/result";
+import {failure, mapAsyncResultFn, mapResultFn, success} from "../result/result";
+import type {Directory} from "./directory";
+import type {File} from "./file";
+import type {FileExists} from "./file-exists";
+import type {FsStage} from "./fs-stage";
+import type {NotADirectory} from "./not-a-directory";
 
 export type CommitResult = Result<CommitFailureReason>;
 
@@ -69,7 +70,7 @@ async function openDirectory(options: OpenOptions<Directory>): Promise<OpenDirec
 
     try {
         await fs.mkdir(options.path);
-    } catch (reason) {
+    } catch (reason: unknown) {
         if (!hasProperty(reason, "code") || reason.code !== "EEXIST") {
             throw reason;
         } else if (await fs.stat(options.path).then(stat => !stat.isDirectory())) {
@@ -98,8 +99,8 @@ async function openFile(options: OpenOptions<File>): Promise<OpenFileResult> {
     const flags = options.overwrite ? "r+" : "wx+";
     return fs
         .open(options.path, flags)
-        .catch(async reason => {
-            if (reason.code === "ENOENT" && options.overwrite) {
+        .catch(async (reason: unknown) => {
+            if (hasProperty(reason, "code") && reason.code === "ENOENT" && options.overwrite) {
                 return fs.open(options.path, "wx+");
             } else {
                 throw reason;
@@ -108,7 +109,7 @@ async function openFile(options: OpenOptions<File>): Promise<OpenFileResult> {
         .then(
             fileHandle => success({type: "open-file", fileHandle, data: options.node.data}),
             reason => {
-                if (reason.code === "EEXIST") {
+                if (hasProperty(reason, "code") && reason.code === "EEXIST") {
                     return failure([{type: "file-exists", path: options.path}]);
                 } else {
                     throw reason;

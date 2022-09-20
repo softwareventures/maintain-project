@@ -1,6 +1,6 @@
 import {anyFn} from "@softwareventures/array";
-import {Project} from "../project/project";
-import {Update} from "../project/update";
+import type {Project} from "../project/project";
+import type {Update} from "../project/update";
 import {projectFileExists} from "../project/file-exists";
 import {writeLicense} from "./write";
 

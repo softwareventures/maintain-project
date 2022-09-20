@@ -1,8 +1,8 @@
-import {Document} from "yaml";
-import {ProjectSource} from "../project/project";
-import {ReadYamlFailureReason} from "../project/read-yaml";
-import {Result} from "../result/result";
-import {File} from "../fs-stage/file";
+import type {Document} from "yaml";
+import type {ProjectSource} from "../project/project";
+import type {ReadYamlFailureReason} from "../project/read-yaml";
+import type {Result} from "../result/result";
+import type {File} from "../fs-stage/file";
 import {modifyProjectYaml} from "../project/modify-yaml";
 
 export async function modifyCiWorkflow(

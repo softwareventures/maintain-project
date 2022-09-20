@@ -1,5 +1,5 @@
 import {and} from "@softwareventures/array";
-import {ProjectSource} from "../project/project";
+import type {ProjectSource} from "../project/project";
 import {projectFileExists} from "../project/file-exists";
 import {projectDevDependsOn} from "../project/dev-depends-on";
 

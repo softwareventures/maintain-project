@@ -1,5 +1,5 @@
-import {Update} from "../project/update";
-import {Project} from "../project/project";
+import type {Update} from "../project/update";
+import type {Project} from "../project/project";
 import {yarnFixIfAvailable} from "./fix";
 
 export async function applyCodeStyle(project: Project): Promise<Update | null> {
