@@ -29,7 +29,7 @@
     "./index.js"
   ],
   "engines": {
-    "node": "^14 || >=16"
+    "node": "^14 || ^16 || >=18"
   },
   "dependencies": {
     "@eslint/eslintrc": "1.3.2",
