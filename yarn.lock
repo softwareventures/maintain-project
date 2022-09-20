@@ -633,12 +633,12 @@
   dependencies:
     tslib "2.4.0"
 
-"@softwareventures/template-webpack-project@1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@softwareventures/template-webpack-project/-/template-webpack-project-1.4.2.tgz#97874508b2d967ef3176432768371448187d0591"
-  integrity sha512-NbFf+AnLav6aQ3jylz9M9IhBnrnQBSRqfkH+MbsbpFoXLfFoq2sk6EU1rQd61iyjJejKHxBvwsNUjGOqx5HSTg==
+"@softwareventures/template-webpack-project@2.1.5":
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/@softwareventures/template-webpack-project/-/template-webpack-project-2.1.5.tgz#9c5c4c4a5214e6bf545c8f269ee4e3831c7746ed"
+  integrity sha512-6QWx9pZHRRrOA7Kgfd4KEiiBAdDMx2HuitdZzp15kWxLDoDiyJ9wHyPgYUDPPM6FLDeMCIPkukRi5oQO/d2mrA==
   dependencies:
-    "@types/webpack-env" "1.17.0"
+    "@types/webpack-env" "1.18.0"
     tslib "2.4.0"
 
 "@softwareventures/tsconfig@6.0.0":
@@ -787,10 +787,10 @@
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-4.0.2.tgz#6286b4c7228d58ab7866d19716f3696e03a09397"
   integrity sha512-Q5vtl1W5ue16D+nIaW8JWebSSraJVlK+EthKn7e7UcD4KWsaSJ8BqGPXNaPghgtcn/fhvrN17Tv8ksUsQpiplw==
 
-"@types/webpack-env@1.17.0":
-  version "1.17.0"
-  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.17.0.tgz#f99ce359f1bfd87da90cc4a57cab0a18f34a48d0"
-  integrity sha512-eHSaNYEyxRA5IAG0Ym/yCyf86niZUIF/TpWKofQI/CVfh5HsMEUyfE2kwFxha4ow0s5g0LfISQxpDKjbRDrizw==
+"@types/webpack-env@1.18.0":
+  version "1.18.0"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.18.0.tgz#ed6ecaa8e5ed5dfe8b2b3d00181702c9925f13fb"
+  integrity sha512-56/MAlX5WMsPVbOg7tAxnYvNYMMWr/QJiIp6BxVSW3JJXUVzzOn64qW8TzQyMSqSUFM2+PVI4aUHcHOzIz/1tg==
 
 "@types/wordwrap@1.0.1":
   version "1.0.1"
