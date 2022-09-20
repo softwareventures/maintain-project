@@ -62,7 +62,7 @@ export function exclude<T>(
     iterable: AsyncIterableLike<T>,
     predicate: (element: T) => Promise<boolean> | boolean
 ): AsyncIterable<T> {
-    return filter(iterable, element => !predicate(element));
+    return filter(iterable, async element => !(await predicate(element)));
 }
 
 export const asyncExclude = exclude;
