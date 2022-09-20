@@ -16,8 +16,8 @@ export interface UnknownGitHost {
 }
 
 export interface GitHostOptions {
-    readonly user?: string;
-    readonly project?: string;
+    readonly user?: string | undefined;
+    readonly project?: string | undefined;
 }
 
 export function createGitHost(options: ProjectOptions): GitHost {

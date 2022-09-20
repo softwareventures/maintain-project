@@ -42,12 +42,15 @@ export async function updateCopyrightYear(project: Project): Promise<Update | nu
                     .map(license => license.split("\n"))
                     .map(mapFn(line => line.replace(/\r$/u, "")))
                     .map(partitionWhileFn(line => line.match(copyrightLineRegExp) == null))
-                    .map(([titleLines, followingLines]) => [
-                        titleLines,
-                        ...partitionWhile(followingLines, line =>
-                            Boolean(line.match(copyrightLineRegExp))
-                        )
-                    ]).value;
+                    .map(
+                        ([titleLines, followingLines]) =>
+                            [
+                                titleLines,
+                                ...partitionWhile(followingLines, line =>
+                                    Boolean(line.match(copyrightLineRegExp))
+                                )
+                            ] as const
+                    ).value;
 
                 const copyrights = chain(copyrightLines)
                     .map(

@@ -11,7 +11,7 @@ import type {InsertFailureReason} from "./insert-failure-reason";
 
 export interface FsStage {
     readonly root: Directory;
-    readonly overwrite?: boolean;
+    readonly overwrite?: boolean | undefined;
 }
 
 export type InsertResult = Result<InsertFailureReason, FsStage>;

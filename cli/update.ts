@@ -10,7 +10,7 @@ import {updateProject} from "../project/update";
 import type {Project} from "../project/project";
 
 export interface UpdateOptions {
-    readonly breaking?: boolean;
+    readonly breaking?: boolean | undefined;
 }
 
 export function cliUpdate(path: string, {breaking}: UpdateOptions): void {

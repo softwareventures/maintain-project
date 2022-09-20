@@ -9,7 +9,7 @@ export const emptyDirectory: Directory = {type: "directory", entries: new Map()}
 
 export interface ListOptions {
     readonly directory: Directory;
-    readonly recursive?: boolean;
+    readonly recursive?: boolean | undefined;
 }
 
 export interface Entry {

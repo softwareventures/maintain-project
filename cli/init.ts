@@ -9,15 +9,15 @@ import {createProject} from "../project/create";
 import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
 
 export interface InitOptions {
-    readonly scope?: string;
-    readonly name?: string;
-    readonly githubOwner?: string;
-    readonly githubProject?: string;
-    readonly webapp?: boolean;
-    readonly authorName?: string;
-    readonly authorEmail?: string;
-    readonly license?: string;
-    readonly copyrightHolder?: string;
+    readonly scope?: string | undefined;
+    readonly name?: string | undefined;
+    readonly githubOwner?: string | undefined;
+    readonly githubProject?: string | undefined;
+    readonly webapp?: boolean | undefined;
+    readonly authorName?: string | undefined;
+    readonly authorEmail?: string | undefined;
+    readonly license?: string | undefined;
+    readonly copyrightHolder?: string | undefined;
 }
 
 export function cliInit(path: string, options: InitOptions): void {

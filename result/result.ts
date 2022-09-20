@@ -23,7 +23,7 @@ export interface Failure<T = void> {
 
 export function success(): Success;
 export function success<T>(value: T): Success<T>;
-export function success<T>(value?: T): Success<T | undefined> {
+export function success<T>(value?: T | undefined): Success<T | undefined> {
     return {type: "success", value};
 }
 
@@ -298,7 +298,10 @@ export async function toAsyncNullable<TValue>(
     return result.then(toNullable);
 }
 
-export function throwFailure<TValue>(result: Result<unknown, TValue>, message?: string): TValue {
+export function throwFailure<TValue>(
+    result: Result<unknown, TValue>,
+    message?: string | undefined
+): TValue {
     if (result.type === "success") {
         return result.value;
     } else {

@@ -6,8 +6,8 @@ import {entries} from "@softwareventures/dictionary";
 import {filterFn, mapFn} from "@softwareventures/array";
 
 export interface DateRange {
-    readonly start?: Date;
-    readonly end?: Date;
+    readonly start?: Date | undefined;
+    readonly end?: Date | undefined;
 }
 
 export function nodeReleasesSupportedInDateRange(dates: DateRange): string[] {

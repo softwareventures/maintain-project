@@ -32,7 +32,11 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
     const npmPackage = packageJson
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         .then(mapResultFn(packageJson => String(packageJson?.name ?? "")))
-        .then(mapResultFn(name => /^(?:(@.*?)\/)?(.*)$/u.exec(String(name)) ?? ["", "", ""]))
+        .then(
+            mapResultFn(
+                name => /^(?:(@.*?)\/)?(.*)$/u.exec(String(name)) ?? (["", undefined, ""] as const)
+            )
+        )
         .then(mapResultFn(([_, scope, name]) => ({scope, name})));
 
     const git = readGitProject(project);

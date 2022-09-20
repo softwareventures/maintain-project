@@ -5,20 +5,27 @@ const byUsername = new Map([
 
 /** A subset of ProjectOptions used by the guessCopyrightHolder function. */
 export interface GuessCopyrightHolderOptions {
-    readonly license?: {
-        readonly copyrightHolder?: string;
-    };
-    readonly npmPackage?: {
-        readonly scope?: string;
-    };
+    readonly license?:
+        | undefined
+        | {
+              readonly copyrightHolder?: string | undefined;
+          };
+    readonly npmPackage?:
+        | undefined
+        | {
+              readonly scope?: string | undefined;
+          };
     readonly gitHost?:
         | {
-              readonly user?: string;
+              readonly user?: string | undefined;
           }
+        | undefined
         | object;
-    readonly author?: {
-        readonly name?: string;
-    };
+    readonly author?:
+        | undefined
+        | {
+              readonly name?: string | undefined;
+          };
 }
 
 export function guessCopyrightHolder(options: GuessCopyrightHolderOptions): string | undefined {

@@ -13,7 +13,9 @@ export function findExtract<T>(
     predicate: (element: T) => boolean
 ): [T | null, T[]] {
     const index = findIndex(array, predicate);
-    return index == null ? [null, Array.from(array)] : [array[index], excludeIndex(array, index)];
+    return index == null
+        ? [null, Array.from(array)]
+        : [array[index] as T, excludeIndex(array, index)];
 }
 
 export function findExtractFn<T, U extends T>(
@@ -38,7 +40,7 @@ export function splitWhere<T>(array: ArrayLike<T>, predicate: (element: T) => bo
     const result = [current];
 
     for (let i = 0; i < array.length; ++i) {
-        const element = array[i];
+        const element = array[i] as T;
         if (predicate(element)) {
             current = [];
             result.push(current);

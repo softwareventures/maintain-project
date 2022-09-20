@@ -1,6 +1,6 @@
 import type {Dirent} from "fs";
 import {excludeNull, filterFn, mapFn} from "@softwareventures/array";
-import {mapNullFn} from "@softwareventures/nullable";
+import {mapNullFn, notNull} from "@softwareventures/nullable";
 import type {ReadTextResult} from "../project/read-text";
 import {mapResultFn, toNullable} from "../result/result";
 import {splitWhereFn} from "../collections/arrays";
@@ -54,7 +54,7 @@ export async function readIgnore({
             mapResultFn(
                 mapFn(
                     mapFn(([comment, entry]) =>
-                        comment == null ? ignoreEntry(entry) : ignoreComment(comment)
+                        comment == null ? ignoreEntry(notNull(entry)) : ignoreComment(comment)
                     )
                 )
             )

@@ -9,36 +9,40 @@ import type {EslintProject} from "../eslint/eslint-project";
 export interface Project {
     readonly path: string;
     readonly npmPackage: NpmPackage;
-    readonly git?: GitProject;
-    readonly gitHost?: GitHost;
+    readonly git?: GitProject | undefined;
+    readonly gitHost?: GitHost | undefined;
     readonly node: NodeVersions;
     readonly target: "npm" | "webapp";
-    readonly tslint?: TslintProject;
-    readonly eslint?: EslintProject;
+    readonly tslint?: TslintProject | undefined;
+    readonly eslint?: EslintProject | undefined;
     readonly author: {
-        readonly name?: string;
-        readonly email?: string;
+        readonly name?: string | undefined;
+        readonly email?: string | undefined;
     };
     readonly license: {
-        readonly spdxLicense?: SpdxLicense;
+        readonly spdxLicense?: SpdxLicense | undefined;
         readonly year: number;
-        readonly copyrightHolder?: string;
+        readonly copyrightHolder?: string | undefined;
     };
 }
 
 export interface ProjectOptions {
     readonly path: string;
-    readonly npmPackage?: NpmPackageOptions;
-    readonly gitHost?: GitHostOptions;
-    readonly target?: "npm" | "webapp";
-    readonly author?: {
-        readonly name?: string;
-        readonly email?: string;
-    };
-    readonly license?: {
-        readonly spdxLicense?: SpdxLicense;
-        readonly copyrightHolder?: string;
-    };
+    readonly npmPackage?: NpmPackageOptions | undefined;
+    readonly gitHost?: GitHostOptions | undefined;
+    readonly target?: "npm" | "webapp" | undefined;
+    readonly author?:
+        | undefined
+        | {
+              readonly name?: string | undefined;
+              readonly email?: string | undefined;
+          };
+    readonly license?:
+        | undefined
+        | {
+              readonly spdxLicense?: SpdxLicense | undefined;
+              readonly copyrightHolder?: string | undefined;
+          };
 }
 
 export type ProjectSource = Project | {readonly path: string};

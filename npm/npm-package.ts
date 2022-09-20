@@ -6,8 +6,8 @@ export interface NpmPackage extends NpmPackageOptions {
 }
 
 export interface NpmPackageOptions {
-    readonly name?: string;
-    readonly scope?: string;
+    readonly name?: string | undefined;
+    readonly scope?: string | undefined;
 }
 
 export function createNpmPackage(options: ProjectOptions): NpmPackage {

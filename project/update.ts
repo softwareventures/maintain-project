@@ -43,17 +43,17 @@ export type Update = FsStageUpdate | DirectUpdate;
 export interface FsStageUpdate {
     readonly type: "fs-stage-update";
     readonly log: string;
-    readonly breaking?: readonly string[];
+    readonly breaking?: readonly string[] | undefined;
     readonly apply: (stage: FsStage) => Promise<InsertResult>;
-    readonly updatedProject?: Project;
+    readonly updatedProject?: Project | undefined;
 }
 
 export interface DirectUpdate {
     readonly type: "direct-update";
     readonly log: string;
-    readonly breaking?: readonly string[];
+    readonly breaking?: readonly string[] | undefined;
     readonly apply: () => Promise<Result<UpdateStepFailureReason>>;
-    readonly updatedProject?: Project;
+    readonly updatedProject?: Project | undefined;
 }
 
 export type UpdateResult = Result<UpdateFailureReason, Project>;
@@ -64,7 +64,7 @@ export type UpdateStepFailureReason = YarnFixFailureReason | PrettierFixFailureR
 
 export interface UpdateProjectOptions {
     readonly project: Project;
-    readonly breaking?: boolean;
+    readonly breaking?: boolean | undefined;
 }
 
 export async function updateProject(options: UpdateProjectOptions): Promise<UpdateResult> {
