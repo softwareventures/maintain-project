@@ -54,7 +54,7 @@
     "@types/picomatch": "2.3.0",
     "@types/recursive-readdir": "2.2.1",
     "@types/semver": "7.3.12",
-    "@types/spdx-correct": "2.0.0",
+    "@types/spdx-correct": "3.1.0",
     "@types/wordwrap": "1.0.1",
     "commander": "9.4.0",
     "empty-dir": "3.0.0",
