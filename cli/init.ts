@@ -55,6 +55,8 @@ export function cliInit(path: string, options: InitOptions): void {
                                     return `Not a Directory: ${reason.path}`;
                                 case "git-init-failed":
                                     return "git init failed";
+                                case "yarn-set-version-failed":
+                                    return "yarn set version failed";
                                 case "yarn-install-failed":
                                     return "yarn install failed";
                                 case "yarn-fix-failed":
