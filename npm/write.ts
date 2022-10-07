@@ -1,5 +1,6 @@
 import chain from "@softwareventures/chain";
 import {mapNullable} from "@softwareventures/nullable";
+import {hasProperty} from "unknown";
 import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
 import {insert} from "../fs-stage/fs-stage";
 import {chainAsyncResultsFn, success} from "../result/result";
@@ -42,6 +43,18 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                     repository: gitHost == null ? undefined : repositoryShortcut(gitHost),
                     license:
                         mapNullable(project.license.spdxLicense, formatSpdxExpression) ?? undefined,
+                    scripts:
+                        hasProperty(json, "scripts") && typeof json.scripts === "object"
+                            ? {
+                                  ...json.scripts,
+                                  _postinstall: undefined,
+                                  postinstall: hasProperty(json.scripts, "postinstall")
+                                      ? json.scripts.postinstall
+                                      : hasProperty(json.scripts, "_postinstall")
+                                      ? json.scripts._postinstall
+                                      : undefined
+                              }
+                            : undefined,
                     engines: {
                         node: nodeVersionRange(project.node.currentReleases)
                     },
