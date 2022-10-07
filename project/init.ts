@@ -26,6 +26,8 @@ import type {YarnSetVersionFailureReason} from "../yarn/set-version-stable";
 import {yarnSetVersionStable} from "../yarn/set-version-stable";
 import type {YarnPluginImportFailureReason} from "../yarn/plugin-import-typescript";
 import {yarnPluginImportTypeScript} from "../yarn/plugin-import-typescript";
+import type {SetYarnLinkerFailureReason} from "../yarn/set-linker-to-node-modules";
+import {setYarnLinkerToNodeModules} from "../yarn/set-linker-to-node-modules";
 import type {Project} from "./project";
 
 export type InitResult = Result<InitFailureReason>;
@@ -35,6 +37,7 @@ export type InitFailureReason =
     | GitInitFailureReason
     | YarnSetVersionFailureReason
     | YarnPluginImportFailureReason
+    | SetYarnLinkerFailureReason
     | YarnInstallFailureReason
     | YarnFixFailureReason;
 
@@ -63,6 +66,7 @@ export default async function init(project: Project): Promise<InitResult> {
         .then(bindAsyncResultFn<InitFailureReason>(async () => gitInit(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnSetVersionStable(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnPluginImportTypeScript(project)))
+        .then(bindAsyncResultFn<InitFailureReason>(async () => setYarnLinkerToNodeModules(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnInstall(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnFix(project)));
 }

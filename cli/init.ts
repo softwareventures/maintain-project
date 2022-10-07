@@ -59,6 +59,8 @@ export function cliInit(path: string, options: InitOptions): void {
                                     return "yarn set version failed";
                                 case "yarn-plugin-import-failed":
                                     return "yarn plugin import failed";
+                                case "set-yarn-linker-failed":
+                                    return "failed to set yarn linker";
                                 case "yarn-install-failed":
                                     return "yarn install failed";
                                 case "yarn-fix-failed":
