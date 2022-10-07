@@ -24,6 +24,8 @@ import {writeHuskyConfig} from "../husky/write";
 import {writeCommitlintConfig} from "../commitlint/write";
 import type {YarnSetVersionFailureReason} from "../yarn/set-version-stable";
 import {yarnSetVersionStable} from "../yarn/set-version-stable";
+import type {YarnPluginImportFailureReason} from "../yarn/plugin-import-typescript";
+import {yarnPluginImportTypeScript} from "../yarn/plugin-import-typescript";
 import type {Project} from "./project";
 
 export type InitResult = Result<InitFailureReason>;
@@ -32,6 +34,7 @@ export type InitFailureReason =
     | CommitFailureReason
     | GitInitFailureReason
     | YarnSetVersionFailureReason
+    | YarnPluginImportFailureReason
     | YarnInstallFailureReason
     | YarnFixFailureReason;
 
@@ -59,6 +62,7 @@ export default async function init(project: Project): Promise<InitResult> {
         .then(async fsStage => commit(project.path, fsStage))
         .then(bindAsyncResultFn<InitFailureReason>(async () => gitInit(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnSetVersionStable(project)))
+        .then(bindAsyncResultFn<InitFailureReason>(async () => yarnPluginImportTypeScript(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnInstall(project)))
         .then(bindAsyncResultFn<InitFailureReason>(async () => yarnFix(project)));
 }
