@@ -37,7 +37,7 @@
     "@softwareventures/chain": "1.0.1",
     "@softwareventures/date": "3.0.0",
     "@softwareventures/dictionary": "1.0.1",
-    "@softwareventures/iterable": "2.0.2",
+    "@softwareventures/iterable": "2.1.0",
     "@softwareventures/nullable": "2.0.0",
     "@softwareventures/ordered": "1.1.0",
     "@softwareventures/promise": "1.0.2",
