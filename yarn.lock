@@ -617,10 +617,10 @@
   dependencies:
     tslib "2.3.1"
 
-"@softwareventures/promise@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/@softwareventures/promise/-/promise-1.0.2.tgz#cb3713bd412b208858320473e5db9bdbb3c2ed28"
-  integrity sha512-K58dHd3mD+yAPHuPMUY7ZYlICHSRSPkMzFcEArSaRqUR0ZO13CByHdXMiD0diDDMnvKOFFrWBJG756oiANwErQ==
+"@softwareventures/promise@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/promise/-/promise-2.0.0.tgz#1ca4a7296c4f164e71a98c419e86063bcb773152"
+  integrity sha512-KUvq91DZ9r3pyVrcC6HaCzNt6qkLFOvUZ+1xd9VUUYn9Rdykid0iHxqZwEp2HPPrK8+6ZDE+gRn6100zkCBasQ==
   dependencies:
     tslib "^2.3.1"
 
