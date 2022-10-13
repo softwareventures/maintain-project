@@ -587,37 +587,37 @@
     "@softwareventures/nullable" "^2.0.0"
     tslib "2.4.0"
 
-"@softwareventures/iterable@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/iterable/-/iterable-2.1.0.tgz#181c1ec7fe2f65818fe88a70b10320c00cdff85c"
-  integrity sha512-ze/8j7VWOli8SSPjtKwrB9B1zNcXuUId/721Y/GGplb8gmkvTeNKTbyFTjdjLX2kD+3jdvnWwr4pdp6rn4pzUg==
+"@softwareventures/iterable@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@softwareventures/iterable/-/iterable-3.0.2.tgz#cfb1ba0b51f66608d493003d1354a90cf66f0407"
+  integrity sha512-iT0TZ4sRc0fMSjFVL7sOa+aVjxv8IjFyPe+NdU1iKUYGP0uV7+HC6WYJiha68KC5nPoMtgbD5WrvWu3NRkK2oA==
   dependencies:
-    "@softwareventures/nullable" "^1.0.0 || ^1.2.1 || ^2.0.0"
-    "@softwareventures/ordered" "^0.2.2 || ^1.0.0"
+    "@softwareventures/nullable" "^1.0.0 || ^1.2.1 || ^2.0.0 || ^3.0.0"
+    "@softwareventures/ordered" "^0.2.2 || ^1.0.0 || ^2.0.0"
     tslib "2.4.0"
 
-"@softwareventures/nullable@3.0.0":
+"@softwareventures/nullable@3.0.0", "@softwareventures/nullable@^1.0.0 || ^1.2.1 || ^2.0.0 || ^3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/nullable/-/nullable-3.0.0.tgz#979045c99e7c8a9055cb25c3c5cb5b9edfc50085"
   integrity sha512-kgYOGJHzgZl0QGqMqbRe34i5VaRQUsG+X9AcblJL1lGDq+npLsCS974VSJmOBxnSqIQ5dcgah+zBxHndH8qzfg==
   dependencies:
     tslib "2.4.0"
 
-"@softwareventures/nullable@^1.0.0 || ^1.2.1 || ^2.0.0", "@softwareventures/nullable@^1.0.0 || ^2.0.0", "@softwareventures/nullable@^2.0.0":
+"@softwareventures/nullable@^1.0.0 || ^2.0.0", "@softwareventures/nullable@^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/nullable/-/nullable-2.0.0.tgz#d11498c5fe71bb0b94ba85a40e774c19c721c5d3"
   integrity sha512-zx+FMgB4MqmqIiCglgP8GZIYPw57yFBuz/jh0kXNAoEtSRl3LkwhaGG0b/y5yae2RsYSaVkNotQaSmJRt5GahA==
   dependencies:
     tslib "2.3.0"
 
-"@softwareventures/ordered@2.0.0", "@softwareventures/ordered@^0.2.1 || ^1.0.0 || ^2.0.0":
+"@softwareventures/ordered@2.0.0", "@softwareventures/ordered@^0.2.1 || ^1.0.0 || ^2.0.0", "@softwareventures/ordered@^0.2.2 || ^1.0.0 || ^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-2.0.0.tgz#feaee7148f6a447f96adaa169d27fd4962b4e3d4"
   integrity sha512-NSNuBWZ8yoNwN3tBD24E+rCHktLdJFnkrVoVy0S5C6OsKZ55viy9+IsMyMnHju2mPoB/iCmzQOPgFj/eu9WpQA==
   dependencies:
     tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
 
-"@softwareventures/ordered@^0.2.2 || ^1.0.0", "@softwareventures/ordered@^1.1.0":
+"@softwareventures/ordered@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-1.1.0.tgz#5bd8929574d309738f6bcccaa017557979a4e303"
   integrity sha512-XkoiEiTiLhDnDHYKmDobtoNlqYEmK/LK/FOeKzfIOB8Xfl9+Q6toDxSasB+T6coOZiJ0GA23XFsSkh0grC2Nng==
