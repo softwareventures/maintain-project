@@ -38,7 +38,7 @@
     "@softwareventures/date": "3.0.0",
     "@softwareventures/dictionary": "1.0.1",
     "@softwareventures/iterable": "2.1.0",
-    "@softwareventures/nullable": "2.0.0",
+    "@softwareventures/nullable": "3.0.0",
     "@softwareventures/ordered": "1.1.0",
     "@softwareventures/promise": "2.0.0",
     "@softwareventures/template-node-project": "2.0.5",
