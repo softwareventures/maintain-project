@@ -550,13 +550,13 @@
   resolved "https://registry.yarnpkg.com/@softwareventures/chain/-/chain-2.0.0.tgz#531fb9933c5820ad2168bf91c935f81ff1ef8377"
   integrity sha512-pnWS8TZndRGFDJz9Oempa6FfNIC8NiiVPLMSO7tSzFPX9lI+DdesEt/L0MXtXlxyg9kxYq5qkslM5jsgpAaO1A==
 
-"@softwareventures/date@3.0.0", "@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-3.0.0.tgz#7eb49938c07f89115f5a891177cf7a407af22828"
-  integrity sha512-Zd4T2wXOYGZo4fml237D/id3VMM0lUA6PQJDq2Vn05FeIMIg2Mt3rcgOqZ6kr1i/jiCOJSTAB6rTX/p5a+185g==
+"@softwareventures/date@3.0.1", "@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-3.0.1.tgz#00e325dd791385b560947a6da5ea15e4602ead67"
+  integrity sha512-WmtkRpSQMyIwcaEn2df5SymiPsSO0a7isD9ui+jR48CdpJzJUU6L3mAUovCTkW5PxoMofMaKQMd4PtjBL0YZbQ==
   dependencies:
     "@softwareventures/format-date" "^1.0.0"
-    "@softwareventures/ordered" "^0.2.1 || ^1.0.0"
+    "@softwareventures/ordered" "^0.2.1 || ^1.0.0 || ^2.0.0"
     "@types/is-integer" "1.0.0"
     is-integer "1.0.7"
     is-integer-in-range "^1.0.0 || ^2.0.0 || ^3.0.0"
@@ -610,14 +610,14 @@
   dependencies:
     tslib "2.3.0"
 
-"@softwareventures/ordered@2.0.0":
+"@softwareventures/ordered@2.0.0", "@softwareventures/ordered@^0.2.1 || ^1.0.0 || ^2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-2.0.0.tgz#feaee7148f6a447f96adaa169d27fd4962b4e3d4"
   integrity sha512-NSNuBWZ8yoNwN3tBD24E+rCHktLdJFnkrVoVy0S5C6OsKZ55viy9+IsMyMnHju2mPoB/iCmzQOPgFj/eu9WpQA==
   dependencies:
     tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
 
-"@softwareventures/ordered@^0.2.1 || ^1.0.0", "@softwareventures/ordered@^0.2.2 || ^1.0.0", "@softwareventures/ordered@^1.1.0":
+"@softwareventures/ordered@^0.2.2 || ^1.0.0", "@softwareventures/ordered@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-1.1.0.tgz#5bd8929574d309738f6bcccaa017557979a4e303"
   integrity sha512-XkoiEiTiLhDnDHYKmDobtoNlqYEmK/LK/FOeKzfIOB8Xfl9+Q6toDxSasB+T6coOZiJ0GA23XFsSkh0grC2Nng==
