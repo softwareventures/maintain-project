@@ -646,10 +646,10 @@
     conventional-changelog-conventionalcommits "^4.6.3 || ^5.0.0"
     tslib "2.4.0"
 
-"@softwareventures/template-node-project@2.0.5":
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/@softwareventures/template-node-project/-/template-node-project-2.0.5.tgz#74725456d5747f50ee64a84d092444c198540d4a"
-  integrity sha512-C9wvUG5oRKJJbpFWSgpsxZszbygPoyQnrz+ol7GFsT++rF+Por/vn53Ye9VKVlbj/31qIubJWFC2m8cZMfUVtA==
+"@softwareventures/template-node-project@2.0.6":
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/@softwareventures/template-node-project/-/template-node-project-2.0.6.tgz#d3489e3d1b93d5cf47abb3ec9783ac89098367ed"
+  integrity sha512-f6nLx4zdj0q7gUlQItoRRTXLeUlTDhRSNjmoaOTr81iNq5vAyPnqEmLoicm8nedxVz60NEQ3RL1Hari4FlJ3sQ==
   dependencies:
     tslib "2.4.0"
 
