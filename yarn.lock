@@ -610,7 +610,14 @@
   dependencies:
     tslib "2.3.0"
 
-"@softwareventures/ordered@1.1.0", "@softwareventures/ordered@^0.2.1 || ^1.0.0", "@softwareventures/ordered@^0.2.2 || ^1.0.0", "@softwareventures/ordered@^1.1.0":
+"@softwareventures/ordered@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-2.0.0.tgz#feaee7148f6a447f96adaa169d27fd4962b4e3d4"
+  integrity sha512-NSNuBWZ8yoNwN3tBD24E+rCHktLdJFnkrVoVy0S5C6OsKZ55viy9+IsMyMnHju2mPoB/iCmzQOPgFj/eu9WpQA==
+  dependencies:
+    tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
+
+"@softwareventures/ordered@^0.2.1 || ^1.0.0", "@softwareventures/ordered@^0.2.2 || ^1.0.0", "@softwareventures/ordered@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/ordered/-/ordered-1.1.0.tgz#5bd8929574d309738f6bcccaa017557979a4e303"
   integrity sha512-XkoiEiTiLhDnDHYKmDobtoNlqYEmK/LK/FOeKzfIOB8Xfl9+Q6toDxSasB+T6coOZiJ0GA23XFsSkh0grC2Nng==
