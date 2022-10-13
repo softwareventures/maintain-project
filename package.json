@@ -59,7 +59,7 @@
     "commander": "9.4.1",
     "empty-dir": "3.0.0",
     "escodegen": "2.0.0",
-    "hosted-git-info": "5.1.0",
+    "hosted-git-info": "6.0.0",
     "jsdom": "20.0.1",
     "node-releases": "2.0.6",
     "non-null": "2.0.1",
