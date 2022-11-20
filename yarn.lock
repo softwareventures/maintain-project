@@ -625,12 +625,12 @@
   dependencies:
     tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
 
-"@softwareventures/prettier-config@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/prettier-config/-/prettier-config-3.0.0.tgz#e57ff64b9378486bc9b42437b34b3dcaf47319d9"
-  integrity sha512-YDom5xLPdsqKY5+Rcsv4S5reFvENt/z09aZopRdIzaqKBnL1uWXE3atbk27rVXTeekWgtauWCtgTJLiAJoLK8g==
+"@softwareventures/prettier-config@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/prettier-config/-/prettier-config-4.0.0.tgz#3f9393ba90f7fa3f7d2dbe37f79a297cf434cf8f"
+  integrity sha512-A622DzCRym/yUH2PN5RvC+/AYxqoTMcGC535Kcn5kPQ1likZ4cOsBkfwJN3HLnAXAcvyeW8PXDBwfMIldo3itw==
   dependencies:
-    tslib "2.3.1"
+    tslib "2.4.0"
 
 "@softwareventures/promise@2.0.0":
   version "2.0.0"
