@@ -555,10 +555,10 @@
     "@softwareventures/ordered" "^1.1.0"
     tslib "^2.0.0"
 
-"@softwareventures/chain@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/chain/-/chain-2.0.0.tgz#531fb9933c5820ad2168bf91c935f81ff1ef8377"
-  integrity sha512-pnWS8TZndRGFDJz9Oempa6FfNIC8NiiVPLMSO7tSzFPX9lI+DdesEt/L0MXtXlxyg9kxYq5qkslM5jsgpAaO1A==
+"@softwareventures/chain@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@softwareventures/chain/-/chain-2.0.2.tgz#2267be08e338d543d7d08b972422ecdaa0bf18ed"
+  integrity sha512-oE9Oo3QlO9YAWQW+chyl/IcLaU1H3vJUDydfO7fKVlKI0nW95amTPlYVjtPeIIuwE4VpWIAzrTzocQTRvqRFAA==
 
 "@softwareventures/date@3.0.1", "@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0":
   version "3.0.1"
