@@ -597,14 +597,14 @@
     "@softwareventures/nullable" "^2.0.0 || ^3.0.0"
     tslib "2.4.0"
 
-"@softwareventures/iterable@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@softwareventures/iterable/-/iterable-3.0.2.tgz#cfb1ba0b51f66608d493003d1354a90cf66f0407"
-  integrity sha512-iT0TZ4sRc0fMSjFVL7sOa+aVjxv8IjFyPe+NdU1iKUYGP0uV7+HC6WYJiha68KC5nPoMtgbD5WrvWu3NRkK2oA==
+"@softwareventures/iterable@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/iterable/-/iterable-3.1.0.tgz#437004814d85ae959d2ec766d4ac83375390c257"
+  integrity sha512-UwPfmggbhTBajey9p7wdXpDHFnady05wYuFu6muM//77k5760F2ZLgJc9oFKpXZcy/sjGblDyoahIcz1N7DvCQ==
   dependencies:
     "@softwareventures/nullable" "^1.0.0 || ^1.2.1 || ^2.0.0 || ^3.0.0"
     "@softwareventures/ordered" "^0.2.2 || ^1.0.0 || ^2.0.0"
-    tslib "2.4.0"
+    tslib "2.4.1"
 
 "@softwareventures/nullable@3.0.0", "@softwareventures/nullable@^1.0.0 || ^1.2.1 || ^2.0.0 || ^3.0.0", "@softwareventures/nullable@^1.0.0 || ^2.0.0 || ^3.0.0", "@softwareventures/nullable@^2.0.0 || ^3.0.0":
   version "3.0.0"
