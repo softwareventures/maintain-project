@@ -103,8 +103,14 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
                 ? null
                 : {
                       type: "fs-stage-update",
-                      log: `feat(node): drop support for node ${versionsToDropText}`,
-                      breaking: [breakingText],
+                      ...(project.target === "webapp"
+                          ? {
+                                log: `build(node): drop support for building in node ${versionsToDropText}`
+                            }
+                          : {
+                                log: `feat(node): drop support for node ${versionsToDropText}`,
+                                breaking: [breakingText]
+                            }),
                       apply: async stage => chainAsyncResults(stage, actions),
                       updatedProject: {
                           ...project,
