@@ -67,7 +67,7 @@
     "prettier-package-json": "2.7.0",
     "recursive-readdir": "2.2.3",
     "semver": "7.3.8",
-    "simple-git": "3.15.0",
+    "simple-git": "3.15.1",
     "spdx-correct": "3.1.1",
     "spdx-license-list": "6.6.0",
     "tslib": "2.4.1",
