@@ -1,6 +1,6 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {mapFn} from "@softwareventures/iterable";
 import {hasProperty} from "unknown";
 import {liftPromises, liftResults, mapValue} from "../collections/maps";

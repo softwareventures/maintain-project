@@ -1,5 +1,5 @@
 import {resolve} from "path";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {todayUtc} from "@softwareventures/date";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {hasProperty} from "unknown";

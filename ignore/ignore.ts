@@ -1,6 +1,6 @@
 import {posix} from "path";
 import {concat, first, foldFn, mapFn, tail} from "@softwareventures/array";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import picomatch = require("picomatch");
 

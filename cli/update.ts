@@ -1,5 +1,5 @@
 import {exit} from "process";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {forEachFn, mapFn} from "@softwareventures/array";
 import {hasProperty} from "unknown";
 import type {ReadProjectFailureReason} from "../project/read";

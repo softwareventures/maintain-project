@@ -1,5 +1,5 @@
 import {EOL} from "os";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {
     concat,
     first,

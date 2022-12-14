@@ -1,4 +1,4 @@
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import type {Result} from "../result/result";
 import {mapResultFn} from "../result/result";
 import type {Directory} from "./directory";

@@ -1,7 +1,7 @@
 import type {Date} from "@softwareventures/date";
 import {concatMapFn, filterFn, isArray, mapFn, only} from "@softwareventures/array";
 import {intersects} from "semver";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {mapNullFn} from "@softwareventures/nullable";
 import type {ProjectSource} from "../project/project";
 import type {ReadJsonFailureReason} from "../project/read-json";

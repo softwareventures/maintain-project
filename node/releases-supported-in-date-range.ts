@@ -1,7 +1,7 @@
 import releaseSchedule = require("node-releases/data/release-schedule/release-schedule.json");
 import type {Date} from "@softwareventures/date";
 import {afterOrEqual, beforeOrEqual, parseIso8601} from "@softwareventures/date";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {entries} from "@softwareventures/dictionary";
 import {filterFn, mapFn} from "@softwareventures/array";
 

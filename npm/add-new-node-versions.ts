@@ -1,4 +1,4 @@
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {any, append, excludeFn, first} from "@softwareventures/array";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";

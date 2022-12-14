@@ -1,4 +1,4 @@
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {mapNullable} from "@softwareventures/nullable";
 import {hasProperty} from "unknown";
 import type {FsStage, InsertResult} from "../fs-stage/fs-stage";

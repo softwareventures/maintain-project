@@ -1,4 +1,4 @@
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {foldFn, initial, push} from "@softwareventures/array";
 
 export function resolvePathSegments(path: string): readonly string[] | null {

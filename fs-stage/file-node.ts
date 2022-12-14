@@ -1,5 +1,5 @@
 import {first, tail} from "@softwareventures/array";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import type {Result} from "../result/result";
 import {failure, mapFailure, mapFailureFn, mapResultFn, success} from "../result/result";
 import {insert as mapInsert} from "../collections/maps";

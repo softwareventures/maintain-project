@@ -1,5 +1,5 @@
 import {append, exclude, map} from "@softwareventures/array";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
 import type {Project} from "../project/project";

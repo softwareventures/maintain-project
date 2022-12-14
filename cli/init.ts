@@ -1,6 +1,6 @@
 import {exit} from "process";
 import {forEachFn, mapFn} from "@softwareventures/array";
-import chain from "@softwareventures/chain";
+import {chain} from "@softwareventures/chain";
 import {hasProperty} from "unknown";
 import type {InitFailureReason} from "../project/init";
 import init from "../project/init";
