@@ -64,7 +64,7 @@
     "node-releases": "2.0.8",
     "non-null": "2.0.1",
     "picomatch": "2.3.1",
-    "prettier-package-json": "2.7.0",
+    "prettier-package-json": "2.8.0",
     "recursive-readdir": "2.2.3",
     "semver": "7.3.8",
     "simple-git": "3.15.1",
