@@ -94,7 +94,7 @@
     "eslint-plugin-jsdoc": "39.6.4",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "eslint-plugin-sonarjs": "0.17.0",
-    "prettier": "2.8.1",
+    "prettier": "2.8.2",
     "semantic-release": "19.0.5",
     "shx": "0.3.4",
     "ts-node": "10.9.1"
