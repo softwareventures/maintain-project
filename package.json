@@ -42,7 +42,7 @@
     "@softwareventures/ordered": "2.0.0",
     "@softwareventures/promise": "2.0.0",
     "@softwareventures/template-node-project": "2.1.2",
-    "@softwareventures/template-webpack-project": "2.2.1",
+    "@softwareventures/template-webpack-project": "2.2.2",
     "@types/empty-dir": "2.0.1",
     "@types/escodegen": "0.0.7",
     "@types/eslint": "8.4.10",
