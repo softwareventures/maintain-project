@@ -656,12 +656,12 @@
     conventional-changelog-conventionalcommits "^4.6.3 || ^5.0.0"
     tslib "2.4.1"
 
-"@softwareventures/template-node-project@2.1.2":
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/@softwareventures/template-node-project/-/template-node-project-2.1.2.tgz#e2e3e84e715182552e6092a9670f9fc6ff774f57"
-  integrity sha512-QWt17dCIV6wdrb02ixezkAhJ4GefVktf3oFsddbGiBFwF6V58h4NfKB9VQg54QhnFm2HJ5bVJPZGKQYCM9bbBg==
+"@softwareventures/template-node-project@2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@softwareventures/template-node-project/-/template-node-project-2.1.3.tgz#b2e03e56d2ad7de0d0de4dde38f2fbaec9ddddc6"
+  integrity sha512-8ULiGqNoMYbi9VrzgYkecd/KwaDMYD9irJWoGRgA+lGl5yTFsvsPXmJgWxYq4WRIRybh1UXzXMs9t0y6EhZc5A==
   dependencies:
-    tslib "2.4.1"
+    tslib "2.5.0"
 
 "@softwareventures/template-webpack-project@2.3.0":
   version "2.3.0"
