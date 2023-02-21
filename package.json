@@ -36,7 +36,7 @@
     "@softwareventures/array": "6.0.3",
     "@softwareventures/chain": "3.0.0",
     "@softwareventures/date": "3.0.2",
-    "@softwareventures/dictionary": "2.1.0",
+    "@softwareventures/dictionary": "2.1.1",
     "@softwareventures/iterable": "3.2.0",
     "@softwareventures/nullable": "3.1.0",
     "@softwareventures/ordered": "2.0.0",

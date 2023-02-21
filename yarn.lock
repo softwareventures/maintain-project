@@ -572,11 +572,12 @@
     is-integer-in-range "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0"
     tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
 
-"@softwareventures/dictionary@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/dictionary/-/dictionary-2.1.0.tgz#1c8f5b627baaf2701fa1eebd34610ea2ae31dd00"
-  integrity sha512-VN2AekIcgl+nagoHRUaOHh1HiL7v8J9Fd2l1tNluUkOv+yB4JyG7OB4t6mTBHaFgXEEYUfyaYmLs32ExLc6yHA==
+"@softwareventures/dictionary@2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@softwareventures/dictionary/-/dictionary-2.1.1.tgz#34596e388120dfa4da501302ed25a84c06847006"
+  integrity sha512-pic3dgq4N249Wgwii6wmeyYAQ61nNwJljg4nH9tq++H9ldMASMrrhuu8pLT4C5EneMaiOXI8TBmfzupNDiVpOQ==
   dependencies:
+    "@softwareventures/nullable" "^3.1.0"
     tslib "2.5.0"
 
 "@softwareventures/eslint-config@7.1.0":
@@ -605,7 +606,7 @@
     "@softwareventures/ordered" "^0.2.2 || ^1.0.0 || ^2.0.0"
     tslib "2.4.1"
 
-"@softwareventures/nullable@3.1.0", "@softwareventures/nullable@^1.0.0 || ^1.2.1 || ^2.0.0 || ^3.0.0", "@softwareventures/nullable@^1.0.0 || ^2.0.0 || ^3.0.0", "@softwareventures/nullable@^2.0.0 || ^3.0.0":
+"@softwareventures/nullable@3.1.0", "@softwareventures/nullable@^1.0.0 || ^1.2.1 || ^2.0.0 || ^3.0.0", "@softwareventures/nullable@^1.0.0 || ^2.0.0 || ^3.0.0", "@softwareventures/nullable@^2.0.0 || ^3.0.0", "@softwareventures/nullable@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@softwareventures/nullable/-/nullable-3.1.0.tgz#fa90b5c37cd38c0f2da2727e886e4bdfa36526b8"
   integrity sha512-iVrju9OeZsBk1itOijs+OFVLWpZqlEMEe8tbfhvqkb5bn7/quBA/ohu4fLL57EW5Ulsi3m6oqrolDzMxggITbA==
