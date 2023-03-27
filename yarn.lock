@@ -695,10 +695,10 @@
   dependencies:
     tslib "2.5.0"
 
-"@softwareventures/template-webpack-project@2.3.1":
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/@softwareventures/template-webpack-project/-/template-webpack-project-2.3.1.tgz#e2cc1b191ada6269191b7544409232068afd55ad"
-  integrity sha512-oIPtKWtm8+hr+HrAWLFBZZx/9BISLRRpjCtfvrBE5lFLLEDVOjwBa3zqWRjt7Uq0xG/EZxdzHCw0DMvmbzPKeQ==
+"@softwareventures/template-webpack-project@2.3.2":
+  version "2.3.2"
+  resolved "https://registry.yarnpkg.com/@softwareventures/template-webpack-project/-/template-webpack-project-2.3.2.tgz#5ae58e58a2f93890068792df6c3bcd11269236a0"
+  integrity sha512-VUsEu+IQye9yUO6GgEqOztHhLC6dKJOM4t/moKNXjogCBcor5k4CTXDLeiCp89P5+MSIISz0Sfpy385eQxYf3Q==
   dependencies:
     "@types/webpack-env" "1.18.0"
     tslib "2.5.0"
