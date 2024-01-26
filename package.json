@@ -44,7 +44,7 @@
     "@softwareventures/template-node-project": "2.1.5",
     "@softwareventures/template-webpack-project": "2.3.25",
     "@types/empty-dir": "2.0.4",
-    "@types/escodegen": "0.0.7",
+    "@types/escodegen": "0.0.10",
     "@types/eslint": "8.37.0",
     "@types/estree": "1.0.1",
     "@types/hosted-git-info": "3.0.2",
