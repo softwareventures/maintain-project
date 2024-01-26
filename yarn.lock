@@ -725,13 +725,13 @@
   dependencies:
     tslib "^2.6.2"
 
-"@softwareventures/template-webpack-project@2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@softwareventures/template-webpack-project/-/template-webpack-project-2.3.2.tgz#5ae58e58a2f93890068792df6c3bcd11269236a0"
-  integrity sha512-VUsEu+IQye9yUO6GgEqOztHhLC6dKJOM4t/moKNXjogCBcor5k4CTXDLeiCp89P5+MSIISz0Sfpy385eQxYf3Q==
+"@softwareventures/template-webpack-project@2.3.25":
+  version "2.3.25"
+  resolved "https://registry.yarnpkg.com/@softwareventures/template-webpack-project/-/template-webpack-project-2.3.25.tgz#8dea2eb3ae9c306bbaae384511ef68a89c2c80c4"
+  integrity sha512-4T4vEzdYk3w9xRAve6FRMuVLIyptwejY1gqGGZxfoSDK36OfH+VX/ow0BdvFlURvHUV+uxJ7ah33qxn64FzSAw==
   dependencies:
-    "@types/webpack-env" "1.18.0"
-    tslib "2.5.0"
+    "@types/webpack-env" "1.18.3"
+    tslib "2.6.2"
 
 "@softwareventures/tsconfig@7.0.0":
   version "7.0.0"
@@ -891,10 +891,10 @@
   resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-4.0.5.tgz#cb6e2a691b70cb177c6e3ae9c1d2e8b2ea8cd304"
   integrity sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==
 
-"@types/webpack-env@1.18.0":
-  version "1.18.0"
-  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.18.0.tgz#ed6ecaa8e5ed5dfe8b2b3d00181702c9925f13fb"
-  integrity sha512-56/MAlX5WMsPVbOg7tAxnYvNYMMWr/QJiIp6BxVSW3JJXUVzzOn64qW8TzQyMSqSUFM2+PVI4aUHcHOzIz/1tg==
+"@types/webpack-env@1.18.3":
+  version "1.18.3"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.18.3.tgz#e81f769199a5609c751f34fcc6f6095ceac7831f"
+  integrity sha512-v4CH6FLBCftYGFAswDhzFLjKgucXsOkIf5Mzl8ZZhEtC6oye9whFInNPKszNB9AvX7JEZMtpXxWctih6addP+Q==
 
 "@types/wordwrap@1.0.1":
   version "1.0.1"
