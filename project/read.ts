@@ -51,7 +51,7 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
         .then(mapResultFn(gitHost => gitHost ?? undefined));
 
     const target = projectFileExists(project, "webpack.config.cjs")
-        .then(webpack => webpack || projectFileExists(project, "webpack.config.js"))
+        .then(async webpack => webpack || projectFileExists(project, "webpack.config.js"))
         .then(webpack => (webpack ? "webapp" : "npm"));
 
     const tslint = readTslintProject(project);

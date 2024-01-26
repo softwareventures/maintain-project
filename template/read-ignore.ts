@@ -22,7 +22,7 @@ export async function readTemplateIgnore(
         readText: async path =>
             readTemplateDirectory(templateId, posix.dirname(path))
                 .then(anyFn(dirent => dirent.name === posix.basename(path) && dirent.isFile()))
-                .then(exists => (exists ? readTemplateText(templateId, path) : null))
+                .then(async exists => (exists ? readTemplateText(templateId, path) : null))
                 .then(mapNullableFn(text => success(text)))
                 .then(mapNullFn(() => failure([{type: "file-not-found", path}])))
     });

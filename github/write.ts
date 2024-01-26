@@ -14,14 +14,14 @@ export function writeGitHubConfig(project: Project): (fsStage: FsStage) => Promi
             templateId: projectTemplateId(project),
             pathSegments: [".github", "workflows", "ci.yml"],
             modify: workflow => {
-                // FIXME
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 workflow.getIn([
                     "jobs",
                     "build-and-test",
                     "strategy",
                     "matrix",
                     "node-version"
+                    // FIXME
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 ]).items = map(project.node.testedVersions, version => `${version}.x`);
                 workflow.setIn(
                     ["env", "DEPLOY_NODE_VERSION"],

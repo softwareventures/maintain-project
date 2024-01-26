@@ -18,7 +18,7 @@ export async function updateLintFixScript(
     const existingScript = readProjectScript(project, script);
 
     const isTypeScript = isTypescriptProject(project);
-    const tsconfig = isTypeScript.then(isTypeScript =>
+    const tsconfig = isTypeScript.then(async isTypeScript =>
         isTypeScript ? readTsconfig(project) : null
     );
     const isTsNoEmit = tsconfig
