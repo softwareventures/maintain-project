@@ -52,7 +52,7 @@
     "@types/node": "14.18.63",
     "@types/parse-author": "2.0.3",
     "@types/picomatch": "2.3.3",
-    "@types/recursive-readdir": "2.2.1",
+    "@types/recursive-readdir": "2.2.4",
     "@types/semver": "7.5.6",
     "@types/spdx-correct": "3.1.0",
     "@types/wordwrap": "1.0.1",
