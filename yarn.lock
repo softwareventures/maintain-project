@@ -886,10 +886,10 @@
   resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.18.3.tgz#e81f769199a5609c751f34fcc6f6095ceac7831f"
   integrity sha512-v4CH6FLBCftYGFAswDhzFLjKgucXsOkIf5Mzl8ZZhEtC6oye9whFInNPKszNB9AvX7JEZMtpXxWctih6addP+Q==
 
-"@types/wordwrap@1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@types/wordwrap/-/wordwrap-1.0.1.tgz#6cfbe1e2ea03a30831453389e5fdec8be40fd178"
-  integrity sha512-xe+rWyom8xn0laMWH3M7elOpWj2rDQk+3f13RAur89GKsf4FO5qmBNtXXtwepFo2XNgQI0nePdCEStoHFnNvWg==
+"@types/wordwrap@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@types/wordwrap/-/wordwrap-1.0.3.tgz#1faf6e6002e8d63534bd9ad329a32bc772d4983e"
+  integrity sha512-jx39cOYWJxZxVOZeNHvLVoDLRUFcYtIJaurC6C0qzCovIB3GPDbMDbYvoWi9D1B2PtIE16rElQOFR4Y+8QbUgw==
 
 "@typescript-eslint/eslint-plugin@6.19.1":
   version "6.19.1"
