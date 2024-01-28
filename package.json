@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@eslint/eslintrc": "1.4.1",
-    "@softwareventures/array": "6.0.3",
+    "@softwareventures/array": "6.1.0",
     "@softwareventures/chain": "3.0.0",
     "@softwareventures/date": "3.0.2",
     "@softwareventures/dictionary": "2.1.1",
