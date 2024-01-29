@@ -58,7 +58,7 @@
     "@types/wordwrap": "1.0.3",
     "commander": "10.0.1",
     "empty-dir": "3.0.0",
-    "escodegen": "2.0.0",
+    "escodegen": "2.1.0",
     "hosted-git-info": "6.1.1",
     "jsdom": "21.1.2",
     "node-releases": "2.0.14",
