@@ -616,19 +616,7 @@
   resolved "https://registry.yarnpkg.com/@softwareventures/chain/-/chain-3.0.0.tgz#f9f84a1a28f20ff2dd9b048b179646faec0114c8"
   integrity sha512-W5qOFTvn4kgmO58hRbcT5xX/1JtzIyJPY8OYsx6tkQSgzcgP+nlI+JMp2E6I7c7wXtkR0TcWEL1qQ06ByBfGHA==
 
-"@softwareventures/date@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-3.0.2.tgz#f7d5a5b400d11749cbc61403d0bfa92b7156eb89"
-  integrity sha512-TjUXek2lddH0Ypn1nRpEamKJWzqEofR8kov/1TSWeQQaI3dVlkU3dvHcknio9GQyFEX8+Gp5SOhX8akqsLbQPw==
-  dependencies:
-    "@softwareventures/format-date" "^1.0.0"
-    "@softwareventures/ordered" "^0.2.1 || ^1.0.0 || ^2.0.0"
-    "@types/is-integer" "1.0.0"
-    is-integer "1.0.7"
-    is-integer-in-range "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0"
-    tslib "^1.9.3 || ^2.0.0 || ^2.1.0"
-
-"@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0":
+"@softwareventures/date@3.1.2", "@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-3.1.2.tgz#65d182cc2066df22525109f7f69959a801a9f85c"
   integrity sha512-kfqT4EcKMhy/a2b+VneebS7UVWyTsaPNLRpsh1PWbPUkSg0TjofGZJ/W1smP/6L77l0Huqxh3ZJGd1DxJy/nOQ==
@@ -792,11 +780,6 @@
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/@types/hosted-git-info/-/hosted-git-info-3.0.5.tgz#658e80083026a0574fbfd256abb5cbfb6ecd2218"
   integrity sha512-Dmngh7U003cOHPhKGyA7LWqrnvcTyILNgNPmNCxlx7j8MIi54iBliiT8XqVLIQ3GchoOjVAyBzNJVyuaJjqokg==
-
-"@types/is-integer@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@types/is-integer/-/is-integer-1.0.0.tgz#8393445ad14b2b51c9ac7e91220de0efc8de2028"
-  integrity sha512-AAFRQhSVYdpQgKEkUY+bMRL8yAZSq7h7AY14iSK1xod4wOdH4Gc/KMAR4tlSo9Sf5KsYizWwlJOnLCbet5AU2A==
 
 "@types/is-integer@^1.0.0", "@types/is-integer@^1.0.2":
   version "1.0.2"
@@ -3408,7 +3391,7 @@ is-glob@^4.0.0, is-glob@^4.0.1, is-glob@^4.0.3, is-glob@~4.0.1:
     is-integer "^1.0.7"
     tslib "2.4.0"
 
-is-integer@1.0.7, is-integer@^1.0.7:
+is-integer@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/is-integer/-/is-integer-1.0.7.tgz#6bde81aacddf78b659b6629d629cadc51a886d5c"
   integrity sha512-RPQc/s9yBHSvpi+hs9dYiJ2cuFeU6x3TyyIp8O2H6SKEltIvJOzRj9ToyvcStDvPR/pS4rxgr1oBFajQjZ2Szg==
