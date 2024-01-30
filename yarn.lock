@@ -644,10 +644,23 @@
   resolved "https://registry.yarnpkg.com/@softwareventures/chain/-/chain-3.0.0.tgz#f9f84a1a28f20ff2dd9b048b179646faec0114c8"
   integrity sha512-W5qOFTvn4kgmO58hRbcT5xX/1JtzIyJPY8OYsx6tkQSgzcgP+nlI+JMp2E6I7c7wXtkR0TcWEL1qQ06ByBfGHA==
 
-"@softwareventures/date@3.1.2", "@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0":
+"@softwareventures/date@3.1.2":
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-3.1.2.tgz#65d182cc2066df22525109f7f69959a801a9f85c"
   integrity sha512-kfqT4EcKMhy/a2b+VneebS7UVWyTsaPNLRpsh1PWbPUkSg0TjofGZJ/W1smP/6L77l0Huqxh3ZJGd1DxJy/nOQ==
+  dependencies:
+    "@softwareventures/format-date" "^1.0.0"
+    "@softwareventures/ordered" "^0.2.1 || ^1.0.0 || ^2.0.0"
+    "@types/is-integer" "^1.0.2"
+    is-integer "^1.0.7"
+    is-integer-in-range "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0"
+    tslib "^2.1.0"
+    unknown "^0.2.5"
+
+"@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0 || ^4.0.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-4.1.0.tgz#03f20921dabe9c27083b3898f83340a0d8ff176f"
+  integrity sha512-O99nhLDLhsjZP/5xCoYN/CBI6W12Uk13hVmqMpcPayrM1D5vSJGaJCYtbTWoyI2VepyD5tClCSMDFAlchGukoA==
   dependencies:
     "@softwareventures/format-date" "^1.0.0"
     "@softwareventures/ordered" "^0.2.1 || ^1.0.0 || ^2.0.0"
@@ -673,12 +686,12 @@
     tslib "^2.3.1"
 
 "@softwareventures/format-date@^1.0.0":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@softwareventures/format-date/-/format-date-1.0.3.tgz#1f9fdc597e456360e60919b399661b49e60a8b1c"
-  integrity sha512-GUugCPQSynoD4FvVW8gh8Ck6cJV5U7hzEF1eXDhWNELYKgXdyRasF+JEK9mIKCx/SpmUbBpBOKFPk+xL2LOTBA==
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@softwareventures/format-date/-/format-date-1.0.5.tgz#a16d9c1293ef737d2616488f6fafbed649f3a9b0"
+  integrity sha512-Rry1OEGWTXFL+3NCHf6j1/jUkQ96zIE4VN9HA8AS/6xQL94IdHS0Of1bGZc2sJsCKJdTKXQQ8/wohTU0Hv7pTw==
   dependencies:
     "@softwareventures/array" "^3.10.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0"
-    "@softwareventures/date" "^1.4.2 || ^2.0.0 || ^3.0.0"
+    "@softwareventures/date" "^1.4.2 || ^2.0.0 || ^3.0.0 || ^4.0.0"
     "@softwareventures/nullable" "^2.0.0 || ^3.0.0"
     tslib "^2.6.2"
 
@@ -831,9 +844,9 @@
   integrity sha512-hov8bUuiLiyFPGyFPE1lwWhmzYbirOXQNNo40+y3zow8aFVTeyn3VWL0VFFfdNddA8S4Vf0Tc062rzyNr7Paag==
 
 "@types/node@*":
-  version "20.11.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.6.tgz#6adf4241460e28be53836529c033a41985f85b6e"
-  integrity sha512-+EOokTnksGVgip2PbYbr3xnR7kZigh4LbybAfBAw5BpnQ+FqBYUsvCEjYd70IXKlbohQ64mzEYmMtlWUY8q//Q==
+  version "20.11.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.10.tgz#6c3de8974d65c362f82ee29db6b5adf4205462f9"
+  integrity sha512-rZEfe/hJSGYmdfX9tvcPMYeYPW2sNl50nsw4jZmRcaG0HIAb0WYEpsB05GOb53vjqpyE9GUhlDQ4jLSoB5q9kg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -2170,9 +2183,9 @@ duplexer2@~0.1.0:
     readable-stream "^2.0.2"
 
 emittery@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/emittery/-/emittery-1.0.1.tgz#e0cf36e2d7eef94dbd025969f642d57ae50a56cd"
-  integrity sha512-2ID6FdrMD9KDLldGesP6317G78K7km/kMcwItRtVFva7I/cSEOIaLpewaUb+YLXVwdAp3Ctfxh/V5zIl1sj7dQ==
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/emittery/-/emittery-1.0.2.tgz#5cab3c35bb8d13e8c29219586bf8d8f6ab1dfa42"
+  integrity sha512-PqHdP6JJrxiSXQzCAzII77dVsfyGWu+7V0ghqkaCej2shF1cnIPeFE9kKZcVTqvBjrRMDVOdNXKEYcjxkznS1g==
 
 emoji-regex@^10.3.0:
   version "10.3.0"
@@ -2575,9 +2588,9 @@ fastest-levenshtein@^1.0.12:
   integrity sha512-eRnCtTTtGZFpQCwhJiUOuxPQWRXVKYDn0b2PeHfXL6/Zi53SLAzAHfVhVWK2AryC/WH05kGfxhFIPvTF0SXQzg==
 
 fastq@^1.6.0:
-  version "1.16.0"
-  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.16.0.tgz#83b9a9375692db77a822df081edb6a9cf6839320"
-  integrity sha512-ifCoaXsDrsdkWTtiNJX5uzHDsrck5TzfKKDcuFFTIrrc/BS076qgEIfoIy1VeZqViznfKiysPYTh/QeHtnIsYA==
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.17.0.tgz#ca5e1a90b5e68f97fc8b61330d5819b82f5fab03"
+  integrity sha512-zGygtijUMT7jnk3h26kUms3BkSDp4IfIKjmnqI2tvx6nuBfiF1UqOxbnLfzdv+apBy+53oaImsKtMw/xYbW+1w==
   dependencies:
     reusify "^1.0.4"
 
