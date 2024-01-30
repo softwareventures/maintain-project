@@ -60,7 +60,7 @@
     "empty-dir": "3.0.0",
     "escodegen": "2.1.0",
     "hosted-git-info": "6.1.1",
-    "jsdom": "21.1.2",
+    "jsdom": "24.0.0",
     "node-releases": "2.0.14",
     "non-null": "2.0.1",
     "picomatch": "2.3.1",
