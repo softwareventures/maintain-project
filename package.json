@@ -35,7 +35,7 @@
     "@eslint/eslintrc": "1.4.1",
     "@softwareventures/array": "6.1.0",
     "@softwareventures/chain": "3.0.0",
-    "@softwareventures/date": "3.1.2",
+    "@softwareventures/date": "4.1.1",
     "@softwareventures/dictionary": "2.1.1",
     "@softwareventures/iterable": "3.3.0",
     "@softwareventures/nullable": "3.2.0",

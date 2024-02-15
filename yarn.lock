@@ -644,23 +644,10 @@
   resolved "https://registry.yarnpkg.com/@softwareventures/chain/-/chain-3.0.0.tgz#f9f84a1a28f20ff2dd9b048b179646faec0114c8"
   integrity sha512-W5qOFTvn4kgmO58hRbcT5xX/1JtzIyJPY8OYsx6tkQSgzcgP+nlI+JMp2E6I7c7wXtkR0TcWEL1qQ06ByBfGHA==
 
-"@softwareventures/date@3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-3.1.2.tgz#65d182cc2066df22525109f7f69959a801a9f85c"
-  integrity sha512-kfqT4EcKMhy/a2b+VneebS7UVWyTsaPNLRpsh1PWbPUkSg0TjofGZJ/W1smP/6L77l0Huqxh3ZJGd1DxJy/nOQ==
-  dependencies:
-    "@softwareventures/format-date" "^1.0.0"
-    "@softwareventures/ordered" "^0.2.1 || ^1.0.0 || ^2.0.0"
-    "@types/is-integer" "^1.0.2"
-    is-integer "^1.0.7"
-    is-integer-in-range "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0"
-    tslib "^2.1.0"
-    unknown "^0.2.5"
-
-"@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0 || ^4.0.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-4.1.0.tgz#03f20921dabe9c27083b3898f83340a0d8ff176f"
-  integrity sha512-O99nhLDLhsjZP/5xCoYN/CBI6W12Uk13hVmqMpcPayrM1D5vSJGaJCYtbTWoyI2VepyD5tClCSMDFAlchGukoA==
+"@softwareventures/date@4.1.1", "@softwareventures/date@^1.4.2 || ^2.0.0 || ^3.0.0 || ^4.0.0":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@softwareventures/date/-/date-4.1.1.tgz#ac60ad81582fe562a23d2f89f87d90c50ddc6c30"
+  integrity sha512-xQ6W0NZHAHQjuV67cPUcY+KaKuDax3S7uBVk/SsAsiZbglDOQo5EvGwtvD2bsZTintcs8e6bnS42csHiDaJI0A==
   dependencies:
     "@softwareventures/format-date" "^1.0.0"
     "@softwareventures/ordered" "^0.2.1 || ^1.0.0 || ^2.0.0"
