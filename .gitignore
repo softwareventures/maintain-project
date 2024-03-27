@@ -9,7 +9,6 @@ npm-debug.log*
 *.d.ts
 *.js.map
 !/types/*.d.ts
-!/template/template/**/*.ts
 
 # macOS
 .DS_Store
