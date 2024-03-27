@@ -1,3 +1,14 @@
 {
-  "extends": ["@softwareventures:app"]
+  "extends": ["@softwareventures:app"],
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "matchPackageNames": [
+        "@softwareventures/template-node-project",
+        "@softwareventures/template-webpack-project"
+      ],
+      "matchUpdateTypes": ["minor"],
+      "semanticCommitType": "feat"
+    }
+  ]
 }
