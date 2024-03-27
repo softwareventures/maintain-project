@@ -8,7 +8,6 @@
 /.snyk
 *.ts
 !*.d.ts
-!/template/template/**/*.ts
 
 # yarn and npm
 package-lock.json
