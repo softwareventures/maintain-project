@@ -5,6 +5,6 @@ import type {Project} from "../project/project";
 import {projectTemplateId} from "../template/project-template-id";
 
 export function writeRenovateConfig(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
-    const file = copyFromTemplate(projectTemplateId(project), "renovate.json");
+    const file = copyFromTemplate(projectTemplateId(project), "renovate.json.template");
     return async fsStage => file.then(file => insert(fsStage, "renovate.json", file));
 }
