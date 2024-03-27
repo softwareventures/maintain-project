@@ -72,10 +72,10 @@ export async function readProject(path: string): Promise<ReadProjectResult> {
                           ...(hasProperty(author, "email") ? {email: String(author.email)} : null)
                       }
                     : typeof author === "string"
-                    ? chain(/^\s*(.*?)(?:\s+<\s*(.*)\s*>)?\s*$/u.exec(author) ?? []).map(
-                          ([_, name, email]) => ({name, email})
-                      ).value
-                    : {}
+                      ? chain(/^\s*(.*?)(?:\s+<\s*(.*)\s*>)?\s*$/u.exec(author) ?? []).map(
+                            ([_, name, email]) => ({name, email})
+                        ).value
+                      : {}
             )
         );
 

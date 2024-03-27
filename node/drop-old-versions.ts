@@ -63,7 +63,7 @@ export async function dropOldNodeVersions(project: Project): Promise<Update | nu
                     ...packageJson?.engines,
                     node: targetRange
                 }
-            } as unknown)
+            }) as unknown
     ).then(toNullable);
 
     const newWorkflowFile = readProjectYamlAsDocument(project, ".github/workflows/ci.yml")

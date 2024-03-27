@@ -51,8 +51,8 @@ function writePackageJson(project: Project): (fsStage: FsStage) => Promise<Inser
                                   postinstall: hasProperty(json.scripts, "postinstall")
                                       ? json.scripts.postinstall
                                       : hasProperty(json.scripts, "_postinstall")
-                                      ? json.scripts._postinstall
-                                      : undefined
+                                        ? json.scripts._postinstall
+                                        : undefined
                               }
                             : undefined,
                     engines: {

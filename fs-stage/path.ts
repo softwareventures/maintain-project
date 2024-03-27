@@ -12,12 +12,12 @@ export function resolvePathSegments(path: string): readonly string[] | null {
                     resolved == null
                         ? null
                         : segment === "."
-                        ? resolved
-                        : segment === ".." && resolved.length > 0
-                        ? initial(resolved)
-                        : segment === ".."
-                        ? null
-                        : push(resolved, segment),
+                          ? resolved
+                          : segment === ".." && resolved.length > 0
+                            ? initial(resolved)
+                            : segment === ".."
+                              ? null
+                              : push(resolved, segment),
                 [] as readonly string[] | null
             )
         ).value;

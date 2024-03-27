@@ -47,7 +47,7 @@ export async function addNewNodeVersionsToPackageJson(
                     ...packageJson?.engines,
                     node: resultVersionRange
                 }
-            } as unknown)
+            }) as unknown
     );
 
     return toAsyncNullable(file).then(

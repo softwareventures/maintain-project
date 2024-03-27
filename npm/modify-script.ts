@@ -22,6 +22,6 @@ export async function modifyProjectScript(
                     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                     [name]: modify(mapNullable(json?.scripts?.[name], String)) ?? undefined
                 }
-            } as unknown)
+            }) as unknown
     );
 }

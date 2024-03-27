@@ -39,7 +39,7 @@ export async function setYarnLinkerToNodeModules(
                             ({
                                 type: "set-yarn-linker-failed",
                                 reason
-                            } as const)
+                            }) as const
                     )
                 )
             )
