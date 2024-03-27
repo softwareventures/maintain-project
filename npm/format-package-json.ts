@@ -1,7 +1,7 @@
 import {format} from "prettier-package-json";
-import type {PackageJsonKey} from "prettier-package-json/build/types";
+import type {PackageJson, PackageJsonKey} from "prettier-package-json/build/types";
 
-export function formatPackageJson(json: object): string {
+export function formatPackageJson(json: PackageJson): string {
     return format(json, {
         keyOrder: [
             "private",
