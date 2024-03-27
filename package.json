@@ -22,9 +22,7 @@
     "semantic-release": "semantic-release",
     "test": "ava"
   },
-  "bin": {
-    "maintain-project": "./index.js"
-  },
+  "bin": "./index.js",
   "sideEffects": [
     "./index.js"
   ],
@@ -121,6 +119,7 @@
   "release": {
     "extends": "@softwareventures/semantic-release-config"
   },
+  "packageManager": "yarn@4.1.1",
   "publishConfig": {
     "access": "public"
   }
