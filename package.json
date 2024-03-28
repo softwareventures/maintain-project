@@ -18,7 +18,7 @@
     "fix": "tsc --noEmit && eslint --fix . && prettier --write .",
     "lint": "tsc --noEmit && eslint . && prettier --check .",
     "maintain-project": "node . update",
-    "prepare": "tsc",
+    "prepack": "tsc",
     "semantic-release": "semantic-release",
     "test": "ava"
   },
