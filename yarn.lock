@@ -1003,22 +1003,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@softwareventures/date@npm:3.1.2":
-  version: 3.1.2
-  resolution: "@softwareventures/date@npm:3.1.2"
-  dependencies:
-    "@softwareventures/format-date": "npm:^1.0.0"
-    "@softwareventures/ordered": "npm:^0.2.1 || ^1.0.0 || ^2.0.0"
-    "@types/is-integer": "npm:^1.0.2"
-    is-integer: "npm:^1.0.7"
-    is-integer-in-range: "npm:^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0"
-    tslib: "npm:^2.1.0"
-    unknown: "npm:^0.2.5"
-  checksum: 10c0/00bcc32cce6ad9998c2f9379a153d50ab72910d86ce9a9b934561ad3f2ff35008d15f40bac4eef5019f99c197b1655466e96910f041301d87a5b75906d4757da
-  languageName: node
-  linkType: hard
-
-"@softwareventures/date@npm:^1.4.2 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0":
+"@softwareventures/date@npm:5.0.0, @softwareventures/date@npm:^1.4.2 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0":
   version: 5.0.0
   resolution: "@softwareventures/date@npm:5.0.0"
   dependencies:
@@ -1095,7 +1080,7 @@ __metadata:
     "@eslint/eslintrc": "npm:3.0.2"
     "@softwareventures/array": "npm:7.0.0"
     "@softwareventures/chain": "npm:3.0.0"
-    "@softwareventures/date": "npm:3.1.2"
+    "@softwareventures/date": "npm:5.0.0"
     "@softwareventures/dictionary": "npm:2.1.1"
     "@softwareventures/eslint-config": "npm:7.5.0"
     "@softwareventures/iterable": "npm:3.3.0"
