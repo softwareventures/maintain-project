@@ -777,10 +777,10 @@
   dependencies:
     tslib "2.6.2"
 
-"@softwareventures/template-node-project@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@softwareventures/template-node-project/-/template-node-project-3.1.0.tgz#25b3be7544fce41e2889409d37ec708883336528"
-  integrity sha512-UYM4Vc5cMBZQ71d+et+oa0CHB2haa9u8zCNUZmGknCGf40ngjD/pUxrj1Ryrcz/p7bDxmVV086Z2rf7Y8IsM4g==
+"@softwareventures/template-node-project@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@softwareventures/template-node-project/-/template-node-project-3.2.0.tgz#49c6dce7fa0953c7e6b077daeaedc15e6ec7a443"
+  integrity sha512-uWwqJZ4iSXAIfuGd5D1u7vmmzvSpaHVT0rC3fqpAOJPRLUQUHQN7O7wEelQojrCh+OSZDmlgoV3ld6JsgXSFyw==
   dependencies:
     tslib "^2.6.2"
 
