@@ -1,7 +1,6 @@
 import {exit} from "process";
 import {forEachFn, mapFn} from "@softwareventures/array";
 import {chain} from "@softwareventures/chain";
-import {hasProperty} from "unknown";
 import type {InitFailureReason} from "../project/init.js";
 import init from "../project/init.js";
 import {bindFailureFn, mapResultFn} from "../result/result.js";
@@ -69,13 +68,5 @@ export function cliInit(path: string, options: InitOptions): void {
                     .map(forEachFn(message => void console.error(`Error: ${message}`)));
                 exit(1);
             })
-        )
-        .catch(reason => {
-            if (Boolean(reason) && hasProperty(reason, "message")) {
-                console.error(reason.message);
-            } else {
-                console.error(reason);
-            }
-            exit(1);
-        });
+        );
 }

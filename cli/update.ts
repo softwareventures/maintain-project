@@ -1,7 +1,6 @@
 import {exit} from "process";
 import {chain} from "@softwareventures/chain";
 import {forEachFn, mapFn} from "@softwareventures/array";
-import {hasProperty} from "unknown";
 import type {ReadProjectFailureReason} from "../project/read.js";
 import {readProject} from "../project/read.js";
 import {bindAsyncResultFn, bindFailureFn} from "../result/result.js";
@@ -14,7 +13,7 @@ export interface UpdateOptions {
 }
 
 export function cliUpdate(path: string, {breaking}: UpdateOptions): void {
-    readProject(path)
+    void readProject(path)
         .then(
             bindAsyncResultFn<ReadProjectFailureReason, UpdateFailureReason, Project, Project>(
                 async project => updateProject({project, breaking})
@@ -49,13 +48,5 @@ export function cliUpdate(path: string, {breaking}: UpdateOptions): void {
                     .map(forEachFn(message => void console.error(`Error: ${message}`)));
                 exit(1);
             })
-        )
-        .catch(reason => {
-            if (hasProperty(reason, "message")) {
-                console.error(reason.message);
-            } else {
-                console.error(reason);
-            }
-            exit(1);
-        });
+        );
 }
