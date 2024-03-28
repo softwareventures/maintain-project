@@ -1105,7 +1105,7 @@ __metadata:
     "@softwareventures/prettier-config": "npm:4.0.0"
     "@softwareventures/promise": "npm:2.0.0"
     "@softwareventures/semantic-release-config": "npm:4.1.0"
-    "@softwareventures/template-node-project": "npm:3.2.0"
+    "@softwareventures/template-node-project": "npm:3.3.0"
     "@softwareventures/template-webpack-project": "npm:3.3.0"
     "@softwareventures/tsconfig": "npm:7.1.0"
     "@types/empty-dir": "npm:2.0.4"
@@ -1236,12 +1236,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@softwareventures/template-node-project@npm:3.2.0":
-  version: 3.2.0
-  resolution: "@softwareventures/template-node-project@npm:3.2.0"
+"@softwareventures/template-node-project@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@softwareventures/template-node-project@npm:3.3.0"
   dependencies:
     tslib: "npm:^2.6.2"
-  checksum: 10c0/6bb1f1c27a523282759ef12e262522df3a73790ecc6736fdb7ae8ef4621ba957dae5adc8dae6949db24ada4af8d8541def76d699444c0357ce50cb8d9f113320
+  checksum: 10c0/90d54f08465d66d72f9e68aa92f8b3e3bf3e3d44505af4da52113ed667f69a3a5753490fe5c5d9ac239463809395e410f59686048a968e887abc415ed9f1fff1
   languageName: node
   linkType: hard
 
