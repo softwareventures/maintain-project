@@ -118,6 +118,7 @@
     }
   },
   "ava": {
+    "concurrency": 1,
     "extensions": {
       "ts": "module"
     },
