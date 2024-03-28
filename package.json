@@ -122,7 +122,7 @@
       "ts": "module"
     },
     "nodeArguments": [
-      "--import=tsimp"
+      "--import=tsimp/import"
     ]
   },
   "release": {
