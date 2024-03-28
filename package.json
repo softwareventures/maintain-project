@@ -20,7 +20,6 @@
     "lint": "tsc --noEmit && eslint . && prettier --check .",
     "maintain-project": "node . update",
     "prepack": "tsc",
-    "semantic-release": "semantic-release",
     "test": "ava"
   },
   "bin": "./index.js",
