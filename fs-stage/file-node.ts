@@ -1,14 +1,14 @@
 import {first, tail} from "@softwareventures/array";
 import {chain} from "@softwareventures/chain";
-import type {Result} from "../result/result";
-import {failure, mapFailure, mapFailureFn, mapResultFn, success} from "../result/result";
-import {insert as mapInsert} from "../collections/maps";
-import type {Directory} from "./directory";
-import {emptyDirectory} from "./directory";
-import type {File} from "./file";
-import type {ReadFileNodeResult} from "./read-file-node-result";
-import type {InsertFailureReason} from "./insert-failure-reason";
-import {resolvePathSegments} from "./path";
+import type {Result} from "../result/result.js";
+import {failure, mapFailure, mapFailureFn, mapResultFn, success} from "../result/result.js";
+import {insert as mapInsert} from "../collections/maps.js";
+import type {Directory} from "./directory.js";
+import {emptyDirectory} from "./directory.js";
+import type {File} from "./file.js";
+import type {ReadFileNodeResult} from "./read-file-node-result.js";
+import type {InsertFailureReason} from "./insert-failure-reason.js";
+import {resolvePathSegments} from "./path.js";
 
 export type FileNode = Directory | File;
 

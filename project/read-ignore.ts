@@ -1,9 +1,9 @@
 import {basename, dirname, join} from "path";
-import type {Ignore} from "../ignore/ignore";
-import {readIgnore} from "../ignore/read";
-import type {ProjectSource} from "./project";
-import {readProjectDirectory} from "./read-directory";
-import {readProjectText} from "./read-text";
+import type {Ignore} from "../ignore/ignore.js";
+import {readIgnore} from "../ignore/read.js";
+import type {ProjectSource} from "./project.js";
+import {readProjectDirectory} from "./read-directory.js";
+import {readProjectText} from "./read-text.js";
 
 export async function readProjectIgnore(project: ProjectSource, name: string): Promise<Ignore> {
     return readIgnore({

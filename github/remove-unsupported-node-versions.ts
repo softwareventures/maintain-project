@@ -1,11 +1,11 @@
 import {map, partition} from "@softwareventures/array";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
-import type {Project} from "../project/project";
-import type {FsStageUpdate} from "../project/update";
-import {toAsyncNullable} from "../result/result";
-import {insert} from "../fs-stage/fs-stage";
-import {modifyCiWorkflow} from "./modify-ci-workflow";
+import type {Project} from "../project/project.js";
+import type {FsStageUpdate} from "../project/update.js";
+import {toAsyncNullable} from "../result/result.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {modifyCiWorkflow} from "./modify-ci-workflow.js";
 
 export async function removeUnsupportedNodeVersions(
     project: Project

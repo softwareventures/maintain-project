@@ -1,11 +1,11 @@
-import type {ProjectSource} from "../project/project";
-import type {ReadJsonFailureReason} from "../project/read-json";
-import {readProjectJson} from "../project/read-json";
-import type {Result} from "../result/result";
-import {mapResultFn} from "../result/result";
-import type {File} from "../fs-stage/file";
-import {textFile} from "../fs-stage/file";
-import {formatPackageJson} from "./format-package-json";
+import type {ProjectSource} from "../project/project.js";
+import type {ReadJsonFailureReason} from "../project/read-json.js";
+import {readProjectJson} from "../project/read-json.js";
+import type {Result} from "../result/result.js";
+import {mapResultFn} from "../result/result.js";
+import type {File} from "../fs-stage/file.js";
+import {textFile} from "../fs-stage/file.js";
+import {formatPackageJson} from "./format-package-json.js";
 
 export async function modifyPackageJson(
     project: ProjectSource,

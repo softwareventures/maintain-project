@@ -1,6 +1,6 @@
-import type {File} from "../fs-stage/file";
-import {readTemplateText} from "./read-text";
-import type {TemplateId} from "./template";
+import type {File} from "../fs-stage/file.js";
+import {readTemplateText} from "./read-text.js";
+import type {TemplateId} from "./template.js";
 
 export interface ModifyTemplateTextOptions {
     readonly templateId: TemplateId;

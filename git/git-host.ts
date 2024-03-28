@@ -1,6 +1,6 @@
 import {basename} from "path";
-import HostedGitInfo = require("hosted-git-info");
-import type {ProjectOptions} from "../project/project";
+import HostedGitInfo from "hosted-git-info";
+import type {ProjectOptions} from "../project/project.js";
 
 export type GitHost = GitHubHost | UnknownGitHost;
 

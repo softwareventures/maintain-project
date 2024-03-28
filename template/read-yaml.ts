@@ -1,7 +1,7 @@
 import type {Document} from "yaml";
-import {parseDocument} from "yaml";
-import {readTemplateText} from "./read-text";
-import type {TemplateId} from "./template";
+import yaml from "yaml";
+import {readTemplateText} from "./read-text.js";
+import type {TemplateId} from "./template.js";
 
 export async function readTemplateYamlAsDocument(
     templateId: TemplateId,
@@ -9,7 +9,7 @@ export async function readTemplateYamlAsDocument(
     ...pathSegments: string[]
 ): Promise<Document.Parsed> {
     return readTemplateText(templateId, path, ...pathSegments)
-        .then(text => parseDocument(text))
+        .then(text => yaml.parseDocument(text))
         .then(document => {
             if (document.errors.length === 0) {
                 return document;

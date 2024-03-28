@@ -1,5 +1,5 @@
 import type {JSDOM} from "jsdom";
-import formatXml = require("xml-formatter");
+import formatXml from "xml-formatter";
 
 export function formatIdeaXml(dom: JSDOM): string {
     return formatXml(dom.serialize(), {

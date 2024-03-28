@@ -1,4 +1,4 @@
-import releaseSchedule = require("node-releases/data/release-schedule/release-schedule.json");
+import releaseSchedule from "node-releases/data/release-schedule/release-schedule.json" assert {type: "json"};
 import type {Date} from "@softwareventures/date";
 import {afterOrEqual, beforeOrEqual, parseIso8601} from "@softwareventures/date";
 import {chain} from "@softwareventures/chain";

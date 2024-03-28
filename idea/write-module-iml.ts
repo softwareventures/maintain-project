@@ -1,8 +1,8 @@
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
-import type {Project} from "../project/project";
-import {projectTemplateId} from "../template/project-template-id";
-import {copyFromTemplate} from "../template/copy";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import type {Project} from "../project/project.js";
+import {projectTemplateId} from "../template/project-template-id.js";
+import {copyFromTemplate} from "../template/copy.js";
 
 export function writeIdeaModuleIml(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const imlFilename =

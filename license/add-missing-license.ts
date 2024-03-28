@@ -1,8 +1,8 @@
 import {anyFn} from "@softwareventures/array";
-import type {Project} from "../project/project";
-import type {Update} from "../project/update";
-import {projectFileExists} from "../project/file-exists";
-import {writeLicense} from "./write";
+import type {Project} from "../project/project.js";
+import type {Update} from "../project/update.js";
+import {projectFileExists} from "../project/file-exists.js";
+import {writeLicense} from "./write.js";
 
 export async function addMissingLicense(project: Project): Promise<Update | null> {
     return Promise.all([

@@ -1,5 +1,5 @@
 import {format} from "prettier-package-json";
-import type {PackageJson, PackageJsonKey} from "prettier-package-json/build/types";
+import type {PackageJson, PackageJsonKey} from "prettier-package-json/build/types.js";
 
 export function formatPackageJson(json: PackageJson): string {
     return format(json, {

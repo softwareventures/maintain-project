@@ -1,7 +1,9 @@
 {
-  "extends": "@softwareventures/tsconfig/dom-commonjs",
+  "extends": "@softwareventures/tsconfig/dom",
   "compilerOptions": {
-    "types": []
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node"]
   },
   "exclude": ["**/test.ts", "**/*.test.ts"]
 }

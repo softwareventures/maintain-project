@@ -1,14 +1,15 @@
 import {promises as fs} from "fs";
+import {fileURLToPath} from "url";
 import {filterFn, mapFn} from "@softwareventures/array";
 import {JSDOM} from "jsdom";
-import formatXml = require("xml-formatter");
-import {textFile} from "../fs-stage/file";
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
+import formatXml from "xml-formatter";
+import {textFile} from "../fs-stage/file.js";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
 
 export async function writeIdeaDictionary(fsStage: FsStage): Promise<InsertResult> {
     const words = fs
-        .readFile(require.resolve("./dictionary.txt"), "utf-8")
+        .readFile(fileURLToPath(import.meta.resolve("./dictionary.txt")), "utf-8")
         .then(text => text.split("\n"))
         .then(mapFn(word => word.trim()))
         .then(filterFn(word => word !== ""));

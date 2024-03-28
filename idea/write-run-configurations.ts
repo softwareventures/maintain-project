@@ -1,9 +1,9 @@
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
-import {chainAsyncResultsFn, success} from "../result/result";
-import {copyFromTemplate} from "../template/copy";
-import type {Project} from "../project/project";
-import {projectTemplateId} from "../template/project-template-id";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {chainAsyncResultsFn, success} from "../result/result.js";
+import {copyFromTemplate} from "../template/copy.js";
+import type {Project} from "../project/project.js";
+import {projectTemplateId} from "../template/project-template-id.js";
 
 export function writeIdeaRunConfigurations(
     project: Project

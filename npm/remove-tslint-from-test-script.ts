@@ -1,12 +1,12 @@
 import {mapNullable, mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {mapFn} from "@softwareventures/array";
-import type {FsStageUpdate} from "../project/update";
-import type {ProjectSource} from "../project/project";
-import {findExtract} from "../collections/arrays";
-import {toNullable} from "../result/result";
-import {insert} from "../fs-stage/fs-stage";
-import {readProjectScript} from "./read-script";
-import {modifyProjectScript} from "./modify-script";
+import type {FsStageUpdate} from "../project/update.js";
+import type {ProjectSource} from "../project/project.js";
+import {findExtract} from "../collections/arrays.js";
+import {toNullable} from "../result/result.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {readProjectScript} from "./read-script.js";
+import {modifyProjectScript} from "./modify-script.js";
 
 export async function removeTslintFromTestScript(
     project: ProjectSource

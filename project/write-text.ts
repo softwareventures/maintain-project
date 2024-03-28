@@ -1,11 +1,11 @@
 import {promises as fs} from "fs";
 import {resolve} from "path";
 import {hasProperty} from "unknown";
-import type {Result} from "../result/result";
-import {failure, success} from "../result/result";
-import type {FileNotFound} from "../fs-stage/file-not-found";
-import type {FileIsDirectory} from "../fs-stage/file-is-directory";
-import type {ProjectSource} from "./project";
+import type {Result} from "../result/result.js";
+import {failure, success} from "../result/result.js";
+import type {FileNotFound} from "../fs-stage/file-not-found.js";
+import type {FileIsDirectory} from "../fs-stage/file-is-directory.js";
+import type {ProjectSource} from "./project.js";
 
 export type WriteTextResult = Result<WriteTextFailureReason>;
 

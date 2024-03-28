@@ -2,11 +2,11 @@ import {exit} from "process";
 import {forEachFn, mapFn} from "@softwareventures/array";
 import {chain} from "@softwareventures/chain";
 import {hasProperty} from "unknown";
-import type {InitFailureReason} from "../project/init";
-import init from "../project/init";
-import {bindFailureFn, mapResultFn} from "../result/result";
-import {createProject} from "../project/create";
-import {parseAndCorrectSpdxExpression} from "../license/spdx/correct";
+import type {InitFailureReason} from "../project/init.js";
+import init from "../project/init.js";
+import {bindFailureFn, mapResultFn} from "../result/result.js";
+import {createProject} from "../project/create.js";
+import {parseAndCorrectSpdxExpression} from "../license/spdx/correct.js";
 
 export interface InitOptions {
     readonly scope?: string | undefined;

@@ -1,5 +1,5 @@
 import test from "ava";
-import {excludeIndex, findExtract} from "./arrays";
+import {excludeIndex, findExtract} from "./arrays.js";
 
 test("findExtract", t => {
     t.deepEqual(

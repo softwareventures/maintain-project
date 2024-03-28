@@ -1,15 +1,15 @@
 import {sep} from "path";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {first, tail} from "@softwareventures/array";
-import type {Project} from "../project/project";
-import {toAsyncNullable} from "../result/result";
-import {readProjectXml} from "../project/read-xml";
-import {readTemplateXml} from "../template/read-xml";
-import {projectTemplateId} from "../template/project-template-id";
-import {insert} from "../fs-stage/fs-stage";
-import {textFile} from "../fs-stage/file";
-import type {FsStageUpdate} from "../project/update";
-import {formatIdeaXml} from "./format-idea-xml";
+import type {Project} from "../project/project.js";
+import {toAsyncNullable} from "../result/result.js";
+import {readProjectXml} from "../project/read-xml.js";
+import {readTemplateXml} from "../template/read-xml.js";
+import {projectTemplateId} from "../template/project-template-id.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {textFile} from "../fs-stage/file.js";
+import type {FsStageUpdate} from "../project/update.js";
+import {formatIdeaXml} from "./format-idea-xml.js";
 
 export async function enableDisableIdeaEslintInspection(
     project: Project

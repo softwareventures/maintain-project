@@ -1,11 +1,11 @@
 import {resolve} from "path";
 import {mapFn} from "@softwareventures/array";
-import type {ProjectSource} from "../project/project";
-import type {Result} from "../result/result";
-import {combineAsyncResults, mapFailureFn, success} from "../result/result";
-import {yarn} from "../yarn/yarn";
-import {readProjectScript} from "../npm/read-script";
-import {isPrettierProject} from "./is-prettier-project";
+import type {ProjectSource} from "../project/project.js";
+import type {Result} from "../result/result.js";
+import {combineAsyncResults, mapFailureFn, success} from "../result/result.js";
+import {yarn} from "../yarn/yarn.js";
+import {readProjectScript} from "../npm/read-script.js";
+import {isPrettierProject} from "./is-prettier-project.js";
 
 export type PrettierFixResult = Result<PrettierFixFailureReason>;
 

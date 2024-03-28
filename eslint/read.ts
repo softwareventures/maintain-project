@@ -3,12 +3,12 @@ import {Legacy} from "@eslint/eslintrc";
 import {mapNullableFn} from "@softwareventures/nullable";
 import {hasProperty} from "unknown";
 import {contains, isArray} from "@softwareventures/array";
-import {projectDevDependsOn} from "../project/dev-depends-on";
-import type {ProjectSource} from "../project/project";
-import {readProjectJson} from "../project/read-json";
-import {toAsyncNullable} from "../result/result";
-import {readProjectYaml} from "../project/read-yaml";
-import type {EslintProject} from "./eslint-project";
+import {projectDevDependsOn} from "../project/dev-depends-on.js";
+import type {ProjectSource} from "../project/project.js";
+import {readProjectJson} from "../project/read-json.js";
+import {toAsyncNullable} from "../result/result.js";
+import {readProjectYaml} from "../project/read-yaml.js";
+import type {EslintProject} from "./eslint-project.js";
 
 export async function readEslintProject(
     project: ProjectSource

@@ -2,12 +2,12 @@ import {mapNullableFn, notNull} from "@softwareventures/nullable";
 import {YAMLMap} from "yaml/types";
 import {any, filter, indexOf, isArray, last} from "@softwareventures/array";
 import {hasProperty} from "unknown";
-import type {Project} from "../project/project";
-import type {FsStageUpdate} from "../project/update";
-import {toNullable} from "../result/result";
-import {insert} from "../fs-stage/fs-stage";
-import {readProjectScript} from "../npm/read-script";
-import {modifyCiWorkflow} from "./modify-ci-workflow";
+import type {Project} from "../project/project.js";
+import type {FsStageUpdate} from "../project/update.js";
+import {toNullable} from "../result/result.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {readProjectScript} from "../npm/read-script.js";
+import {modifyCiWorkflow} from "./modify-ci-workflow.js";
 
 export async function addYarnLintToCiWorkflow(project: Project): Promise<FsStageUpdate | null> {
     const file = readProjectScript(project, "lint").then(

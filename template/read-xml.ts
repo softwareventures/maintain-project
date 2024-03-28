@@ -1,6 +1,6 @@
 import {JSDOM} from "jsdom";
-import type {TemplateId} from "./template";
-import {readTemplateText} from "./read-text";
+import type {TemplateId} from "./template.js";
+import {readTemplateText} from "./read-text.js";
 
 export async function readTemplateXml(
     templateId: TemplateId,

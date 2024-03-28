@@ -1,10 +1,10 @@
-import type {GitHost, GitHostOptions} from "../git/git-host";
-import type {NpmPackage, NpmPackageOptions} from "../npm/npm-package";
-import type {NodeVersions} from "../node/node-versions";
-import type {SpdxLicense} from "../license/spdx/spdx";
-import type {GitProject} from "../git/git-project";
-import type {TslintProject} from "../tslint/tslint-project";
-import type {EslintProject} from "../eslint/eslint-project";
+import type {GitHost, GitHostOptions} from "../git/git-host.js";
+import type {NpmPackage, NpmPackageOptions} from "../npm/npm-package.js";
+import type {NodeVersions} from "../node/node-versions.js";
+import type {SpdxLicense} from "../license/spdx/spdx.js";
+import type {GitProject} from "../git/git-project.js";
+import type {TslintProject} from "../tslint/tslint-project.js";
+import type {EslintProject} from "../eslint/eslint-project.js";
 
 export interface Project {
     readonly path: string;

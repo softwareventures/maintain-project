@@ -1,13 +1,13 @@
 import {first, tail} from "@softwareventures/array";
-import type {SpdxToken} from "./scan";
-import {scanSpdxExpression} from "./scan";
+import type {SpdxToken} from "./scan.js";
+import {scanSpdxExpression} from "./scan.js";
 import type {
     CombinationOperator,
     CompoundExpression,
     SimpleExpression,
     SpdxLicense,
     WithExpression
-} from "./spdx";
+} from "./spdx.js";
 
 export function parseSpdxExpression(text: string): SpdxLicense {
     const tokens = scanSpdxExpression(text);

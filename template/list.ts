@@ -1,8 +1,8 @@
 import {relative, sep} from "path";
 import {mapFn} from "@softwareventures/array";
-import recursiveReadDir = require("recursive-readdir");
-import type {TemplateId} from "./template";
-import {templatePath} from "./template";
+import recursiveReadDir from "recursive-readdir";
+import type {TemplateId} from "./template.js";
+import {templatePath} from "./template.js";
 
 export async function listTemplateFiles(
     templateId: TemplateId,

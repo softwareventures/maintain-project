@@ -1,11 +1,11 @@
 import type {Dirent} from "fs";
 import {excludeNull, filterFn, mapFn} from "@softwareventures/array";
 import {mapNullFn, notNull} from "@softwareventures/nullable";
-import type {ReadTextResult} from "../project/read-text";
-import {mapResultFn, toNullable} from "../result/result";
-import {splitWhereFn} from "../collections/arrays";
-import type {Ignore, IgnoreGroup} from "./ignore";
-import {ignoreComment, ignoreEntry} from "./ignore";
+import type {ReadTextResult} from "../project/read-text.js";
+import {mapResultFn, toNullable} from "../result/result.js";
+import {splitWhereFn} from "../collections/arrays.js";
+import type {Ignore, IgnoreGroup} from "./ignore.js";
+import {ignoreComment, ignoreEntry} from "./ignore.js";
 
 export interface ReadIgnoreOptions {
     path: string;

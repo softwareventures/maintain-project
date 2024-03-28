@@ -1,16 +1,16 @@
 import {mapNullableFn} from "@softwareventures/nullable";
 import {excludeNull, only} from "@softwareventures/array";
-import type {Project} from "../project/project";
-import type {FsStageUpdate} from "../project/update";
-import {readProjectScript} from "../npm/read-script";
-import {chainAsyncResults} from "../result/result";
-import {readProjectRunConfiguration} from "./read-run-configuration";
+import type {Project} from "../project/project.js";
+import type {FsStageUpdate} from "../project/update.js";
+import {readProjectScript} from "../npm/read-script.js";
+import {chainAsyncResults} from "../result/result.js";
+import {readProjectRunConfiguration} from "./read-run-configuration.js";
 import {
     writeIdeaRunConfigurationFix,
     writeIdeaRunConfigurationLint,
     writeIdeaRunConfigurationStart,
     writeIdeaRunConfigurationTest
-} from "./write-run-configurations";
+} from "./write-run-configurations.js";
 
 export async function addMissingIdeaRunConfigurations(
     project: Project

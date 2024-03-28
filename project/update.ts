@@ -1,9 +1,9 @@
 import type {SimpleGit} from "simple-git";
-import simpleGit from "simple-git";
+import {simpleGit} from "simple-git";
 import {concat, map} from "@softwareventures/array";
-import wrap = require("wordwrap");
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import type {Result} from "../result/result";
+import wrap from "wordwrap";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import type {Result} from "../result/result.js";
 import {
     bindAsyncResultFn,
     failure,
@@ -12,31 +12,31 @@ import {
     success,
     throwFailureFn,
     tolerantFoldAsyncResultsFn
-} from "../result/result";
-import {emptyDirectory} from "../fs-stage/directory";
-import {updateCopyrightYear} from "../license/update-copyright-year";
-import type {CommitFailureReason} from "../fs-stage/commit";
-import {commit} from "../fs-stage/commit";
-import {addMissingLicense} from "../license/add-missing-license";
-import type {YarnFixFailureReason} from "../yarn/fix";
-import {applyCodeStyle} from "../yarn/apply-code-style";
-import type {PrettierFixFailureReason} from "../prettier/fix";
-import {prettierFixFilesIfAvailable} from "../prettier/fix";
-import {updateFixScript} from "../npm/update-fix-script";
-import {updateLintScript} from "../npm/update-lint-script";
-import {addNewNodeVersionsToPackageJson} from "../npm/add-new-node-versions";
-import {addMissingNodeVersionsToGitHubActions} from "../github/add-missing-node-versions";
-import {applyCodeStyleToPackageJson} from "../npm/apply-code-style";
-import {useLatestNodeToDeploy} from "../github/use-latest-node-to-deploy";
-import {useLatestNodeToMaintain} from "../github/use-latest-node-to-maintain";
-import {dropOldNodeVersions} from "../node/drop-old-versions";
-import {removeUnsupportedNodeVersions} from "../github/remove-unsupported-node-versions";
-import {removeTslintFromTestScript} from "../npm/remove-tslint-from-test-script";
-import {addYarnLintToCiWorkflow} from "../github/add-yarn-lint-to-ci-workflow";
-import {addMissingIdeaRunConfigurations} from "../idea/add-missing-run-configurations";
-import {enableDisableIdeaTslintInspection} from "../idea/enable-disable-tslint";
-import {enableDisableIdeaEslintInspection} from "../idea/enable-disable-eslint";
-import type {Project} from "./project";
+} from "../result/result.js";
+import {emptyDirectory} from "../fs-stage/directory.js";
+import {updateCopyrightYear} from "../license/update-copyright-year.js";
+import type {CommitFailureReason} from "../fs-stage/commit.js";
+import {commit} from "../fs-stage/commit.js";
+import {addMissingLicense} from "../license/add-missing-license.js";
+import type {YarnFixFailureReason} from "../yarn/fix.js";
+import {applyCodeStyle} from "../yarn/apply-code-style.js";
+import type {PrettierFixFailureReason} from "../prettier/fix.js";
+import {prettierFixFilesIfAvailable} from "../prettier/fix.js";
+import {updateFixScript} from "../npm/update-fix-script.js";
+import {updateLintScript} from "../npm/update-lint-script.js";
+import {addNewNodeVersionsToPackageJson} from "../npm/add-new-node-versions.js";
+import {addMissingNodeVersionsToGitHubActions} from "../github/add-missing-node-versions.js";
+import {applyCodeStyleToPackageJson} from "../npm/apply-code-style.js";
+import {useLatestNodeToDeploy} from "../github/use-latest-node-to-deploy.js";
+import {useLatestNodeToMaintain} from "../github/use-latest-node-to-maintain.js";
+import {dropOldNodeVersions} from "../node/drop-old-versions.js";
+import {removeUnsupportedNodeVersions} from "../github/remove-unsupported-node-versions.js";
+import {removeTslintFromTestScript} from "../npm/remove-tslint-from-test-script.js";
+import {addYarnLintToCiWorkflow} from "../github/add-yarn-lint-to-ci-workflow.js";
+import {addMissingIdeaRunConfigurations} from "../idea/add-missing-run-configurations.js";
+import {enableDisableIdeaTslintInspection} from "../idea/enable-disable-tslint.js";
+import {enableDisableIdeaEslintInspection} from "../idea/enable-disable-eslint.js";
+import type {Project} from "./project.js";
 
 export type Update = FsStageUpdate | DirectUpdate;
 

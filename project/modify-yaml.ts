@@ -1,11 +1,11 @@
 import type {Document} from "yaml";
-import type {Result} from "../result/result";
-import {mapResultFn} from "../result/result";
-import type {File} from "../fs-stage/file";
-import {textFile} from "../fs-stage/file";
-import type {ProjectSource} from "./project";
-import type {ReadYamlFailureReason} from "./read-yaml";
-import {readProjectYamlAsDocument} from "./read-yaml";
+import type {Result} from "../result/result.js";
+import {mapResultFn} from "../result/result.js";
+import type {File} from "../fs-stage/file.js";
+import {textFile} from "../fs-stage/file.js";
+import type {ProjectSource} from "./project.js";
+import type {ReadYamlFailureReason} from "./read-yaml.js";
+import {readProjectYamlAsDocument} from "./read-yaml.js";
 
 export async function modifyProjectYaml(
     project: ProjectSource,

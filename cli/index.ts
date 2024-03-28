@@ -1,17 +1,17 @@
 import {argv, cwd} from "process";
 import {last} from "@softwareventures/array";
 import {Command} from "commander";
-import {name, version} from "../package.json";
-import type {InitOptions} from "./init";
-import {cliInit} from "./init";
-import type {UpdateOptions} from "./update";
-import {cliUpdate} from "./update";
+import pkg from "../package.json" assert {type: "json"};
+import type {InitOptions} from "./init.js";
+import {cliInit} from "./init.js";
+import type {UpdateOptions} from "./update.js";
+import {cliUpdate} from "./update.js";
 
 export default function cli(): void {
     const program = new Command()
         .allowExcessArguments(false)
-        .name(last(name.split("/")) ?? "")
-        .version(version);
+        .name(last(pkg.name.split("/")) ?? "")
+        .version(pkg.version);
 
     program
         .command("init [destination]")

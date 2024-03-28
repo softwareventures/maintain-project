@@ -1,7 +1,7 @@
 import {fork} from "child_process";
-import type {Result} from "../result/result";
-import {failure, success} from "../result/result";
-import type {ProjectSource} from "../project/project";
+import type {Result} from "../result/result.js";
+import {failure, success} from "../result/result.js";
+import type {ProjectSource} from "../project/project.js";
 
 export type YarnResult = Result<YarnFailureReason>;
 

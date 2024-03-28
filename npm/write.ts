@@ -1,17 +1,17 @@
 import {chain} from "@softwareventures/chain";
 import {mapNullable} from "@softwareventures/nullable";
 import {hasProperty} from "unknown";
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
-import {chainAsyncResultsFn, success} from "../result/result";
-import {copyFromTemplate} from "../template/copy";
-import {modifyTemplateText} from "../template/modify-text";
-import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host";
-import type {Project} from "../project/project";
-import {nodeVersionRange} from "../node/version-range";
-import {formatSpdxExpression} from "../license/spdx/format";
-import {projectTemplateId} from "../template/project-template-id";
-import {formatPackageJson} from "./format-package-json";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {chainAsyncResultsFn, success} from "../result/result.js";
+import {copyFromTemplate} from "../template/copy.js";
+import {modifyTemplateText} from "../template/modify-text.js";
+import {bugsUrl, homepageUrl, repositoryShortcut} from "../git/git-host.js";
+import type {Project} from "../project/project.js";
+import {nodeVersionRange} from "../node/version-range.js";
+import {formatSpdxExpression} from "../license/spdx/format.js";
+import {projectTemplateId} from "../template/project-template-id.js";
+import {formatPackageJson} from "./format-package-json.js";
 
 export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     return chainAsyncResultsFn([writePackageJson(project), writeNpmIgnore(project)]);

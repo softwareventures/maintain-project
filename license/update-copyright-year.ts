@@ -15,14 +15,14 @@ import {
     unshiftFn
 } from "@softwareventures/array";
 import {mapNullableFn} from "@softwareventures/nullable";
-import type {Project} from "../project/project";
-import type {FsStage} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
-import {readProjectText} from "../project/read-text";
-import {textFile} from "../fs-stage/file";
-import type {Update} from "../project/update";
-import {chainAsyncResultsFn, toNullable} from "../result/result";
-import {asyncExcludeNull, asyncMapFn, combineAsync} from "../collections/async-iterable";
+import type {Project} from "../project/project.js";
+import type {FsStage} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {readProjectText} from "../project/read-text.js";
+import {textFile} from "../fs-stage/file.js";
+import type {Update} from "../project/update.js";
+import {chainAsyncResultsFn, toNullable} from "../result/result.js";
+import {asyncExcludeNull, asyncMapFn, combineAsync} from "../collections/async-iterable.js";
 
 export async function updateCopyrightYear(project: Project): Promise<Update | null> {
     const copyrightLineRegExp = /^\s*($|((Copyright|\(C\)|©)\s*)+.*\d{4})/iu;

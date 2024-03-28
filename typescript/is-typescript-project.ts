@@ -1,7 +1,7 @@
 import {and} from "@softwareventures/array";
-import type {ProjectSource} from "../project/project";
-import {projectFileExists} from "../project/file-exists";
-import {projectDevDependsOn} from "../project/dev-depends-on";
+import type {ProjectSource} from "../project/project.js";
+import {projectFileExists} from "../project/file-exists.js";
+import {projectDevDependsOn} from "../project/dev-depends-on.js";
 
 export async function isTypescriptProject(project: ProjectSource): Promise<boolean> {
     return Promise.all([

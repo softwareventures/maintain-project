@@ -1,16 +1,16 @@
 import {filterFn, mapFn} from "@softwareventures/array";
 import {applyAsync} from "@softwareventures/promise";
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insertFn} from "../fs-stage/fs-stage";
-import {chainAsyncResults, chainAsyncResultsFn} from "../result/result";
-import {copyFromTemplate} from "../template/copy";
-import {listTemplateFiles} from "../template/list";
-import type {Project} from "../project/project";
-import {projectTemplateId} from "../template/project-template-id";
-import {writeIdeaDictionary} from "./write-dictionary";
-import {writeIdeaModuleIml} from "./write-module-iml";
-import {writeIdeaModulesXml} from "./write-modules-xml";
-import {writeIdeaRunConfigurations} from "./write-run-configurations";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insertFn} from "../fs-stage/fs-stage.js";
+import {chainAsyncResults, chainAsyncResultsFn} from "../result/result.js";
+import {copyFromTemplate} from "../template/copy.js";
+import {listTemplateFiles} from "../template/list.js";
+import type {Project} from "../project/project.js";
+import {projectTemplateId} from "../template/project-template-id.js";
+import {writeIdeaDictionary} from "./write-dictionary.js";
+import {writeIdeaModuleIml} from "./write-module-iml.js";
+import {writeIdeaModulesXml} from "./write-modules-xml.js";
+import {writeIdeaRunConfigurations} from "./write-run-configurations.js";
 
 export function writeIdeaProjectFiles(
     project: Project

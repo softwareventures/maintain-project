@@ -1,13 +1,13 @@
 import {chain} from "@softwareventures/chain";
-import type {Result} from "../result/result";
-import {mapResultFn} from "../result/result";
-import type {Directory} from "./directory";
-import type {FileNode} from "./file-node";
+import type {Result} from "../result/result.js";
+import {mapResultFn} from "../result/result.js";
+import type {Directory} from "./directory.js";
+import type {FileNode} from "./file-node.js";
 import {
     insert as insertIntoDirectory,
     insertSubdirectory as insertSubdirectoryIntoDirectory
-} from "./file-node";
-import type {InsertFailureReason} from "./insert-failure-reason";
+} from "./file-node.js";
+import type {InsertFailureReason} from "./insert-failure-reason.js";
 
 export interface FsStage {
     readonly root: Directory;

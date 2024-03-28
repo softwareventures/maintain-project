@@ -1,6 +1,6 @@
 import {toArray, concatMap, zip} from "@softwareventures/iterable";
-import type {Result} from "../result/result";
-import {failure, isSuccess, success} from "../result/result";
+import type {Result} from "../result/result.js";
+import {failure, isSuccess, success} from "../result/result.js";
 
 export function copy<T, U>(map: ReadonlyMap<T, U>): Map<T, U> {
     return new Map(map);

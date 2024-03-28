@@ -2,14 +2,14 @@ import {chain} from "@softwareventures/chain";
 import {any, append, excludeFn, first} from "@softwareventures/array";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
-import type {Project} from "../project/project";
-import type {FsStageUpdate} from "../project/update";
-import {toAsyncNullable} from "../result/result";
-import {nodeVersionRange} from "../node/version-range";
-import {insert} from "../fs-stage/fs-stage";
-import {looseSort} from "../semver/loose-sort";
-import {looseLt} from "../semver/loose-lt";
-import {modifyPackageJson} from "./modify-package-json";
+import type {Project} from "../project/project.js";
+import type {FsStageUpdate} from "../project/update.js";
+import {toAsyncNullable} from "../result/result.js";
+import {nodeVersionRange} from "../node/version-range.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {looseSort} from "../semver/loose-sort.js";
+import {looseLt} from "../semver/loose-lt.js";
+import {modifyPackageJson} from "./modify-package-json.js";
 
 export async function addNewNodeVersionsToPackageJson(
     project: Project

@@ -1,15 +1,15 @@
 import {mapNull, mapNullable, mapNullableFn, mapNullFn} from "@softwareventures/nullable";
 import {equal as arraysEqual, excludeNull, mapFn} from "@softwareventures/array";
-import type {Project} from "../project/project";
-import type {FsStageUpdate} from "../project/update";
-import {isTypescriptProject} from "../typescript/is-typescript-project";
-import {readTsconfig} from "../typescript/read-tsconfig";
-import {isSuccess, mapResultFn, toNullable} from "../result/result";
-import {isPrettierProject} from "../prettier/is-prettier-project";
-import {findExtract} from "../collections/arrays";
-import {insert} from "../fs-stage/fs-stage";
-import {modifyProjectScript} from "./modify-script";
-import {readProjectScript} from "./read-script";
+import type {Project} from "../project/project.js";
+import type {FsStageUpdate} from "../project/update.js";
+import {isTypescriptProject} from "../typescript/is-typescript-project.js";
+import {readTsconfig} from "../typescript/read-tsconfig.js";
+import {isSuccess, mapResultFn, toNullable} from "../result/result.js";
+import {isPrettierProject} from "../prettier/is-prettier-project.js";
+import {findExtract} from "../collections/arrays.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {modifyProjectScript} from "./modify-script.js";
+import {readProjectScript} from "./read-script.js";
 
 export async function updateLintFixScript(
     project: Project,

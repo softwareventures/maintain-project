@@ -1,17 +1,17 @@
 import {exclude, filter, first, map, partition} from "@softwareventures/array";
 import {intersects} from "semver";
 import {hasProperty} from "unknown";
-import type {Project} from "../project/project";
-import type {Update} from "../project/update";
-import {looseSort} from "../semver/loose-sort";
-import {looseLtr} from "../semver/loose-ltr";
-import {modifyPackageJson} from "../npm/modify-package-json";
-import {readProjectYamlAsDocument} from "../project/read-yaml";
-import {chainAsyncResults, mapResultFn, toNullable} from "../result/result";
-import {textFile} from "../fs-stage/file";
-import type {FsStage} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
-import {nodeVersionRange} from "./version-range";
+import type {Project} from "../project/project.js";
+import type {Update} from "../project/update.js";
+import {looseSort} from "../semver/loose-sort.js";
+import {looseLtr} from "../semver/loose-ltr.js";
+import {modifyPackageJson} from "../npm/modify-package-json.js";
+import {readProjectYamlAsDocument} from "../project/read-yaml.js";
+import {chainAsyncResults, mapResultFn, toNullable} from "../result/result.js";
+import {textFile} from "../fs-stage/file.js";
+import type {FsStage} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {nodeVersionRange} from "./version-range.js";
 
 export async function dropOldNodeVersions(project: Project): Promise<Update | null> {
     const currentReleaseRange = nodeVersionRange(project.node.currentReleases);

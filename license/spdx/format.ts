@@ -1,5 +1,5 @@
-import type {CombinationOperator, SpdxLicense} from "./spdx";
-import {combinationOperatorPrecedence} from "./spdx";
+import type {CombinationOperator, SpdxLicense} from "./spdx.js";
+import {combinationOperatorPrecedence} from "./spdx.js";
 
 export function formatSpdxExpression(license: SpdxLicense): string {
     return formatSpdxExpressionInternal(license, null);

@@ -3,15 +3,15 @@ import {concatMapFn, filterFn, isArray, mapFn, only} from "@softwareventures/arr
 import {intersects} from "semver";
 import {chain} from "@softwareventures/chain";
 import {mapNullFn} from "@softwareventures/nullable";
-import type {ProjectSource} from "../project/project";
-import type {ReadJsonFailureReason} from "../project/read-json";
-import {readProjectJson} from "../project/read-json";
-import type {Result} from "../result/result";
-import {allAsyncResults, bindFailureFn, failure, mapResultFn, success} from "../result/result";
-import type {ReadYamlFailureReason} from "../project/read-yaml";
-import {readProjectYaml} from "../project/read-yaml";
-import type {NodeVersions} from "./node-versions";
-import {nodeReleasesSupportedInDateRange} from "./releases-supported-in-date-range";
+import type {ProjectSource} from "../project/project.js";
+import type {ReadJsonFailureReason} from "../project/read-json.js";
+import {readProjectJson} from "../project/read-json.js";
+import type {Result} from "../result/result.js";
+import {allAsyncResults, bindFailureFn, failure, mapResultFn, success} from "../result/result.js";
+import type {ReadYamlFailureReason} from "../project/read-yaml.js";
+import {readProjectYaml} from "../project/read-yaml.js";
+import type {NodeVersions} from "./node-versions.js";
+import {nodeReleasesSupportedInDateRange} from "./releases-supported-in-date-range.js";
 
 export type ReadNodeVersionsResult = Result<ReadNodeVersionsFailureReason, NodeVersions>;
 

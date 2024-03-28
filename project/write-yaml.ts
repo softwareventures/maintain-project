@@ -1,8 +1,8 @@
 import type {Document} from "yaml";
-import type {Result} from "../result/result";
-import type {WriteTextFailureReason} from "./write-text";
-import {writeProjectText} from "./write-text";
-import type {ProjectSource} from "./project";
+import type {Result} from "../result/result.js";
+import type {WriteTextFailureReason} from "./write-text.js";
+import {writeProjectText} from "./write-text.js";
+import type {ProjectSource} from "./project.js";
 
 export type WriteYamlResult = Result<WriteYamlFailureReason>;
 

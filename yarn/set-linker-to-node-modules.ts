@@ -1,12 +1,12 @@
 import {map} from "@softwareventures/array";
 import type {Document} from "yaml";
-import type {ProjectSource} from "../project/project";
-import type {Result} from "../result/result";
-import {bindAsyncResultFn, bindFailureFn, failure, mapResultFn} from "../result/result";
-import type {ReadYamlFailureReason} from "../project/read-yaml";
-import {readProjectYamlAsDocument} from "../project/read-yaml";
-import type {WriteYamlFailureReason} from "../project/write-yaml";
-import {writeProjectYaml} from "../project/write-yaml";
+import type {ProjectSource} from "../project/project.js";
+import type {Result} from "../result/result.js";
+import {bindAsyncResultFn, bindFailureFn, failure, mapResultFn} from "../result/result.js";
+import type {ReadYamlFailureReason} from "../project/read-yaml.js";
+import {readProjectYamlAsDocument} from "../project/read-yaml.js";
+import type {WriteYamlFailureReason} from "../project/write-yaml.js";
+import {writeProjectYaml} from "../project/write-yaml.js";
 
 export type SetYarnLinkerResult = Result<SetYarnLinkerFailureReason>;
 

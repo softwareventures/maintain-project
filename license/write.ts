@@ -1,11 +1,12 @@
 import {promises as fs} from "fs";
-import spdxLicenseList = require("spdx-license-list/full");
+import {fileURLToPath} from "url";
+import spdxLicenseList from "spdx-license-list/full.js";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
-import type {Project} from "../project/project";
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
-import {success} from "../result/result";
-import {textFile} from "../fs-stage/file";
+import type {Project} from "../project/project.js";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {success} from "../result/result.js";
+import {textFile} from "../fs-stage/file.js";
 
 export function writeLicense(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const licenseExpression = project.license?.spdxLicense;
@@ -41,7 +42,7 @@ export function writeLicense(project: Project): (fsStage: FsStage) => Promise<In
 async function readLicenseText(licenseId: string): Promise<string | null> {
     switch (licenseId) {
         case "ISC":
-            return fs.readFile(require.resolve("./LICENSE.ISC.md"), "utf-8");
+            return fs.readFile(fileURLToPath(import.meta.resolve("./LICENSE.ISC.md")), "utf-8");
         default:
             return spdxLicenseList[licenseId]?.licenseText ?? null;
     }

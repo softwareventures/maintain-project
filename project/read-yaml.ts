@@ -1,12 +1,12 @@
 import type {Document} from "yaml";
-import {parse, parseDocument} from "yaml";
+import yaml from "yaml";
 import {map} from "@softwareventures/array";
 import {hasProperty} from "unknown";
-import type {Result} from "../result/result";
-import {bindResultFn, failure, mapResultFn, success} from "../result/result";
-import type {ProjectSource} from "./project";
-import type {ReadTextFailureReason} from "./read-text";
-import {readProjectText} from "./read-text";
+import type {Result} from "../result/result.js";
+import {bindResultFn, failure, mapResultFn, success} from "../result/result.js";
+import type {ProjectSource} from "./project.js";
+import type {ReadTextFailureReason} from "./read-text.js";
+import {readProjectText} from "./read-text.js";
 
 // FIXME Use `unknown` instead
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -25,7 +25,7 @@ export async function readProjectYaml(
     path: string
 ): Promise<ReadYamlResult> {
     return readProjectText(project, path)
-        .then(mapResultFn(parse))
+        .then(mapResultFn(yaml.parse))
         .catch((reason: unknown) => {
             if (hasProperty(reason, "code") || !(reason instanceof Error)) {
                 throw reason;
@@ -42,7 +42,7 @@ export async function readProjectYamlAsDocument(
     path: string
 ): Promise<ReadYamlAsDocumentResult> {
     return readProjectText(project, path)
-        .then(mapResultFn(parseDocument))
+        .then(mapResultFn(yaml.parseDocument))
         .then(
             bindResultFn<
                 ReadTextFailureReason,

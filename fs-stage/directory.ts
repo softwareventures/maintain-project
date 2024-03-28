@@ -1,4 +1,4 @@
-import type {FileNode} from "./file-node";
+import type {FileNode} from "./file-node.js";
 
 export interface Directory {
     readonly type: "directory";

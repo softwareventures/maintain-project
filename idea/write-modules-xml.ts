@@ -1,8 +1,8 @@
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
-import {modifyTemplateXml} from "../template/modify-xml";
-import type {Project} from "../project/project";
-import {projectTemplateId} from "../template/project-template-id";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {modifyTemplateXml} from "../template/modify-xml.js";
+import type {Project} from "../project/project.js";
+import {projectTemplateId} from "../template/project-template-id.js";
 
 export function writeIdeaModulesXml(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     const file = modifyTemplateXml({

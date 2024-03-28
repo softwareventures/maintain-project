@@ -1,10 +1,10 @@
 import * as escodegen from "escodegen";
 import type {Program} from "estree";
-import {textFile} from "../fs-stage/file";
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insert} from "../fs-stage/fs-stage";
-import {success} from "../result/result";
-import type {Project} from "../project/project";
+import {textFile} from "../fs-stage/file.js";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {success} from "../result/result.js";
+import type {Project} from "../project/project.js";
 
 export function writeWebpackConfig(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     if (project.target !== "webapp") {

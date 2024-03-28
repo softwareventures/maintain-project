@@ -1,11 +1,11 @@
-import simpleGit from "simple-git";
+import {simpleGit} from "simple-git";
 import {todayUtc} from "@softwareventures/date";
-import {createNpmPackage} from "../npm/npm-package";
-import {createGitHost} from "../git/git-host";
-import {guessCopyrightHolder} from "../license/guess-copyright-holder";
-import {createNodeVersions} from "../node/create";
-import {createGitProject} from "../git/create";
-import type {Project, ProjectOptions} from "./project";
+import {createNpmPackage} from "../npm/npm-package.js";
+import {createGitHost} from "../git/git-host.js";
+import {guessCopyrightHolder} from "../license/guess-copyright-holder.js";
+import {createNodeVersions} from "../node/create.js";
+import {createGitProject} from "../git/create.js";
+import type {Project, ProjectOptions} from "./project.js";
 
 export async function createProject(options: ProjectOptions): Promise<Project> {
     const git = simpleGit();

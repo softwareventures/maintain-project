@@ -1,7 +1,7 @@
 import {map} from "@softwareventures/array";
 import {concatMap, filter, fold, toArray} from "@softwareventures/iterable";
-import type {AsyncIterableLike} from "../collections/async-iterable";
-import {asyncFilter, asyncFold, combineAsync} from "../collections/async-iterable";
+import type {AsyncIterableLike} from "../collections/async-iterable.js";
+import {asyncFilter, asyncFold, combineAsync} from "../collections/async-iterable.js";
 
 export type Result<TReason = void, TValue = void> = Success<TValue> | Failure<TReason>;
 

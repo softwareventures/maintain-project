@@ -3,14 +3,14 @@ import {resolve} from "path";
 import {chain} from "@softwareventures/chain";
 import {mapFn} from "@softwareventures/iterable";
 import {hasProperty} from "unknown";
-import {liftPromises, liftResults, mapValue} from "../collections/maps";
-import type {Result} from "../result/result";
-import {failure, mapAsyncResultFn, mapResultFn, success} from "../result/result";
-import type {Directory} from "./directory";
-import type {File} from "./file";
-import type {FileExists} from "./file-exists";
-import type {FsStage} from "./fs-stage";
-import type {NotADirectory} from "./not-a-directory";
+import {liftPromises, liftResults, mapValue} from "../collections/maps.js";
+import type {Result} from "../result/result.js";
+import {failure, mapAsyncResultFn, mapResultFn, success} from "../result/result.js";
+import type {Directory} from "./directory.js";
+import type {File} from "./file.js";
+import type {FileExists} from "./file-exists.js";
+import type {FsStage} from "./fs-stage.js";
+import type {NotADirectory} from "./not-a-directory.js";
 
 export type CommitResult = Result<CommitFailureReason>;
 

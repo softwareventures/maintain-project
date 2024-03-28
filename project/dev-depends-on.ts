@@ -1,6 +1,6 @@
-import {isSuccess, mapResultFn} from "../result/result";
-import type {ProjectSource} from "./project";
-import {readProjectJson} from "./read-json";
+import {isSuccess, mapResultFn} from "../result/result.js";
+import type {ProjectSource} from "./project.js";
+import {readProjectJson} from "./read-json.js";
 
 export async function projectDevDependsOn(
     project: ProjectSource,

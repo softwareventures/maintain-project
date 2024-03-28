@@ -1,11 +1,11 @@
 import {mapFn} from "@softwareventures/array";
 import {allAsync} from "@softwareventures/promise";
-import type {Project} from "../project/project";
-import type {FsStage, InsertResult} from "../fs-stage/fs-stage";
-import {insertFn} from "../fs-stage/fs-stage";
-import {copyFromTemplate} from "../template/copy";
-import {projectTemplateId} from "../template/project-template-id";
-import {chainResults} from "../result/result";
+import type {Project} from "../project/project.js";
+import type {FsStage, InsertResult} from "../fs-stage/fs-stage.js";
+import {insertFn} from "../fs-stage/fs-stage.js";
+import {copyFromTemplate} from "../template/copy.js";
+import {projectTemplateId} from "../template/project-template-id.js";
+import {chainResults} from "../result/result.js";
 
 export function writeHuskyConfig(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
     return async fsStage =>

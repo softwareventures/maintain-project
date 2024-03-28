@@ -1,7 +1,7 @@
-import type {Result} from "../result/result";
-import {mapFailureFn} from "../result/result";
-import type {ProjectSource} from "../project/project";
-import {yarn} from "./yarn";
+import type {Result} from "../result/result.js";
+import {mapFailureFn} from "../result/result.js";
+import type {ProjectSource} from "../project/project.js";
+import {yarn} from "./yarn.js";
 
 export type YarnInstallResult = Result<YarnInstallFailureReason>;
 

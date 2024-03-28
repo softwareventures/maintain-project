@@ -14,6 +14,7 @@
   "bugs": "https://github.com/softwareventures/maintain-project/issues",
   "repository": "github:softwareventures/maintain-project",
   "license": "ISC",
+  "type": "module",
   "scripts": {
     "commit": "cz",
     "fix": "tsc --noEmit && eslint --fix . && prettier --write .",
@@ -29,7 +30,7 @@
     "./index.js"
   ],
   "engines": {
-    "node": "^18 || >=20"
+    "node": ">=20.6"
   },
   "dependencies": {
     "@eslint/eslintrc": "3.0.2",
@@ -49,7 +50,7 @@
     "@types/estree": "1.0.5",
     "@types/hosted-git-info": "3.0.5",
     "@types/jsdom": "21.1.6",
-    "@types/node": "14.18.63",
+    "@types/node": "20.11.30",
     "@types/parse-author": "2.0.3",
     "@types/picomatch": "2.3.3",
     "@types/recursive-readdir": "2.2.4",
@@ -104,7 +105,7 @@
     "pinst": "3.0.0",
     "prettier": "3.2.5",
     "semantic-release": "23.0.6",
-    "ts-node": "10.9.2"
+    "tsimp": "2.0.11"
   },
   "eslintConfig": {
     "root": true,
@@ -117,11 +118,11 @@
     }
   },
   "ava": {
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register/files"
+    "extensions": {
+      "ts": "module"
+    },
+    "nodeArguments": [
+      "--import=tsimp"
     ]
   },
   "release": {

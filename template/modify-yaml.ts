@@ -1,8 +1,8 @@
 import type {Document} from "yaml";
-import type {File} from "../fs-stage/file";
-import {textFile} from "../fs-stage/file";
-import {readTemplateYamlAsDocument} from "./read-yaml";
-import type {TemplateId} from "./template";
+import type {File} from "../fs-stage/file.js";
+import {textFile} from "../fs-stage/file.js";
+import {readTemplateYamlAsDocument} from "./read-yaml.js";
+import type {TemplateId} from "./template.js";
 
 export interface ModifyTemplateYamlOptions {
     readonly templateId: TemplateId;

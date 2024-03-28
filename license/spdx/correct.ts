@@ -1,7 +1,7 @@
-import spdxCorrect = require("spdx-correct");
-import type {SpdxLicense} from "./spdx";
-import {parseSpdxExpression} from "./parse";
-import {formatSpdxExpression} from "./format";
+import spdxCorrect from "spdx-correct";
+import type {SpdxLicense} from "./spdx.js";
+import {parseSpdxExpression} from "./parse.js";
+import {formatSpdxExpression} from "./format.js";
 
 export function parseAndCorrectSpdxExpression(text: string): SpdxLicense {
     return correctSpdxLicense(parseSpdxExpression(text));

@@ -1,9 +1,9 @@
 import {mapNullable} from "@softwareventures/nullable";
-import type {ProjectSource} from "../project/project";
-import type {Result} from "../result/result";
-import type {ReadJsonFailureReason} from "../project/read-json";
-import type {File} from "../fs-stage/file";
-import {modifyPackageJson} from "./modify-package-json";
+import type {ProjectSource} from "../project/project.js";
+import type {Result} from "../result/result.js";
+import type {ReadJsonFailureReason} from "../project/read-json.js";
+import type {File} from "../fs-stage/file.js";
+import {modifyPackageJson} from "./modify-package-json.js";
 
 export async function modifyProjectScript(
     project: ProjectSource,

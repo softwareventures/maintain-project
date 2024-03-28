@@ -1,6 +1,6 @@
 import {chain} from "@softwareventures/chain";
 import {initial, last, mapFn} from "@softwareventures/array";
-import {looseSort} from "../semver/loose-sort";
+import {looseSort} from "../semver/loose-sort.js";
 
 export function nodeVersionRange(versions: readonly string[]): string {
     return chain(versions)

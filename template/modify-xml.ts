@@ -1,8 +1,8 @@
 import type {JSDOM} from "jsdom";
-import type {File} from "../fs-stage/file";
-import {formatIdeaXml} from "../idea/format-idea-xml";
-import type {TemplateId} from "./template";
-import {readTemplateXml} from "./read-xml";
+import type {File} from "../fs-stage/file.js";
+import {formatIdeaXml} from "../idea/format-idea-xml.js";
+import type {TemplateId} from "./template.js";
+import {readTemplateXml} from "./read-xml.js";
 
 export interface ModifyTemplateXmlOptions {
     readonly templateId: TemplateId;

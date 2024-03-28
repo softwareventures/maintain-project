@@ -1,8 +1,8 @@
-import type {Result} from "../result/result";
-import {mapFailureFn, success} from "../result/result";
-import type {ProjectSource} from "../project/project";
-import {readProjectScript} from "../npm/read-script";
-import {yarn} from "./yarn";
+import type {Result} from "../result/result.js";
+import {mapFailureFn, success} from "../result/result.js";
+import type {ProjectSource} from "../project/project.js";
+import {readProjectScript} from "../npm/read-script.js";
+import {yarn} from "./yarn.js";
 
 export type YarnFixResult = Result<YarnFixFailureReason>;
 

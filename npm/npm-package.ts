@@ -1,5 +1,5 @@
 import {basename} from "path";
-import type {ProjectOptions} from "../project/project";
+import type {ProjectOptions} from "../project/project.js";
 
 export interface NpmPackage extends NpmPackageOptions {
     readonly name: string;

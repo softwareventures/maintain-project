@@ -1,12 +1,12 @@
 import {posix} from "path";
 import {anyFn} from "@softwareventures/array";
 import {mapNullableFn, mapNullFn} from "@softwareventures/nullable";
-import {readIgnore} from "../ignore/read";
-import {failure, success} from "../result/result";
-import type {Ignore} from "../ignore/ignore";
-import {readTemplateDirectory} from "./read-directory";
-import {readTemplateText} from "./read-text";
-import type {TemplateId} from "./template";
+import {readIgnore} from "../ignore/read.js";
+import {failure, success} from "../result/result.js";
+import type {Ignore} from "../ignore/ignore.js";
+import {readTemplateDirectory} from "./read-directory.js";
+import {readTemplateText} from "./read-text.js";
+import type {TemplateId} from "./template.js";
 
 export async function readTemplateIgnore(
     templateId: TemplateId,

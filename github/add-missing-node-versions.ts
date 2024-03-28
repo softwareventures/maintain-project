@@ -2,12 +2,12 @@ import {append, exclude, map} from "@softwareventures/array";
 import {chain} from "@softwareventures/chain";
 import {intersects} from "semver";
 import {mapNullableFn} from "@softwareventures/nullable";
-import type {Project} from "../project/project";
-import type {FsStageUpdate} from "../project/update";
-import {toAsyncNullable} from "../result/result";
-import {looseSort} from "../semver/loose-sort";
-import {insert} from "../fs-stage/fs-stage";
-import {modifyCiWorkflow} from "./modify-ci-workflow";
+import type {Project} from "../project/project.js";
+import type {FsStageUpdate} from "../project/update.js";
+import {toAsyncNullable} from "../result/result.js";
+import {looseSort} from "../semver/loose-sort.js";
+import {insert} from "../fs-stage/fs-stage.js";
+import {modifyCiWorkflow} from "./modify-ci-workflow.js";
 
 export async function addMissingNodeVersionsToGitHubActions(
     project: Project

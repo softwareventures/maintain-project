@@ -2,12 +2,12 @@ import {exit} from "process";
 import {chain} from "@softwareventures/chain";
 import {forEachFn, mapFn} from "@softwareventures/array";
 import {hasProperty} from "unknown";
-import type {ReadProjectFailureReason} from "../project/read";
-import {readProject} from "../project/read";
-import {bindAsyncResultFn, bindFailureFn} from "../result/result";
-import type {UpdateFailureReason} from "../project/update";
-import {updateProject} from "../project/update";
-import type {Project} from "../project/project";
+import type {ReadProjectFailureReason} from "../project/read.js";
+import {readProject} from "../project/read.js";
+import {bindAsyncResultFn, bindFailureFn} from "../result/result.js";
+import type {UpdateFailureReason} from "../project/update.js";
+import {updateProject} from "../project/update.js";
+import type {Project} from "../project/project.js";
 
 export interface UpdateOptions {
     readonly breaking?: boolean | undefined;

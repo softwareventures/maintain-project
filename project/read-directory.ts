@@ -1,7 +1,7 @@
 import type {Dirent} from "fs";
 import {promises as fs} from "fs";
 import {resolve} from "path";
-import type {ProjectSource} from "./project";
+import type {ProjectSource} from "./project.js";
 
 export async function readProjectDirectory(
     project: ProjectSource,
