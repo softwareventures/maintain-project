@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import {pathToFileURL} from "node:url";
+import {pathToFileURL} from "url";
 import {resolve} from "path";
 import cli from "./cli/index.js";
 
