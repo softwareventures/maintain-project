@@ -18,6 +18,7 @@ compositing
 conrod
 contoso
 coord
+corepack
 cors
 creatives
 crypto
