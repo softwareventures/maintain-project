@@ -42,7 +42,7 @@
     "@softwareventures/nullable": "3.2.0",
     "@softwareventures/ordered": "2.0.0",
     "@softwareventures/promise": "2.0.0",
-    "@softwareventures/template-node-project": "3.30.0",
+    "@softwareventures/template-node-project": "3.32.0",
     "@softwareventures/template-webpack-project": "3.32.0",
     "@types/empty-dir": "2.0.4",
     "@types/escodegen": "0.0.10",
