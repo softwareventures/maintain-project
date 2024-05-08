@@ -43,7 +43,7 @@
     "@softwareventures/ordered": "2.0.0",
     "@softwareventures/promise": "2.0.0",
     "@softwareventures/template-node-project": "3.37.0",
-    "@softwareventures/template-webpack-project": "3.40.0",
+    "@softwareventures/template-webpack-project": "3.41.0",
     "@types/empty-dir": "2.0.4",
     "@types/escodegen": "0.0.10",
     "@types/eslint": "8.56.10",
