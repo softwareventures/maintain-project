@@ -50,7 +50,7 @@
     "@types/estree": "1.0.5",
     "@types/hosted-git-info": "3.0.5",
     "@types/jsdom": "21.1.6",
-    "@types/node": "20.12.11",
+    "@types/node": "20.12.12",
     "@types/parse-author": "2.0.3",
     "@types/picomatch": "2.3.3",
     "@types/recursive-readdir": "2.2.4",
