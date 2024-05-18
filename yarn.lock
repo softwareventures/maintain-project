@@ -1109,7 +1109,7 @@ __metadata:
     "@softwareventures/precise-commits": "npm:4.0.12"
     "@softwareventures/prettier-config": "npm:4.0.0"
     "@softwareventures/promise": "npm:2.0.0"
-    "@softwareventures/semantic-release-config": "npm:4.1.0"
+    "@softwareventures/semantic-release-config": "npm:5.0.0"
     "@softwareventures/template-node-project": "npm:3.45.0"
     "@softwareventures/template-webpack-project": "npm:3.46.0"
     "@softwareventures/tsconfig": "npm:8.0.0"
@@ -1153,6 +1153,7 @@ __metadata:
     prettier-package-json: "npm:2.8.0"
     recursive-readdir: "npm:2.2.3"
     semantic-release: "npm:23.1.1"
+    semantic-release-pinst: "npm:1.0.4"
     semver: "npm:7.6.0"
     simple-git: "npm:3.24.0"
     spdx-correct: "npm:3.2.0"
@@ -1229,15 +1230,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@softwareventures/semantic-release-config@npm:4.1.0":
-  version: 4.1.0
-  resolution: "@softwareventures/semantic-release-config@npm:4.1.0"
+"@softwareventures/semantic-release-config@npm:5.0.0":
+  version: 5.0.0
+  resolution: "@softwareventures/semantic-release-config@npm:5.0.0"
   dependencies:
     tslib: "npm:2.6.2"
   peerDependencies:
     conventional-changelog-conventionalcommits: ^4.6.3 || ^5.0.0 || ^6.0.0 || ^7.0.0
+    pinst: ">= 2.1.6"
     semantic-release: ^17.0.7 || ^18.0.0 || ^19.0.0 || ^20.0.0 || ^21.0.0 || ^22.0.0 || ^23.0.0
-  checksum: 10c0/efd21e6598d1f7f4f336463f8ce1702ba529d1f186585d2ac9944c1c461d13b173d406464b12656e2e74b8054850d960f7f84c3a3e86b2aa44242e9bb3eb1fae
+    semantic-release-pinst: ^1.0.0
+  checksum: 10c0/a7698f9f1fde3bd4c734d907b8a8acab2a6ce7b3edd005bdf0a5ca0fd169af905429c63bd15f5d0a68c8d2b3ccbe7a4f7f0a3eb8be8c8c82b70ea7e79c8f9e90
   languageName: node
   linkType: hard
 
@@ -7436,6 +7439,18 @@ __metadata:
   dependencies:
     xmlchars: "npm:^2.2.0"
   checksum: 10c0/3847b839f060ef3476eb8623d099aa502ad658f5c40fd60c105ebce86d244389b0d76fcae30f4d0c728d7705ceb2f7e9b34bb54717b6a7dbedaf5dad2d9a4b74
+  languageName: node
+  linkType: hard
+
+"semantic-release-pinst@npm:1.0.4":
+  version: 1.0.4
+  resolution: "semantic-release-pinst@npm:1.0.4"
+  dependencies:
+    tslib: "npm:^2.6.2"
+  peerDependencies:
+    pinst: ">= 2.1.6"
+    semantic-release: ">= 22.0.0"
+  checksum: 10c0/42cc215a9957c5866d5f38dab67dc57ea92dccbd26fc967a50b2f41e5401f88a8035db77791bbf75e79e8fb37d721e3a5f6c962d18136c3f3a1208af16318eb4
   languageName: node
   linkType: hard
 

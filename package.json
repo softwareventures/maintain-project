@@ -87,7 +87,7 @@
     "@softwareventures/eslint-config": "7.5.0",
     "@softwareventures/precise-commits": "4.0.12",
     "@softwareventures/prettier-config": "4.0.0",
-    "@softwareventures/semantic-release-config": "4.1.0",
+    "@softwareventures/semantic-release-config": "5.0.0",
     "@softwareventures/tsconfig": "8.0.0",
     "@typescript-eslint/eslint-plugin": "7.9.0",
     "@typescript-eslint/parser": "7.9.0",
@@ -105,6 +105,7 @@
     "pinst": "3.0.0",
     "prettier": "3.2.5",
     "semantic-release": "23.1.1",
+    "semantic-release-pinst": "1.0.4",
     "tsimp": "2.0.11"
   },
   "eslintConfig": {
