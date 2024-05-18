@@ -21,8 +21,7 @@
     "postinstall": "husky",
     "lint": "tsc --noEmit && eslint . && prettier --check .",
     "maintain-project": "node . update",
-    "prepack": "tsc && pinst --disable",
-    "postpack": "pinst --enable",
+    "prepack": "tsc",
     "test": "ava"
   },
   "bin": "./index.js",
