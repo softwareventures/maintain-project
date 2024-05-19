@@ -1023,9 +1023,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@softwareventures/date@npm:5.0.0, @softwareventures/date@npm:^1.4.2 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0":
-  version: 5.0.0
-  resolution: "@softwareventures/date@npm:5.0.0"
+"@softwareventures/date@npm:5.0.2, @softwareventures/date@npm:^1.4.2 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0":
+  version: 5.0.2
+  resolution: "@softwareventures/date@npm:5.0.2"
   dependencies:
     "@softwareventures/format-date": "npm:^1.0.0"
     "@softwareventures/ordered": "npm:^0.2.1 || ^1.0.0 || ^2.0.0"
@@ -1034,7 +1034,7 @@ __metadata:
     is-integer-in-range: "npm:^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0"
     tslib: "npm:^2.1.0"
     unknown: "npm:^0.2.5"
-  checksum: 10c0/4ac53809c1cfc28afa998f241bfd416514eb2bfb295bb7e891d2d196b8357252ff4150331819aa14965e6716cb78662794815cbe8e76c384f301ff53866fe082
+  checksum: 10c0/9341f1a51a8b7d545dcced8e44ae53ea0b925a755d76639cbb2b6992c6fc5d4d1a539dce590157ff634b44add0adb50f5fc26bffec194eaac4f04521f5bfb23a
   languageName: node
   linkType: hard
 
@@ -1100,7 +1100,7 @@ __metadata:
     "@eslint/eslintrc": "npm:3.0.2"
     "@softwareventures/array": "npm:7.0.0"
     "@softwareventures/chain": "npm:3.0.0"
-    "@softwareventures/date": "npm:5.0.0"
+    "@softwareventures/date": "npm:5.0.2"
     "@softwareventures/dictionary": "npm:2.1.1"
     "@softwareventures/eslint-config": "npm:7.5.0"
     "@softwareventures/iterable": "npm:3.3.0"
