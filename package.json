@@ -60,7 +60,7 @@
     "corepack": "0.27.0",
     "empty-dir": "3.0.0",
     "escodegen": "2.1.0",
-    "hosted-git-info": "7.0.1",
+    "hosted-git-info": "7.0.2",
     "jsdom": "24.0.0",
     "node-releases": "2.0.18",
     "non-null": "2.0.1",
