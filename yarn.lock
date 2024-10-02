@@ -1136,7 +1136,7 @@ __metadata:
     eslint-plugin-jsdoc: "npm:48.11.0"
     eslint-plugin-prefer-arrow: "npm:1.2.3"
     eslint-plugin-sonarjs: "npm:0.25.1"
-    hosted-git-info: "npm:7.0.1"
+    hosted-git-info: "npm:7.0.2"
     husky: "npm:9.1.5"
     inquirer: "npm:9.3.6"
     jsdom: "npm:24.0.0"
@@ -4371,16 +4371,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hosted-git-info@npm:7.0.1":
-  version: 7.0.1
-  resolution: "hosted-git-info@npm:7.0.1"
-  dependencies:
-    lru-cache: "npm:^10.0.1"
-  checksum: 10c0/361c4254f717f06d581a5a90aa0156a945e662e05ebbb533c1fa9935f10886d8247db48cbbcf9667f02e519e6479bf16dcdcf3124c3030e76c4c3ca2c88ee9d3
-  languageName: node
-  linkType: hard
-
-"hosted-git-info@npm:^7.0.0, hosted-git-info@npm:^7.0.1":
+"hosted-git-info@npm:7.0.2, hosted-git-info@npm:^7.0.0, hosted-git-info@npm:^7.0.1":
   version: 7.0.2
   resolution: "hosted-git-info@npm:7.0.2"
   dependencies:
