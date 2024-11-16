@@ -4311,11 +4311,6 @@ nofilter@^3.1.0:
   resolved "https://registry.yarnpkg.com/nofilter/-/nofilter-3.1.0.tgz#c757ba68801d41ff930ba2ec55bab52ca184aa66"
   integrity sha512-l2NNj07e9afPnhAhvgVrCD/oy2Ai1yfLpuo3EpiO1jFTsB4sFz6oIfAfSZyQzVpkZQ9xS8ZS5g1jCBgq4Hwo0g==
 
-non-null@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/non-null/-/non-null-2.0.1.tgz#686c26772c33f57391f1ba61dbe3f847532392e0"
-  integrity sha512-/Oew2NHelqqTDM8bAmuf79c/mOi+xjresHh1TQUYswMKIwFogSHRwramp9f/dptMwfoB5Wf0lch7kCEyaLPVkw==
-
 nopt@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/nopt/-/nopt-6.0.0.tgz#245801d8ebf409c6df22ab9d95b65e1309cdb16d"

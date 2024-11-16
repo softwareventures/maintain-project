@@ -62,7 +62,6 @@
     "hosted-git-info": "6.1.1",
     "jsdom": "21.1.2",
     "node-releases": "2.0.18",
-    "non-null": "2.0.1",
     "picomatch": "2.3.1",
     "prettier-package-json": "2.8.0",
     "recursive-readdir": "2.2.3",
