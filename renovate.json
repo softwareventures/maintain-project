@@ -10,5 +10,6 @@
       "matchUpdateTypes": ["minor"],
       "semanticCommitType": "feat"
     }
-  ]
+  ],
+  "baseBranches": ["main", "master", "alpha", "beta", "next", "next-major", "4.x"]
 }
