@@ -756,15 +756,7 @@
   resolved "https://registry.yarnpkg.com/@types/escodegen/-/escodegen-0.0.10.tgz#1699fef93d85f6457c67450d9c318c8e11e8dfc2"
   integrity sha512-IVvcNLEFbiL17qiGRGzyfx/u9K6lA5w6wcQSIgv2h4JG3ZAFIY1Be9ITTSPuARIxRpzW54s8OvcF6PdonBbDzg==
 
-"@types/eslint@8.56.2":
-  version "8.56.2"
-  resolved "https://registry.yarnpkg.com/@types/eslint/-/eslint-8.56.2.tgz#1c72a9b794aa26a8b94ad26d5b9aa51c8a6384bb"
-  integrity sha512-uQDwm1wFHmbBbCZCqAlq6Do9LYwByNZHWzXppSnay9SuwJ+VRbjkbLABer54kcPnMSlG6Fdiy2yaFXm/z9Z5gw==
-  dependencies:
-    "@types/estree" "*"
-    "@types/json-schema" "*"
-
-"@types/estree@*", "@types/estree@1.0.5":
+"@types/estree@1.0.5":
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.5.tgz#a6ce3e556e00fd9895dd872dd172ad0d4bd687f4"
   integrity sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==
@@ -788,7 +780,7 @@
     "@types/tough-cookie" "*"
     parse5 "^7.0.0"
 
-"@types/json-schema@*", "@types/json-schema@^7.0.12":
+"@types/json-schema@^7.0.12":
   version "7.0.15"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.15.tgz#596a1747233694d50f6ad8a7869fcb6f56cf5841"
   integrity sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==
