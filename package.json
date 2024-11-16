@@ -93,7 +93,6 @@
     "eslint-plugin-sonarjs": "0.25.1",
     "prettier": "2.8.8",
     "semantic-release": "19.0.5",
-    "shx": "0.3.4",
     "ts-node": "10.9.2"
   },
   "eslintConfig": {
