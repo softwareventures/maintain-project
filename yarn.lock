@@ -1120,7 +1120,7 @@ __metadata:
     "@types/estree": "npm:1.0.6"
     "@types/hosted-git-info": "npm:3.0.5"
     "@types/jsdom": "npm:21.1.7"
-    "@types/node": "npm:20.16.10"
+    "@types/node": "npm:20.17.6"
     "@types/parse-author": "npm:2.0.3"
     "@types/picomatch": "npm:2.3.4"
     "@types/recursive-readdir": "npm:2.2.4"
@@ -1371,12 +1371,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:20.16.10":
-  version: 20.16.10
-  resolution: "@types/node@npm:20.16.10"
+"@types/node@npm:*, @types/node@npm:20.17.6":
+  version: 20.17.6
+  resolution: "@types/node@npm:20.17.6"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/c0c0c7ecb083ec638c2118e54b5242bb4c39a75608cbac9475cf15aaceb64b8bc997a87a0798e700a81d61651c8a7750ae0455be0f0996ada6e8b2bb818d90c5
+  checksum: 10c0/5918c7ff8368bbe6d06d5e739c8ae41a9db41628f28760c60cda797be7d233406f07c4d0e6fdd960a0a342ec4173c2217eb6624e06bece21c1f1dd1b92805c15
   languageName: node
   linkType: hard
 
