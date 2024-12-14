@@ -62,7 +62,7 @@
     "escodegen": "2.1.0",
     "hosted-git-info": "7.0.2",
     "jsdom": "24.1.3",
-    "node-releases": "2.0.18",
+    "node-releases": "2.0.19",
     "non-null": "2.0.1",
     "picomatch": "4.0.2",
     "prettier-package-json": "2.8.0",
