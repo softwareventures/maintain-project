@@ -1112,7 +1112,7 @@ __metadata:
     "@softwareventures/promise": "npm:2.0.0"
     "@softwareventures/semantic-release-config": "npm:5.1.0"
     "@softwareventures/template-node-project": "npm:3.192.0"
-    "@softwareventures/template-webpack-project": "npm:3.204.0"
+    "@softwareventures/template-webpack-project": "npm:3.214.0"
     "@softwareventures/tsconfig": "npm:8.1.0"
     "@types/empty-dir": "npm:2.0.4"
     "@types/escodegen": "npm:0.0.10"
@@ -1253,13 +1253,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@softwareventures/template-webpack-project@npm:3.204.0":
-  version: 3.204.0
-  resolution: "@softwareventures/template-webpack-project@npm:3.204.0"
+"@softwareventures/template-webpack-project@npm:3.214.0":
+  version: 3.214.0
+  resolution: "@softwareventures/template-webpack-project@npm:3.214.0"
   dependencies:
     "@types/webpack-env": "npm:1.18.5"
     tslib: "npm:2.8.1"
-  checksum: 10c0/05e6e1c2b68ef72efadc19dcfea3c99f3c960df5844c9556415ba2fc1ff6091310f6a7e1f5bc395c5c360e1e138c4b90090ce0aa11b9d0d9172c9011b53a6fd4
+  checksum: 10c0/81c77d848030e0a290103c20cfe6822fc0da484cc1a2db9c4ea66ea57a3d8bf8502e6d12b86f45026db38bf5eebfdc3f20b7843d64bd53fb5c78db350e20a183
   languageName: node
   linkType: hard
 
