@@ -1,5 +1,6 @@
 import {promises as fs} from "fs";
 import {fileURLToPath} from "url";
+import {EOL} from "os";
 import {filterFn, mapFn} from "@softwareventures/array";
 import {JSDOM} from "jsdom";
 import formatXml from "xml-formatter";
@@ -39,6 +40,7 @@ export async function writeIdeaDictionary(fsStage: FsStage): Promise<InsertResul
         .then(() =>
             formatXml(dom.serialize(), {
                 collapseContent: true,
+                lineSeparator: EOL,
                 indentation: "  ",
                 stripComments: true,
                 whiteSpaceAtEndOfSelfclosingTag: true
