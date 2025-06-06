@@ -1,7 +1,7 @@
 import {argv, cwd} from "process";
 import {last} from "@softwareventures/array";
 import {Command} from "commander";
-import pkg from "../package.json" assert {type: "json"};
+import pkg from "../package.json" with {type: "json"};
 import type {InitOptions} from "./init.js";
 import {cliInit} from "./init.js";
 import type {UpdateOptions} from "./update.js";
