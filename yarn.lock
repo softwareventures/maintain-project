@@ -1137,7 +1137,7 @@ __metadata:
     "@types/parse-author": "npm:2.0.3"
     "@types/picomatch": "npm:2.3.4"
     "@types/recursive-readdir": "npm:2.2.4"
-    "@types/semver": "npm:7.5.8"
+    "@types/semver": "npm:7.7.1"
     "@types/spdx-correct": "npm:3.1.3"
     "@types/wordwrap": "npm:1.0.3"
     "@typescript-eslint/eslint-plugin": "npm:7.18.0"
@@ -1168,7 +1168,7 @@ __metadata:
     recursive-readdir: "npm:2.2.3"
     semantic-release: "npm:23.1.1"
     semantic-release-pinst: "npm:1.0.4"
-    semver: "npm:7.6.3"
+    semver: "npm:7.7.2"
     simple-git: "npm:3.27.0"
     spdx-correct: "npm:3.2.0"
     spdx-license-list: "npm:6.9.0"
@@ -1429,10 +1429,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/semver@npm:7.5.8":
-  version: 7.5.8
-  resolution: "@types/semver@npm:7.5.8"
-  checksum: 10c0/8663ff927234d1c5fcc04b33062cb2b9fcfbe0f5f351ed26c4d1e1581657deebd506b41ff7fdf89e787e3d33ce05854bc01686379b89e9c49b564c4cfa988efa
+"@types/semver@npm:7.7.1":
+  version: 7.7.1
+  resolution: "@types/semver@npm:7.7.1"
+  checksum: 10c0/c938aef3bf79a73f0f3f6037c16e2e759ff40c54122ddf0b2583703393d8d3127130823facb880e694caa324eb6845628186aac1997ee8b31dc2d18fafe26268
   languageName: node
   linkType: hard
 
@@ -7678,12 +7678,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semver@npm:7.6.3, semver@npm:^7.1.1, semver@npm:^7.1.2, semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.5.2, semver@npm:^7.5.3, semver@npm:^7.6.0, semver@npm:^7.6.3":
-  version: 7.6.3
-  resolution: "semver@npm:7.6.3"
+"semver@npm:7.7.2, semver@npm:^7.1.1, semver@npm:^7.1.2, semver@npm:^7.3.2, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.5.2, semver@npm:^7.5.3, semver@npm:^7.6.0, semver@npm:^7.6.3":
+  version: 7.7.2
+  resolution: "semver@npm:7.7.2"
   bin:
     semver: bin/semver.js
-  checksum: 10c0/88f33e148b210c153873cb08cfe1e281d518aaa9a666d4d148add6560db5cd3c582f3a08ccb91f38d5f379ead256da9931234ed122057f40bb5766e65e58adaf
+  checksum: 10c0/aca305edfbf2383c22571cb7714f48cadc7ac95371b4b52362fb8eeffdfbc0de0669368b82b2b15978f8848f01d7114da65697e56cd8c37b0dab8c58e543f9ea
   languageName: node
   linkType: hard
 
