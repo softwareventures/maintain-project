@@ -14,7 +14,11 @@ import {projectTemplateId} from "../template/project-template-id.js";
 import {formatPackageJson} from "./format-package-json.js";
 
 export function writeNpmFiles(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
-    return chainAsyncResultsFn([writePackageJson(project), writeNpmIgnore(project)]);
+    return chainAsyncResultsFn([
+        writePackageJson(project),
+        writeNpmIgnore(project),
+        writeYarnRc(project)
+    ]);
 }
 
 function writePackageJson(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
@@ -70,6 +74,17 @@ function writeNpmIgnore(project: Project): (fsStage: FsStage) => Promise<InsertR
     if (project.target === "npm") {
         const file = copyFromTemplate(projectTemplateId(project), "npmignore.template");
         return async fsStage => file.then(file => insert(fsStage, ".npmignore", file));
+    } else {
+        return async fsStage => success(fsStage);
+    }
+}
+
+function writeYarnRc(project: Project): (fsStage: FsStage) => Promise<InsertResult> {
+    if (project.target === "npm") {
+        return async fsStage =>
+            copyFromTemplate(projectTemplateId(project), ".yarnrc.yml").then(file =>
+                insert(fsStage, ".yarnrc.yml", file)
+            );
     } else {
         return async fsStage => success(fsStage);
     }
