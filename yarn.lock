@@ -1174,7 +1174,7 @@ __metadata:
     husky: "npm:9.1.7"
     inquirer: "npm:9.3.8"
     jsdom: "npm:24.1.3"
-    node-releases: "npm:2.0.19"
+    node-releases: "npm:2.0.21"
     non-null: "npm:2.0.1"
     picomatch: "npm:4.0.2"
     pinst: "npm:3.0.0"
@@ -6247,10 +6247,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-releases@npm:2.0.19":
-  version: 2.0.19
-  resolution: "node-releases@npm:2.0.19"
-  checksum: 10c0/52a0dbd25ccf545892670d1551690fe0facb6a471e15f2cfa1b20142a5b255b3aa254af5f59d6ecb69c2bec7390bc643c43aa63b13bf5e64b6075952e716b1aa
+"node-releases@npm:2.0.21":
+  version: 2.0.21
+  resolution: "node-releases@npm:2.0.21"
+  checksum: 10c0/0eb94916eeebbda9d51da6a9ea47428a12b2bb0dd94930c949632b0c859356abf53b2e5a2792021f96c5fda4f791a8e195f2375b78ae7dba8d8bc3141baa1469
   languageName: node
   linkType: hard
 
