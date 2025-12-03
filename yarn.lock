@@ -1193,7 +1193,7 @@ __metadata:
     typescript: "npm:5.7.2"
     unknown: "npm:0.2.6"
     wordwrap: "npm:1.0.0"
-    xml-formatter: "npm:2.6.1"
+    xml-formatter: "npm:3.6.7"
     yaml: "npm:1.10.2"
   bin:
     maintain-project: ./index.js
@@ -9251,12 +9251,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml-formatter@npm:2.6.1":
-  version: 2.6.1
-  resolution: "xml-formatter@npm:2.6.1"
+"xml-formatter@npm:3.6.7":
+  version: 3.6.7
+  resolution: "xml-formatter@npm:3.6.7"
   dependencies:
-    xml-parser-xo: "npm:^3.2.0"
-  checksum: 10c0/97af94786f14d295eb74d5062e311f6c7b351d7b2b11c76d275eeb5197d98450bd0197de51dda9fbd6f03fbd23432e535fd13e8780a207cb1158a3d987bf02e5
+    xml-parser-xo: "npm:^4.1.5"
+  checksum: 10c0/4b1a466c4613dbbb64cdce4a25e076cae8d2beba93dda71e2123d226e3010925f8ff3bf547b8e0e0c980a47eed5bb6a660f2225b8cb600761da5fc0656416944
   languageName: node
   linkType: hard
 
@@ -9267,10 +9267,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xml-parser-xo@npm:^3.2.0":
-  version: 3.2.0
-  resolution: "xml-parser-xo@npm:3.2.0"
-  checksum: 10c0/33101bc707eeccda575f2df2de20d9b01513467c16c53e9f87205ab4bcc800586f1080cf37550b681b9c123b4a7778dcdb324989782c2a6c6698ae5ab623be84
+"xml-parser-xo@npm:^4.1.5":
+  version: 4.1.5
+  resolution: "xml-parser-xo@npm:4.1.5"
+  checksum: 10c0/4160a031f8ccb63351321b851891c99e3faefed45daf47ce0bf4bbf3daf3b3202b9fa3a2dfe9be08de5a39a6323ae281e7ea6acc5f8b9a117baf3992add04c7a
   languageName: node
   linkType: hard
 

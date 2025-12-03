@@ -76,7 +76,7 @@
     "typescript": "5.7.2",
     "unknown": "0.2.6",
     "wordwrap": "1.0.0",
-    "xml-formatter": "2.6.1",
+    "xml-formatter": "3.6.7",
     "yaml": "1.10.2"
   },
   "devDependencies": {
