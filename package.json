@@ -67,7 +67,7 @@
     "picomatch": "4.0.2",
     "prettier-package-json": "2.8.0",
     "recursive-readdir": "2.2.3",
-    "semver": "7.7.2",
+    "semver": "7.7.4",
     "simple-git": "3.31.1",
     "spdx-correct": "3.2.0",
     "spdx-license-list": "6.9.0",
