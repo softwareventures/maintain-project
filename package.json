@@ -32,7 +32,7 @@
     "node": ">=20.6"
   },
   "dependencies": {
-    "@eslint/eslintrc": "3.2.0",
+    "@eslint/eslintrc": "3.3.4",
     "@softwareventures/array": "7.0.1",
     "@softwareventures/chain": "3.0.0",
     "@softwareventures/date": "5.0.2",
