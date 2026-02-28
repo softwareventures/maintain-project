@@ -1161,7 +1161,7 @@ __metadata:
     commander: "npm:12.1.0"
     commitizen: "npm:4.3.1"
     conventional-changelog-conventionalcommits: "npm:7.0.2"
-    corepack: "npm:0.33.0"
+    corepack: "npm:0.34.6"
     empty-dir: "npm:3.0.0"
     escodegen: "npm:2.1.0"
     eslint: "npm:8.57.1"
@@ -2737,16 +2737,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"corepack@npm:0.33.0":
-  version: 0.33.0
-  resolution: "corepack@npm:0.33.0"
+"corepack@npm:0.34.6":
+  version: 0.34.6
+  resolution: "corepack@npm:0.34.6"
   bin:
     corepack: ./dist/corepack.js
     pnpm: ./dist/pnpm.js
     pnpx: ./dist/pnpx.js
     yarn: ./dist/yarn.js
     yarnpkg: ./dist/yarnpkg.js
-  checksum: 10c0/cc73285af8485ffaf6f42c945e0eb0cddef4e9063f4fed090216c49c48cf849716254d49738865c3e296b188f33419cf335738a70c97269d7c256ff3646833ff
+  checksum: 10c0/63762d2fed870081eb6043c1f4258532baacf0c681cfadbd594fb9c2c2b329f47dccadd9bcc36067c1d6277b2addf628e2c6bf2441078e299f4f0cfb4955b6f6
   languageName: node
   linkType: hard
 
