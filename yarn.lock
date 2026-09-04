@@ -1202,7 +1202,7 @@ __metadata:
     semver: "npm:7.7.2"
     simple-git: "npm:3.36.0"
     spdx-correct: "npm:3.2.0"
-    spdx-license-list: "npm:6.9.0"
+    spdx-license-list: "npm:6.12.0"
     tsimp: "npm:2.0.12"
     tslib: "npm:2.8.1"
     tslint: "npm:6.1.3"
@@ -8072,10 +8072,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"spdx-license-list@npm:6.9.0":
-  version: 6.9.0
-  resolution: "spdx-license-list@npm:6.9.0"
-  checksum: 10c0/d9123a9eca9b403b8ac201b89057df9b052caba26dbec6acbdfe6593b6054b9eb0ac14520d0c2541930d2f6be033b0f74683bc979ae6391f72ab4406f0cfe619
+"spdx-license-list@npm:6.12.0":
+  version: 6.12.0
+  resolution: "spdx-license-list@npm:6.12.0"
+  checksum: 10c0/e65657a6e4324ab00722dd9bf624a06d498014dee1a1ebdc89bbdd7c9816eee5a401839ef0f8b257f5a8bcb6976cad36937f434fd15ed11cee5f06ead8508926
   languageName: node
   linkType: hard
 
